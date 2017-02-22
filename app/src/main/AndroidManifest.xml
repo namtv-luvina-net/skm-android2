@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="epsap4.soliton.co.jp"
+    android:versionCode="12410"
+    android:versionName="2.0"
+    android:installLocation="internalOnly">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.BIND_DEVICE_ADMIN"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--Bluetoothによる通信を許可する-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!--Bluetoothの設定変更を許可する-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <application
+
+        android:icon="@mipmap/type04_72px"
+        android:label="@string/app_name" android:allowBackup="false" android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
+        android:networkSecurityConfig="@xml/network_security_config">
+        <!-- Version 2.0 -->
+
+        <activity android:name=".activity.MenuAcivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ViewPagerInputActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        </activity>
+        <activity android:name=".activity.ConfirmApplyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        </activity>
+        <activity android:name=".activity.CompleteApplyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        </activity>
+
+<!-- Version 1.0 -->
+<!--
+        <activity android:name=".activity.ListCertActivity" android:configChanges="orientation"
+            >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.DetailCertActivity" android:configChanges="orientation" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+        <activity android:name=".activity.SettingNotificationOneCertActivity" android:configChanges="orientation" android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+        <activity android:name=".activity.SettingsNotificationActivity" android:configChanges="orientation" android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+        <activity android:name=".activity.SettingActivity" android:configChanges="orientation" android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+        <activity android:name=".activity.ScheduledNoificationActivity" android:configChanges="orientation" android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
+        <receiver android:name=".notification.AlarmReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+
+        </receiver>
+        <activity
+            android:label="@string/app_name"
+            android:name=".activity.EPS_ap400Activity" android:configChanges="orientation|screenSize"
+
+            >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="soliton-km" android:host="EPSapConnect" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.EnrollActivity" android:configChanges="orientation"></activity>
+        <service android:name="SacService"></service>
+        <receiver android:name="EpsapAdminReceiver" android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin" android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".activity.ProfileActivity" android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".activity.ProfileListActivity" android:configChanges="orientation|screenSize"
+            >
+        </activity>
+        <activity android:name=".activity.BlockActivity" android:configChanges="orientation" android:screenOrientation="portrait"></activity>
+        <receiver android:name="BlockReceiver">
+            <intent-filter>
+                <action android:name="epsap3.soliton.co.jp.block.ViewAction.VIEW" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".activity.ProfileResetActivity" android:configChanges="orientation"></activity>
+
+
+        <service android:name="EPSVpnService" android:permission="android.permission.BIND_VPN_SERVICE">
+            <intent-filter>
+                <action android:name="android.net.VpnService"/>
+            </intent-filter>
+        </service>
+        <activity android:name=".activity.CertLoginActivity" android:configChanges="orientation|keyboardHidden|screenSize"></activity>
+        <activity android:name=".activity.CertRequestActivity" android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".activity.CertGuidanceActivity" android:configChanges="orientation|screenSize"></activity>
+        <service android:name=".mdm.MDMService"></service>
+        <receiver android:name=".mdm.MDMBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.SCREEN_ON" />
+            </intent-filter>
+        </receiver>
+        <activity android:name=".mdm.MDMCheckinActivity"></activity>
+        <activity android:name=".instapp.InstallAppListActivity" android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".activity.SupportActivity" android:configChanges="orientation|screenSize"
+            android:theme="@style/MyTheme"></activity>
+-->
+    </application>
+
+
+</manifest>

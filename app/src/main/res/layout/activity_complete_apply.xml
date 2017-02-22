@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:weightSum="2">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textColor="@color/text_color_inactive"
+        android:text="@string/apply_completed"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnBackToTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textAllCaps="false"
+            android:textSize="30dp"
+            android:textColor="@color/text_color_active"
+            android:text="@string/back_to_top"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:gravity="center|top">
+
+     <LinearLayout
+		        android:id="@+id/LinearLayout01"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal"
+ >
+
+		    <Button
+		        android:id="@+id/Button_GuideBack"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_alignParentLeft="true"
+		        android:layout_width="50dp"
+		        android:layout_height="38dp"
+		        android:text="＜" />
+
+		    <View
+			android:layout_width="0dp"
+			android:layout_height="1dp"
+			android:layout_weight="1"
+			/>
+		    <Button
+		        android:id="@+id/Button_GuideNext"
+		        style="?android:attr/buttonStyleSmall"
+		        android:layout_alignParentRight="true"
+		        android:layout_width="50dp"
+		        android:layout_height="38dp"
+		        android:text="＞" />
+		    </LinearLayout>
+		    
+     <TextView android:text="dummy commnet" 
+			android:id="@+id/certguidance_comment" 
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textSize="18sp">
+			</TextView>
+	
+     <TableLayout
+	    android:id="@+id/tableLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+
+	    <TableRow
+	        android:id="@+id/tableRow5"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+			
+		<Button
+		    android:id="@+id/button_open_cert"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/guidance_next_button" />
+		
+		
+	    </TableRow>
+	    
+
+	    <FrameLayout
+            android:id="@+id/FmProfile01"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+	    
+	    </TableLayout>
+	    
+    <ImageView
+        android:id="@+id/imageView_cert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ca_cert" />
+
+
+</LinearLayout>

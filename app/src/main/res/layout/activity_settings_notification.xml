@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background_color_white"
+    tools:context=".activity.SettingsNotificationActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#ffff"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/common_margin"
+        android:paddingRight="@dimen/common_big_margin">
+
+        <TextView
+            android:id="@+id/textViewNotificationSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_back"
+            android:gravity="center_vertical"
+            android:text="@string/label_settings"
+            android:textColor="@color/add_cert" />
+
+        <TextView
+            android:id="@+id/textViewSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/label_save"
+            android:textColor="@color/add_cert" />
+
+        <TextView
+            android:id="@+id/textViewNameCertificate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/label_notification_settings"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_cert" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background_group_cert"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_big_margin"
+            android:hint="@string/label_expired_notification" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/common_margin"
+            android:background="@color/line_cert" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background_color_white"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/common_big_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_big_margin"
+                android:text="@string/label_notification"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchExperidNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/common_margin"
+            android:background="@color/line_cert" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background_group_cert"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_big_margin"
+            android:hint="@string/label_before_expired_notification" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/common_margin"
+            android:background="@color/line_cert" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background_color_white"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/common_big_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_big_margin"
+                android:text="@string/label_notification"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchBeforeExperidNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/common_big_margin"
+            android:layout_marginTop="@dimen/common_margin"
+            android:background="@color/line_cert" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/background_color_white"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_big_margin"
+                android:gravity="left"
+                android:text="@string/label_expired"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/common_big_margin"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/textViewbeforefinaldate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/common_margin"
+                    android:text="7 Day before"/>
+
+                <RelativeLayout
+
+                    android:layout_width="72dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/rectang_button"
+                    android:gravity="right">
+
+                    <TextView
+                        android:id="@+id/textview_subtract"
+                        android:layout_width="36dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@color/add_cert"
+                        android:textSize="20dp" />
+
+                    <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:background="@color/add_cert" />
+
+                    <TextView
+                        android:id="@+id/textview_add"
+                        android:layout_width="36dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="@color/add_cert"
+                        android:textSize="20dp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/common_margin"
+            android:background="@color/line_cert" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

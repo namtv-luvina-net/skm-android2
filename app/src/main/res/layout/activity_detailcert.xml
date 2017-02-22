@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background_color_white"
+    tools:context=".activity.DetailCertActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/common_margin"
+        android:layout_height="48dp"
+        android:background="@color/background_color_white"
+        >
+        <TextView
+            android:id="@+id/textViewCertificates"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="@color/add_cert"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/ic_back"
+            android:text="@string/label_list_certificate"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/textViewNameCertificate"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+           />
+        <TextView
+            android:id="@+id/textViewMenu"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:textColor="@color/add_cert"
+            android:text="@string/label_menu"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/listviewInforCert"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="0dp"/>
+
+</LinearLayout>

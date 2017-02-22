@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+
+
+    <!-- 最初に下部に置きたいボタンを含むレイアウトを配置 -->
+	<LinearLayout
+		android:id="@+id/linearLayout1"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		    android:orientation="vertical" >
+
+
+		<Button
+		    android:id="@+id/Button_Mail"
+		    android:layout_width="match_parent"
+		    android:layout_height="35dp"
+		    android:gravity="left|center_vertical"
+		    android:ellipsize="end"
+		    android:text="Button"
+		    android:textSize="13sp" />
+
+		<Button
+		    android:id="@+id/Button_Phone"
+		    android:layout_width="match_parent"
+		    android:layout_height="35dp"
+		    android:gravity="left|center_vertical"
+		    android:text="Button"
+		    android:textSize="13sp" />
+
+	</LinearLayout>
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_above="@id/linearLayout1"
+>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center|top"
+    android:orientation="vertical" >
+
+    <LinearLayout
+
+	  android:layout_width="match_parent"
+	  android:orientation="vertical" android:layout_height="wrap_content" android:gravity="top">
+<!-- 証明書取得 -->
+    <TextView android:text="@string/certlogin_header_title" android:id="@+id/MainTitle"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:layout_gravity="center|top" android:textSize="20sp">
+	</TextView>
+
+
+
+
+	</LinearLayout>
+<!--
+    <FrameLayout
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+
+    <TextView android:text="Input User ID &amp; Password"
+	android:id="@+id/PleaseInput" android:layout_width="wrap_content"
+	android:layout_gravity="center|top" android:layout_height="wrap_content">
+	</TextView>
+-->
+
+
+<!--
+	 <TextView android:id="@+id/TextPading"
+	  	android:text="" android:layout_height="wrap_content"
+	  	android:layout_width="wrap_content"
+	  	android:textSize="20sp">
+	  </TextView>
+-->
+
+<!-- ユーザーID -->
+	<TextView android:text="@string/certlogin_userid_title"
+	android:id="@+id/UserID" android:layout_width="wrap_content"
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+
+	<EditText
+	    android:id="@+id/EditUserID"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="text"
+	    android:text=""
+	    android:width="170dp" >
+
+	</EditText>
+
+
+
+<!-- Password -->
+	<TextView android:text="@string/certlogin_password_title"
+	android:id="@+id/Password" android:layout_width="wrap_content"
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+
+
+	<EditText
+	    android:id="@+id/EditPassword"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="textPassword"
+	    android:text=""
+	    android:width="170dp" >
+
+	</EditText>
+
+	<TextView android:text=""
+	android:id="@+id/ErrorLoginMessage" android:layout_width="wrap_content"
+	android:layout_gravity="center|top" android:layout_height="wrap_content">
+	</TextView>
+
+<!--
+	<Button android:text="Login" android:id="@+id/ButtonLogin"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+	</Button>
+-->
+  	<!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+		<View android:id="@+id/Separator"
+		      android:layout_width="wrap_content"
+		      android:background="#222222"
+		      android:layout_height="1dp"
+		      android:layout_marginBottom="2dp">
+		</View>
+
+
+
+	<TableLayout
+	    android:id="@+id/tableLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+
+	    <TableRow
+	        android:id="@+id/tableRow8"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+<!-- ユーザー認証 -->
+		<Button
+		    android:id="@+id/button_user_auth"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/certlogin_userauthentication_button" />
+		 </TableRow>
+		<TableRow
+	        android:id="@+id/tableRow5"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+<!-- 開始 -->
+		<Button
+		    android:id="@+id/button_start_cert"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/certlogin_start_button" />
+		 </TableRow>
+
+<!-- 「EPS-apサーバーへアクセスします」 -->
+	    <TextView android:text="@string/certlogin_start_msg"
+			android:id="@+id/instant_profile_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+
+	    </TableLayout>
+
+
+
+	    <TableLayout
+	    android:id="@+id/tableLayout2"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+
+	    <TableRow
+	        android:id="@+id/tableRow6"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+<!-- 「証明書取得手順を確認する」 -->
+		<Button
+		    android:id="@+id/button_open_guide"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/certlogin_guide_button" />
+
+
+	    </TableRow>
+
+ 	    </TableLayout>
+	     <FrameLayout
+            android:id="@+id/FmProfile01"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+
+
+	    <!-- UDID表示 -->
+
+
+	<TableLayout
+	    android:id="@+id/tableLayout3"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	    <TableRow
+	        android:id="@+id/tableRow7"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+
+	    <Button
+	        android:id="@+id/button_UDID_saw"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/certlogin_apid_button" />
+
+	    </TableRow>
+<!-- 「表示とともにクリップボードへのコピーを行います。」 -->
+	    <TextView android:text="@string/certlogin_apid_msg"
+			android:id="@+id/apid_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+	    <TextView android:text="@string/main_apid_wifi"
+			android:id="@+id/apid_wifi_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+			</TextView>
+
+	    <EditText
+			    android:id="@+id/EditUDID"
+			    android:layout_height="wrap_content"
+			    android:layout_width="match_parent"
+			    android:inputType="none"
+			    android:clickable="false"
+				android:cursorVisible="false"
+				android:focusable="false"
+			    android:focusableInTouchMode="false"
+			    android:text=""
+			    android:textSize="13sp"
+			    android:width="220dp" >
+	    </EditText>
+
+	     <TextView android:text="@string/main_apid_vpn"
+			android:id="@+id/apid_vpn_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+	    <EditText
+			    android:id="@+id/EditVPNAPID"
+			    android:layout_height="wrap_content"
+			    android:layout_width="match_parent"
+			    android:inputType="none"
+			    android:clickable="false"
+				android:cursorVisible="false"
+				android:focusable="false"
+			    android:focusableInTouchMode="false"
+			    android:text=""
+			    android:textSize="13sp"
+			    android:width="220dp" >
+	    </EditText>
+
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+
+	</TableLayout>
+
+		<!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+ 		<View android:id="@+id/Separator02"
+		      android:layout_width="wrap_content"
+		      android:background="#222222"
+		      android:layout_height="1dp"
+		      android:layout_marginBottom="2dp">
+		</View>
+
+<!-- 証明書タイプ選択Spinner -->
+	<TextView android:text="@string/certlogin_certspinner_msg"
+	android:id="@+id/CertTypeMsg" android:layout_width="wrap_content"
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+		<Spinner
+		    android:id="@+id/Spinner_certificate"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:entries="@array/certtype_strarray" >
+
+		</Spinner>
+
+<!-- アプリケーション一覧 -->
+    <TextView android:text="@string/certlogin_app_button" android:id="@+id/APPInstTitle"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:layout_gravity="center|top" android:textSize="20sp">
+	</TextView>
+
+    <TableLayout
+	    android:id="@+id/tableLayout4"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	    <TableRow
+	        android:id="@+id/tableRow8"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+
+	    <Button
+	        android:id="@+id/button_application_list"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/certlogin_app_button" />
+
+	    </TableRow>
+
+	    	</TableLayout>
+
+</LinearLayout>
+</ScrollView>
+</RelativeLayout>

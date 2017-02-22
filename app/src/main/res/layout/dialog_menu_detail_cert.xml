@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="40dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:hint="@string/label_dialog_choose_detail"/>
+
+    <TextView
+        android:id="@+id/textviewDeleteCert"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_black"
+        android:text="@string/label_dialog_delete_cert"/>
+    <TextView
+        android:id="@+id/textviewNotificationOne"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_black"
+        android:text="@string/label_notification_settings"/>
+    <TextView
+        android:id="@+id/textviewCancleDialog"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/common_big_margin"
+        android:textColor="@color/color_black"
+        android:gravity="center_horizontal"
+        android:text="@string/label_dialog_Cancle"/>
+
+</LinearLayout>

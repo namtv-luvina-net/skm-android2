@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+>
+	
+    <LinearLayout 
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:orientation="vertical">
+        
+    <Button
+        android:id="@+id/Button_delete_pro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="プロファイル削除" />
+    
+    <Button 
+        android:id="@+id/Button_reset_pro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="プロファイル再設定" />
+    
+    
+    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) --> 
+<!--  		<View android:id="@+id/Separator" 
+		      android:layout_width="wrap_content" 
+		      android:background="#DDFFFFFF" 
+		      android:layout_height="1dp" 
+		      android:layout_marginBottom="2dp">
+		</View>
+		
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Debug用"
+             />
+
+        <Button
+            android:id="@+id/Button_date_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="データ削除" />
+-->
+</LinearLayout>
+</ScrollView>

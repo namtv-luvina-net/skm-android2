@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center|top"
+    android:orientation="vertical"  >
+
+    <LinearLayout
+
+	  android:layout_width="match_parent"
+	  android:orientation="vertical" android:layout_height="wrap_content" android:gravity="top">
+
+
+    <TextView android:text="@string/support_header_title" android:id="@+id/MainTitle"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:layout_gravity="center|top" android:textSize="20sp">
+	</TextView>
+
+
+
+
+
+	</LinearLayout>
+<!--
+    <FrameLayout
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+
+    <TextView android:text="Input User ID &amp; Password"
+	android:id="@+id/PleaseInput" android:layout_width="wrap_content"
+	android:layout_gravity="center|top" android:layout_height="wrap_content">
+	</TextView>
+-->
+
+
+
+<!--
+	 <TextView android:id="@+id/TextPading"
+	  	android:text="" android:layout_height="wrap_content"
+	  	android:layout_width="wrap_content"
+	  	android:textSize="20sp">
+	  </TextView>
+-->
+
+<!--
+	<TextView android:text="UserID:"
+	android:id="@+id/UserID" android:layout_width="wrap_content"
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+
+	<EditText
+	    android:id="@+id/EditUserID"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="text"
+	    android:text=""
+	    android:width="170px" >
+
+	</EditText>
+
+
+
+
+	<TextView android:text="Password:"
+	android:id="@+id/Password" android:layout_width="wrap_content"
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+
+	<EditText
+	    android:id="@+id/EditPassword"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="text"
+	    android:password="true"
+	    android:text=""
+	    android:width="170px" >
+
+	</EditText>
+-->
+<!--
+	<Button android:text="Login" android:id="@+id/ButtonLogin"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+	</Button>
+-->
+	<!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+		<View android:id="@+id/Separator"
+		      android:layout_width="wrap_content"
+		      android:background="#DDFFFFFF"
+		      android:layout_height="1dp"
+		      android:layout_marginBottom="2dp">
+		</View>
+<!--
+	<TextView android:text="一般ユーザー" android:id="@+id/TextAnonymous"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_gravity="center|top" android:textSize="20sp">
+	</TextView>
+-->
+	<TableLayout
+	    android:id="@+id/tableLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+
+
+
+
+
+	    <FrameLayout
+            android:id="@+id/FmProfile01"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+
+
+
+	    <TextView
+	        android:id="@+id/textViewApkInfo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/support_apk_info"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <TextView android:text=""
+			android:id="@+id/support_apkverion"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+	    <FrameLayout
+            android:id="@+id/FmProfile02"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+
+   	    <TableRow
+	        android:id="@+id/tableRow7"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+<!-- APID表示 -->
+	    <Button
+	        android:id="@+id/button_UDID_saw"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/main_apid_button" />
+
+	    </TableRow>
+
+	    <TextView android:text="@string/main_apid_msg"
+			android:id="@+id/instant_profile_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+   	    <TableRow
+	        android:id="@+id/tableRow8"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+<!-- メールで送信 -->
+	    <Button
+	        android:id="@+id/button_mail_send"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/main_mail_button" />
+
+	    </TableRow>
+
+<!-- APIDビュー -->
+   	    <TextView android:text="@string/main_apid_wifi"
+			android:id="@+id/apid_wifi_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+			</TextView>
+	    <EditText
+			    android:id="@+id/EditUDID"
+			    android:layout_height="wrap_content"
+			    android:layout_width="match_parent"
+			    android:inputType="none"
+			    android:clickable="false"
+				android:cursorVisible="false"
+				android:focusable="false"
+			    android:focusableInTouchMode="false"
+			    android:text=""
+			    android:textSize="13sp"
+			    android:width="220dp" >
+	    </EditText>
+
+	    <TextView android:text="@string/main_apid_vpn"
+			android:id="@+id/apid_vpn_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+	    <EditText
+			    android:id="@+id/EditVPNAPID"
+			    android:layout_height="wrap_content"
+			    android:layout_width="match_parent"
+			    android:inputType="none"
+			    android:clickable="false"
+				android:cursorVisible="false"
+				android:focusable="false"
+			    android:focusableInTouchMode="false"
+			    android:text=""
+			    android:textSize="13sp"
+			    android:width="220dp" >
+	    </EditText>
+
+	     <FrameLayout
+            android:id="@+id/FmProfile03"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+ <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+ <!-- 診断情報 -->
+	    <Button
+	        android:id="@+id/button_log_send"
+	        android:layout_weight="1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/diag_logget_button" />
+	    <Button
+	        android:id="@+id/button_log_delete"
+	        android:layout_weight="1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/diag_logdel_button" />
+	    </LinearLayout>
+	     <FrameLayout
+            android:id="@+id/FmProfile04"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) -->
+	<TextView
+	    android:id="@+id/VersionText"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="right"
+	    android:text="" >
+	    </TextView>
+
+
+<!--
+		<View android:id="@+id/Separator"
+		      android:layout_width="wrap_content"
+		      android:background="#DDFFFFFF"
+		      android:layout_height="1dp"
+		      android:layout_marginBottom="2dp">
+		</View>
+
+	<TextView android:text="Debug" android:id="@+id/TextDebut"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+	></TextView>
+		<Button
+		    android:id="@+id/button_enroll"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Enroll" />
+
+	    <TableRow
+	        android:id="@+id/tableRow2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	    <Button
+		    android:id="@+id/button_create_short"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="ｼｮｰﾄｶｯﾄの作成" />
+
+		<Button
+		    android:id="@+id/button_remove_short"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="ｼｮｰﾄｶｯﾄの削除" />
+
+
+	    </TableRow>
+
+	    <TableRow
+	        android:id="@+id/tableRow3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+
+	        <TextView
+		    android:id="@+id/textView1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="ショートカット名"
+		    />
+
+			<EditText
+		    android:id="@+id/editShortcut"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:width="170px"
+		    android:text="Eps-ap設定" ></EditText>
+
+		    <requestFocus />
+	    </TableRow>
+
+	    <TableRow
+	        android:id="@+id/tableRow4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+
+		    <TextView
+		    android:id="@+id/textView2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="URI"
+		    />
+
+			<EditText
+		    android:id="@+id/editUri"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:width="200px"
+		    android:text="http://www.yahoo.co.jp" ></EditText>
+	    </TableRow>
+-->
+	</TableLayout>
+
+</LinearLayout>
+</ScrollView>

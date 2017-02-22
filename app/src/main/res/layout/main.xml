@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+   
+>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center|top"
+    android:orientation="vertical"  >
+    
+    <LinearLayout
+	  
+	  android:layout_width="match_parent" 
+	  android:orientation="vertical" android:layout_height="wrap_content" android:gravity="top">
+
+	
+    <TextView android:text="@string/main_header_title" android:id="@+id/MainTitle" 
+	android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	android:layout_gravity="center|top" android:textSize="20sp">
+	</TextView>
+	
+    
+	<TextView android:text="@string/ConnectionAddress" 
+	android:id="@+id/ServerURL" android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" android:layout_gravity="top">
+	</TextView>
+	
+	<EditText
+	    android:id="@+id/EditServerURL"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="textUri"
+	    android:maxLength="128"
+	    android:text="" >
+
+	</EditText>
+	
+	
+	</LinearLayout>
+<!--	
+    <FrameLayout
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+    
+    <TextView android:text="Input User ID &amp; Password" 
+	android:id="@+id/PleaseInput" android:layout_width="wrap_content" 
+	android:layout_gravity="center|top" android:layout_height="wrap_content">
+	</TextView>
+-->
+	
+	<TextView android:text="" 
+	android:id="@+id/ErrorLoginMessage" android:layout_width="wrap_content" 
+	android:layout_gravity="center|top" android:layout_height="wrap_content">
+	</TextView>
+	
+<!--  
+	 <TextView android:id="@+id/TextPading" 
+	  	android:text="" android:layout_height="wrap_content" 
+	  	android:layout_width="wrap_content"
+	  	android:textSize="20sp">
+	  </TextView>
+-->	  
+	 
+<!-- 
+	<TextView android:text="UserID:" 
+	android:id="@+id/UserID" android:layout_width="wrap_content" 
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+	
+	<EditText
+	    android:id="@+id/EditUserID"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="text"
+	    android:text=""
+	    android:width="170px" >
+
+	</EditText>
+
+	
+
+
+	<TextView android:text="Password:" 
+	android:id="@+id/Password" android:layout_width="wrap_content" 
+	android:layout_gravity="top" android:layout_height="wrap_content">
+	</TextView>
+
+	<EditText
+	    android:id="@+id/EditPassword"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:inputType="text"
+	    android:password="true"
+	    android:text=""
+	    android:width="170px" >
+
+	</EditText>
+-->
+<!--	
+	<Button android:text="Login" android:id="@+id/ButtonLogin" 
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+	</Button>
+-->
+	<!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) --> 
+		<View android:id="@+id/Separator" 
+		      android:layout_width="wrap_content" 
+		      android:background="#DDFFFFFF" 
+		      android:layout_height="1dp" 
+		      android:layout_marginBottom="2dp">
+		</View>
+<!--
+	<TextView android:text="一般ユーザー" android:id="@+id/TextAnonymous" 
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:layout_gravity="center|top" android:textSize="20sp">
+	</TextView>
+-->
+	<TableLayout
+	    android:id="@+id/tableLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+
+	    <TableRow
+	        android:id="@+id/tableRow5"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+			
+		<Button
+		    android:id="@+id/button_profile_list"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/main_connet_button" />
+		
+		
+	    </TableRow>
+	    
+	    <TextView android:text="@string/main_connect_msg" 
+			android:id="@+id/connect_comment" 
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+	    <FrameLayout
+            android:id="@+id/FmProfile01"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+	    
+	    <TableRow
+	        android:id="@+id/tableRow6"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+			
+		<Button
+		    android:id="@+id/button_profile_del"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/main_prodel_button" />
+		
+		
+	    </TableRow>
+	    
+	    <TextView android:text="@string/main_prodel_msg" 
+			android:id="@+id/profile_del_comment" 
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+	    <FrameLayout
+            android:id="@+id/FmProfile02"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" />
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) --> 
+	    
+   	<!--     <TableRow
+	        android:id="@+id/tableRow7"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" > -->
+<!-- APID表示 -->
+<!-- 	    <Button
+	        android:id="@+id/button_UDID_saw"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/main_apid_button" />
+
+	    </TableRow>
+	    
+	    <TextView android:text="@string/main_apid_msg" 
+			android:id="@+id/instant_profile_comment" 
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+			</TextView>
+
+   	    <TableRow
+	        android:id="@+id/tableRow8"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" > -->
+<!-- メールで送信 -->
+<!--	    <Button
+	        android:id="@+id/button_mail_send"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/main_mail_button" />
+
+	    </TableRow>
+	    
+	    <EditText
+			    android:id="@+id/EditUDID"
+			    android:layout_height="wrap_content"
+			    android:layout_width="match_parent" 
+			    android:inputType="none"
+			    android:clickable="false" 
+				android:cursorVisible="false" 
+				android:focusable="false" 
+			    android:focusableInTouchMode="false"
+			    android:text=""
+			    android:textSize="13sp"
+			    android:width="220dp" >
+	    </EditText> 
+
+	     <FrameLayout
+            android:id="@+id/FmProfile03"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" /> -->
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) --> 
+	    <!-- 
+ <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"> -->
+ <!-- 診断情報 -->
+<!-- 	    <Button
+	        android:id="@+id/button_log_send"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/diag_logget_button" />
+	    <Button
+	        android:id="@+id/button_log_delete"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/diag_logdel_button" />
+	    </LinearLayout>	-->
+<!-- 	     <FrameLayout
+            android:id="@+id/FmProfile04"
+            android:background="#222222"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp" /> -->
+	    <!-- セパレータの例 (色:白 線幅:1dp 底部マージン:2dp) --> 
+ 	<TextView
+	    android:id="@+id/SupportText"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="right"
+	    android:text="@string/main_txt_gosupport" 
+	    android:textAppearance="?android:attr/textAppearanceMedium">
+	    </TextView>
+
+
+
+
+	</TableLayout>
+
+</LinearLayout> 
+</ScrollView>
