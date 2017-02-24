@@ -274,4 +274,10 @@
     <string name="connect_not_epsap">接続先アドレスまたはポート番号が違います。</string>
     <string name="devicecheck_error">NetAttest EPS-apにAPIDが登録されていません。</string>
     <string name="registration_setting_invalid">端末登録設定が無効です。</string>
+    <string name="apid_description">APIDをタップすると、メニューが表示されます</string>
+    <string name="apid_subject_email">Soliton KeyManager APID</string>
+    <string name="select_apid">選択してください。</string>
+    <string name="copy_apid">クリップボードにコピー</string>
+    <string name="send_apid">メールで送信</string>
+    <string name="user_id_is_invalid">ユーザーIDが無効です</string>
 </resources>

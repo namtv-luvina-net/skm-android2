@@ -199,6 +199,7 @@ public class ConfirmApplyActivity extends Activity {
             }
         } else {
             if (m_nErroType == RET_ESP_AP_OK) {
+                saveElementApply();
                 applyFinish();
                 return;
             }

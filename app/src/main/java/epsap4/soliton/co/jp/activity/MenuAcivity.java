@@ -53,6 +53,8 @@ public class MenuAcivity extends Activity {
         btnMenuAPID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MenuAcivity.this, APIDActivity.class);
+                startActivity(intent);
             }
         });
     }

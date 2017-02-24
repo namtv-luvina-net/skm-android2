@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import epsap4.soliton.co.jp.InformCtrl;
 import epsap4.soliton.co.jp.R;
+import epsap4.soliton.co.jp.ValidateParams;
 import epsap4.soliton.co.jp.activity.ViewPagerInputActivity;
 
 /**
@@ -125,7 +126,7 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     public void nextAction() {
         pagerInputActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
-        if (!isValidEmail(txtEmail.getText())) {
+        if (!ValidateParams.isValidEmail(txtEmail.getText().toString().trim())) {
             showMessage(getString(R.string.apply_mail_error));
             return;
         }
@@ -159,16 +160,4 @@ public class InputEmailPageFragment extends InputBasePageFragment {
         }
     }
 
-    /**
-     * Validate email
-     * @param target
-     * @return
-     */
-    private boolean isValidEmail(CharSequence target) {
-        if (target == null) {
-            return false;
-        } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-        }
-    }
 }

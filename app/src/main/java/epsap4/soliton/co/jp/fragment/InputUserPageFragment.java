@@ -23,6 +23,7 @@ import epsap4.soliton.co.jp.HttpConnectionCtrl;
 import epsap4.soliton.co.jp.LogCtrl;
 import epsap4.soliton.co.jp.R;
 import epsap4.soliton.co.jp.StringList;
+import epsap4.soliton.co.jp.ValidateParams;
 import epsap4.soliton.co.jp.activity.CompleteApplyActivity;
 import epsap4.soliton.co.jp.activity.ViewPagerInputActivity;
 import epsap4.soliton.co.jp.customview.DialogApplyProgressBar;
@@ -163,6 +164,10 @@ public class InputUserPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
+        if (!ValidateParams.isValidUserID(txtUserId.getText().toString().trim())) {
+            showMessage(getString(R.string.user_id_is_invalid));
+            return;
+        }
         pagerInputActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
         pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
@@ -233,7 +238,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 pagerInputActivity.getInputApplyInfo().setPassword(null);
                 pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
                 Intent intent = new Intent(pagerInputActivity, CompleteApplyActivity.class);
-                intent.putExtra(CompleteApplyActivity.BACK_AUTO, true);
+                intent.putExtra(CompleteApplyActivity.BACK_AUTO, false);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 pagerInputActivity.finish();
@@ -251,6 +256,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
             } else if (m_nErroType == ERR_COLON) {
                 String str_err = getString(R.string.ERR);
                 showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
+            } else if (m_nErroType == ERR_LOGIN_FAIL) {
+                showMessage(getString(R.string.login_failed));
             } else {
                 showMessage(getString(R.string.connect_failed));
             }
@@ -338,6 +345,9 @@ public class InputUserPageFragment extends InputBasePageFragment {
             } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.ERR).toString())) {
                 LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", pagerInputActivity);
                 m_nErroType = ERR_COLON;
+                return false;
+            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith("NG")) {
+                m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             // 取得したCookieをログイン時のCookieとして保持する.
