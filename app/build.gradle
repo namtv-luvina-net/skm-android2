@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '25.0.2'
     defaultConfig {
-        applicationId "epsap4.soliton.co.jp"
+        applicationId "jp.co.soliton.keymanager"
         minSdkVersion 14
         targetSdkVersion 24
        // testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

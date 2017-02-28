@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="12"
+    android:orientation="horizontal"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="3">
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_approval_confirmation"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_weight="5"
+        >
+        <TextView
+            android:id="@+id/titleHost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text=""
+            android:textSize="14dp"/>
+        <TextView
+            android:id="@+id/tvHostValue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleHost"
+            android:textSize="14dp"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="" />
+        <TextView
+            android:id="@+id/titleID"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvHostValue"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="" />
+        <TextView
+            android:id="@+id/tvIdValue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleID"
+            android:textSize="14dp"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="right|center"
+        android:layout_weight="4"
+        >
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text=""
+            android:textSize="14dp"
+            android:textColor="@color/text_color_active"
+            android:layout_marginRight="1dp" />
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="24dp"
+            android:layout_width="24dp"
+            android:src="@drawable/ic_arrow"
+            />
+    </LinearLayout>
+</LinearLayout>

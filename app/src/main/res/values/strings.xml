@@ -279,4 +279,8 @@
     <string name="copy_apid">Copy to Clipboard</string>
     <string name="send_apid">Send APID via Email</string>
     <string name="user_id_is_invalid">Invalid user ID</string>
+    <string name="list_application">List Application</string>
+    <string name="stt_waiting_approval">Waiting Approval</string>
+    <string name="stt_rejected">Rejected</string>
+    <string name="stt_cancel">Withdrawn</string>
 </resources>

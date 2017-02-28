@@ -5,7 +5,7 @@
     android:background="@drawable/background"
     android:orientation="vertical" >
     <!-- ViewPager -->
-    <epsap4.soliton.co.jp.swipelayout.InputApplyViewPager
+    <jp.co.soliton.keymanager.swipelayout.InputApplyViewPager
         android:layout_width="fill_parent" android:layout_height="fill_parent"
         android:id="@+id/viewPager" />
     <!-- Footer -->

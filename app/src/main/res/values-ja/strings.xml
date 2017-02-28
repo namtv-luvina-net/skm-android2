@@ -280,4 +280,8 @@
     <string name="copy_apid">クリップボードにコピー</string>
     <string name="send_apid">メールで送信</string>
     <string name="user_id_is_invalid">ユーザーIDが無効です</string>
+    <string name="list_application">申請一覧</string>
+    <string name="stt_waiting_approval">承認待ち</string>
+    <string name="stt_rejected">却下</string>
+    <string name="stt_cancel">取り下げ済み</string>
 </resources>

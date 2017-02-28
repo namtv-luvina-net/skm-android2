@@ -64,6 +64,22 @@
             android:gravity="center|top"
             />
         <Button
+            android:id="@+id/btnMenuConfirmApply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/apply_confirmation"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:textColor="@color/text_color_active"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|top"
+            />
+        <Button
             android:id="@+id/btnMenuAPID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
