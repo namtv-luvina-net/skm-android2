@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.dbalias.DatabaseHandler;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -48,8 +51,15 @@ public class MenuAcivity extends Activity {
             btnMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
-                    startActivity(intent);
+                    if (totalApply == 1) {
+                        List<ElementApply> listElementApply = db.getAllElementApply();
+                        Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
+                        intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
+                        startActivity(intent);
+                    }
                 }
             });
         }

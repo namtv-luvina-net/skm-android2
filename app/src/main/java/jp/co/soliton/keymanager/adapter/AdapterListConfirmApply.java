@@ -88,8 +88,6 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Lookup view for data ElementApply
-        viewHolder.titleHost.setText(getContext().getText(R.string.host_name).toString() + ":");
-        viewHolder.titleID.setText(getContext().getText(R.string.certlogin_userid_title).toString() + ":");
         if (listElementApply.get(position).getHost() != null) {
             viewHolder.tvHostValue.setText(listElementApply.get(position).getHost());
         }

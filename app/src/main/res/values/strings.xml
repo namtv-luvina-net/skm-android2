@@ -283,4 +283,17 @@
     <string name="stt_waiting_approval">Waiting Approval</string>
     <string name="stt_rejected">Rejected</string>
     <string name="stt_cancel">Withdrawn</string>
+    <string name="delete_apply">Delete application</string>
+    <string name="withdrawal_apply">Withdrawal application</string>
+    <string name="title_host_name">Host name :</string>
+    <string name="title_user_id">User ID :</string>
+    <string name="title_apply_date">Application date :</string>
+    <string name="title_status">Status :</string>
+    <string name="confirm_apply_status">Confirm approval status</string>
+    <string name="re_apply">Reapply</string>
+    <string name="dialog_withdraw_title">Withdrawal of application</string>
+    <string name="dialog_withdraw_msg">Withdraw the selected application.\nIs it OK?</string>
+    <string name="dialog_btn_withdraw">Withdrawal</string>
+    <string name="dialog_delete_title">Delete of application</string>
+    <string name="dialog_delete_msg">Delete the selected application.\nIs it OK?</string>
 </resources>

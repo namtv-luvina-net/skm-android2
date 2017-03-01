@@ -1,5 +1,6 @@
 package jp.co.soliton.keymanager.dbalias;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -209,8 +210,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put("host_name", elementApply.getHost());
         values.put("user_id", elementApply.getUserId());
         values.put("password", elementApply.getPassword());
-        values.put("email", elementApply.getEmail());
-        values.put("reason", elementApply.getReason());
+        if (elementApply.getEmail() != null && elementApply.getEmail() != "") {
+            values.put("email", elementApply.getEmail());
+        }
+        if (elementApply.getReason() != null && elementApply.getReason() != "") {
+            values.put("reason", elementApply.getReason());
+        }
         values.put("target", elementApply.getTarger());
         values.put("status", elementApply.getStatus());
         values.put("challenge", elementApply.isChallenge() ? 1 : 0);
@@ -269,7 +274,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
                 elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
                 elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
-//                elementApply.setCreateDate(Date.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("created_at"))));
+                elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
 
                 elementApplyList.add(elementApply);
             } while (cursor.moveToNext());
@@ -296,5 +301,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return total;
+    }
+
+    /**
+     * This method Getting single ElementApply by id in DB
+     *
+     * @param id
+     * @return
+     */
+    public ElementApply getElementApply(String id) {
+        String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY + " WHERE id = " + id;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        ElementApply elementApply = new ElementApply();
+
+        cursor.moveToFirst();
+        elementApply.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+        elementApply.setHost(cursor.getString(cursor.getColumnIndexOrThrow("host_name")));
+        elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
+        elementApply.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("password")));
+        elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+        elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
+        elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
+        elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+        elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
+        elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
+        return elementApply;
+    }
+
+    /**
+     * This method Deleting ElementApply in DB
+     *
+     * @param id
+     */
+    public void deleteElementApply(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ELEMENT_APPLY, " id = ?",
+                new String[]{id});
+        db.close();
     }
 }

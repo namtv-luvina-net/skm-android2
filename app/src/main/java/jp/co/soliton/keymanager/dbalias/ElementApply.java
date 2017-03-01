@@ -20,14 +20,14 @@ public class ElementApply {
     private String targer;
     private int status;
     private boolean challenge;
-    private Date createDate;
+    private String updateDate;
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getUpdateDate() {
+        return updateDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
     }
 
     public int getId() {

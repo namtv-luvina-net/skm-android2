@@ -284,4 +284,17 @@
     <string name="stt_waiting_approval">承認待ち</string>
     <string name="stt_rejected">却下</string>
     <string name="stt_cancel">取り下げ済み</string>
+    <string name="delete_apply">申請を削除する</string>
+    <string name="withdrawal_apply">申請を取り下げる</string>
+    <string name="title_host_name">ホスト名 :</string>
+    <string name="title_user_id">ユーザーID :</string>
+    <string name="title_apply_date">申請日 :</string>
+    <string name="title_status">ステータス :</string>
+    <string name="confirm_apply_status">承認状況を確認する</string>
+    <string name="re_apply">再申請する</string>
+    <string name="dialog_withdraw_title">申請の取り下げ</string>
+    <string name="dialog_withdraw_msg">選択した申請を取り下げます。\nよろしいですか?</string>
+    <string name="dialog_btn_withdraw">取り下げ</string>
+    <string name="dialog_delete_title">申請の削除</string>
+    <string name="dialog_delete_msg">選択した申請を削除します。\nよろしいですか？</string>
 </resources>

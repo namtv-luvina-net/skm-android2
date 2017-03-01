@@ -1,6 +1,7 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,13 +25,15 @@ public class ListConfirmActivity extends Activity {
     private AdapterListConfirmApply adapterListConfirmApply;
     private DatabaseHandler databaseHandler;
     private List<ElementApply> listElementApply;
-    private TextView textViewBack;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_confirm);
+        title = (TextView) findViewById(R.id.tvTitleHeader);
+        title.setText(getString(R.string.list_application));
         list = (ListView)findViewById(R.id.listConfirm);
         databaseHandler = new DatabaseHandler(getApplicationContext());
         listElementApply = databaseHandler.getAllElementApply();
@@ -41,16 +44,15 @@ public class ListConfirmActivity extends Activity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
+                intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(position).getId()));
+                startActivity(intent);
+            }
+        });
+    }
 
-            }
-        });
-        textViewBack = (TextView)findViewById(R.id.textViewBack);
-        textViewBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    public void btnBackClick(View v) {
+        finish();
     }
 
     /**

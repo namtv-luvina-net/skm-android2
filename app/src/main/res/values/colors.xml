@@ -9,4 +9,7 @@
     <color name="color_black">#000</color>
     <color name="text_color_active">#007AFF</color>
     <color name="text_color_inactive">#595757</color>
+    <color name="text_button_inactive">#CEC8D7</color>
+    <color name="text_delete_apply">#FF3B30</color>
+    <color name="text_color">#3C3C3C</color>
 </resources>

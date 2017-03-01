@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/thumbnail"
             android:layout_toRightOf="@+id/thumbnail"
-            android:text=""
+            android:text="@string/title_host_name"
+            android:textColor="@color/text_color"
             android:textSize="14dp"/>
         <TextView
             android:id="@+id/tvHostValue"
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/titleHost"
             android:textSize="14dp"
+            android:textColor="@color/text_color"
             android:layout_toRightOf="@+id/thumbnail"
             android:text="" />
         <TextView
@@ -50,14 +52,16 @@
             android:layout_below="@id/tvHostValue"
             android:layout_marginTop="10dp"
             android:textSize="14dp"
+            android:textColor="@color/text_color"
             android:layout_toRightOf="@+id/thumbnail"
-            android:text="" />
+            android:text="@string/title_user_id" />
         <TextView
             android:id="@+id/tvIdValue"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/titleID"
             android:textSize="14dp"
+            android:textColor="@color/text_color"
             android:layout_toRightOf="@+id/thumbnail"
             android:text="" />
     </LinearLayout>
@@ -75,11 +79,10 @@
             android:gravity="right"
             android:text=""
             android:textSize="14dp"
-            android:textColor="@color/text_color_active"
-            android:layout_marginRight="1dp" />
+            android:textColor="@color/text_color_active" />
         <ImageView
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="5dp"
             android:layout_height="24dp"
             android:layout_width="24dp"
             android:src="@drawable/ic_arrow"

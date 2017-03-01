@@ -47,6 +47,15 @@ public class ViewPagerInputActivity extends FragmentActivity {
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
+        String formConfirmApply = getIntent().getStringExtra("FROM_CONFIRM_APPLY");
+
+        if(formConfirmApply.equals("1")) {
+            getInputApplyInfo().setHost("10.0.1.68");
+            getInputApplyInfo().setPort("80");
+            getInputApplyInfo().setSecurePort("443");
+            getInputApplyInfo().setUserId("test1");
+            gotoPage(3);
+        }
     }
 
     @Override
@@ -183,12 +192,12 @@ public class ViewPagerInputActivity extends FragmentActivity {
         if (activeBack) {
             backButton.setTextColor(getResources().getColor(R.color.text_color_active));
         } else {
-            backButton.setTextColor(getResources().getColor(R.color.text_color_inactive));
+            backButton.setTextColor(getResources().getColor(R.color.text_button_inactive));
         }
         if (activeNext) {
             nextButton.setTextColor(getResources().getColor(R.color.text_color_active));
         } else {
-            nextButton.setTextColor(getResources().getColor(R.color.text_color_inactive));
+            nextButton.setTextColor(getResources().getColor(R.color.text_button_inactive));
         }
     }
 
