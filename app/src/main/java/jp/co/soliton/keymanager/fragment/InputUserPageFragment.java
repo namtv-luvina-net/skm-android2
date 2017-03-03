@@ -28,8 +28,8 @@ import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.dbalias.DatabaseHandler;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -45,7 +45,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
     private EditText txtPassword;
     private boolean isEnroll;
     private boolean challenge;
-    private DatabaseHandler databaseHandler;
+    private ElementApplyManager elementMgr;
 
     public static Fragment newInstance(Context context) {
         InputUserPageFragment f = new InputUserPageFragment();
@@ -69,8 +69,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
             if (progressDialog == null) {
                 progressDialog = new DialogApplyProgressBar(pagerInputActivity);
             }
-            if (databaseHandler == null) {
-                databaseHandler = new DatabaseHandler(pagerInputActivity);
+            if (elementMgr == null) {
+                elementMgr = new ElementApplyManager(pagerInputActivity);
             }
         }
     }
@@ -299,8 +299,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
     }
 
     private void saveElementApply() {
-        if (databaseHandler == null) {
-            databaseHandler = new DatabaseHandler(pagerInputActivity);
+        if (elementMgr == null) {
+            elementMgr = new ElementApplyManager(pagerInputActivity);
         }
         String rtnserial;
         if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
@@ -310,6 +310,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
         }
         ElementApply elementApply = new ElementApply();
         elementApply.setHost(pagerInputActivity.getInputApplyInfo().getHost());
+        elementApply.setPort(pagerInputActivity.getInputApplyInfo().getPort());
+        elementApply.setPortSSL(pagerInputActivity.getInputApplyInfo().getSecurePort());
         elementApply.setUserId(pagerInputActivity.getInputApplyInfo().getUserId());
         elementApply.setPassword(pagerInputActivity.getInputApplyInfo().getPassword());
         elementApply.setEmail("");
@@ -317,7 +319,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
         elementApply.setTarger(rtnserial);
         elementApply.setStatus(ElementApply.STATUS_APPLY_PENDING);
         elementApply.setChallenge(challenge);
-        databaseHandler.saveElementApply(elementApply);
+        elementMgr.saveElementApply(elementApply);
     }
 
     /**

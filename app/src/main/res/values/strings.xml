@@ -296,4 +296,10 @@
     <string name="dialog_btn_withdraw">Withdrawal</string>
     <string name="dialog_delete_title">Delete of application</string>
     <string name="dialog_delete_msg">Delete the selected application.\nIs it OK?</string>
+    <string name="input_password">Input Password</string>
+    <string name="approval_completed">Approval Completed</string>
+    <string name="beginning_to_use_procedures">Beginning to use procedures</string>
+    <string name="message_pending">This application is currently pending approval.</string>
+    <string name="message_reject">This application has been rejected by the administrator.</string>
+    <string name="message_cancel">This application has been deleted.</string>
 </resources>

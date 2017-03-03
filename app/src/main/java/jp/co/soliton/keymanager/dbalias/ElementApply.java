@@ -10,9 +10,12 @@ public class ElementApply {
     public static int STATUS_APPLY_CANCEL  = 0;
     public static int STATUS_APPLY_REJECT  = 1;
     public static int STATUS_APPLY_PENDING = 2;
+    public static int STATUS_APPLY_APPROVED = 99;
 
     private int id;
     private String host;
+    private String portSSL;
+    private String port;
     private String userId;
     private String password;
     private String email;
@@ -21,14 +24,6 @@ public class ElementApply {
     private int status;
     private boolean challenge;
     private String updateDate;
-
-    public String getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(String updateDate) {
-        this.updateDate = updateDate;
-    }
 
     public int getId() {
         return id;
@@ -44,6 +39,22 @@ public class ElementApply {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getPortSSL() {
+        return portSSL;
+    }
+
+    public void setPortSSL(String portSSL) {
+        this.portSSL = portSSL;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     public String getUserId() {
@@ -100,5 +111,13 @@ public class ElementApply {
 
     public void setChallenge(boolean challenge) {
         this.challenge = challenge;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
     }
 }

@@ -38,4 +38,17 @@ public class ValidateParams {
         }
         return true;
     }
+
+    /**
+     * Check null or empty string value
+     *
+     * @param value
+     * @return
+     */
+    public static Boolean nullOrEmpty(String value) {
+        if (value == null) {
+            return true;
+        }
+        return value.trim().isEmpty();
+    }
 }

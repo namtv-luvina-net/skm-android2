@@ -11,8 +11,8 @@ import java.util.List;
 
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.dbalias.DatabaseHandler;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -26,7 +26,7 @@ public class MenuAcivity extends Activity {
     private Button btnMenuAPID;
     private Button btnMenuConfirmApply;
     private int totalApply;
-    private DatabaseHandler db;
+    private ElementApplyManager elementMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +36,14 @@ public class MenuAcivity extends Activity {
         btnMenuAPID = (Button) findViewById(R.id.btnMenuAPID);
         btnMenuConfirmApply = (Button) findViewById(R.id.btnMenuConfirmApply);
         zoneMenuCtr = (LinearLayout) findViewById(R.id.zoneMenuCtr);
-        db = new DatabaseHandler(getApplicationContext());
+        elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        totalApply = db.getCountElementApply();
+        totalApply = elementMgr.getCountElementApply();
         if (totalApply <= 0) {
             btnMenuConfirmApply.setVisibility(View.GONE);
         } else {
@@ -52,7 +52,7 @@ public class MenuAcivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     if (totalApply == 1) {
-                        List<ElementApply> listElementApply = db.getAllElementApply();
+                        List<ElementApply> listElementApply = elementMgr.getAllElementApply();
                         Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
                         intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
                         startActivity(intent);

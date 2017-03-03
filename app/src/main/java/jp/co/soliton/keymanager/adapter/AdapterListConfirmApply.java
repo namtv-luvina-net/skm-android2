@@ -97,7 +97,8 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
         if (listElementApply.get(position).getStatus() == ElementApply.STATUS_APPLY_CANCEL) {
             viewHolder.tvStatus.setText(getContext().getText(R.string.stt_cancel));
         } else if (listElementApply.get(position).getStatus() == ElementApply.STATUS_APPLY_PENDING) {
-            viewHolder.tvStatus.setText(getContext().getText(R.string.stt_waiting_approval));
+            String stt = getContext().getText(R.string.stt_waiting_approval).toString();
+            viewHolder.tvStatus.setText(stt.replace(" ", "\n"));
         } else if (listElementApply.get(position).getStatus() == ElementApply.STATUS_APPLY_REJECT) {
             viewHolder.tvStatus.setText(getContext().getText(R.string.stt_rejected));
         }

@@ -16,7 +16,10 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.adapter.ViewPagerAdapter;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
@@ -37,6 +40,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
     private Button nextButton;
     private InformCtrl m_InformCtrl;
     private InputApplyInfo inputApplyInfo;
+    private ElementApplyManager elementMgr;
 
     /** Called when the activity is first created. */
     @Override
@@ -47,13 +51,20 @@ public class ViewPagerInputActivity extends FragmentActivity {
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
-        String formConfirmApply = getIntent().getStringExtra("FROM_CONFIRM_APPLY");
+        elementMgr = new ElementApplyManager(this);
+        String idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
 
-        if(formConfirmApply.equals("1")) {
-            getInputApplyInfo().setHost("10.0.1.68");
-            getInputApplyInfo().setPort("80");
-            getInputApplyInfo().setSecurePort("443");
-            getInputApplyInfo().setUserId("test1");
+        if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
+            ElementApply detail = elementMgr.getElementApply(idConfirmApply);
+            getInputApplyInfo().setHost(detail.getHost());
+            getInputApplyInfo().setPort(detail.getPort());
+            getInputApplyInfo().setSecurePort(detail.getPortSSL());
+            if (detail.getTarger().startsWith("WIFI")) {
+                getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_WiFi);
+            } else {
+                getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
+            }
+            getInputApplyInfo().setUserId(detail.getUserId());
             gotoPage(3);
         }
     }

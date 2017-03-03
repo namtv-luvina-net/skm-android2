@@ -22,6 +22,7 @@ import jp.co.soliton.keymanager.R;
 public class DialogApplyMessage extends Dialog {
     private Button btnOK;
     private TextView txtDlgApplyMsg;
+    private TextView txtTitle;
     private RelativeLayout zoneDlgApplyMsg;
     private Context context;
 
@@ -43,6 +44,7 @@ public class DialogApplyMessage extends Dialog {
         btnOK = (Button) findViewById(R.id.btnDlgApplyOK);
         txtDlgApplyMsg = (TextView) findViewById(R.id.txtDlgApplyMsg);
         txtDlgApplyMsg.setText(message);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
         zoneDlgApplyMsg = (RelativeLayout)findViewById(R.id.zoneDlgApplyMsg);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,10 @@ public class DialogApplyMessage extends Dialog {
         });
         setCancelable(false);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    public void setTitleDialog(String title) {
+        txtTitle.setText(title);
     }
 
     @Override

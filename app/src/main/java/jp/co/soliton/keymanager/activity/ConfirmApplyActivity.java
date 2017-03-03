@@ -21,8 +21,8 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.dbalias.DatabaseHandler;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
@@ -55,7 +55,7 @@ public class ConfirmApplyActivity extends Activity {
     private TextView txtConfirmEmail;
     private TextView txtConfirmReason;
     protected DialogApplyProgressBar progressDialog;
-    private DatabaseHandler databaseHandler;
+    private ElementApplyManager elementMgr;
 
     private InputApplyInfo inputApplyInfo;
     private InformCtrl m_InformCtrl;
@@ -87,8 +87,8 @@ public class ConfirmApplyActivity extends Activity {
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
         }
-        if (databaseHandler == null) {
-            databaseHandler = new DatabaseHandler(this);
+        if (elementMgr == null) {
+            elementMgr = new ElementApplyManager(this);
         }
     }
 
@@ -309,6 +309,8 @@ public class ConfirmApplyActivity extends Activity {
         }
         ElementApply elementApply = new ElementApply();
         elementApply.setHost(inputApplyInfo.getHost());
+        elementApply.setPort(inputApplyInfo.getPort());
+        elementApply.setPortSSL(inputApplyInfo.getSecurePort());
         elementApply.setUserId(inputApplyInfo.getUserId());
         elementApply.setPassword(inputApplyInfo.getPassword());
         elementApply.setEmail(inputApplyInfo.getEmail());
@@ -320,7 +322,7 @@ public class ConfirmApplyActivity extends Activity {
         } else {
             elementApply.setChallenge(false);
         }
-        databaseHandler.saveElementApply(elementApply);
+        elementMgr.saveElementApply(elementApply);
     }
 
     /**

@@ -78,8 +78,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
-
+        <activity
+            android:name=".activity.InputPasswordActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        </activity>
+        <activity
+            android:name=".activity.CompleteConfirmApplyActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        </activity>
     </application>
-
-
 </manifest>

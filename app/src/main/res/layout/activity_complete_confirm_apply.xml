@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    >
+    <LinearLayout
+        android:id="@+id/layoutComplete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:textColor="@color/text_color_inactive"
+            android:text="@string/approval_completed"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btnBackToTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
+                android:textSize="30dp"
+                android:textColor="@color/text_color_active"
+                android:onClick="clickBack"
+                android:text="@string/beginning_to_use_procedures"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

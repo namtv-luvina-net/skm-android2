@@ -297,4 +297,10 @@
     <string name="dialog_btn_withdraw">取り下げ</string>
     <string name="dialog_delete_title">申請の削除</string>
     <string name="dialog_delete_msg">選択した申請を削除します。\nよろしいですか？</string>
+    <string name="input_password">パスワードを入力</string>
+    <string name="approval_completed">承認が完了しました</string>
+    <string name="beginning_to_use_procedures">利用開始手続きを始める</string>
+    <string name="message_pending">この申請は現在承認待ちです。</string>
+    <string name="message_reject">この申請は管理者により却下されました。</string>
+    <string name="message_cancel">申請を削除しました。</string>
 </resources>

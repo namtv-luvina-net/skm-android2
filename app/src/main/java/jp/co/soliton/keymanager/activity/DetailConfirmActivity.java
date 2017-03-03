@@ -9,8 +9,8 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
-import jp.co.soliton.keymanager.dbalias.DatabaseHandler;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 /**
  * Created by lexuanvinh on 02/27/2017.
@@ -18,7 +18,7 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 public class DetailConfirmActivity extends Activity {
 
-    private DatabaseHandler databaseHandler;
+    private ElementApplyManager elementMgr;
     private TextView tvHostName;
     private TextView tvUserId;
     private TextView tvDate;
@@ -35,7 +35,7 @@ public class DetailConfirmActivity extends Activity {
         setContentView(R.layout.activity_detail_confirm);
         title = (TextView) findViewById(R.id.tvTitleHeader);
         id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
-        databaseHandler = new DatabaseHandler(getApplicationContext());
+        elementMgr = new ElementApplyManager(getApplicationContext());
         tvHostName = (TextView)findViewById(R.id.tvHostName);
         tvUserId = (TextView)findViewById(R.id.tvUserId);
         tvDate = (TextView)findViewById(R.id.tvDate);
@@ -46,7 +46,7 @@ public class DetailConfirmActivity extends Activity {
 
     private void setupDisplay() {
         title.setText(getString(R.string.apply_confirmation));
-        ElementApply detail = databaseHandler.getElementApply(id);
+        ElementApply detail = elementMgr.getElementApply(id);
         if (detail.getHost() != null) {
             tvHostName.setText(detail.getHost());
         }
@@ -104,15 +104,15 @@ public class DetailConfirmActivity extends Activity {
     }
 
     public void clickConfirmApply(View v) {
-        InputApplyInfo.deletePref(DetailConfirmActivity.this);
-        Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputActivity.class);
-        intent.putExtra("FROM_CONFIRM_APPLY", "1");
+        Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+        intent.putExtra("ELEMENT_APPLY_ID", id);
         startActivity(intent);
     }
 
     public void clickReApply(View v) {
         InputApplyInfo.deletePref(DetailConfirmActivity.this);
         Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputActivity.class);
+        intent.putExtra("ELEMENT_APPLY_ID", id);
         startActivity(intent);
     }
 
@@ -124,6 +124,8 @@ public class DetailConfirmActivity extends Activity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                elementMgr.deleteElementApply(id);
+                DetailConfirmActivity.this.finish();
             }
         });
         dialog.show();
@@ -137,6 +139,10 @@ public class DetailConfirmActivity extends Activity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+                intent.putExtra("ELEMENT_APPLY_ID", id);
+                intent.putExtra("CANCEL_APPLY", "1");
+                startActivity(intent);
             }
         });
         dialog.show();
