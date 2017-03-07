@@ -22,6 +22,7 @@ import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -109,6 +110,25 @@ public class InputPasswordActivity extends Activity {
         // 入力データを情報管理クラスへセットする
         m_InformCtrl.SetUserID(strUserid);
         m_InformCtrl.SetPassword(strPasswd);
+        m_InformCtrl.SetMessage(message);
+        return true;
+    }
+
+    /**
+     * Make parameter for logon to server
+     * @return
+     */
+    private boolean makeParameterDrop() {
+        // ログインメッセージ
+        // URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
+        String message;
+        try {
+            message = "Action=drop";
+        } catch (Exception ex) {
+            Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
+            return false;
+        }
+        // 入力データを情報管理クラスへセットする
         m_InformCtrl.SetMessage(message);
         return true;
     }
@@ -233,9 +253,64 @@ public class InputPasswordActivity extends Activity {
                     }
                 }
             }
+            if (status == ElementApply.STATUS_APPLY_APPROVED) {
+                String sendmsg = m_p_aided.DeviceInfoText(element.getTarger());
+                m_InformCtrl.SetMessage(sendmsg);
+            }
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン終了 =========>
             ////////////////////////////////////////////////////////////////////////////
+            m_nErroType = InputBasePageFragment.SUCCESSFUL;
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            endConnection(result);
+        }
+    }
+
+    /**
+     * Task processing logon
+     */
+    private class DropApplyTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ////////////////////////////////////////////////////////////////////////////
+            // 大項目1. ログイン開始 <=========
+            ////////////////////////////////////////////////////////////////////////////
+            HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
+            boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
+            cancelApply = "";
+
+            if (ret == false) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", getApplicationContext());
+                m_nErroType = InputBasePageFragment.ERR_NETWORK;
+                return false;
+            }
+            // ログイン結果
+            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", getApplicationContext());
+                m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+                return false;
+            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", getApplicationContext());
+                m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+                return false;
+            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", getApplicationContext());
+                m_nErroType = InputBasePageFragment.ERR_COLON;
+                return false;
+            } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
+                m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
+                return false;
+            }
+            // 取得したCookieをログイン時のCookieとして保持する.
+            m_InformCtrl.SetLoginCookie(m_InformCtrl.GetCookie());
+            if (m_InformCtrl.GetRtn().startsWith("OK")) {
+                status = ElementApply.STATUS_APPLY_CANCEL;
+            }
             m_nErroType = InputBasePageFragment.SUCCESSFUL;
             return ret;
         }
@@ -255,11 +330,34 @@ public class InputPasswordActivity extends Activity {
     private void endConnection(boolean result) {
         progressDialog.dismiss();
         if (result) {
-            if (!ValidateParams.nullOrEmpty(cancelApply) && cancelApply == "1") {
+            if (!ValidateParams.nullOrEmpty(cancelApply) && cancelApply.equals("1") && status == ElementApply.STATUS_APPLY_PENDING) {
+                final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
+                dialog.setTextDisplay(getString(R.string.dialog_withdraw_title), getString(R.string.dialog_withdraw_msg)
+                        , getString(R.string.label_dialog_Cancle), getString(R.string.dialog_btn_withdraw));
+                dialog.setOnClickOK(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
+                        m_InformCtrl.SetURL(url);
+
+                        //make parameter
+                        boolean ret = makeParameterDrop();
+                        if (!ret) {
+                            showMessage(getString(R.string.connect_failed));
+                            return;
+                        }
+                        progressDialog.show();
+                        //open thread logon to server
+                        new DropApplyTask().execute();
+                    }
+                });
+                dialog.show();
             } else {
                 elementMgr.updateStatus(status, id);
                 Intent intent = new Intent(InputPasswordActivity.this, CompleteConfirmApplyActivity.class);
                 intent.putExtra("STATUS_APPLY", status);
+                intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
                 finish();
                 startActivity(intent);
             }

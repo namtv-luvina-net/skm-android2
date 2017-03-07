@@ -30,6 +30,8 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 
 public class XmlPullParserAided /*extends Activity*/{
 	// 変数
@@ -763,6 +765,10 @@ public class XmlPullParserAided /*extends Activity*/{
 							// keyがPayloadDisplayNameのとき
 							Log.i("PayloadDisplayName = ", strdata);
 							xmlpiece.SetProfileName(strdata);
+							if (!ValidateParams.nullOrEmpty(strdata)) {
+								InputPortPageFragment.payloadDisplayName = strdata;
+							}
+
 						} else {
 							Log.i("keyName = ", keyName);
 							Log.i("typeName = ", typeName);

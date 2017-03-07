@@ -26,14 +26,14 @@
             android:layout_weight="1"
             android:gravity="center">
             <Button
-                android:id="@+id/btnBackToTop"
+                android:id="@+id/btnStartUsing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:textAllCaps="false"
                 android:textSize="30dp"
                 android:textColor="@color/text_color_active"
-                android:onClick="clickBack"
+                android:onClick="clickStart"
                 android:text="@string/beginning_to_use_procedures"/>
         </LinearLayout>
     </LinearLayout>

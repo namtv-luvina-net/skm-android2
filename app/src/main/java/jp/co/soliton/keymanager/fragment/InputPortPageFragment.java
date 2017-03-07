@@ -26,8 +26,11 @@ import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 
@@ -41,6 +44,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
     private EditText txtPort;
     private TextView zoneInputPortTitle;
     private LinearLayout zoneInputPort;
+    public static String payloadDisplayName = "EACert";
 
     public static Fragment newInstance(Context context) {
         InputPortPageFragment f = new InputPortPageFragment();
@@ -217,7 +221,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
         try {
             X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
             intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
-            intent.putExtra(KeyChain.EXTRA_NAME, "EACert");
+            intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
             pagerInputActivity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
         } catch (Exception e) {
             showMessage(getString(R.string.error_install_certificate));

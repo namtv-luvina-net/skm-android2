@@ -132,20 +132,10 @@ public class DetailConfirmActivity extends Activity {
     }
 
     public void clickWithdrawApply(View v) {
-        final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
-        dialog.setTextDisplay(getString(R.string.dialog_withdraw_title), getString(R.string.dialog_withdraw_msg)
-                , getString(R.string.label_dialog_Cancle), getString(R.string.dialog_btn_withdraw));
-        dialog.setOnClickOK(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
-                intent.putExtra("ELEMENT_APPLY_ID", id);
-                intent.putExtra("CANCEL_APPLY", "1");
-                startActivity(intent);
-            }
-        });
-        dialog.show();
+        Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+        intent.putExtra("ELEMENT_APPLY_ID", id);
+        intent.putExtra("CANCEL_APPLY", "1");
+        startActivity(intent);
     }
 
     /**
@@ -154,6 +144,10 @@ public class DetailConfirmActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        int totalApply = elementMgr.getCountElementApply();
+        if (totalApply <= 0) {
+            finish();
+        }
         setupDisplay();
     }
 }

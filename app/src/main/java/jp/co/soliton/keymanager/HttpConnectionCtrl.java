@@ -778,6 +778,58 @@ public class HttpConnectionCtrl {
 		}
 	}
 
+	// ログイン
+	public boolean RunHttpDropUrlConnection(InformCtrl Inf) {
+		Log.i("HttpConnectionCtrl::RunHttpDropUrlConnection ", "start");
+
+		HttpURLConnection http = null;
+
+		//CookieManager manager = CookieManager.getInstance();
+
+		try {
+			String strURL;
+
+			if (Inf.GetURL().startsWith("https") == true
+					|| Inf.GetURL().startsWith("http") == true) {
+				strURL = Inf.GetURL();
+			} else {
+				strURL = "https://" + Inf.GetURL();
+			}
+
+			// HTTP 接続のopen
+			URL url = new URL(/*Inf.GetURL()*/strURL + "/api.php");
+
+			if (url.getProtocol().toLowerCase().equals("https")) {
+				HttpsURLConnection urlconn = (HttpsURLConnection)url.openConnection();
+				http = urlconn;
+			} else {
+				http = (HttpURLConnection)url.openConnection();
+			}
+
+			// コネクションタイムアウトを設定
+			http.setConnectTimeout(5000);
+
+			// HTTPメソッド定義
+			http.setRequestMethod("POST");
+			http.setRequestProperty("User-Agent", m_str_user_agtpro /*m_ctx.getText(R.string.User_Agentprofile).toString()*/);
+			//http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			http.setRequestProperty("Cookie", Inf.GetLoginCookie());	// ログイン時に取得したCookieをそのまま使う.
+			http.setRequestProperty("Accept-Language",  m_ctx.getString(R.string.accept_language));
+
+			// 送受信
+			return PostPacket(http, Inf, 512);
+
+		} catch (MalformedURLException e) {
+			// FIXME
+			Log.e("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::MalformedURLException", e.toString());
+			return false;
+		} catch (IOException e) {
+			// FIXME
+			Log.e("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::IOException", e.toString());
+			return false;
+		}
+	}
+
 	public boolean RunHttpApplyAPSapConnection(InformCtrl Inf) {
 		Log.i("HttpConnectionCtrl::RunHttpApplyAPSapConnection ", "start");
 

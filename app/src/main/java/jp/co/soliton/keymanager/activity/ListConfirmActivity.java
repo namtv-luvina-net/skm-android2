@@ -49,6 +49,14 @@ public class ListConfirmActivity extends Activity {
     protected void onResume() {
         super.onResume();
         listElementApply = elementMgr.getAllElementApply();
+        if(listElementApply.size() == 1) {
+            Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
+            intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
+            finish();
+            startActivity(intent);
+        } else if(listElementApply.size() == 0) {
+            finish();
+        }
         adapterListConfirmApply = new AdapterListConfirmApply(this, listElementApply);
         list.setAdapter(adapterListConfirmApply);
 
