@@ -357,6 +357,7 @@ public class InputPasswordActivity extends Activity {
                 elementMgr.updateStatus(status, id);
                 Intent intent = new Intent(InputPasswordActivity.this, CompleteConfirmApplyActivity.class);
                 intent.putExtra("STATUS_APPLY", status);
+                intent.putExtra("ELEMENT_APPLY", element);
                 intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
                 finish();
                 startActivity(intent);

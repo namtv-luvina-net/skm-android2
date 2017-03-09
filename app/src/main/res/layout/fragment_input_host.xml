@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_underline"
-            android:hint="01.solution.co.jp"
+            android:hint="epsap.example"
             android:inputType="text|textVisiblePassword|textNoSuggestions"
             android:layout_weight="1"
             android:textSize="25sp"

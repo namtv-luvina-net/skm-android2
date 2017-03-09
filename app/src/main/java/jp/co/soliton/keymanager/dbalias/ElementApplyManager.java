@@ -80,7 +80,8 @@ public class ElementApplyManager {
         List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
-                + " WHERE status <> " + ElementApply.STATUS_APPLY_APPROVED;
+                + " WHERE status <> " + ElementApply.STATUS_APPLY_APPROVED
+                + " ORDER BY id DESC";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -176,6 +177,16 @@ public class ElementApplyManager {
         ContentValues values = new ContentValues();
         values.put("status", status);
         db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
+        db.close(); // Closing database connection
+    }
+
+    public void updateElementCertificate(ElementApply element) {
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("expiration_date", element.getExpirationDate());
+        values.put("cn_value", element.getcNValue());
+        values.put("sn_value", element.getsNValue());
+        db.update(TABLE_ELEMENT_APPLY, values, "id="+element.getId(), null);
         db.close(); // Closing database connection
     }
 }

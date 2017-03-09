@@ -24,6 +24,7 @@ public class CompleteConfirmApplyActivity extends Activity {
 
     private int status;
     private InformCtrl m_InformCtrl;
+    private ElementApply element;
 
     /** Called when the activity is first created. */
     @Override
@@ -33,12 +34,13 @@ public class CompleteConfirmApplyActivity extends Activity {
         Intent intent = getIntent();
         status = intent.getIntExtra("STATUS_APPLY", -1);
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
+        element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
         if (status == ElementApply.STATUS_APPLY_APPROVED) {
             //
         } else if (status == ElementApply.STATUS_APPLY_PENDING) {
             LinearLayout layout = (LinearLayout) findViewById(R.id.layoutComplete);
             layout.setVisibility(View.GONE);
-            showMessage(getString(R.string.message_pending), getString(R.string.apply_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
+            showMessage(getString(R.string.message_pending), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
                     CompleteConfirmApplyActivity.this.finish();
@@ -47,7 +49,7 @@ public class CompleteConfirmApplyActivity extends Activity {
         } else if (status == ElementApply.STATUS_APPLY_REJECT) {
             LinearLayout layout = (LinearLayout) findViewById(R.id.layoutComplete);
             layout.setVisibility(View.GONE);
-            showMessage(getString(R.string.message_reject), getString(R.string.apply_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
+            showMessage(getString(R.string.message_reject), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
                     CompleteConfirmApplyActivity.this.finish();
@@ -56,7 +58,7 @@ public class CompleteConfirmApplyActivity extends Activity {
         } else if (status == ElementApply.STATUS_APPLY_CANCEL) {
             LinearLayout layout = (LinearLayout) findViewById(R.id.layoutComplete);
             layout.setVisibility(View.GONE);
-            showMessage(getString(R.string.message_cancel), getString(R.string.apply_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
+            showMessage(getString(R.string.message_cancel), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
                     CompleteConfirmApplyActivity.this.finish();
@@ -75,6 +77,7 @@ public class CompleteConfirmApplyActivity extends Activity {
     public void clickStart(View v) {
         Intent intent = new Intent(getApplicationContext(), StartUsingProceduresActivity.class);
         intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
+        intent.putExtra("ELEMENT_APPLY", element);
         startActivity(intent);
     }
 

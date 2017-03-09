@@ -2,15 +2,10 @@ package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
-import android.security.KeyChainException;
 import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 
 import org.bouncycastle.jce.PKCS10CertificationRequest;
 
@@ -19,21 +14,21 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.cert.CertStore;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.scep.Requester;
 import jp.co.soliton.keymanager.scep.RequesterException;
@@ -59,7 +54,6 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private int m_nCertReq_RequestCode = 60;
     private int m_nEnrollRtnCode = 55;
 
-    private ProgressBar progressBar;
     private String m_strKeyType = "";
     private String m_strSubject = "";
     private String m_strChallenge = "";
@@ -70,16 +64,16 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private XmlPullParserAided m_p_aided = null;
     private static InformCtrl m_InformCtrl;
     private int m_nErroType;
+    private ElementApply element;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_using_procedures);
-        progressBar = (ProgressBar) findViewById(R.id.pb);
         Intent intent = getIntent();
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
+        element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
         scepRequester = getScepRequester();
-//        new CertificateEnrollTask().execute(scepRequester);
         new GetDeviceCertTask().execute();
     }
 
@@ -95,7 +89,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     }
 
     /**
-     * Task processing logon
+     * Task processing GetDeviceCertTask
      */
     private class GetDeviceCertTask extends AsyncTask<Void, Void, Boolean> {
         protected Boolean doInBackground(Void... params) {
@@ -195,48 +189,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
     @Override
     public void alias(String alias) {
-//        PrintViewKeyStore2();
-//
-//        if (alias != null) {
-//            m_strSelectArias = alias;
-//
-//            // ここでWi-Fiの設定を行おう
-//            SetScepWifi();
-//
-//            Log.d("CertLoginActivity", "printAlias():: " + m_strSelectArias);
-//            try {
-//                PrivateKey privateKey = KeyChain.getPrivateKey(CertLoginActivity.this, m_strSelectArias);
-//                Log.d("CertLoginActivity", privateKey.getFormat() + ":" + privateKey);
-//
-//                X509Certificate[] certs = KeyChain.getCertificateChain(CertLoginActivity.this, m_strSelectArias);
-//                final StringBuffer sb = new StringBuffer();
-//                for (X509Certificate cert : certs) {
-//                    sb.append(cert.getIssuerDN());
-//                    sb.append("\n");
-//                    sb.append(cert.getNotAfter());
-//                    sb.append("\n");
-//                }
-//                Log.d("CertLoginActivity", "X509Certificate:" + sb.toString());
-//
-//                X509Certificate hogehoge = getX509Cert( sb.toString());
-//
-//                // 通信前にConnectionTypeをセットする
-//                m_nConnectionActionType = CONN_SCEP;
-//
-//                // SCEP関連のプロパティのやり取りをEPSと行う
-//                // サーバーとの通信をスレッドで行う
-//                Thread thread = new Thread(this);	// 自分クラスをスレッドの引数に渡して...
-//                thread.start();						// run()が実行される
-//            } catch (KeyChainException e) {
-//                // TODO 自動生成された catch ブロック
-//                e.printStackTrace();
-//            } catch (InterruptedException e) {
-//                // TODO 自動生成された catch ブロック
-//                e.printStackTrace();
-//            }
-//        } else {
-//            //           Log.d(TAG, "User hit Disallow");
-//        }
+        Log.d("CertLoginActivity", "printAlias():: " + alias);
     }
 
     private class CertificateEnrollTask extends AsyncTask<Requester, Integer, Boolean> {
@@ -291,24 +244,34 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                     CertificateUtility.certificateToKeyChain(
                             StartUsingProceduresActivity.this,
                             certRep.getCertificate(),
-                            "anhvt"/*"epsap"m_strCertArias*/, m_nEnrollRtnCode/*0*/);
+                            m_InformCtrl.GetUserID()/*"epsap"m_strCertArias*/, m_nEnrollRtnCode/*0*/);
+
+                    element.setsNValue(certRep.getCertificate().getSerialNumber().toString());
+                    String str = certRep.getCertificate().getSubjectDN().toString();
+                    String[] arr = str.split(",");
+                    for(int i = 0; i < arr.length; i++) {
+                        if(arr[i].toString().startsWith("CN=")) {
+                            element.setcNValue(arr[i].toString().replace("CN=","").trim());
+                        }
+                    }
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
                 } else {
-//                    progressBar.setEnabled(false);
+                    return false;
+                }
+            } catch (RequesterException e) {
+                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask RequesterException::" + e.toString(), StartUsingProceduresActivity.this);
+                //	e.printStackTrace();
                 return false;
-            }
-        } catch (RequesterException e) {
-            LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask RequesterException::" + e.toString(), StartUsingProceduresActivity.this);
-            //	e.printStackTrace();
-            return false;
-        } catch (NoSuchAlgorithmException e) {
-            LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask NoSuchAlgorithmException::" + e.toString(), StartUsingProceduresActivity.this);
-            //	e.printStackTrace();
-            return false;
-        } catch (NoSuchProviderException e) {
-            LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask NoSuchProviderException::" + e.toString(), StartUsingProceduresActivity.this);
-            //	e.printStackTrace();
-            return false;
-        } catch (Exception e) {
+            } catch (NoSuchAlgorithmException e) {
+                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask NoSuchAlgorithmException::" + e.toString(), StartUsingProceduresActivity.this);
+                //	e.printStackTrace();
+                return false;
+            } catch (NoSuchProviderException e) {
+                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask NoSuchProviderException::" + e.toString(), StartUsingProceduresActivity.this);
+                //	e.printStackTrace();
+                return false;
+            } catch (Exception e) {
                 LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask Exception::" + e.toString(), StartUsingProceduresActivity.this);
                 //	e.printStackTrace();
                 return false;
@@ -326,6 +289,9 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         // メインスレッドに反映させる処理
         protected void onPostExecute(Boolean result) {
             Log.d("CertificateEnrollTask", "onPostExecute - " + "result");
+            if(!result) {
+                new DropCertTask().execute();
+            }
         }
     }
 
@@ -388,6 +354,47 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         } else if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_rfc822Name)) {	// rfc822Name
             // チケット #8907 メールアドレスをSubjectAltNameとして設定しておく
             m_strSubjectAltName = strData;
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogCtrl.Logger(LogCtrl.m_strInfo, "onActivityResult start " + "REC CODE = " + Integer.toString(requestCode), this);
+        if (requestCode == m_nCertReq_RequestCode) {
+            // 申請アクティビティ終了後
+            Log.i("onActivityResult","REC CODE = " + Integer.toString(requestCode));
+        } else if (requestCode == m_nEnrollRtnCode) {
+            // After CertificateEnrollTask
+            Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
+            if (resultCode != 0) {
+                ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
+                mgr.updateElementCertificate(element);
+                Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
+                intent.putExtra("ELEMENT_APPLY", element);
+                startActivity(intent);
+            } else {
+                new DropCertTask().execute();
+            }
+        } else if (requestCode == m_nGuidePageRequestCode) {
+            if (resultCode == StringList.RESULT_GUIDE_CLOSE) finish();
+        } else if (requestCode == m_nApplicationList) {
+        }
+    }
+
+    /**
+     * Task processing DropCertTask
+     */
+    private class DropCertTask extends AsyncTask<Void, Void, Boolean> {
+        protected Boolean doInBackground(Void... params) {
+            m_InformCtrl.SetMessage("Action=drop");
+            // 申請
+            HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
+            boolean ret = conn.RunHttpApplyUrlConnection(m_InformCtrl);		// 専用のRunHttpを作成する
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
         }
     }
 

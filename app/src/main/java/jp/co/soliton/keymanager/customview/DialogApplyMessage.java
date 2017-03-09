@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -61,6 +62,7 @@ public class DialogApplyMessage extends Dialog {
 
     public void setTitleDialog(String title) {
         txtTitle.setText(title);
+        txtTitle.setTypeface(null, Typeface.BOLD);
     }
 
     @Override

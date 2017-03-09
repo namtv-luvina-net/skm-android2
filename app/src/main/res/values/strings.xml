@@ -287,7 +287,7 @@
     <string name="withdrawal_apply">Withdrawal application</string>
     <string name="title_host_name">Host name :</string>
     <string name="title_user_id">User ID :</string>
-    <string name="title_apply_date">Application date :</string>
+    <string name="title_apply_date">Apply date :</string>
     <string name="title_status">Status :</string>
     <string name="confirm_apply_status">Confirm approval status</string>
     <string name="re_apply">Reapply</string>
@@ -303,4 +303,9 @@
     <string name="message_reject">This application has been rejected by the administrator.</string>
     <string name="message_cancel">This application has been deleted.</string>
     <string name="start_to_use_procedures">Beginning to use procedures...</string>
+    <string name="title_cn">CN :</string>
+    <string name="title_sn">S/N :</string>
+    <string name="title_expiration_date">Expiration Date :</string>
+    <string name="txt_complete_using_procedures">Start using procedure has been completed</string>
+    <string name="approval_confirmation">Approval Confirmation</string>
 </resources>

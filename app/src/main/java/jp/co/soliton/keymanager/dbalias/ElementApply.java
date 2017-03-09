@@ -1,12 +1,13 @@
 package jp.co.soliton.keymanager.dbalias;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by luongdolong on 2/22/2017.
  */
 
-public class ElementApply {
+public class ElementApply implements Serializable {
     public static int STATUS_APPLY_CANCEL  = 0;
     public static int STATUS_APPLY_REJECT  = 1;
     public static int STATUS_APPLY_PENDING = 2;
@@ -24,6 +25,11 @@ public class ElementApply {
     private int status;
     private boolean challenge;
     private String updateDate;
+    private boolean notiEnableFlag;
+    private int notiEnableBefore;
+    private String expirationDate;
+    private String cNValue;
+    private String sNValue;
 
     public int getId() {
         return id;
@@ -119,5 +125,45 @@ public class ElementApply {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public boolean isNotiEnableFlag() {
+        return notiEnableFlag;
+    }
+
+    public void setNotiEnableFlag(boolean notiEnableFlag) {
+        this.notiEnableFlag = notiEnableFlag;
+    }
+
+    public int getNotiEnableBefore() {
+        return notiEnableBefore;
+    }
+
+    public void setNotiEnableBefore(int notiEnableBefore) {
+        this.notiEnableBefore = notiEnableBefore;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getcNValue() {
+        return cNValue;
+    }
+
+    public void setcNValue(String cNValue) {
+        this.cNValue = cNValue;
+    }
+
+    public String getsNValue() {
+        return sNValue;
+    }
+
+    public void setsNValue(String sNValue) {
+        this.sNValue = sNValue;
     }
 }
