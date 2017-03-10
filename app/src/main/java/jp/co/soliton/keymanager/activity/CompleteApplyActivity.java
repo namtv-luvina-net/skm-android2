@@ -53,7 +53,9 @@ public class CompleteApplyActivity extends Activity {
             @Override
             public void onClick(View v) {
                 InputApplyInfo.deletePref(CompleteApplyActivity.this);
-                finish();
+                Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }

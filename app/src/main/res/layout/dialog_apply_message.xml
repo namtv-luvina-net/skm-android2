@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textColor="@color/text_color_inactive"
             android:text="@string/error"
             android:gravity="center"
@@ -22,7 +22,7 @@
             android:id="@+id/txtDlgApplyMsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:textColor="@color/text_color_inactive"
             android:text="This is message"
             android:layout_marginBottom="20dp"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/transparent"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textColor="@color/text_color_active"
             android:text="OK"
             android:gravity="center"/>

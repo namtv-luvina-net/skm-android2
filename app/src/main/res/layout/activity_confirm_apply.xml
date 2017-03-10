@@ -175,7 +175,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/background_color_white"
-                            android:text="@string/title_user_id"
+                            android:text="@string/certlogin_userid_title"
                             android:gravity="left|center"
                             android:textSize="25sp"
                             android:textColor="@color/text_color_inactive"

@@ -1,6 +1,7 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -374,7 +376,14 @@ public class InputPasswordActivity extends Activity {
                 String str_err = getString(R.string.ERR);
                 showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
             } else if (m_nErroType == InputBasePageFragment.ERR_LOGIN_FAIL) {
-                showMessage(getString(R.string.login_failed));
+                showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
+                    @Override
+                    public void onOkDismissMessage() {
+                        txtPassword.setText("");
+                        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                    }
+                });
             } else {
                 showMessage(getString(R.string.connect_failed));
             }
@@ -388,6 +397,17 @@ public class InputPasswordActivity extends Activity {
      */
     protected void showMessage(String message) {
         DialogApplyMessage dlgMessage = new DialogApplyMessage(this, message);
+        dlgMessage.show();
+    }
+
+    /**
+     * Show message
+     *
+     * @param message
+     */
+    protected void showMessage(String message, DialogApplyMessage.OnOkDismissMessageListener listener) {
+        DialogApplyMessage dlgMessage = new DialogApplyMessage(this, message);
+        dlgMessage.setOnOkDismissMessageListener(listener);
         dlgMessage.show();
     }
 }

@@ -51,7 +51,7 @@ public class ElementApplyManager {
         db.close(); // Closing database connection
     }
 
-    private int getIdElementApply(String host_name, String user_id) {
+    public int getIdElementApply(String host_name, String user_id) {
         int id = 0;
         SQLiteDatabase db = databaseHandler.getReadableDatabase();
         String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ?";

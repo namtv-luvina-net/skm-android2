@@ -77,6 +77,17 @@ public class InputBasePageFragment extends Fragment {
     }
 
     /**
+     * Show message
+     *
+     * @param message
+     */
+    protected void showMessage(String message, DialogApplyMessage.OnOkDismissMessageListener listener) {
+        DialogApplyMessage dlgMessage = new DialogApplyMessage(getContext(), message);
+        dlgMessage.setOnOkDismissMessageListener(listener);
+        dlgMessage.show();
+    }
+
+    /**
      * Next action when click next button in every page
      */
     public void nextAction() {

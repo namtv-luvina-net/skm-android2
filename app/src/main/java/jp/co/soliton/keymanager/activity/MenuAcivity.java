@@ -21,6 +21,8 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
  */
 
 public class MenuAcivity extends Activity {
+    public static String GO_TO_LIST_APPLY = "0";
+
     private LinearLayout zoneMenuCtr;
     private Button btnMenuStart;
     private Button btnMenuAPID;
@@ -43,6 +45,11 @@ public class MenuAcivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (MenuAcivity.GO_TO_LIST_APPLY.equals("1")) {
+            MenuAcivity.GO_TO_LIST_APPLY = "0";
+            Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
+            startActivity(intent);
+        }
         totalApply = elementMgr.getCountElementApply();
         if (totalApply <= 0) {
             btnMenuConfirmApply.setVisibility(View.GONE);

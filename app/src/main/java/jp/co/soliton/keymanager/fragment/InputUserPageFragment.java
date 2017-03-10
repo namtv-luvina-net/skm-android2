@@ -26,7 +26,9 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
+import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -46,6 +48,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
     private boolean isEnroll;
     private boolean challenge;
     private ElementApplyManager elementMgr;
+    private boolean isSubmitted;
 
     public static Fragment newInstance(Context context) {
         InputUserPageFragment f = new InputUserPageFragment();
@@ -247,7 +250,19 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 startActivity(intent);
                 pagerInputActivity.finish();
             } else {
-                pagerInputActivity.gotoPage(4);
+                if (isSubmitted) {
+                    Intent intent = new Intent(pagerInputActivity, CompleteConfirmApplyActivity.class);
+                    pagerInputActivity.finish();
+                    intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
+                    String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
+                            pagerInputActivity.getInputApplyInfo().getUserId()));
+                    ElementApply element = elementMgr.getElementApply(id);
+                    intent.putExtra("ELEMENT_APPLY", element);
+                    intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
+                    startActivity(intent);
+                } else {
+                    pagerInputActivity.gotoPage(4);
+                }
             }
         } else {
             //show error message
@@ -261,7 +276,14 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 String str_err = getString(R.string.ERR);
                 showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
             } else if (m_nErroType == ERR_LOGIN_FAIL) {
-                showMessage(getString(R.string.login_failed));
+                showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
+                    @Override
+                    public void onOkDismissMessage() {
+                        txtPassword.setText("");
+                        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                    }
+                });
             } else {
                 showMessage(getString(R.string.connect_failed));
             }
@@ -384,7 +406,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     }
                     if(StringList.m_str_issubmitted.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         if (6 == p_data.GetType()) {
-                            isEnroll = true;
+                            isSubmitted = true;
                         }
                     }
                     if (StringList.m_str_scep_challenge.equalsIgnoreCase(p_data.GetKeyName())) {

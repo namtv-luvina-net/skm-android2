@@ -31,10 +31,10 @@ public class CompleteConfirmApplyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_confirm_apply);
-        Intent intent = getIntent();
-        status = intent.getIntExtra("STATUS_APPLY", -1);
-        m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
-        element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
+        Intent it = getIntent();
+        status = it.getIntExtra("STATUS_APPLY", -1);
+        m_InformCtrl = (InformCtrl)it.getSerializableExtra(StringList.m_str_InformCtrl);
+        element = (ElementApply)it.getSerializableExtra("ELEMENT_APPLY");
         if (status == ElementApply.STATUS_APPLY_APPROVED) {
             //
         } else if (status == ElementApply.STATUS_APPLY_PENDING) {
@@ -43,7 +43,10 @@ public class CompleteConfirmApplyActivity extends Activity {
             showMessage(getString(R.string.message_pending), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
-                    CompleteConfirmApplyActivity.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                    MenuAcivity.GO_TO_LIST_APPLY = "1";
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             });
         } else if (status == ElementApply.STATUS_APPLY_REJECT) {
@@ -52,20 +55,29 @@ public class CompleteConfirmApplyActivity extends Activity {
             showMessage(getString(R.string.message_reject), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
-                    CompleteConfirmApplyActivity.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                    MenuAcivity.GO_TO_LIST_APPLY = "1";
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             });
         } else if (status == ElementApply.STATUS_APPLY_CANCEL) {
             LinearLayout layout = (LinearLayout) findViewById(R.id.layoutComplete);
             layout.setVisibility(View.GONE);
-            showMessage(getString(R.string.message_cancel), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
+            showMessage(getString(R.string.message_cancel), getString(R.string.title_cancel), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
-                    CompleteConfirmApplyActivity.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                    MenuAcivity.GO_TO_LIST_APPLY = "1";
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             });
         } else {
-            CompleteConfirmApplyActivity.this.finish();
+            Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+            MenuAcivity.GO_TO_LIST_APPLY = "1";
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
     }
 

@@ -127,7 +127,9 @@ public class DetailConfirmActivity extends Activity {
             public void onClick(View v) {
                 dialog.dismiss();
                 elementMgr.deleteElementApply(id);
-                DetailConfirmActivity.this.finish();
+                Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         dialog.show();

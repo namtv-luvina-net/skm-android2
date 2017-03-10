@@ -303,6 +303,7 @@
     <string name="message_pending">この申請は現在承認待ちです。</string>
     <string name="message_reject">この申請は管理者により却下されました。</string>
     <string name="message_cancel">申請を取り下げました。</string>
+    <string name="title_cancel">申請の取り下げ</string>
     <string name="start_to_use_procedures">利用開始手続きを\nしています...</string>
     <string name="title_cn">CN :</string>
     <string name="title_sn">S/N :</string>
