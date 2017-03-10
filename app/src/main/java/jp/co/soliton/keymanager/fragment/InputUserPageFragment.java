@@ -251,6 +251,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 pagerInputActivity.finish();
             } else {
                 if (isSubmitted) {
+                    saveElementApply();
                     Intent intent = new Intent(pagerInputActivity, CompleteConfirmApplyActivity.class);
                     pagerInputActivity.finish();
                     intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
