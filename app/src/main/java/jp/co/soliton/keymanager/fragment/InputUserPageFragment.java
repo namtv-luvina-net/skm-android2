@@ -390,6 +390,11 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     if (StringList.m_str_scep_challenge.equalsIgnoreCase(p_data.GetKeyName())) {
                         challenge = (6 == p_data.GetType());
                     }
+                    if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
+                        if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+                            pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
+                        }
+                    }
                 }
             }
             ////////////////////////////////////////////////////////////////////////////

@@ -148,7 +148,7 @@
             android:text="@string/back_to_top"
             android:gravity="center|top"
             android:textSize="20sp"
-            android:onClick="btnBackClick"
+            android:onClick="backToTop"
             android:clickable="true"
             android:textColor="@color/text_color_active"/>
     </LinearLayout>

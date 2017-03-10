@@ -3,6 +3,7 @@ package jp.co.soliton.keymanager.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import jp.co.soliton.keymanager.R;
@@ -37,5 +38,11 @@ public class CompleteUsingProceduresActivity extends Activity {
         txtCN.setText(elementApply.getcNValue());
         txtSN.setText(elementApply.getsNValue());
         txtEpDate.setText(elementApply.getExpirationDate());
+    }
+
+    public void backToTop(View v) {
+        Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

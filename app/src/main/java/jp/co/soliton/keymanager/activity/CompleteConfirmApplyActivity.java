@@ -78,6 +78,7 @@ public class CompleteConfirmApplyActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), StartUsingProceduresActivity.class);
         intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
         intent.putExtra("ELEMENT_APPLY", element);
+        CompleteConfirmApplyActivity.this.finish();
         startActivity(intent);
     }
 

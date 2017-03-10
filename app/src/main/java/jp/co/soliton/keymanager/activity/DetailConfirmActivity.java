@@ -18,6 +18,8 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 public class DetailConfirmActivity extends Activity {
 
+    public static String backToList = "0";
+
     private ElementApplyManager elementMgr;
     private TextView tvHostName;
     private TextView tvUserId;
@@ -144,6 +146,10 @@ public class DetailConfirmActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (DetailConfirmActivity.backToList.equals("1")) {
+            DetailConfirmActivity.backToList = "0";
+            finish();
+        }
         int totalApply = elementMgr.getCountElementApply();
         if (totalApply <= 0) {
             finish();

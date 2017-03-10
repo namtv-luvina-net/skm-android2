@@ -184,6 +184,13 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
      */
     protected void showMessage(String message) {
         DialogApplyMessage dlgMessage = new DialogApplyMessage(this, message);
+        dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
+            @Override
+            public void onOkDismissMessage() {
+                DetailConfirmActivity.backToList = "1";
+                finish();
+            }
+        });
         dlgMessage.show();
     }
 
@@ -370,9 +377,12 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 mgr.updateElementCertificate(element);
                 Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
                 intent.putExtra("ELEMENT_APPLY", element);
+                DetailConfirmActivity.backToList = "1";
+                finish();
                 startActivity(intent);
             } else {
-                new DropCertTask().execute();
+                DetailConfirmActivity.backToList = "1";
+                finish();
             }
         } else if (requestCode == m_nGuidePageRequestCode) {
             if (resultCode == StringList.RESULT_GUIDE_CLOSE) finish();
@@ -395,6 +405,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
+            StartUsingProceduresActivity.this.finish();
         }
     }
 
