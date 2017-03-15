@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="@string/apply_confirmation"
+            android:text="@string/approval_confirmation"
             android:textAllCaps="false"
             android:layout_weight="1"
             android:textSize="@dimen/text_size_title"
