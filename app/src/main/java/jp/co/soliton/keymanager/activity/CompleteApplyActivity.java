@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 /**
  * Created by luongdolong on 2/7/2017.
@@ -18,7 +21,8 @@ import jp.co.soliton.keymanager.R;
 public class CompleteApplyActivity extends Activity {
     public static final String BACK_AUTO = "backAuto";
     private Button btnBackTop;
-
+    private InformCtrl m_InformCtrl;
+    private ElementApply element;
 
     @Override
     public void finishActivity(int requestCode) {
@@ -34,6 +38,8 @@ public class CompleteApplyActivity extends Activity {
         Intent intent = getIntent();
         if (intent.getBooleanExtra(BACK_AUTO, false)) {
             btnBackTop.setText(getString(R.string.back_to_top_auto));
+            m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
+            element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
         } else {
             btnBackTop.setText(getString(R.string.back_to_top));
         }
@@ -52,10 +58,18 @@ public class CompleteApplyActivity extends Activity {
         btnBackTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputApplyInfo.deletePref(CompleteApplyActivity.this);
-                Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if (btnBackTop.getText().equals(getString(R.string.back_to_top_auto))) {
+                    Intent intent = new Intent(getApplicationContext(), StartUsingProceduresActivity.class);
+                    intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
+                    intent.putExtra("ELEMENT_APPLY", element);
+                    finish();
+                    startActivity(intent);
+                } else {
+                    InputApplyInfo.deletePref(CompleteApplyActivity.this);
+                    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         });
     }

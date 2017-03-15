@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/apid"
             android:gravity="center"
-            android:textSize="30sp"
+            android:textSize="@dimen/text_size_title_large"
             />
 
         <LinearLayout

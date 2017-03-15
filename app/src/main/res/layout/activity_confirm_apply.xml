@@ -20,18 +20,19 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/text_color_active"
                 android:textAllCaps="false"
-                android:textSize="25sp"
+                android:textSize="@dimen/text_size_title"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="left|center"
                 android:text="@string/back"/>
 
-            <TextView
+            <jp.co.soliton.keymanager.customview.AutoResizeTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="30sp"
+                android:textSize="@dimen/text_size_title_large"
+                android:maxLines="1"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/text_color_inactive"
                 android:text="@string/confirm_content"/>
@@ -70,7 +71,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:text="·"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                             android:background="@color/background_color_white"
                             android:text="@string/host_name"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:textColor="@color/text_color_inactive"
                         />
                     </LinearLayout>
@@ -93,7 +94,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:text=""/>
                         <TextView
                             android:id="@+id/txtConfirmHostname"
@@ -102,7 +103,7 @@
                             android:background="@color/background_color_white"
                             android:text="Dummy data"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -117,7 +118,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:text="·"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -125,7 +126,7 @@
                             android:background="@color/background_color_white"
                             android:text="@string/port_number"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -140,7 +141,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:text=""/>
                         <TextView
                             android:id="@+id/txtConfirmPortnumber"
@@ -149,7 +150,7 @@
                             android:background="@color/background_color_white"
                             android:text="Dummy data"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -169,7 +170,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:text="·"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -177,7 +178,7 @@
                             android:background="@color/background_color_white"
                             android:text="@string/certlogin_userid_title"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -192,7 +193,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:text=""/>
                         <TextView
                             android:id="@+id/txtConfirmUserId"
@@ -201,7 +202,7 @@
                             android:background="@color/background_color_white"
                             android:text="Dummy data"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -221,7 +222,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:text="·"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -229,7 +230,7 @@
                             android:background="@color/background_color_white"
                             android:text="@string/store"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -245,7 +246,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:text=""/>
                         <TextView
                             android:id="@+id/txtConfirmTargetPlace"
@@ -254,7 +255,7 @@
                             android:background="@color/background_color_white"
                             android:text="Dummy data"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -279,15 +280,16 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:text="·"/>
-                        <TextView
+                        <jp.co.soliton.keymanager.customview.AutoResizeTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/background_color_white"
                             android:text="@string/notification_destination_email_address"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
+                            android:maxLines="1"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -303,7 +305,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:text=""/>
                         <TextView
                             android:id="@+id/txtConfirmEmail"
@@ -312,7 +314,7 @@
                             android:background="@color/background_color_white"
                             android:text="Dummy data"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -332,7 +334,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:text="·"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -340,7 +342,7 @@
                             android:background="@color/background_color_white"
                             android:text="@string/reason"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_title"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -356,7 +358,7 @@
                             android:layout_width="10dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:text=""/>
                         <TextView
                             android:id="@+id/txtConfirmReason"
@@ -365,7 +367,7 @@
                             android:background="@color/background_color_white"
                             android:text="Dummy data"
                             android:gravity="left|center"
-                            android:textSize="25sp"
+                            android:textSize="@dimen/text_size_value"
                             android:textColor="@color/text_color_inactive"
                             />
                     </LinearLayout>
@@ -381,7 +383,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="@string/apply"
-        android:textSize="25sp"
+        android:textSize="@dimen/text_size_title"
         android:textColor="@color/text_color_active"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"

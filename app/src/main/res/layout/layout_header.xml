@@ -15,16 +15,17 @@
         android:text="@string/back"
         android:onClick="btnBackClick"
         android:clickable="true"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_value"
         android:textColor="@color/add_cert" />
 
-    <TextView
+    <jp.co.soliton.keymanager.customview.AutoResizeTextView
         android:id="@+id/tvTitleHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:maxLines="1"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_value"
         android:textColor="@color/text_color"
         android:text=""/>
     <View

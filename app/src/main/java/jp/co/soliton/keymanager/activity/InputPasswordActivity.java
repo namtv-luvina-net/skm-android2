@@ -97,7 +97,7 @@ public class InputPasswordActivity extends Activity {
     private boolean makeParameterLogon() {
         String strUserid = txtUserId.getText().toString().trim();
         String strPasswd = txtPassword.getText().toString();
-        String rtnserial = element.getTarger();
+        String rtnserial = element.getTarger().replace("WIFI", "").replace("APP", "");
         // ログインメッセージ
         // URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
         String message;
@@ -256,7 +256,7 @@ public class InputPasswordActivity extends Activity {
                 }
             }
             if (status == ElementApply.STATUS_APPLY_APPROVED) {
-                String sendmsg = m_p_aided.DeviceInfoText(element.getTarger());
+                String sendmsg = m_p_aided.DeviceInfoText(element.getTarger().replace("WIFI", "").replace("APP", ""));
                 m_InformCtrl.SetMessage(sendmsg);
             }
             ////////////////////////////////////////////////////////////////////////////
@@ -332,7 +332,7 @@ public class InputPasswordActivity extends Activity {
     private void endConnection(boolean result) {
         progressDialog.dismiss();
         if (result) {
-            if (!ValidateParams.nullOrEmpty(cancelApply) && cancelApply.equals("1") && status == ElementApply.STATUS_APPLY_PENDING) {
+            if (!ValidateParams.nullOrEmpty(cancelApply) && cancelApply.equals("1") && status != ElementApply.STATUS_APPLY_REJECT) {
                 final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
                 dialog.setTextDisplay(getString(R.string.dialog_withdraw_title), getString(R.string.dialog_withdraw_msg)
                         , getString(R.string.label_dialog_Cancle), getString(R.string.dialog_btn_withdraw));
@@ -354,9 +354,19 @@ public class InputPasswordActivity extends Activity {
                         new DropApplyTask().execute();
                     }
                 });
+                dialog.setOnClickCancel(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
                 dialog.show();
             } else {
-                elementMgr.updateStatus(status, id);
+                if (status != ElementApply.STATUS_APPLY_APPROVED) {
+                    elementMgr.updateStatus(status, id);
+                }
+
                 Intent intent = new Intent(InputPasswordActivity.this, CompleteConfirmApplyActivity.class);
                 intent.putExtra("STATUS_APPLY", status);
                 intent.putExtra("ELEMENT_APPLY", element);

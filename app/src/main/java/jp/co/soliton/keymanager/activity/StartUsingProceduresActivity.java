@@ -1,6 +1,9 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import jp.co.soliton.keymanager.EpsapAdminReceiver;
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
@@ -30,6 +34,8 @@ import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
+import jp.co.soliton.keymanager.mdm.MDMControl;
+import jp.co.soliton.keymanager.mdm.MDMFlgs;
 import jp.co.soliton.keymanager.scep.Requester;
 import jp.co.soliton.keymanager.scep.RequesterException;
 
@@ -37,6 +43,7 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.scep.cert.CertificateUtility;
 import jp.co.soliton.keymanager.scep.pkimessage.CertRep;
 import jp.co.soliton.keymanager.scep.pkimessage.PkiStatus;
+import jp.co.soliton.keymanager.wifi.WifiControl;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -62,9 +69,14 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private CertStore cACertificateStore = null;
     private Requester scepRequester = null;
     private XmlPullParserAided m_p_aided = null;
+    private XmlPullParserAided m_p_aided_profile = null;
     private static InformCtrl m_InformCtrl;
     private int m_nErroType;
     private ElementApply element;
+    private String m_strCertArias;
+    private DevicePolicyManager m_DPM;
+    private MDMControl mdmctrl;
+    private ComponentName m_DeviceAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +147,17 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
+
+            SetScepItem();
+
+            m_p_aided_profile = m_p_aided;
+            ret = m_p_aided_profile.TakeApartProfile();
+            if (ret == false) {
+                LogCtrl.Logger(LogCtrl.m_strError, "CertLoginAcrivity::onClick  "+ "TakeApartProfile false", getApplicationContext());
+                //	m_ErrorMessage.setText(R.string.EnrollErrorMessage);
+                m_nErroType = InputBasePageFragment.ERR_NETWORK;
+                return false;
+            }
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン終了 =========>
             ////////////////////////////////////////////////////////////////////////////
@@ -156,8 +179,17 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
      */
     private void endConnection(boolean result) {
         if (result) {
-            SetScepItem();
-            new CertificateEnrollTask().execute(scepRequester);
+            // 2. GetMDMDictionary
+            XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
+            if (mdm_dict == null) {
+                Log.d("CertLoginActivity", "SetMDM() No profile");
+                SetScepWifi();
+                new CertificateEnrollTask().execute(scepRequester);
+            } else {
+                Log.d("CertLoginActivity", "SetMDM() Has profile");
+                CallMDMCheckIn();
+            }
+
         } else {
             //show error message
             if (m_nErroType == InputBasePageFragment.ERR_FORBIDDEN) {
@@ -261,7 +293,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                             element.setcNValue(arr[i].toString().replace("CN=","").trim());
                         }
                     }
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
                     element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
                 } else {
                     return false;
@@ -296,9 +328,6 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         // メインスレッドに反映させる処理
         protected void onPostExecute(Boolean result) {
             Log.d("CertificateEnrollTask", "onPostExecute - " + "result");
-            if(!result) {
-                new DropCertTask().execute();
-            }
         }
     }
 
@@ -355,7 +384,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_challenge)) {	// Challenge
             m_strChallenge = strData;
         } else if(strKeyName.equalsIgnoreCase(StringList.m_str_CaIdent)) {	// Name(Arias)
-//            m_strCertArias = strData;
+            m_strCertArias = strData;
         } else if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_keytype)) {	// Key Type
             m_strKeyType = strData;
         } else if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_rfc822Name)) {	// rfc822Name
@@ -366,10 +395,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         LogCtrl.Logger(LogCtrl.m_strInfo, "onActivityResult start " + "REC CODE = " + Integer.toString(requestCode), this);
-        if (requestCode == m_nCertReq_RequestCode) {
-            // 申請アクティビティ終了後
-            Log.i("onActivityResult","REC CODE = " + Integer.toString(requestCode));
-        } else if (requestCode == m_nEnrollRtnCode) {
+        if (requestCode == m_nEnrollRtnCode) {
             // After CertificateEnrollTask
             Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
             if (resultCode != 0) {
@@ -384,29 +410,120 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 DetailConfirmActivity.backToList = "1";
                 finish();
             }
-        } else if (requestCode == m_nGuidePageRequestCode) {
-            if (resultCode == StringList.RESULT_GUIDE_CLOSE) finish();
-        } else if (requestCode == m_nApplicationList) {
+        } else if (requestCode == m_nMDM_RequestCode) {
+            if (resultCode == RESULT_OK) {
+                SetMDM();
+                SetScepItem();
+                SetScepWifi();
+                new CertificateEnrollTask().execute(scepRequester);
+            } else {
+                finish();
+            }
         }
     }
 
-    /**
-     * Task processing DropCertTask
-     */
-    private class DropCertTask extends AsyncTask<Void, Void, Boolean> {
-        protected Boolean doInBackground(Void... params) {
-            m_InformCtrl.SetMessage("Action=drop");
-            // 申請
-            HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
-            boolean ret = conn.RunHttpApplyUrlConnection(m_InformCtrl);		// 専用のRunHttpを作成する
-            return ret;
+    private void SetScepWifi() {
+        // 1. WifiControlインスタンス取得
+        WifiControl wifi = new WifiControl(this);
+
+        // 2. GetWifiDictList取得
+        List<XmlDictionary> wifi_list = m_p_aided_profile.GetWifiDictList();
+
+        // 3. ループしてWifiControl::SetWifiListを実行
+        if(!wifi_list.isEmpty()) {
+            for(int i = 0; wifi_list.size() > i; i++){
+                XmlDictionary one_piece = wifi_list.get(i);
+                wifi.SetWifiList(one_piece);
+            }
         }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            StartUsingProceduresActivity.this.finish();
+        // 3.2 CA_CertとUser_Certを設定する.
+        wifi.SetCaCert(m_strCertArias);
+        wifi.SetUserCert(m_InformCtrl.GetUserID());
+
+        // 4. WifiControl::PublicConnect(WifiControl.SCEP_WIFI)を実行
+        if(wifi.PublicConnect(WifiControl.SCEP_WIFI) == false) {
+            return;
         }
+    }
+
+    // MDMのチェックインの呼び出し
+    private void CallMDMCheckIn() {
+        LogCtrl.Logger(LogCtrl.m_strDebug, "CertLoginActivity "+ "CallMDMActivity()", this);
+
+        // 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
+        OldMdmCheckOut();
+
+        m_DPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+        m_DeviceAdmin = new ComponentName(StartUsingProceduresActivity.this, EpsapAdminReceiver.class);
+        mdmctrl = new MDMControl(this, m_InformCtrl.GetAPID());
+
+        if (isDeviceAdmin() == false) {
+            addDeviceAdmin();
+        }
+    }
+
+    private void OldMdmCheckOut() {
+        String filedir = "/data/data/" + getPackageName() + "/files/";
+
+        java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
+        if(filename_mdm.exists()) {
+            LogCtrl.Logger(LogCtrl.m_strInfo, "MDMCheckinActivity "+ "OldMdmCheckOut()", this);
+            MDMFlgs mdm = new MDMFlgs();
+            boolean bRet = mdm.ReadAndSetScepMdmInfo(this);
+            if(mdm.GetCheckOut() == true) {
+                MDMControl.CheckOut(mdm, this);
+            }
+
+            MDMControl mdmctrl = new MDMControl(this, mdm.GetUDID());	// この時点でサービスを止める
+            filename_mdm.delete();
+        }
+    }
+
+    // MDMのチェックインおよび、定期通信サービススレッドの起動
+    // HTTP通信を行うため、スレッドから呼び出されること
+    private void SetMDM() {
+        Log.d("MDMCheckinActivity", "SetMDM()");
+        // 2. GetMDMDictionary
+        XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
+        if (mdm_dict == null) {
+            Log.d("CertLoginActivity", "SetMDM() No profile");
+            return;
+        }
+
+        // 3. MDMFlgsにセット(MDMControlにMDMFlgs変数を持たせてそちらにやってもらう
+        mdmctrl.SetMDMmember(mdm_dict);
+
+        // 4. チェックイン(HTTP(S)) (新しいMDM設定情報もここでファイル保存する)
+        boolean bret = mdmctrl.CheckIn(true);
+
+        // 5. OKならスレッド起動...定期通信
+        if(bret == false) {
+            //	mdmctrl.SrartService();
+            Log.e("MDMCheckinActivity::SetMDM", "Checkin err");
+            return;
+        }
+
+        bret = mdmctrl.TokenUpdate();
+        if(bret == false) {
+            //	mdmctrl.SrartService();
+            Log.e("MDMCheckinActivity::SetMDM", "TokenUpdate err");
+            return;
+        }
+    }
+
+    private void addDeviceAdmin() {
+        Log.i("ProfileActivity", "addDeviceAdmin");
+        // Launch the activity to have the user enable our admin.
+        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, m_DeviceAdmin);
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                "Additional text explaining why this needs to be added.");
+        startActivityForResult(intent, m_nMDM_RequestCode);
+    }
+
+    private boolean isDeviceAdmin() {
+        return m_DPM.isAdminActive(m_DeviceAdmin);
     }
 
     @Override

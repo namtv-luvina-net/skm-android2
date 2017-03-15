@@ -141,7 +141,7 @@
     <string name="label_IssuerDN_CN">IssuerDN:</string>
     <string name="label_FinalDate_CA">Final Date:</string>
     <string name="label_add_list_certificate">Add List CA</string>
-    <string name="label_list_certificate">Certificates</string>
+    <string name="label_list_certificate">Certificate</string>
     <string name="label_menu">Menu</string>
     <string name="label_yes">Yes</string>
     <string name="label_no">No</string>
@@ -284,7 +284,7 @@
     <string name="stt_rejected">Rejected</string>
     <string name="stt_cancel">Withdrawn</string>
     <string name="delete_apply">Delete application</string>
-    <string name="withdrawal_apply">Withdrawal application</string>
+    <string name="withdrawal_apply">Withdrawn application</string>
     <string name="title_host_name">Host name :</string>
     <string name="title_user_id">User ID :</string>
     <string name="title_apply_date">Apply date :</string>
@@ -301,12 +301,12 @@
     <string name="beginning_to_use_procedures">Beginning to use procedures</string>
     <string name="message_pending">This application is currently pending approval.</string>
     <string name="message_reject">This application has been rejected by the administrator.</string>
-    <string name="message_cancel">This application has been deleted.</string>
+    <string name="message_cancel">This application has been withdrawn.</string>
     <string name="title_cancel">Withdrawal of application</string>
     <string name="start_to_use_procedures">Beginning to use procedures...</string>
     <string name="title_cn">CN :</string>
     <string name="title_sn">S/N :</string>
-    <string name="title_expiration_date">Expiration Date :</string>
+    <string name="title_expiration_date">Expiration :</string>
     <string name="txt_complete_using_procedures">Start using procedure has been completed</string>
     <string name="approval_confirmation">Approval Confirmation</string>
 </resources>

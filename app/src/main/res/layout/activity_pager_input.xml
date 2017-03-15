@@ -26,7 +26,7 @@
             android:background="@android:color/transparent"
             android:textColor="@color/text_color_active"
             android:layout_alignParentLeft="true"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
             android:textAllCaps="false"
             android:text="@string/back"/>
         <Button
@@ -36,7 +36,7 @@
             android:background="@android:color/transparent"
             android:textColor="@color/text_color_inactive"
             android:layout_alignParentRight="true"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
             android:textAllCaps="false"
             android:text="@string/next"/>
     </RelativeLayout >

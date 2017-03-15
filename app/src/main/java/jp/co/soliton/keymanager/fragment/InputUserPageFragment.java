@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -143,6 +144,11 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 return false;
             }
         });
+        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getUserId())) {
+            txtPassword.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        }
     }
 
     @Override
@@ -245,7 +251,12 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 pagerInputActivity.getInputApplyInfo().setPassword(null);
                 pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
                 Intent intent = new Intent(pagerInputActivity, CompleteApplyActivity.class);
-                intent.putExtra(CompleteApplyActivity.BACK_AUTO, false);
+                intent.putExtra(CompleteApplyActivity.BACK_AUTO, true);
+                intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
+                String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
+                        pagerInputActivity.getInputApplyInfo().getUserId()));
+                ElementApply element = elementMgr.getElementApply(id);
+                intent.putExtra("ELEMENT_APPLY", element);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 pagerInputActivity.finish();
@@ -259,7 +270,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                             pagerInputActivity.getInputApplyInfo().getUserId()));
                     ElementApply element = elementMgr.getElementApply(id);
                     intent.putExtra("ELEMENT_APPLY", element);
-                    intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
+                    intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
                     startActivity(intent);
                 } else {
                     pagerInputActivity.gotoPage(4);
@@ -269,13 +280,13 @@ public class InputUserPageFragment extends InputBasePageFragment {
             //show error message
             if (m_nErroType == ERR_FORBIDDEN) {
                 String str_forbidden = getString(R.string.Forbidden);
-                showMessage(m_InformCtrl.GetRtn().substring(str_forbidden.length()));
+                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_forbidden.length()));
             } else if (m_nErroType == ERR_UNAUTHORIZED) {
                 String str_unauth = getString(R.string.Unauthorized);
-                showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
+                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_unauth.length()));
             } else if (m_nErroType == ERR_COLON) {
                 String str_err = getString(R.string.ERR);
-                showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
+                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_err.length()));
             } else if (m_nErroType == ERR_LOGIN_FAIL) {
                 showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
                     @Override
@@ -404,6 +415,14 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     // 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
                     if(StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         isEnroll = true;
+                        String rtnserial = "";
+                        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
+                            rtnserial = XmlPullParserAided.GetUDID(pagerInputActivity);
+                        } else {
+                            rtnserial = XmlPullParserAided.GetVpnApid(pagerInputActivity);
+                        }
+                        String sendmsg = m_p_aided.DeviceInfoText(rtnserial);
+                        pagerInputActivity.getInformCtrl().SetMessage(sendmsg);
                     }
                     if(StringList.m_str_issubmitted.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         if (6 == p_data.GetType()) {

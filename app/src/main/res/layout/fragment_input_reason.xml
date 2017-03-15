@@ -21,7 +21,7 @@
             android:background="@color/background_color_white"
             android:text="@string/reason_for_apply"
             android:gravity="center|top"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
             android:layout_marginTop="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -36,7 +36,7 @@
             android:hint="@string/input"
             android:layout_weight="1"
             android:maxLines="1"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_value"
             android:maxLength="1024"
             android:paddingLeft="10dp"
             android:layout_marginTop="40dp"
@@ -46,20 +46,26 @@
             android:gravity="bottom"
             android:scrollbars="vertical"
             />
-        <Button
-            android:id="@+id/btnSkipReason"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:textAllCaps="false"
-            android:text="@string/skip"
-            android:textSize="25sp"
-            android:textColor="@color/text_color_active"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            />
+            android:gravity="center">
+            <Button
+                android:id="@+id/btnSkipReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
+                android:text="@string/skip"
+                android:textSize="@dimen/text_size_title"
+                android:textColor="@color/text_color_active"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

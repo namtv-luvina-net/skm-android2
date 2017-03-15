@@ -56,4 +56,8 @@ public class DialogApplyConfirm extends Dialog {
         btnOK.setOnClickListener(listener);
     }
 
+    public void setOnClickCancel(View.OnClickListener listener) {
+        btnCancel.setOnClickListener(listener);
+    }
+
 }

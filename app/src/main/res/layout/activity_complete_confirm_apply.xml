@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30dp"
+            android:textSize="@dimen/text_size_title_large"
             android:textColor="@color/text_color_inactive"
             android:text="@string/approval_completed"/>
         <LinearLayout
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:textAllCaps="false"
-                android:textSize="30dp"
+                android:textSize="@dimen/text_size_title_large"
                 android:textColor="@color/text_color_active"
                 android:onClick="clickStart"
                 android:text="@string/beginning_to_use_procedures"/>

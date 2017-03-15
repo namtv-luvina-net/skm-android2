@@ -55,10 +55,7 @@ public class CompleteConfirmApplyActivity extends Activity {
             showMessage(getString(R.string.message_reject), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
-                    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-                    MenuAcivity.GO_TO_LIST_APPLY = "1";
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    finish();
                 }
             });
         } else if (status == ElementApply.STATUS_APPLY_CANCEL) {
@@ -67,10 +64,7 @@ public class CompleteConfirmApplyActivity extends Activity {
             showMessage(getString(R.string.message_cancel), getString(R.string.title_cancel), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
-                    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-                    MenuAcivity.GO_TO_LIST_APPLY = "1";
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    finish();
                 }
             });
         } else {

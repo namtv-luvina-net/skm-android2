@@ -7,16 +7,18 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:layout_above="@+id/zoneDlgMsgFooter"
         >
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:textColor="@color/text_color_inactive"
             android:text="@string/error"
             android:gravity="center"
+            android:layout_marginBottom="20dp"
             android:id="@+id/txtTitle" />
         <TextView
             android:id="@+id/txtDlgApplyMsg"
@@ -25,7 +27,6 @@
             android:textSize="15dp"
             android:textColor="@color/text_color_inactive"
             android:text="This is message"
-            android:layout_marginBottom="20dp"
             android:layout_gravity="center"
             android:gravity="center"/>
     </LinearLayout>

@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/download_ca_certificate"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:textColor="@color/text_color_inactive"
@@ -32,14 +32,15 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:weightSum="3">
-        <TextView
+        <jp.co.soliton.keymanager.customview.AutoResizeTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/background_color_white"
             android:text="@string/input_http_port_number"
             android:gravity="center|top"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
+            android:maxLines="1"
             android:layout_marginTop="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -53,7 +54,7 @@
             android:text="80"
             android:hint="80"
             android:layout_weight="1"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_value"
             android:maxLines="1"
             android:singleLine="true"
             android:maxLength="5"
@@ -63,7 +64,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="50dp"
             android:gravity="bottom"
             />
         <TextView
@@ -74,7 +75,6 @@
             android:text="@string/download_ca_description"
             android:gravity="left|top"
             android:textSize="18sp"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"

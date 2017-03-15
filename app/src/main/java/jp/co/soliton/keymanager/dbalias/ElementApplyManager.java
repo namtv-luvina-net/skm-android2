@@ -186,6 +186,7 @@ public class ElementApplyManager {
         values.put("expiration_date", element.getExpirationDate());
         values.put("cn_value", element.getcNValue());
         values.put("sn_value", element.getsNValue());
+        values.put("status", ElementApply.STATUS_APPLY_APPROVED);
         db.update(TABLE_ELEMENT_APPLY, values, "id="+element.getId(), null);
         db.close(); // Closing database connection
     }

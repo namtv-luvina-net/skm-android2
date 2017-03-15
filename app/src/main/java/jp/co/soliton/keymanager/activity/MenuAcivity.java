@@ -1,8 +1,12 @@
 package jp.co.soliton.keymanager.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -22,6 +26,7 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 public class MenuAcivity extends Activity {
     public static String GO_TO_LIST_APPLY = "0";
+    private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 
     private LinearLayout zoneMenuCtr;
     private Button btnMenuStart;
@@ -40,7 +45,6 @@ public class MenuAcivity extends Activity {
         zoneMenuCtr = (LinearLayout) findViewById(R.id.zoneMenuCtr);
         elementMgr = new ElementApplyManager(getApplicationContext());
     }
-
 
     @Override
     protected void onResume() {
@@ -71,6 +75,10 @@ public class MenuAcivity extends Activity {
             });
         }
         setupControl();
+
+        if(android.os.Build.VERSION.SDK_INT >= 23) {
+            NewPermissionSet();
+        }
     }
 
     /**
@@ -94,5 +102,12 @@ public class MenuAcivity extends Activity {
             }
         });
 
+    }
+
+    private void NewPermissionSet() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE},
+                    PERMISSIONS_REQUEST_READ_PHONE_STATE);
+        }
     }
 }
