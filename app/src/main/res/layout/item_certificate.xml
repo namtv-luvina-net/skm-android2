@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="12"
+    android:orientation="horizontal"
+    android:paddingTop="25dp"
+    android:paddingBottom="25dp"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="3">
+        <ImageView
+            android:id="@+id/icCertificate"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_approval_confirmation"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_weight="6"
+        >
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleHost"
+            android:textSize="14dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text_color"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_marginBottom="10dp"
+            android:text="Expired" />
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleID"
+            android:textSize="14dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text_color"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="right|center"
+        android:layout_weight="3"
+        >
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="Update"
+            android:textSize="15dp"
+            android:background="@drawable/border_button_inactive"
+            android:scaleType="centerInside"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/text_color_inactive" />
+            />
+    </LinearLayout>
+</LinearLayout>
