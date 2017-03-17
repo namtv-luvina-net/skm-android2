@@ -309,4 +309,7 @@
     <string name="title_expiration_date">Expiration :</string>
     <string name="txt_complete_using_procedures">Start using procedure has been completed</string>
     <string name="approval_confirmation">Approval Confirmation</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_add">＋New</string>
+    <string name="title_list_certificate">Select certificate</string>
 </resources>

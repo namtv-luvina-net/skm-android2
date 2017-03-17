@@ -13,37 +13,29 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
-import jp.co.soliton.keymanager.customview.AutoResizeTextView;
+import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 
 /**
  * Created by luongdolong on 2/3/2017.
- * Page input email for apply
+ *
+ * Page input reason for apply
  */
 
-public class InputEmailPageFragment extends InputBasePageFragment {
-    private EditText txtEmail;
-    private Button btnSkipEmail;
-    private AutoResizeTextView titleEmail;
+public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
+    private EditText txtReason;
+    private Button btnSkipReason;
+
     public static Fragment newInstance(Context context) {
-        InputEmailPageFragment f = new InputEmailPageFragment();
+        ReapplyReasonPageFragment f = new ReapplyReasonPageFragment();
         return f;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_email, null);
-        txtEmail = (EditText) root.findViewById(R.id.txtEmail);
-        btnSkipEmail = (Button) root.findViewById(R.id.btnSkipEmail);
-        titleEmail = (AutoResizeTextView) root.findViewById(R.id.titleEmail);
-        if (ValidateParams.isJPLanguage()) {
-            titleEmail.setMaxLines(1);
-        } else {
-            titleEmail.setMaxLines(3);
-        }
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_reason, null);
+        txtReason = (EditText) root.findViewById(R.id.txtReason);
+        btnSkipReason = (Button) root.findViewById(R.id.btnSkipReason);
         initValueControl();
         return root;
     }
@@ -51,16 +43,16 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ViewPagerInputActivity) {
-            this.pagerInputActivity = (ViewPagerInputActivity) context;
+        if (context instanceof ViewPagerReapplyActivity) {
+            this.pagerReapplyActivity = (ViewPagerReapplyActivity) context;
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Set action for edit text
-        txtEmail.addTextChangedListener(new TextWatcher() {
+        //Action for edit text
+        txtReason.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -75,7 +67,7 @@ public class InputEmailPageFragment extends InputBasePageFragment {
             }
         });
 
-        txtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        txtReason.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -83,11 +75,11 @@ public class InputEmailPageFragment extends InputBasePageFragment {
                 }
             }
         });
-        txtEmail.setOnKeyListener(new View.OnKeyListener() {
+        txtReason.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (!nullOrEmpty(txtEmail.getText().toString())) {
+                    if (!nullOrEmpty(txtReason.getText().toString())) {
                         nextAction();
                         return true;
                     }
@@ -100,13 +92,13 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //Action skip input email
-        btnSkipEmail.setOnClickListener(new View.OnClickListener() {
+        //Action skip input reason
+        btnSkipReason.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pagerInputActivity.getInputApplyInfo().setEmail(null);
-                pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
-                pagerInputActivity.gotoPage(5);
+                pagerReapplyActivity.getInputApplyInfo().setReason(null);
+                pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+                pagerReapplyActivity.gotoConfirmApply();
             }
         });
     }
@@ -128,28 +120,25 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     }
 
     /**
-     * Next action move to input reason screen
+     * Move to confirm apply screen
      */
     @Override
     public void nextAction() {
-        pagerInputActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
-        pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
-        if (!ValidateParams.isValidEmail(txtEmail.getText().toString().trim())) {
-            showMessage(getString(R.string.apply_mail_error));
-            return;
-        }
-        pagerInputActivity.gotoPage(5);
+        pagerReapplyActivity.getInputApplyInfo().setReason(txtReason.getText().toString().trim());
+        pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+
+        pagerReapplyActivity.gotoConfirmApply();
     }
 
     /**
-     * Init value for controls
+     * init value control
      */
     private void initValueControl() {
-        if (pagerInputActivity == null) {
+        if (pagerReapplyActivity == null) {
             return;
         }
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getEmail())) {
-            txtEmail.setText(pagerInputActivity.getInputApplyInfo().getEmail());
+        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getReason())) {
+            txtReason.setText(pagerReapplyActivity.getInputApplyInfo().getReason());
         }
         setStatusControl();
     }
@@ -158,14 +147,13 @@ public class InputEmailPageFragment extends InputBasePageFragment {
      * Set status for next/back button
      */
     private void setStatusControl() {
-        if (pagerInputActivity.getCurrentPage() != 4) {
+        if (pagerReapplyActivity.getCurrentPage() != 2) {
             return;
         }
-        if (nullOrEmpty(txtEmail.getText().toString())) {
-            pagerInputActivity.setActiveBackNext(true, false);
+        if (nullOrEmpty(txtReason.getText().toString())) {
+            pagerReapplyActivity.setActiveBackNext(true, false);
         } else {
-            pagerInputActivity.setActiveBackNext(true, true);
+            pagerReapplyActivity.setActiveBackNext(true, true);
         }
     }
-
 }

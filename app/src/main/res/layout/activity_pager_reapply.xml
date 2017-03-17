@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+    <!-- ViewPager -->
+    <jp.co.soliton.keymanager.swipelayout.InputApplyViewPager
+        android:layout_width="fill_parent" android:layout_height="fill_parent"
+        android:id="@+id/viewPager" />
+    <!-- Footer -->
+    <include layout="@layout/input_footer"  />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnInputBack"
+            android:background="@android:color/transparent"
+            android:textColor="@color/text_color_active"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/text_size_title"
+            android:textAllCaps="false"
+            android:text="@string/back"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnInputNext"
+            android:background="@android:color/transparent"
+            android:textColor="@color/text_color_inactive"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/text_size_title"
+            android:textAllCaps="false"
+            android:text="@string/next"/>
+    </RelativeLayout >
+</FrameLayout>

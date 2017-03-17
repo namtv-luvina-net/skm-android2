@@ -47,7 +47,7 @@ public class DetailConfirmActivity extends Activity {
     }
 
     private void setupDisplay() {
-        title.setText(getString(R.string.apply_confirmation));
+        title.setText(getString(R.string.approval_confirmation));
         ElementApply detail = elementMgr.getElementApply(id);
         if (detail.getHost() != null) {
             tvHostName.setText(detail.getHost());

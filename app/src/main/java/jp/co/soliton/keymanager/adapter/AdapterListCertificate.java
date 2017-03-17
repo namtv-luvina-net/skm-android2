@@ -1,6 +1,8 @@
 package jp.co.soliton.keymanager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.ParseException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 /**
@@ -28,7 +38,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
     public class ViewHolder {
         public TextView txtStatus;
         public TextView txtName;
-        public Button btnUpdate;
+        public TextView btnUpdate;
         public ImageView icCertificate;
     }
 
@@ -81,26 +91,70 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_certificate, parent, false);
             viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatus);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.txtName);
-            viewHolder.btnUpdate = (Button) convertView.findViewById(R.id.btnUpdate);
+            viewHolder.btnUpdate = (TextView) convertView.findViewById(R.id.btnUpdate);
             viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icCertificate);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        // Lookup view for data ElementApply
-        if (listElementApply.get(position).getHost() != null) {
-            viewHolder.txtStatus.setText(listElementApply.get(position).getHost());
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+
+            Date expirationDate = formatter.parse(listElementApply.get(position).getExpirationDate());
+            Date current_date = formatter.parse(getDateNow());
+
+            //Comparing dates
+            long difference = Math.abs(expirationDate.getTime() - current_date.getTime());
+            long differenceDates = difference / (24 * 60 * 60 * 1000);
+
+            if (differenceDates >= 0 && differenceDates < listElementApply.get(position).getNotiEnableBefore() * 2) {
+                viewHolder.txtStatus.setText("残り" + differenceDates + "日");
+                final int id = listElementApply.get(position).getId();
+                viewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        InputApplyInfo.deletePref(getContext());
+                        Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
+                        intent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, String.valueOf(id));
+                        getContext().startActivity(intent);
+                    }
+                });
+                viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
+                viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
+            } else if (differenceDates > listElementApply.get(position).getNotiEnableBefore()){
+                viewHolder.txtStatus.setText("有効期限：" + formatter.format(expirationDate));
+                viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_inactive));
+                viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_inactive);
+            } else {
+                viewHolder.txtStatus.setText("有効期限切れ");
+                final int id = listElementApply.get(position).getId();
+                viewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        InputApplyInfo.deletePref(getContext());
+                        Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
+                        intent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, String.valueOf(id));
+                        getContext().startActivity(intent);
+                    }
+                });
+                viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
+                viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
+                viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         if (listElementApply.get(position).getUserId() != null) {
             viewHolder.txtName.setText(listElementApply.get(position).getUserId());
         }
-        viewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         return convertView;
 
+    }
+
+    private String getDateNow() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

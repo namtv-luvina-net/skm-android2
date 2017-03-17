@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 
 /**
@@ -24,12 +24,12 @@ import jp.co.soliton.keymanager.customview.AutoResizeTextView;
  * Page input email for apply
  */
 
-public class InputEmailPageFragment extends InputBasePageFragment {
+public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
     private EditText txtEmail;
     private Button btnSkipEmail;
     private AutoResizeTextView titleEmail;
     public static Fragment newInstance(Context context) {
-        InputEmailPageFragment f = new InputEmailPageFragment();
+        ReapplyEmailPageFragment f = new ReapplyEmailPageFragment();
         return f;
     }
 
@@ -51,8 +51,8 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ViewPagerInputActivity) {
-            this.pagerInputActivity = (ViewPagerInputActivity) context;
+        if (context instanceof ViewPagerReapplyActivity) {
+            this.pagerReapplyActivity = (ViewPagerReapplyActivity) context;
         }
     }
 
@@ -104,9 +104,9 @@ public class InputEmailPageFragment extends InputBasePageFragment {
         btnSkipEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pagerInputActivity.getInputApplyInfo().setEmail(null);
-                pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
-                pagerInputActivity.gotoPage(5);
+                pagerReapplyActivity.getInputApplyInfo().setEmail(null);
+                pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+                pagerReapplyActivity.gotoPage(2);
             }
         });
     }
@@ -132,24 +132,24 @@ public class InputEmailPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
-        pagerInputActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
-        pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+        pagerReapplyActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
+        pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
         if (!ValidateParams.isValidEmail(txtEmail.getText().toString().trim())) {
             showMessage(getString(R.string.apply_mail_error));
             return;
         }
-        pagerInputActivity.gotoPage(5);
+        pagerReapplyActivity.gotoPage(2);
     }
 
     /**
      * Init value for controls
      */
     private void initValueControl() {
-        if (pagerInputActivity == null) {
+        if (pagerReapplyActivity == null) {
             return;
         }
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getEmail())) {
-            txtEmail.setText(pagerInputActivity.getInputApplyInfo().getEmail());
+        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getEmail())) {
+            txtEmail.setText(pagerReapplyActivity.getInputApplyInfo().getEmail());
         }
         setStatusControl();
     }
@@ -158,13 +158,13 @@ public class InputEmailPageFragment extends InputBasePageFragment {
      * Set status for next/back button
      */
     private void setStatusControl() {
-        if (pagerInputActivity.getCurrentPage() != 4) {
+        if (pagerReapplyActivity.getCurrentPage() != 1) {
             return;
         }
         if (nullOrEmpty(txtEmail.getText().toString())) {
-            pagerInputActivity.setActiveBackNext(true, false);
+            pagerReapplyActivity.setActiveBackNext(true, false);
         } else {
-            pagerInputActivity.setActiveBackNext(true, true);
+            pagerReapplyActivity.setActiveBackNext(true, true);
         }
     }
 

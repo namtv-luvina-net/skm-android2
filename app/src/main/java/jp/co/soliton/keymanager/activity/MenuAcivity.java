@@ -88,9 +88,14 @@ public class MenuAcivity extends Activity {
         btnMenuStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputApplyInfo.deletePref(MenuAcivity.this);
-                Intent intent = new Intent(MenuAcivity.this, ViewPagerInputActivity.class);
-                startActivity(intent);
+                if (elementMgr.hasReApplyCertificate()) {
+                    Intent intent = new Intent(MenuAcivity.this, ListCertificateActivity.class);
+                    startActivity(intent);
+                } else {
+                    InputApplyInfo.deletePref(MenuAcivity.this);
+                    Intent intent = new Intent(MenuAcivity.this, ViewPagerInputActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

@@ -43,7 +43,7 @@ public class ElementApplyManager {
         values.put("challenge", elementApply.isChallenge() ? 1 : 0);
         int id = getIdElementApply(elementApply.getHost(), elementApply.getUserId());
         if (id > 0) {
-            values.put("updated_at", getDateTime());
+            values.put("updated_at", getDateWithFomat("yyyy/MM/dd HH:mm:ss"));
             db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
         } else {
             db.insert(TABLE_ELEMENT_APPLY, null, values);// Inserting Row
@@ -64,9 +64,9 @@ public class ElementApplyManager {
         return id;
     }
 
-    private String getDateTime() {
+    private String getDateWithFomat(String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                format, Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -101,6 +101,36 @@ public class ElementApplyManager {
                 elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
                 elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
                 elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
+
+                elementApplyList.add(elementApply);
+            } while (cursor.moveToNext());
+        }
+        return elementApplyList;
+    }
+
+    /**
+     * This method Getting All ElementApply in DB
+     *
+     * @return
+     */
+    public List<ElementApply> getAllCertificate() {
+        List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
+                + " WHERE status = " + ElementApply.STATUS_APPLY_APPROVED
+                + " ORDER BY id DESC";
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                ElementApply elementApply = new ElementApply();
+                elementApply.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
+                elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+                elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
+                elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
 
                 elementApplyList.add(elementApply);
             } while (cursor.moveToNext());
@@ -189,5 +219,36 @@ public class ElementApplyManager {
         values.put("status", ElementApply.STATUS_APPLY_APPROVED);
         db.update(TABLE_ELEMENT_APPLY, values, "id="+element.getId(), null);
         db.close(); // Closing database connection
+    }
+
+    public boolean hasReApplyCertificate() {
+        List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
+                + " WHERE status = " + ElementApply.STATUS_APPLY_APPROVED
+                + " ORDER BY id DESC";
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Date expirationDate = formatter.parse(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
+                    Date current_date = formatter.parse(getDateWithFomat("yyyy/MM/dd"));
+                    //Comparing dates
+                    long difference = Math.abs(expirationDate.getTime() - current_date.getTime());
+                    long differenceDates = difference / (24 * 60 * 60 * 1000);
+                    if (differenceDates < cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")) ) {
+                        return true;
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        return false;
     }
 }

@@ -310,4 +310,7 @@
     <string name="title_expiration_date">有効期限 :</string>
     <string name="txt_complete_using_procedures">利用開始手続きが完了しました</string>
     <string name="approval_confirmation">承認確認</string>
+    <string name="btn_update">&#160;&#160;申請&#160;&#160;</string>
+    <string name="btn_add">＋新規</string>
+    <string name="title_list_certificate">証明書を選択</string>
 </resources>

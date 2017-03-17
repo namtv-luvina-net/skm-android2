@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterListCertificate;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -33,7 +34,7 @@ public class ListCertificateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_certificate);
         title = (TextView) findViewById(R.id.tvTitleHeader);
-        title.setText(getString(R.string.list_application));
+        title.setText(getString(R.string.title_list_certificate));
         list = (ListView)findViewById(R.id.listConfirm);
         elementMgr = new ElementApplyManager(getApplicationContext());
     }
@@ -42,21 +43,20 @@ public class ListCertificateActivity extends Activity {
         finish();
     }
 
+    public void btnNewClick(View v) {
+        InputApplyInfo.deletePref(ListCertificateActivity.this);
+        Intent intent = new Intent(ListCertificateActivity.this, ViewPagerInputActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * Update List Certificate
      */
     @Override
     protected void onResume() {
         super.onResume();
-        listCertificate = elementMgr.getAllElementApply();
-        if(listCertificate.size() == 1) {
-            Intent intent = new Intent(ListCertificateActivity.this, DetailConfirmActivity.class);
-            intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listCertificate.get(0).getId()));
-            finish();
-            startActivity(intent);
-        } else if(listCertificate.size() == 0) {
-            finish();
-        }
+        listCertificate = elementMgr.getAllCertificate();
+
         adapterListCertificate = new AdapterListCertificate(this, listCertificate);
         list.setAdapter(adapterListCertificate);
 

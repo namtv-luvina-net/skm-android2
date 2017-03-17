@@ -19,6 +19,8 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -65,6 +67,7 @@ public class ConfirmApplyActivity extends Activity {
     private int errorCount;
     private boolean reTry;
     private HashMap<String, Boolean> mapKey = new HashMap<>();
+    private AutoResizeTextView titleEmail;
 
     /** Called when the activity is first created. */
     @Override
@@ -79,6 +82,12 @@ public class ConfirmApplyActivity extends Activity {
         txtConfirmTargetPlace = (TextView) findViewById(R.id.txtConfirmTargetPlace);
         txtConfirmEmail = (TextView) findViewById(R.id.txtConfirmEmail);
         txtConfirmReason = (TextView) findViewById(R.id.txtConfirmReason);
+        titleEmail = (AutoResizeTextView) findViewById(R.id.titleEmail);
+        if (ValidateParams.isJPLanguage()) {
+            titleEmail.setMaxLines(1);
+        } else {
+            titleEmail.setMaxLines(3);
+        }
 
         inputApplyInfo = InputApplyInfo.getPref(this);
         Intent intent = getIntent();

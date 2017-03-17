@@ -15,12 +15,11 @@
         android:layout_marginEnd="25dp"
         android:weightSum="3">
         <jp.co.soliton.keymanager.customview.AutoResizeTextView
-            android:id="@+id/titleEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/background_color_white"
-            android:text="@string/set_notification_destination_email_address"
+            android:text="@string/input_id_and_password"
             android:gravity="center|top"
             android:textSize="@dimen/text_size_title"
             android:maxLines="1"
@@ -29,46 +28,39 @@
             android:layout_marginEnd="10dp"
             android:textColor="@color/text_color_inactive"
             />
+        <TextView
+            android:id="@+id/txtUserId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="name@soliton.co.jp"
+            android:layout_weight="1"
+            android:textSize="@dimen/text_size_value"
+            android:maxLength="64"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="25dp"
+            android:gravity="bottom"
+            />
         <EditText
-            android:id="@+id/txtEmail"
+            android:id="@+id/txtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_underline"
-            android:hint="name@example.co.jp"
-            android:inputType="text|textVisiblePassword|textNoSuggestions"
+            android:hint="@string/certlogin_password_title"
+            android:inputType="textPassword"
             android:layout_weight="1"
             android:textSize="@dimen/text_size_value"
             android:maxLines="1"
             android:singleLine="true"
             android:maxLength="256"
             android:paddingLeft="10dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="50dp"
             android:gravity="bottom"
             />
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <Button
-                android:id="@+id/btnSkipEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:textAllCaps="false"
-                android:text="@string/skip"
-                android:layout_weight="1"
-                android:textSize="25sp"
-                android:textColor="@color/text_color_active"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                />
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

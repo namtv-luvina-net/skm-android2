@@ -1,5 +1,6 @@
 package jp.co.soliton.keymanager;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,5 +51,18 @@ public class ValidateParams {
             return true;
         }
         return value.trim().isEmpty();
+    }
+
+    /**
+     * is jp language
+     *
+     * @param
+     * @return boolean
+     */
+    public static Boolean isJPLanguage() {
+        if (Locale.getDefault().getLanguage().equals("ja")) {
+            return true;
+        }
+        return false;
     }
 }
