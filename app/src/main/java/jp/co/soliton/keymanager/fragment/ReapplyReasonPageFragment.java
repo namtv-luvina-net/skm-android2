@@ -33,7 +33,7 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_reason, null);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_reapply_reason, null);
         txtReason = (EditText) root.findViewById(R.id.txtReason);
         btnSkipReason = (Button) root.findViewById(R.id.btnSkipReason);
         initValueControl();

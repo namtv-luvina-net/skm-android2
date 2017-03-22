@@ -194,6 +194,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
      * @param pageIndex
      */
     public void gotoPage(int pageIndex) {
+        System.out.println(adapter.getCount());
         if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
             mViewPager.setCurrentItem(pageIndex, true);
             btnCircleAction(pageIndex + 3);

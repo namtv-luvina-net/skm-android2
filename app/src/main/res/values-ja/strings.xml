@@ -313,4 +313,7 @@
     <string name="btn_update">&#160;&#160;申請&#160;&#160;</string>
     <string name="btn_add">＋新規</string>
     <string name="title_list_certificate">証明書を選択</string>
+    <string name="text_start_reapply">利用を継続するには\n再申請が必要です</string>
+    <string name="apply_start">申請開始</string>
+    <string name="notif_title">証明書の有効期限を過ぎました。</string>
 </resources>

@@ -20,10 +20,10 @@ import jp.co.soliton.keymanager.fragment.ReapplyUserPageFragment;
  */
 
 public class ViewPagerReaaplyAdapter extends FragmentPagerAdapter {
-    public static int totalPage = 6;
+    public static int totalPage = 3;
 
     private Context context;
-    private Fragment [] listFragment = new Fragment[6];
+    private Fragment [] listFragment = new Fragment[3];
 
     public ViewPagerReaaplyAdapter(Context context, FragmentManager fm) {
         super(fm);

@@ -187,6 +187,7 @@ public class ElementApplyManager {
         elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
         elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
         elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
+        elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
         return elementApply;
     }
 

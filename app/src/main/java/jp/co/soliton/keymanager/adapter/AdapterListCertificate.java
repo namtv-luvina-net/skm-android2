@@ -107,7 +107,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             long difference = Math.abs(expirationDate.getTime() - current_date.getTime());
             long differenceDates = difference / (24 * 60 * 60 * 1000);
 
-            if (differenceDates >= 0 && differenceDates < listElementApply.get(position).getNotiEnableBefore() * 2) {
+            if (differenceDates >= 0 && differenceDates < listElementApply.get(position).getNotiEnableBefore()) {
                 viewHolder.txtStatus.setText("残り" + differenceDates + "日");
                 final int id = listElementApply.get(position).getId();
                 viewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {

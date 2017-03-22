@@ -30,6 +30,7 @@ import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -401,6 +402,8 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             if (resultCode != 0) {
                 ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
                 mgr.updateElementCertificate(element);
+                AlarmReceiver alarm = new AlarmReceiver();
+                alarm.setOnetimeTimer(getApplicationContext(), String.valueOf(element.getId()));
                 Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
                 intent.putExtra("ELEMENT_APPLY", element);
                 DetailConfirmActivity.backToList = "1";
