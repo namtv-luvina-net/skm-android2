@@ -15,6 +15,7 @@ import java.util.List;
 
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -26,7 +27,6 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
  */
 
 public class MenuAcivity extends Activity {
-    public static String GO_TO_LIST_APPLY = "0";
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 
     private LinearLayout zoneMenuCtr;
@@ -50,8 +50,8 @@ public class MenuAcivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (MenuAcivity.GO_TO_LIST_APPLY.equals("1")) {
-            MenuAcivity.GO_TO_LIST_APPLY = "0";
+        if (StringList.GO_TO_LIST_APPLY.equals("1")) {
+            StringList.GO_TO_LIST_APPLY = "0";
             Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
             startActivity(intent);
         }

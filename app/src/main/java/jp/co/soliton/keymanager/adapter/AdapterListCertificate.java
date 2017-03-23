@@ -104,7 +104,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             Date current_date = formatter.parse(getDateNow());
 
             //Comparing dates
-            long difference = Math.abs(expirationDate.getTime() - current_date.getTime());
+            long difference = expirationDate.getTime() - current_date.getTime();
             long differenceDates = difference / (24 * 60 * 60 * 1000);
 
             if (differenceDates >= 0 && differenceDates < listElementApply.get(position).getNotiEnableBefore()) {
@@ -115,7 +115,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                     public void onClick(View v) {
                         InputApplyInfo.deletePref(getContext());
                         Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
-                        intent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, String.valueOf(id));
+                        intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
                         getContext().startActivity(intent);
                     }
                 });
@@ -133,7 +133,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                     public void onClick(View v) {
                         InputApplyInfo.deletePref(getContext());
                         Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
-                        intent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, String.valueOf(id));
+                        intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
                         getContext().startActivity(intent);
                     }
                 });

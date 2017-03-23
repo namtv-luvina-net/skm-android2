@@ -220,7 +220,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
             @Override
             public void onOkDismissMessage() {
-                DetailConfirmActivity.backToList = "1";
+                StringList.backToList = "1";
                 finish();
             }
         });
@@ -296,6 +296,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                     }
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
                     element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
+//                    element.setExpirationDate("2017/03/20");
                 } else {
                     return false;
                 }
@@ -406,11 +407,11 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 alarm.setOnetimeTimer(getApplicationContext(), String.valueOf(element.getId()));
                 Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
                 intent.putExtra("ELEMENT_APPLY", element);
-                DetailConfirmActivity.backToList = "1";
+                StringList.backToList = "1";
                 finish();
                 startActivity(intent);
             } else {
-                DetailConfirmActivity.backToList = "1";
+                StringList.backToList = "1";
                 finish();
             }
         } else if (requestCode == m_nMDM_RequestCode) {

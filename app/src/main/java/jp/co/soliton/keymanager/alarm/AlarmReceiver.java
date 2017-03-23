@@ -1,7 +1,5 @@
 package jp.co.soliton.keymanager.alarm;
 
-import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,10 +15,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.AlarmReapplyActivity;
-import jp.co.soliton.keymanager.activity.ListConfirmActivity;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
@@ -37,7 +33,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         //You can do the processing here update the widget/remote views.
         Bundle extras = intent.getExtras();
 
-        String id = extras.getString(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, "");
+        String id = extras.getString(StringList.ELEMENT_APPLY_ID, "");
 
         ElementApplyManager mgr = new ElementApplyManager(context);
         ElementApply element = mgr.getElementApply(id);
@@ -47,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setContentTitle(context.getString(R.string.notif_title))
                         .setContentText(element.getUserId());
         Intent resultIntent = new Intent(context, AlarmReapplyActivity.class);
-        resultIntent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, element.getId());
+        resultIntent.putExtra(StringList.ELEMENT_APPLY_ID, id);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(AlarmReapplyActivity.class);
@@ -74,7 +70,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         try {
             AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(context, AlarmReceiver.class);
-            intent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, elementId);
+            intent.putExtra(StringList.ELEMENT_APPLY_ID, elementId);
             final int _id = (int) System.currentTimeMillis();
             PendingIntent pi = PendingIntent.getBroadcast(context, _id, intent, PendingIntent.FLAG_ONE_SHOT);
             ElementApplyManager mgr = new ElementApplyManager(context);
@@ -82,9 +78,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             Date expirationDate = formatter.parse(element.getExpirationDate());
 
-//            am.set(AlarmManager.RTC_WAKEUP, expirationDate.getTime(), pi);
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10000, pi);
-        } catch (ParseException e) {
+            am.set(AlarmManager.RTC_WAKEUP, expirationDate.getTime(), pi);
+//            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10000, pi);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

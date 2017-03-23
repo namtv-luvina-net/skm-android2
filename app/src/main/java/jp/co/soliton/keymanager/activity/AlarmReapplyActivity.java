@@ -37,13 +37,13 @@ public class AlarmReapplyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_reapply);
-        id = getIntent().getStringExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID);
+        id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
     }
 
     public void clickStart(View v) {
         InputApplyInfo.deletePref(this);
         Intent intent = new Intent(this, ViewPagerReapplyActivity.class);
-        intent.putExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID, id);
+        intent.putExtra(StringList.ELEMENT_APPLY_ID, id);
         this.startActivity(intent);
     }
 

@@ -31,7 +31,6 @@ public class ElementApplyManager {
         values.put("port", elementApply.getPort());
         values.put("port_ssl", elementApply.getPortSSL());
         values.put("user_id", elementApply.getUserId());
-        values.put("password", elementApply.getPassword());
         if (elementApply.getEmail() != null && elementApply.getEmail() != "") {
             values.put("email", elementApply.getEmail());
         }
@@ -94,7 +93,6 @@ public class ElementApplyManager {
                 elementApply.setPortSSL(cursor.getString(cursor.getColumnIndexOrThrow("port_ssl")));
                 elementApply.setPort(cursor.getString(cursor.getColumnIndexOrThrow("port")));
                 elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
-                elementApply.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("password")));
                 elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
                 elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
                 elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
@@ -180,7 +178,6 @@ public class ElementApplyManager {
         elementApply.setPortSSL(cursor.getString(cursor.getColumnIndexOrThrow("port_ssl")));
         elementApply.setPort(cursor.getString(cursor.getColumnIndexOrThrow("port")));
         elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
-        elementApply.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("password")));
         elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
         elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
         elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));

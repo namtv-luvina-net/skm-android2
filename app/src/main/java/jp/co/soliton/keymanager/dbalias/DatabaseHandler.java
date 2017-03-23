@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     // All Static variables
     // Database Name
     private static final String DATABASE_NAME = "applyManager.db";
@@ -36,7 +36,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + "port_ssl INTEGER, "
                 + "port INTEGER, "
                 + "user_id TEXT, "
-                + "password TEXT, "
                 + "email TEXT, "
                 + "reason TEXT, "
                 + "target TEXT, "

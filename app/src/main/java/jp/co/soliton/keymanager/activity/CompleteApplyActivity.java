@@ -19,7 +19,6 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
  */
 
 public class CompleteApplyActivity extends Activity {
-    public static final String BACK_AUTO = "backAuto";
     private Button btnBackTop;
     private InformCtrl m_InformCtrl;
     private ElementApply element;
@@ -36,7 +35,7 @@ public class CompleteApplyActivity extends Activity {
         setContentView(R.layout.activity_complete_apply);
         btnBackTop = (Button) findViewById(R.id.btnBackToTop);
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(BACK_AUTO, false)) {
+        if (intent.getBooleanExtra(StringList.BACK_AUTO, false)) {
             btnBackTop.setText(getString(R.string.back_to_top_auto));
             m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
             element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");

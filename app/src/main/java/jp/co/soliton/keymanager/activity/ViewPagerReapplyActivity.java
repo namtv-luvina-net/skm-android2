@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,6 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 public class ViewPagerReapplyActivity extends FragmentActivity {
     public static int REQUEST_CODE_APPLY_COMPLETE = 4953;
-    public static String ELEMENT_APPLY_ID = "ELEMENT_APPLY_ID";
 
     private InputApplyViewPager mViewPager;
     private ViewPagerReaaplyAdapter adapter;
@@ -40,6 +40,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     private InformCtrl m_InformCtrl;
     private InputApplyInfo inputApplyInfo;
     private ElementApplyManager elementMgr;
+    private RelativeLayout groupCircle;
 
     /** Called when the activity is first created. */
     @Override
@@ -51,7 +52,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
         elementMgr = new ElementApplyManager(this);
-        String idConfirmApply = getIntent().getStringExtra(ViewPagerReapplyActivity.ELEMENT_APPLY_ID);
+        String idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
             ElementApply detail = elementMgr.getElementApply(idConfirmApply);
@@ -87,6 +88,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
         mViewPager = (InputApplyViewPager) findViewById(R.id.viewPager);
         backButton = (Button) findViewById(R.id.btnInputBack);
         nextButton = (Button) findViewById(R.id.btnInputNext);
+        groupCircle = (RelativeLayout) findViewById(R.id.groupCircle);
         adapter = new ViewPagerReaaplyAdapter(getApplicationContext(),getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);
@@ -155,6 +157,11 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
                 listButtonCircle.get(i).setBackgroundDrawable(bgCircle);
             }
         }
+        if(action <= 3) {
+            groupCircle.setVisibility(View.INVISIBLE);
+        } else {
+            groupCircle.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -194,7 +201,6 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
      * @param pageIndex
      */
     public void gotoPage(int pageIndex) {
-        System.out.println(adapter.getCount());
         if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
             mViewPager.setCurrentItem(pageIndex, true);
             btnCircleAction(pageIndex + 3);

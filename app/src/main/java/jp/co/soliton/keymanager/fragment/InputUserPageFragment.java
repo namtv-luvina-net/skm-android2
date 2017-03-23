@@ -251,7 +251,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 pagerInputActivity.getInputApplyInfo().setPassword(null);
                 pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
                 Intent intent = new Intent(pagerInputActivity, CompleteApplyActivity.class);
-                intent.putExtra(CompleteApplyActivity.BACK_AUTO, true);
+                intent.putExtra(StringList.BACK_AUTO, true);
                 intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
                 String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
                         pagerInputActivity.getInputApplyInfo().getUserId()));

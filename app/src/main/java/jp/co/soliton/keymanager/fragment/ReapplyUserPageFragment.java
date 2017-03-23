@@ -229,7 +229,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                 pagerReapplyActivity.getInputApplyInfo().setPassword(null);
                 pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
                 Intent intent = new Intent(pagerReapplyActivity, CompleteApplyActivity.class);
-                intent.putExtra(CompleteApplyActivity.BACK_AUTO, true);
+                intent.putExtra(StringList.BACK_AUTO, true);
                 intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
                 String id = String.valueOf(elementMgr.getIdElementApply(pagerReapplyActivity.getInputApplyInfo().getHost(),
                         pagerReapplyActivity.getInputApplyInfo().getUserId()));
@@ -308,6 +308,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         } else {
             pagerReapplyActivity.setActiveBackNext(true, true);
         }
+        pagerReapplyActivity.gotoPage(0);
     }
 
     private void saveElementApply() {
