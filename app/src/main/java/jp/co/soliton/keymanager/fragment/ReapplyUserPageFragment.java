@@ -13,11 +13,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -43,24 +42,24 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
  * Page input account and execute logon to server
  */
 
-public class InputUserPageFragment extends InputBasePageFragment {
-    private EditText txtUserId;
+public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
     private EditText txtPassword;
+    private TextView txtUserId;
     private boolean isEnroll;
     private boolean challenge;
     private ElementApplyManager elementMgr;
     private boolean isSubmitted;
 
     public static Fragment newInstance(Context context) {
-        InputUserPageFragment f = new InputUserPageFragment();
+        ReapplyUserPageFragment f = new ReapplyUserPageFragment();
         return f;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_user, null);
-        txtUserId = (EditText) root.findViewById(R.id.txtUserId);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_reapply_user, null);
         txtPassword = (EditText) root.findViewById(R.id.txtPassword);
+        txtUserId = (TextView) root.findViewById(R.id.txtUserId);
         initValueControl();
         return root;
     }
@@ -68,13 +67,13 @@ public class InputUserPageFragment extends InputBasePageFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ViewPagerInputActivity) {
-            this.pagerInputActivity = (ViewPagerInputActivity) context;
+        if (context instanceof ViewPagerReapplyActivity) {
+            this.pagerReapplyActivity = (ViewPagerReapplyActivity) context;
             if (progressDialog == null) {
-                progressDialog = new DialogApplyProgressBar(pagerInputActivity);
+                progressDialog = new DialogApplyProgressBar(pagerReapplyActivity);
             }
             if (elementMgr == null) {
-                elementMgr = new ElementApplyManager(pagerInputActivity);
+                elementMgr = new ElementApplyManager(pagerReapplyActivity);
             }
         }
     }
@@ -83,20 +82,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //Execute action for edit text
-        txtUserId.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                setStatusControl();
-            }
-        });
         txtPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -113,14 +98,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 setStatusControl();
             }
         });
-        txtUserId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                }
-            }
-        });
+
         txtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -136,7 +114,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (!nullOrEmpty(txtUserId.getText().toString()) && !nullOrEmpty(txtPassword.getText().toString())) {
+                    if (!nullOrEmpty(txtPassword.getText().toString())) {
                         nextAction();
                         return true;
                     }
@@ -144,7 +122,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 return false;
             }
         });
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getUserId())) {
+        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getUserId())) {
             txtPassword.requestFocus();
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
@@ -177,13 +155,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
-        if (!ValidateParams.isValidUserID(txtUserId.getText().toString().trim())) {
-            showMessage(getString(R.string.user_id_is_invalid));
-            return;
-        }
-        pagerInputActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
-        pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
-        pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+        pagerReapplyActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
+        pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
@@ -193,11 +166,12 @@ public class InputUserPageFragment extends InputBasePageFragment {
         progressDialog.show();
         // グレーアウト
         setButtonRunnable(false);
-        if (nullOrEmpty(pagerInputActivity.getInformCtrl().GetURL())) {
-            String url = String.format("%s:%s", pagerInputActivity.getInputApplyInfo().getHost(), pagerInputActivity.getInputApplyInfo().getSecurePort());
-            pagerInputActivity.getInformCtrl().SetURL(url);
+        if (nullOrEmpty(pagerReapplyActivity.getInformCtrl().GetURL())) {
+            String url = String.format("%s:%s", pagerReapplyActivity.getInputApplyInfo().getHost(),
+                    pagerReapplyActivity.getInputApplyInfo().getSecurePort());
+            pagerReapplyActivity.getInformCtrl().SetURL(url);
         }
-        pagerInputActivity.getInformCtrl().SetCookie(null);
+        pagerReapplyActivity.getInformCtrl().SetCookie(null);
         isEnroll = false;
         challenge = false;
         //open thread logon to server
@@ -209,29 +183,33 @@ public class InputUserPageFragment extends InputBasePageFragment {
      * @return
      */
     private boolean makeParameterLogon() {
-        String strUserid = txtUserId.getText().toString().trim();
         String strPasswd = txtPassword.getText().toString();
         String rtnserial = "";
-        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
-            rtnserial = XmlPullParserAided.GetUDID(pagerInputActivity);
+        System.out.println(pagerReapplyActivity.getInputApplyInfo().getPlace());
+        System.out.println(pagerReapplyActivity.getInformCtrl().GetUserID());
+        if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
+            rtnserial = XmlPullParserAided.GetUDID(pagerReapplyActivity);
         } else {
-            rtnserial = XmlPullParserAided.GetVpnApid(pagerInputActivity);
+            rtnserial = XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
         }
+        System.out.println(pagerReapplyActivity.getInputApplyInfo().getPlace());
         // ログインメッセージ
         // URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
         String message;
         try {
-            message = "Action=logon" + "&" + StringList.m_strUserID + URLEncoder.encode(strUserid, "UTF-8") +
+            message = "Action=logon" + "&" + StringList.m_strUserID +
+                    URLEncoder.encode(pagerReapplyActivity.getInputApplyInfo().getUserId(), "UTF-8") +
                     "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
                     "&" + StringList.m_strSerial + rtnserial;
         } catch (Exception ex) {
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }
+        System.out.println(message);
         // 入力データを情報管理クラスへセットする
-        pagerInputActivity.getInformCtrl().SetUserID(strUserid);
-        pagerInputActivity.getInformCtrl().SetPassword(strPasswd);
-        pagerInputActivity.getInformCtrl().SetMessage(message);
+        pagerReapplyActivity.getInformCtrl().SetUserID(pagerReapplyActivity.getInputApplyInfo().getUserId());
+        pagerReapplyActivity.getInformCtrl().SetPassword(strPasswd);
+        pagerReapplyActivity.getInformCtrl().SetMessage(message);
         return true;
     }
 
@@ -248,45 +226,41 @@ public class InputUserPageFragment extends InputBasePageFragment {
             if (isEnroll) {
                 //save element apply
                 saveElementApply();
-                pagerInputActivity.getInputApplyInfo().setPassword(null);
-                pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
-                Intent intent = new Intent(pagerInputActivity, CompleteApplyActivity.class);
+                pagerReapplyActivity.getInputApplyInfo().setPassword(null);
+                pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+                Intent intent = new Intent(pagerReapplyActivity, CompleteApplyActivity.class);
                 intent.putExtra(StringList.BACK_AUTO, true);
-                intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
-                String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
-                        pagerInputActivity.getInputApplyInfo().getUserId()));
-                ElementApply element = elementMgr.getElementApply(id);
+                intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
+                ElementApply element = elementMgr.getElementApply(pagerReapplyActivity.idConfirmApply);
                 intent.putExtra("ELEMENT_APPLY", element);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                pagerInputActivity.finish();
+                pagerReapplyActivity.finish();
             } else {
                 if (isSubmitted) {
                     saveElementApply();
-                    Intent intent = new Intent(pagerInputActivity, CompleteConfirmApplyActivity.class);
-                    pagerInputActivity.finish();
+                    Intent intent = new Intent(pagerReapplyActivity, CompleteConfirmApplyActivity.class);
+                    pagerReapplyActivity.finish();
                     intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
-                    String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
-                            pagerInputActivity.getInputApplyInfo().getUserId()));
-                    ElementApply element = elementMgr.getElementApply(id);
+                    ElementApply element = elementMgr.getElementApply(pagerReapplyActivity.idConfirmApply);
                     intent.putExtra("ELEMENT_APPLY", element);
-                    intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
+                    intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
                     startActivity(intent);
                 } else {
-                    pagerInputActivity.gotoPage(4);
+                    pagerReapplyActivity.gotoPage(1);
                 }
             }
         } else {
             //show error message
             if (m_nErroType == ERR_FORBIDDEN) {
                 String str_forbidden = getString(R.string.Forbidden);
-                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_forbidden.length()));
+                showMessage(pagerReapplyActivity.getInformCtrl().GetRtn().substring(str_forbidden.length()));
             } else if (m_nErroType == ERR_UNAUTHORIZED) {
                 String str_unauth = getString(R.string.Unauthorized);
-                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_unauth.length()));
+                showMessage(pagerReapplyActivity.getInformCtrl().GetRtn().substring(str_unauth.length()));
             } else if (m_nErroType == ERR_COLON) {
                 String str_err = getString(R.string.ERR);
-                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_err.length()));
+                showMessage(pagerReapplyActivity.getInformCtrl().GetRtn().substring(str_err.length()));
             } else if (m_nErroType == ERR_LOGIN_FAIL) {
                 showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
                     @Override
@@ -306,14 +280,14 @@ public class InputUserPageFragment extends InputBasePageFragment {
      * init value for controls
      */
     private void initValueControl() {
-        if (pagerInputActivity == null) {
+        if (pagerReapplyActivity == null) {
             return;
         }
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getUserId())) {
-            txtUserId.setText(pagerInputActivity.getInputApplyInfo().getUserId());
+        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getUserId())) {
+            txtUserId.setText(pagerReapplyActivity.getInputApplyInfo().getUserId());
         }
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getPassword())) {
-            txtPassword.setText(pagerInputActivity.getInputApplyInfo().getPassword());
+        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getPassword())) {
+            txtPassword.setText(pagerReapplyActivity.getInputApplyInfo().getPassword());
         }
         setStatusControl();
     }
@@ -322,32 +296,34 @@ public class InputUserPageFragment extends InputBasePageFragment {
      * Set status for next back button
      */
     private void setStatusControl() {
-        if (pagerInputActivity.getCurrentPage() != 3) {
+        if (pagerReapplyActivity.getCurrentPage() != 0) {
             return;
         }
-        if (nullOrEmpty(txtUserId.getText().toString()) || nullOrEmpty(txtPassword.getText().toString())) {
-            pagerInputActivity.setActiveBackNext(true, false);
+        if (nullOrEmpty(txtPassword.getText().toString())) {
+            pagerReapplyActivity.setActiveBackNext(true, false);
         } else {
-            pagerInputActivity.setActiveBackNext(true, true);
+            pagerReapplyActivity.setActiveBackNext(true, true);
         }
+        pagerReapplyActivity.gotoPage(0);
     }
 
     private void saveElementApply() {
         if (elementMgr == null) {
-            elementMgr = new ElementApplyManager(pagerInputActivity);
+            elementMgr = new ElementApplyManager(pagerReapplyActivity);
         }
+        elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, pagerReapplyActivity.idConfirmApply);
         String rtnserial;
-        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
-            rtnserial = "WIFI" + XmlPullParserAided.GetUDID(pagerInputActivity);
+        if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
+            rtnserial = "WIFI" + XmlPullParserAided.GetUDID(pagerReapplyActivity);
         } else {
-            rtnserial = "APP" + XmlPullParserAided.GetVpnApid(pagerInputActivity);
+            rtnserial = "APP" + XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
         }
         ElementApply elementApply = new ElementApply();
-        elementApply.setHost(pagerInputActivity.getInputApplyInfo().getHost());
-        elementApply.setPort(pagerInputActivity.getInputApplyInfo().getPort());
-        elementApply.setPortSSL(pagerInputActivity.getInputApplyInfo().getSecurePort());
-        elementApply.setUserId(pagerInputActivity.getInputApplyInfo().getUserId());
-        elementApply.setPassword(pagerInputActivity.getInputApplyInfo().getPassword());
+        elementApply.setHost(pagerReapplyActivity.getInputApplyInfo().getHost());
+        elementApply.setPort(pagerReapplyActivity.getInputApplyInfo().getPort());
+        elementApply.setPortSSL(pagerReapplyActivity.getInputApplyInfo().getSecurePort());
+        elementApply.setUserId(pagerReapplyActivity.getInputApplyInfo().getUserId());
+        elementApply.setPassword(pagerReapplyActivity.getInputApplyInfo().getPassword());
         elementApply.setEmail("");
         elementApply.setReason("");
         elementApply.setTarger(rtnserial);
@@ -365,42 +341,42 @@ public class InputUserPageFragment extends InputBasePageFragment {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
-            HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
-            boolean ret = conn.RunHttpApplyLoginUrlConnection(pagerInputActivity.getInformCtrl());
+            HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerReapplyActivity);
+            boolean ret = conn.RunHttpApplyLoginUrlConnection(pagerReapplyActivity.getInformCtrl());
 
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", pagerInputActivity);
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", pagerReapplyActivity);
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
-            if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", pagerInputActivity);
+            if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", pagerReapplyActivity);
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
-            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", pagerInputActivity);
+            } else if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", pagerReapplyActivity);
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
-            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", pagerInputActivity);
+            } else if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.ERR).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", pagerReapplyActivity);
                 m_nErroType = ERR_COLON;
                 return false;
-            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith("NG")) {
+            } else if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith("NG")) {
                 m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             // 取得したCookieをログイン時のCookieとして保持する.
-            pagerInputActivity.getInformCtrl().SetLoginCookie(pagerInputActivity.getInformCtrl().GetCookie());
+            pagerReapplyActivity.getInformCtrl().SetLoginCookie(pagerReapplyActivity.getInformCtrl().GetCookie());
             ///////////////////////////////////////////////////
             // 認証応答の解析(Enroll応答のときの対応を流用できるはず)
             ///////////////////////////////////////////////////
             // 取得XMLのパーサー
-            XmlPullParserAided m_p_aided = new XmlPullParserAided(pagerInputActivity, pagerInputActivity.getInformCtrl().GetRtn(), 2);    // 最上位dictの階層は2になる
+            XmlPullParserAided m_p_aided = new XmlPullParserAided(pagerReapplyActivity, pagerReapplyActivity.getInformCtrl().GetRtn(), 2);    // 最上位dictの階層は2になる
 
-            ret = m_p_aided.TakeApartUserAuthenticationResponse(pagerInputActivity.getInformCtrl());
+            ret = m_p_aided.TakeApartUserAuthenticationResponse(pagerReapplyActivity.getInformCtrl());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", pagerInputActivity);
+                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", pagerReapplyActivity);
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
@@ -416,13 +392,13 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     if(StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         isEnroll = true;
                         String rtnserial = "";
-                        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
-                            rtnserial = XmlPullParserAided.GetUDID(pagerInputActivity);
+                        if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
+                            rtnserial = XmlPullParserAided.GetUDID(pagerReapplyActivity);
                         } else {
-                            rtnserial = XmlPullParserAided.GetVpnApid(pagerInputActivity);
+                            rtnserial = XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
                         }
                         String sendmsg = m_p_aided.DeviceInfoText(rtnserial);
-                        pagerInputActivity.getInformCtrl().SetMessage(sendmsg);
+                        pagerReapplyActivity.getInformCtrl().SetMessage(sendmsg);
                     }
                     if(StringList.m_str_issubmitted.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         if (6 == p_data.GetType()) {
@@ -434,7 +410,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     }
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
                         if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
-                            pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
+                            pagerReapplyActivity.getInputApplyInfo().setEmail(p_data.GetData());
                         }
                     }
                 }

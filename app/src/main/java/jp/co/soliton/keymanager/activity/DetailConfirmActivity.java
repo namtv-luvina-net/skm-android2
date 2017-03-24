@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -17,8 +18,6 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
  */
 
 public class DetailConfirmActivity extends Activity {
-
-    public static String backToList = "0";
 
     private ElementApplyManager elementMgr;
     private TextView tvHostName;
@@ -148,10 +147,6 @@ public class DetailConfirmActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (DetailConfirmActivity.backToList.equals("1")) {
-            DetailConfirmActivity.backToList = "0";
-            finish();
-        }
         int totalApply = elementMgr.getCountElementApply();
         if (totalApply <= 0) {
             finish();

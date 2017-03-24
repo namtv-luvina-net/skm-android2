@@ -44,7 +44,7 @@ public class CompleteConfirmApplyActivity extends Activity {
                 @Override
                 public void onOkDismissMessage() {
                     Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-                    MenuAcivity.GO_TO_LIST_APPLY = "1";
+                    StringList.GO_TO_LIST_APPLY = "1";
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
@@ -69,7 +69,7 @@ public class CompleteConfirmApplyActivity extends Activity {
             });
         } else {
             Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-            MenuAcivity.GO_TO_LIST_APPLY = "1";
+            StringList.GO_TO_LIST_APPLY = "1";
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
@@ -78,6 +78,13 @@ public class CompleteConfirmApplyActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public void clickStart(View v) {

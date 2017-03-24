@@ -30,6 +30,7 @@ import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -219,8 +220,10 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
             @Override
             public void onOkDismissMessage() {
-                DetailConfirmActivity.backToList = "1";
-                finish();
+                StringList.GO_TO_LIST_APPLY = "1";
+                Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         dlgMessage.show();
@@ -293,8 +296,9 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                             element.setcNValue(arr[i].toString().replace("CN=","").trim());
                         }
                     }
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
                     element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
+//                    element.setExpirationDate("2017/03/20");
                 } else {
                     return false;
                 }
@@ -401,14 +405,17 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             if (resultCode != 0) {
                 ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
                 mgr.updateElementCertificate(element);
+                AlarmReceiver alarm = new AlarmReceiver();
+                alarm.setOnetimeTimer(getApplicationContext(), String.valueOf(element.getId()));
                 Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
                 intent.putExtra("ELEMENT_APPLY", element);
-                DetailConfirmActivity.backToList = "1";
                 finish();
                 startActivity(intent);
             } else {
-                DetailConfirmActivity.backToList = "1";
-                finish();
+                StringList.GO_TO_LIST_APPLY = "1";
+                Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         } else if (requestCode == m_nMDM_RequestCode) {
             if (resultCode == RESULT_OK) {
@@ -529,5 +536,12 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

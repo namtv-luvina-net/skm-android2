@@ -31,7 +31,6 @@ public class ElementApplyManager {
         values.put("port", elementApply.getPort());
         values.put("port_ssl", elementApply.getPortSSL());
         values.put("user_id", elementApply.getUserId());
-        values.put("password", elementApply.getPassword());
         if (elementApply.getEmail() != null && elementApply.getEmail() != "") {
             values.put("email", elementApply.getEmail());
         }
@@ -43,7 +42,7 @@ public class ElementApplyManager {
         values.put("challenge", elementApply.isChallenge() ? 1 : 0);
         int id = getIdElementApply(elementApply.getHost(), elementApply.getUserId());
         if (id > 0) {
-            values.put("updated_at", getDateTime());
+            values.put("updated_at", getDateWithFomat("yyyy/MM/dd HH:mm:ss"));
             db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
         } else {
             db.insert(TABLE_ELEMENT_APPLY, null, values);// Inserting Row
@@ -54,8 +53,10 @@ public class ElementApplyManager {
     public int getIdElementApply(String host_name, String user_id) {
         int id = 0;
         SQLiteDatabase db = databaseHandler.getReadableDatabase();
-        String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ?";
-        Cursor cursor = db.rawQuery(Query, new String[]{host_name,user_id});
+        String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ? "
+                + "AND status NOT IN (?,?)";
+        Cursor cursor = db.rawQuery(Query, new String[]{host_name,user_id,
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(0);
@@ -64,9 +65,9 @@ public class ElementApplyManager {
         return id;
     }
 
-    private String getDateTime() {
+    private String getDateWithFomat(String format) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                format, Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -80,10 +81,11 @@ public class ElementApplyManager {
         List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
-                + " WHERE status <> " + ElementApply.STATUS_APPLY_APPROVED
+                + " WHERE status NOT IN (?,?)"
                 + " ORDER BY id DESC";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         // looping through all rows and adding to list
 
         if (cursor.moveToFirst()) {
@@ -94,7 +96,6 @@ public class ElementApplyManager {
                 elementApply.setPortSSL(cursor.getString(cursor.getColumnIndexOrThrow("port_ssl")));
                 elementApply.setPort(cursor.getString(cursor.getColumnIndexOrThrow("port")));
                 elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
-                elementApply.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("password")));
                 elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
                 elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
                 elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
@@ -113,13 +114,44 @@ public class ElementApplyManager {
      *
      * @return
      */
+    public List<ElementApply> getAllCertificate() {
+        List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
+                + " WHERE status = " + ElementApply.STATUS_APPLY_APPROVED
+                + " ORDER BY expiration_date ASC";
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        if (cursor.moveToFirst()) {
+            do {
+                ElementApply elementApply = new ElementApply();
+                elementApply.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+                elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
+                elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+                elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
+                elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
+
+                elementApplyList.add(elementApply);
+            } while (cursor.moveToNext());
+        }
+        return elementApplyList;
+    }
+
+    /**
+     * This method Getting All ElementApply in DB
+     *
+     * @return
+     */
     public int getCountElementApply() {
         int total = 0;
         // Select All Query
         String selectQuery = "SELECT COUNT(*) FROM " + TABLE_ELEMENT_APPLY
-                + " WHERE status <> " + ElementApply.STATUS_APPLY_APPROVED;
+                + " WHERE status NOT IN (?,?)";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         // looping through all rows and adding to list
 
         if (cursor.moveToFirst()) {
@@ -150,13 +182,13 @@ public class ElementApplyManager {
         elementApply.setPortSSL(cursor.getString(cursor.getColumnIndexOrThrow("port_ssl")));
         elementApply.setPort(cursor.getString(cursor.getColumnIndexOrThrow("port")));
         elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
-        elementApply.setPassword(cursor.getString(cursor.getColumnIndexOrThrow("password")));
         elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
         elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
         elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
         elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
         elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
         elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
+        elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
         return elementApply;
     }
 
@@ -189,5 +221,36 @@ public class ElementApplyManager {
         values.put("status", ElementApply.STATUS_APPLY_APPROVED);
         db.update(TABLE_ELEMENT_APPLY, values, "id="+element.getId(), null);
         db.close(); // Closing database connection
+    }
+
+    public boolean hasReApplyCertificate() {
+        List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
+                + " WHERE status = " + ElementApply.STATUS_APPLY_APPROVED
+                + " ORDER BY id DESC";
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Date expirationDate = formatter.parse(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
+                    Date current_date = new Date();
+                    //Comparing dates
+                    long difference = expirationDate.getTime() - current_date.getTime();
+                    long differenceDates = difference / (24 * 60 * 60 * 1000);
+                    if (differenceDates < cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")) ) {
+                        return true;
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        return false;
     }
 }

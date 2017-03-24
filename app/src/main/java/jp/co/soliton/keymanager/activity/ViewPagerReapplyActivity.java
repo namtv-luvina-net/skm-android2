@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -17,11 +18,10 @@ import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.adapter.ViewPagerAdapter;
+import jp.co.soliton.keymanager.adapter.ViewPagerReaaplyAdapter;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
-import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
+import jp.co.soliton.keymanager.fragment.ReapplyBasePageFragment;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 /**
@@ -29,30 +29,31 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
  * Activity for input screen apply
  */
 
-public class ViewPagerInputActivity extends FragmentActivity {
-    public static int REQUEST_CODE_APPLY_COMPLETE        = 4953;
-    public static int REQUEST_CODE_INSTALL_CERTIFICATION = 4954;
+public class ViewPagerReapplyActivity extends FragmentActivity {
+    public static int REQUEST_CODE_APPLY_COMPLETE = 4953;
 
     private InputApplyViewPager mViewPager;
-    private ViewPagerAdapter adapter;
+    private ViewPagerReaaplyAdapter adapter;
     private ArrayList<Button> listButtonCircle = new ArrayList<>();
     private Button backButton;
     private Button nextButton;
     private InformCtrl m_InformCtrl;
     private InputApplyInfo inputApplyInfo;
     private ElementApplyManager elementMgr;
+    private RelativeLayout groupCircle;
+    public String idConfirmApply;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pager_input);
+        setContentView(R.layout.activity_pager_reapply);
         setUpView();
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
         elementMgr = new ElementApplyManager(this);
-        String idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
+        idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
             ElementApply detail = elementMgr.getElementApply(idConfirmApply);
@@ -60,12 +61,13 @@ public class ViewPagerInputActivity extends FragmentActivity {
             getInputApplyInfo().setPort(detail.getPort());
             getInputApplyInfo().setSecurePort(detail.getPortSSL());
             if (detail.getTarger().startsWith("WIFI")) {
-                getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_WiFi);
+                getInputApplyInfo().setPlace(ReapplyBasePageFragment.TARGET_WiFi);
             } else {
-                getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
+                getInputApplyInfo().setPlace(ReapplyBasePageFragment.TARGET_VPN);
             }
             getInputApplyInfo().setUserId(detail.getUserId());
-            gotoPage(3);
+        } else {
+            finish();
         }
     }
 
@@ -78,28 +80,20 @@ public class ViewPagerInputActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         int current;
-        if (mViewPager.getCurrentItem() == 2) {
-            hideInputPort(true);
-            current = mViewPager.getCurrentItem() - 2;
-        } else {
-            current = mViewPager.getCurrentItem() - 1;
-        }
+        current = mViewPager.getCurrentItem() - 1;
         if (current < 0) {
-            InputApplyInfo.deletePref(ViewPagerInputActivity.this);
+            InputApplyInfo.deletePref(ViewPagerReapplyActivity.this);
             finish();
         } else {
             mViewPager.setCurrentItem(current, true);
             btnCircleAction(current);
         }
-        setStatusBackNext(current);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
-        } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {
-            ((InputPortPageFragment)adapter.getItem(mViewPager.getCurrentItem())).finishInstallCertificate(resultCode);
         }
     }
 
@@ -110,7 +104,8 @@ public class ViewPagerInputActivity extends FragmentActivity {
         mViewPager = (InputApplyViewPager) findViewById(R.id.viewPager);
         backButton = (Button) findViewById(R.id.btnInputBack);
         nextButton = (Button) findViewById(R.id.btnInputNext);
-        adapter = new ViewPagerAdapter(getApplicationContext(),getSupportFragmentManager());
+        groupCircle = (RelativeLayout) findViewById(R.id.groupCircle);
+        adapter = new ViewPagerReaaplyAdapter(getApplicationContext(),getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);
         mViewPager.setCurrentItem(0);
@@ -142,20 +137,14 @@ public class ViewPagerInputActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 int current;
-                if (mViewPager.getCurrentItem() == 2) {
-                    hideInputPort(true);
-                    current = mViewPager.getCurrentItem() - 2;
-                } else {
-                    current = mViewPager.getCurrentItem() - 1;
-                }
+                current = mViewPager.getCurrentItem() - 1;
                 if (current < 0) {
-                    InputApplyInfo.deletePref(ViewPagerInputActivity.this);
+                    InputApplyInfo.deletePref(ViewPagerReapplyActivity.this);
                     finish();
                 } else {
                     mViewPager.setCurrentItem(current, true);
                     btnCircleAction(current);
                 }
-                setStatusBackNext(current);
             }
         });
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -163,23 +152,10 @@ public class ViewPagerInputActivity extends FragmentActivity {
             public void onClick(View v) {
                 int current = mViewPager.getCurrentItem();
                 if (current < (adapter.getCount())) {
-                    ((InputBasePageFragment) adapter.getItem(current)).nextAction();
+                    ((ReapplyBasePageFragment) adapter.getItem(current)).nextAction();
                 }
             }
         });
-    }
-
-    /**
-     * Set status next back button
-     * @param current
-     */
-    public void setStatusBackNext(int current) {
-        nextButton.setVisibility(current == 2 ? View.INVISIBLE : View.VISIBLE);
-        if (current == 1) {
-            nextButton.setText(R.string.download);
-        } else {
-            nextButton.setText(R.string.next);
-        }
     }
 
     /**
@@ -196,6 +172,11 @@ public class ViewPagerInputActivity extends FragmentActivity {
                 bgCircle = ContextCompat.getDrawable(this, R.drawable.rounded_cell_inactive);
                 listButtonCircle.get(i).setBackgroundDrawable(bgCircle);
             }
+        }
+        if(action <= 3) {
+            groupCircle.setVisibility(View.INVISIBLE);
+        } else {
+            groupCircle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -238,8 +219,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
     public void gotoPage(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
             mViewPager.setCurrentItem(pageIndex, true);
-            btnCircleAction(pageIndex);
-            setStatusBackNext(pageIndex);
+            btnCircleAction(pageIndex + 3);
         }
     }
 
@@ -247,14 +227,11 @@ public class ViewPagerInputActivity extends FragmentActivity {
      * Go to confirm apply screen
      */
     public void gotoConfirmApply() {
-        Intent intent = new Intent(ViewPagerInputActivity.this, ConfirmApplyActivity.class);
+        Intent intent = new Intent(ViewPagerReapplyActivity.this, ConfirmApplyActivity.class);
         // ビューのリストを新しいintentに引き渡す.HTTP通信もそちらで行う。
         intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
+        intent.putExtra(StringList.UPDATE_APPLY, idConfirmApply);
         startActivityForResult(intent, REQUEST_CODE_APPLY_COMPLETE);
-    }
-
-    public void hideInputPort(boolean hide) {
-        ((InputPortPageFragment) adapter.getItem(1)).hideScreen(hide);
     }
 
     /**

@@ -283,6 +283,7 @@
                             android:textSize="@dimen/text_size_title"
                             android:text="·"/>
                         <jp.co.soliton.keymanager.customview.AutoResizeTextView
+                            android:id="@+id/titleEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/background_color_white"
