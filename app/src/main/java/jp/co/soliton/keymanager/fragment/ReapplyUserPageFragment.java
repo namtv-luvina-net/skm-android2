@@ -231,9 +231,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                 Intent intent = new Intent(pagerReapplyActivity, CompleteApplyActivity.class);
                 intent.putExtra(StringList.BACK_AUTO, true);
                 intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
-                String id = String.valueOf(elementMgr.getIdElementApply(pagerReapplyActivity.getInputApplyInfo().getHost(),
-                        pagerReapplyActivity.getInputApplyInfo().getUserId()));
-                ElementApply element = elementMgr.getElementApply(id);
+                ElementApply element = elementMgr.getElementApply(pagerReapplyActivity.idConfirmApply);
                 intent.putExtra("ELEMENT_APPLY", element);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -244,9 +242,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                     Intent intent = new Intent(pagerReapplyActivity, CompleteConfirmApplyActivity.class);
                     pagerReapplyActivity.finish();
                     intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
-                    String id = String.valueOf(elementMgr.getIdElementApply(pagerReapplyActivity.getInputApplyInfo().getHost(),
-                            pagerReapplyActivity.getInputApplyInfo().getUserId()));
-                    ElementApply element = elementMgr.getElementApply(id);
+                    ElementApply element = elementMgr.getElementApply(pagerReapplyActivity.idConfirmApply);
                     intent.putExtra("ELEMENT_APPLY", element);
                     intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
                     startActivity(intent);
@@ -315,6 +311,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         if (elementMgr == null) {
             elementMgr = new ElementApplyManager(pagerReapplyActivity);
         }
+        elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, pagerReapplyActivity.idConfirmApply);
         String rtnserial;
         if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
             rtnserial = "WIFI" + XmlPullParserAided.GetUDID(pagerReapplyActivity);

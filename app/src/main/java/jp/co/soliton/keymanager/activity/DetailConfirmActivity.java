@@ -147,10 +147,6 @@ public class DetailConfirmActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (StringList.backToList.equals("1")) {
-            StringList.backToList = "0";
-            finish();
-        }
         int totalApply = elementMgr.getCountElementApply();
         if (totalApply <= 0) {
             finish();

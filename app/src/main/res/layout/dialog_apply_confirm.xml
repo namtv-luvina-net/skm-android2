@@ -26,7 +26,7 @@
             android:id="@+id/txtDlgApplyMsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:textColor="@color/text_color_inactive"
             android:text="This is message"
             android:layout_gravity="center"

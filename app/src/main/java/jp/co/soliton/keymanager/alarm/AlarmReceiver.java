@@ -75,7 +75,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             PendingIntent pi = PendingIntent.getBroadcast(context, _id, intent, PendingIntent.FLAG_ONE_SHOT);
             ElementApplyManager mgr = new ElementApplyManager(context);
             ElementApply element = mgr.getElementApply(elementId);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date expirationDate = formatter.parse(element.getExpirationDate());
 
             am.set(AlarmManager.RTC_WAKEUP, expirationDate.getTime(), pi);

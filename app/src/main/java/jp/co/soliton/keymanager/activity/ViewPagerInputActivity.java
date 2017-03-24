@@ -76,6 +76,25 @@ public class ViewPagerInputActivity extends FragmentActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        int current;
+        if (mViewPager.getCurrentItem() == 2) {
+            hideInputPort(true);
+            current = mViewPager.getCurrentItem() - 2;
+        } else {
+            current = mViewPager.getCurrentItem() - 1;
+        }
+        if (current < 0) {
+            InputApplyInfo.deletePref(ViewPagerInputActivity.this);
+            finish();
+        } else {
+            mViewPager.setCurrentItem(current, true);
+            btnCircleAction(current);
+        }
+        setStatusBackNext(current);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();

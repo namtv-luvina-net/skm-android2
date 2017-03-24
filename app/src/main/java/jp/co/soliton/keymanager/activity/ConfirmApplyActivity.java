@@ -68,6 +68,7 @@ public class ConfirmApplyActivity extends Activity {
     private boolean reTry;
     private HashMap<String, Boolean> mapKey = new HashMap<>();
     private AutoResizeTextView titleEmail;
+    private String update_apply;
 
     /** Called when the activity is first created. */
     @Override
@@ -92,6 +93,7 @@ public class ConfirmApplyActivity extends Activity {
         inputApplyInfo = InputApplyInfo.getPref(this);
         Intent intent = getIntent();
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
+        update_apply = intent.getStringExtra(StringList.UPDATE_APPLY);
         conn = new HttpConnectionCtrl(this);
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
@@ -105,6 +107,13 @@ public class ConfirmApplyActivity extends Activity {
     public void onResume() {
         super.onResume();
         setupControl();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     /**
@@ -310,6 +319,10 @@ public class ConfirmApplyActivity extends Activity {
     }
 
     private void saveElementApply() {
+        if (!ValidateParams.nullOrEmpty(update_apply)) {
+            elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
+        }
+
         String rtnserial;
         if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
             rtnserial = "WIFI" + XmlPullParserAided.GetUDID(this);

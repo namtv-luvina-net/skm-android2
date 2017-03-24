@@ -37,7 +37,14 @@ public class CompleteUsingProceduresActivity extends Activity {
         super.onResume();
         txtCN.setText(elementApply.getcNValue());
         txtSN.setText(elementApply.getsNValue());
-        txtEpDate.setText(elementApply.getExpirationDate());
+        txtEpDate.setText(elementApply.getExpirationDate().split(" ")[0]);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public void backToTop(View v) {

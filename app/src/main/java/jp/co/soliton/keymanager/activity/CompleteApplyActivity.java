@@ -50,6 +50,14 @@ public class CompleteApplyActivity extends Activity {
         setupControl();
     }
 
+    @Override
+    public void onBackPressed() {
+        InputApplyInfo.deletePref(CompleteApplyActivity.this);
+        Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
     /**
      * Set action for control
      */

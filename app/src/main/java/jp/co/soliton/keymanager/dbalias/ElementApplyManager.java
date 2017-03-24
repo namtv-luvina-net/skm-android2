@@ -53,8 +53,10 @@ public class ElementApplyManager {
     public int getIdElementApply(String host_name, String user_id) {
         int id = 0;
         SQLiteDatabase db = databaseHandler.getReadableDatabase();
-        String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ?";
-        Cursor cursor = db.rawQuery(Query, new String[]{host_name,user_id});
+        String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ? "
+                + "AND status NOT IN (?,?)";
+        Cursor cursor = db.rawQuery(Query, new String[]{host_name,user_id,
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         if (cursor.moveToFirst()) {
             do {
                 id = cursor.getInt(0);
@@ -79,10 +81,11 @@ public class ElementApplyManager {
         List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
-                + " WHERE status <> " + ElementApply.STATUS_APPLY_APPROVED
+                + " WHERE status NOT IN (?,?)"
                 + " ORDER BY id DESC";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         // looping through all rows and adding to list
 
         if (cursor.moveToFirst()) {
@@ -116,7 +119,7 @@ public class ElementApplyManager {
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
                 + " WHERE status = " + ElementApply.STATUS_APPLY_APPROVED
-                + " ORDER BY id DESC";
+                + " ORDER BY expiration_date ASC";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -145,9 +148,10 @@ public class ElementApplyManager {
         int total = 0;
         // Select All Query
         String selectQuery = "SELECT COUNT(*) FROM " + TABLE_ELEMENT_APPLY
-                + " WHERE status <> " + ElementApply.STATUS_APPLY_APPROVED;
+                + " WHERE status NOT IN (?,?)";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         // looping through all rows and adding to list
 
         if (cursor.moveToFirst()) {
@@ -229,15 +233,15 @@ public class ElementApplyManager {
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
         if (cursor.moveToFirst()) {
             do {
                 try {
                     Date expirationDate = formatter.parse(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
-                    Date current_date = formatter.parse(getDateWithFomat("yyyy/MM/dd"));
+                    Date current_date = new Date();
                     //Comparing dates
-                    long difference = Math.abs(expirationDate.getTime() - current_date.getTime());
+                    long difference = expirationDate.getTime() - current_date.getTime();
                     long differenceDates = difference / (24 * 60 * 60 * 1000);
                     if (differenceDates < cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")) ) {
                         return true;

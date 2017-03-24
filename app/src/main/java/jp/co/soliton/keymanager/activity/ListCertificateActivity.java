@@ -55,10 +55,12 @@ public class ListCertificateActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        listCertificate = elementMgr.getAllCertificate();
+        if (!elementMgr.hasReApplyCertificate()) {
+            finish();
+        }
 
+        listCertificate = elementMgr.getAllCertificate();
         adapterListCertificate = new AdapterListCertificate(this, listCertificate);
         list.setAdapter(adapterListCertificate);
-
     }
 }

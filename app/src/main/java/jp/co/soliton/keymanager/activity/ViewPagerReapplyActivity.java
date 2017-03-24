@@ -41,6 +41,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     private InputApplyInfo inputApplyInfo;
     private ElementApplyManager elementMgr;
     private RelativeLayout groupCircle;
+    public String idConfirmApply;
 
     /** Called when the activity is first created. */
     @Override
@@ -52,7 +53,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
         elementMgr = new ElementApplyManager(this);
-        String idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
+        idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
             ElementApply detail = elementMgr.getElementApply(idConfirmApply);
@@ -65,6 +66,8 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
                 getInputApplyInfo().setPlace(ReapplyBasePageFragment.TARGET_VPN);
             }
             getInputApplyInfo().setUserId(detail.getUserId());
+        } else {
+            finish();
         }
     }
 
@@ -72,6 +75,19 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
         setChangePage();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int current;
+        current = mViewPager.getCurrentItem() - 1;
+        if (current < 0) {
+            InputApplyInfo.deletePref(ViewPagerReapplyActivity.this);
+            finish();
+        } else {
+            mViewPager.setCurrentItem(current, true);
+            btnCircleAction(current);
+        }
     }
 
     @Override
@@ -214,6 +230,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
         Intent intent = new Intent(ViewPagerReapplyActivity.this, ConfirmApplyActivity.class);
         // ビューのリストを新しいintentに引き渡す.HTTP通信もそちらで行う。
         intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
+        intent.putExtra(StringList.UPDATE_APPLY, idConfirmApply);
         startActivityForResult(intent, REQUEST_CODE_APPLY_COMPLETE);
     }
 

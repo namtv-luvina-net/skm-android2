@@ -80,6 +80,13 @@ public class CompleteConfirmApplyActivity extends Activity {
         super.onResume();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
     public void clickStart(View v) {
         Intent intent = new Intent(getApplicationContext(), StartUsingProceduresActivity.class);
         intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
