@@ -86,7 +86,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
             finish();
         } else {
             mViewPager.setCurrentItem(current, true);
-            btnCircleAction(current + 3);
+            btnCircleAction(current);
         }
     }
 
@@ -124,7 +124,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
             public void onPageScrolled(int arg0, float arg1, int arg2) {}
             @Override
             public void onPageSelected(int position) {
-                btnCircleAction(position + 3);
+                btnCircleAction(position);
             }
         });
     }
@@ -143,7 +143,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
                     finish();
                 } else {
                     mViewPager.setCurrentItem(current, true);
-                    btnCircleAction(current + 3);
+                    btnCircleAction(current);
                 }
             }
         });
@@ -163,6 +163,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
      * @param action
      */
     private void btnCircleAction(int action){
+        action+=3;
         Drawable bgCircle;
         for (int i = 0; i < listButtonCircle.size(); i ++) {
             if (i == action) {
@@ -219,7 +220,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     public void gotoPage(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
             mViewPager.setCurrentItem(pageIndex, true);
-            btnCircleAction(pageIndex + 3);
+            btnCircleAction(pageIndex);
         }
     }
 
