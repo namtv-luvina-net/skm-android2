@@ -86,7 +86,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
             finish();
         } else {
             mViewPager.setCurrentItem(current, true);
-            btnCircleAction(current);
+            btnCircleAction(current + 3);
         }
     }
 
@@ -124,7 +124,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
             public void onPageScrolled(int arg0, float arg1, int arg2) {}
             @Override
             public void onPageSelected(int position) {
-                btnCircleAction(position);
+                btnCircleAction(position + 3);
             }
         });
     }
@@ -143,7 +143,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
                     finish();
                 } else {
                     mViewPager.setCurrentItem(current, true);
-                    btnCircleAction(current);
+                    btnCircleAction(current + 3);
                 }
             }
         });
