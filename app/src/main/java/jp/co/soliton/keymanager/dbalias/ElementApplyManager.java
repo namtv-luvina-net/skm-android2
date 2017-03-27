@@ -223,33 +223,23 @@ public class ElementApplyManager {
         db.close(); // Closing database connection
     }
 
-    public boolean hasReApplyCertificate() {
-        List<ElementApply> elementApplyList = new ArrayList<ElementApply>();
+    public boolean hasCertificate() {
+        int total = 0;
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_ELEMENT_APPLY
-                + " WHERE status = " + ElementApply.STATUS_APPLY_APPROVED
-                + " ORDER BY id DESC";
+        String selectQuery = "SELECT COUNT(*) FROM " + TABLE_ELEMENT_APPLY
+                + " WHERE status = ?";
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED)});
         // looping through all rows and adding to list
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
         if (cursor.moveToFirst()) {
             do {
-                try {
-                    Date expirationDate = formatter.parse(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
-                    Date current_date = new Date();
-                    //Comparing dates
-                    long difference = expirationDate.getTime() - current_date.getTime();
-                    long differenceDates = difference / (24 * 60 * 60 * 1000);
-                    if (differenceDates < cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")) ) {
-                        return true;
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                total = cursor.getInt(0);
             } while (cursor.moveToNext());
+        }
+        if (total > 0) {
+            return true;
         }
         return false;
     }

@@ -89,7 +89,7 @@ public class MenuAcivity extends Activity {
         btnMenuStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (elementMgr.hasReApplyCertificate()) {
+                if (elementMgr.hasCertificate()) {
                     Intent intent = new Intent(MenuAcivity.this, ListCertificateActivity.class);
                     startActivity(intent);
                 } else {
