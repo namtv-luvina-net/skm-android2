@@ -55,7 +55,7 @@ public class ListCertificateActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!elementMgr.hasReApplyCertificate()) {
+        if (!elementMgr.finish()) {
             finish();
         }
 
