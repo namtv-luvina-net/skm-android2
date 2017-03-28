@@ -467,6 +467,11 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
         if (isDeviceAdmin() == false) {
             addDeviceAdmin();
+        } else {
+            SetMDM();
+            SetScepItem();
+            SetScepWifi();
+            new CertificateEnrollTask().execute(scepRequester);
         }
     }
 

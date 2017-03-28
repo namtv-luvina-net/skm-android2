@@ -32,14 +32,12 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:weightSum="9"
                    android:orientation="horizontal"
                    android:gravity="center">
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:layout_weight="4"
                         android:paddingLeft="30dp"
                         android:orientation="vertical">
                          <TextView
@@ -76,11 +74,10 @@
 
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:paddingRight="30dp"
-                        android:layout_weight="5"
                         android:paddingLeft="4dp"
                         android:orientation="vertical">
 
@@ -91,6 +88,7 @@
                              android:gravity="center_vertical"
                              android:ellipsize="end"
                              android:textSize="17dp"
+                             android:text="10.30.150.203"
                              android:singleLine="true"
                              android:textColor="@color/text_color"/>
                          <TextView
@@ -101,6 +99,7 @@
                              android:ellipsize="end"
                              android:textSize="17dp"
                              android:singleLine="true"
+                             android:text="ssgb"
                              android:textColor="@color/text_color"/>
                          <TextView
                              android:id="@+id/tvDate"
@@ -108,6 +107,7 @@
                              android:layout_height="wrap_content"
                              android:gravity="center_vertical"
                              android:textSize="17dp"
+                             android:text="2017/03/26"
                              android:textColor="@color/text_color"/>
                          <TextView
                              android:id="@+id/tvStatus"
@@ -115,6 +115,7 @@
                              android:layout_height="wrap_content"
                              android:gravity="center_vertical"
                              android:textSize="17dp"
+                             android:text="Waiting Approval"
                              android:textColor="@color/text_color"/>
                     </LinearLayout>
                </LinearLayout>
