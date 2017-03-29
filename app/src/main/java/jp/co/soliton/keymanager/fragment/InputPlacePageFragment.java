@@ -44,6 +44,11 @@ public class InputPlacePageFragment extends InputBasePageFragment {
         zoneInputPlace = (LinearLayout) root.findViewById(R.id.zoneInputPlace);
         btnTargetVPN = (Button) root.findViewById(R.id.btnTargetVPN);
         btnTargetWiFi = (Button) root.findViewById(R.id.btnTargetWifi);
+        if (pagerInputActivity.d_android_version < 4.3){
+            pagerInputActivity.getInputApplyInfo().setPlace(InputPlacePageFragment.TARGET_VPN);
+            pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+            zoneInputPlace.setVisibility(View.GONE);
+        }
         return root;
     }
 
@@ -65,13 +70,6 @@ public class InputPlacePageFragment extends InputBasePageFragment {
                 pagerInputActivity.gotoPage(3);
             }
         });
-    }
-
-    public void hideScreen() {
-        if (zoneInputPlace == null) {
-            return;
-        }
-        zoneInputPlace.setVisibility(View.INVISIBLE);
     }
 
     @Override

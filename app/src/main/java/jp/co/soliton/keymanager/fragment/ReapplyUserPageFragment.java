@@ -185,14 +185,11 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
     private boolean makeParameterLogon() {
         String strPasswd = txtPassword.getText().toString();
         String rtnserial = "";
-        System.out.println(pagerReapplyActivity.getInputApplyInfo().getPlace());
-        System.out.println(pagerReapplyActivity.getInformCtrl().GetUserID());
         if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
             rtnserial = XmlPullParserAided.GetUDID(pagerReapplyActivity);
         } else {
             rtnserial = XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
         }
-        System.out.println(pagerReapplyActivity.getInputApplyInfo().getPlace());
         // ログインメッセージ
         // URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
         String message;
@@ -205,7 +202,6 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }
-        System.out.println(message);
         // 入力データを情報管理クラスへセットする
         pagerReapplyActivity.getInformCtrl().SetUserID(pagerReapplyActivity.getInputApplyInfo().getUserId());
         pagerReapplyActivity.getInformCtrl().SetPassword(strPasswd);

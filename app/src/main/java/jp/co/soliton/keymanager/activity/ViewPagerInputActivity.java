@@ -77,11 +77,6 @@ public class ViewPagerInputActivity extends FragmentActivity {
             getInputApplyInfo().savePref(this);
             gotoPage(3);
         }
-        if (d_android_version < 4.3){
-            inputApplyInfo.setPlace(InputPlacePageFragment.TARGET_VPN);
-            inputApplyInfo.savePref(this);
-            hideInputPlace();
-        }
     }
 
     @Override
@@ -303,10 +298,6 @@ public class ViewPagerInputActivity extends FragmentActivity {
 
     public void hideInputPort(boolean hide) {
         ((InputPortPageFragment) adapter.getItem(1)).hideScreen(hide);
-    }
-
-    public void hideInputPlace() {
-        ((InputPlacePageFragment) adapter.getItem(2)).hideScreen();
     }
 
     /**
