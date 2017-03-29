@@ -263,7 +263,7 @@ public class WifiControl {
     	//	wifiConfig =this.createEapConfigEAPover43(wifiitem);
     		wifiConfig =this.createEapConfigEAP(wifiitem);
     		bConnect = false;
-    		EAPWifi43Info();
+//    		EAPWifi43Info();
     	}
 
     	// Delete Configuration :: createEapConfig2で作成したWifiConfigと同じSSIDが既に存在するときは、先に削除しておく

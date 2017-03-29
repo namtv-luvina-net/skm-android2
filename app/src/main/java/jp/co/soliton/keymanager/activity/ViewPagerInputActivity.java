@@ -1,17 +1,23 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import jp.co.soliton.keymanager.ConfigrationProcess;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
@@ -21,7 +27,9 @@ import jp.co.soliton.keymanager.adapter.ViewPagerAdapter;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
+import jp.co.soliton.keymanager.fragment.InputPlacePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
+import jp.co.soliton.keymanager.fragment.InputUserPageFragment;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 /**
@@ -41,6 +49,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
     private InformCtrl m_InformCtrl;
     private InputApplyInfo inputApplyInfo;
     private ElementApplyManager elementMgr;
+    public double d_android_version;
 
     /** Called when the activity is first created. */
     @Override
@@ -65,6 +74,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
                 getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
             }
             getInputApplyInfo().setUserId(detail.getUserId());
+            getInputApplyInfo().savePref(this);
             gotoPage(3);
         }
     }
@@ -73,6 +83,32 @@ public class ViewPagerInputActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
         setChangePage();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View v = getCurrentFocus();
+
+        if (v != null &&
+                (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+                v instanceof EditText &&
+                !v.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            v.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + v.getTop() - scrcoords[1];
+
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
+                hideKeyboard(this);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
     }
 
     @Override
@@ -115,6 +151,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
         mViewPager.setPagingEnabled(false);
         mViewPager.setCurrentItem(0);
         initButtonCircle();
+        d_android_version = ConfigrationProcess.getAndroidOsVersion();
     }
 
     /**
@@ -142,6 +179,9 @@ public class ViewPagerInputActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 int current;
+                if (d_android_version < 4.3 && mViewPager.getCurrentItem() == 3){
+                    mViewPager.setCurrentItem(2, true);
+                }
                 if (mViewPager.getCurrentItem() == 2) {
                     hideInputPort(true);
                     current = mViewPager.getCurrentItem() - 2;
@@ -236,6 +276,9 @@ public class ViewPagerInputActivity extends FragmentActivity {
      * @param pageIndex
      */
     public void gotoPage(int pageIndex) {
+        if (d_android_version < 4.3 && pageIndex == 2){
+            pageIndex++;
+        }
         if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
             mViewPager.setCurrentItem(pageIndex, true);
             btnCircleAction(pageIndex);
