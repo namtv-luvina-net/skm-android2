@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
@@ -14,6 +15,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
+import jp.co.soliton.keymanager.ConfigrationProcess;
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
@@ -26,6 +28,7 @@ import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
+import jp.co.soliton.keymanager.fragment.InputPlacePageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -88,6 +91,21 @@ public class ConfirmApplyActivity extends Activity {
             titleEmail.setMaxLines(1);
         } else {
             titleEmail.setMaxLines(3);
+        }
+
+        double d_android_version = ConfigrationProcess.getAndroidOsVersion();
+        if (d_android_version < 4.3){
+            View hrStore = (View) findViewById(R.id.hrStore);
+            LinearLayout titleStore = (LinearLayout) findViewById(R.id.titleStore);
+            LinearLayout valueStore = (LinearLayout) findViewById(R.id.valueStore);
+            hrStore.setVisibility(View.GONE);
+            titleStore.setVisibility(View.GONE);
+            valueStore.setVisibility(View.GONE);
+            LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
+                    , LinearLayout.LayoutParams.WRAP_CONTENT);
+            llp.setMargins(0, 0, 0, 20);
+
+            txtConfirmUserId.setLayoutParams(llp);
         }
 
         inputApplyInfo = InputApplyInfo.getPref(this);

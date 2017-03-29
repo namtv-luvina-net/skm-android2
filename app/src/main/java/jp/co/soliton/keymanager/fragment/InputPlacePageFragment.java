@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
@@ -22,6 +23,7 @@ public class InputPlacePageFragment extends InputBasePageFragment {
 
     private Button btnTargetVPN;
     private Button btnTargetWiFi;
+    private LinearLayout zoneInputPlace;
 
     public static Fragment newInstance(Context context) {
         InputPlacePageFragment f = new InputPlacePageFragment();
@@ -39,6 +41,7 @@ public class InputPlacePageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_place, null);
+        zoneInputPlace = (LinearLayout) root.findViewById(R.id.zoneInputPlace);
         btnTargetVPN = (Button) root.findViewById(R.id.btnTargetVPN);
         btnTargetWiFi = (Button) root.findViewById(R.id.btnTargetWifi);
         return root;
@@ -62,6 +65,13 @@ public class InputPlacePageFragment extends InputBasePageFragment {
                 pagerInputActivity.gotoPage(3);
             }
         });
+    }
+
+    public void hideScreen() {
+        if (zoneInputPlace == null) {
+            return;
+        }
+        zoneInputPlace.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -70,6 +70,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
                 getInputApplyInfo().setPlace(ReapplyBasePageFragment.TARGET_VPN);
             }
             getInputApplyInfo().setUserId(detail.getUserId());
+            getInputApplyInfo().savePref(this);
         } else {
             finish();
         }

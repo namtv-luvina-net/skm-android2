@@ -207,11 +207,13 @@
                             />
                     </LinearLayout>
                     <View
+                        android:id="@+id/hrStore"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="10dp"
                         android:background="#bbc3d1"/>
                     <LinearLayout
+                        android:id="@+id/titleStore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -235,6 +237,7 @@
                             />
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/valueStore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
