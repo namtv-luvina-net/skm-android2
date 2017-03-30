@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
 import android.util.Log;
 
@@ -35,6 +36,7 @@ import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
+import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.mdm.MDMFlgs;
 import jp.co.soliton.keymanager.scep.Requester;
@@ -72,6 +74,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private XmlPullParserAided m_p_aided = null;
     private XmlPullParserAided m_p_aided_profile = null;
     private static InformCtrl m_InformCtrl;
+    private static InformCtrl m_InformCtrlCA;
     private int m_nErroType;
     private ElementApply element;
     private String m_strCertArias;
@@ -185,7 +188,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             if (mdm_dict == null) {
                 Log.d("CertLoginActivity", "SetMDM() No profile");
                 SetScepWifi();
-                new CertificateEnrollTask().execute(scepRequester);
+                DownloadCACertificate();
             } else {
                 Log.d("CertLoginActivity", "SetMDM() Has profile");
                 CallMDMCheckIn();
@@ -422,9 +425,13 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 SetMDM();
                 SetScepItem();
                 SetScepWifi();
-                new CertificateEnrollTask().execute(scepRequester);
+                DownloadCACertificate();
             } else {
                 finish();
+            }
+        } else if (requestCode == ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION) {
+            if (resultCode == Activity.RESULT_OK) {
+                new CertificateEnrollTask().execute(scepRequester);
             }
         }
     }
@@ -471,7 +478,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             SetMDM();
             SetScepItem();
             SetScepWifi();
-            new CertificateEnrollTask().execute(scepRequester);
+            DownloadCACertificate();
         }
     }
 
@@ -548,5 +555,91 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    /**
+     * Task download certificate
+     */
+    private class DownloadCACertificateTask extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            HttpConnectionCtrl conn = new HttpConnectionCtrl(StartUsingProceduresActivity.this);
+            //send request to server
+            boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrlCA);
+            //parse result return
+            if (ret == false) {
+                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask " + "Network error", StartUsingProceduresActivity.this);
+                m_nErroType = InputBasePageFragment.ERR_NETWORK;
+                return false;
+            }
+            // ログイン結果
+            if (m_InformCtrlCA.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + " Forbidden.", StartUsingProceduresActivity.this);
+                m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+                return false;
+            } else if (m_InformCtrlCA.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "Unauthorized.", StartUsingProceduresActivity.this);
+                m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+                return false;
+            } else if (m_InformCtrlCA.GetRtn().startsWith(getText(R.string.ERR).toString())) {
+                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "ERR:", StartUsingProceduresActivity.this);
+                m_nErroType = InputBasePageFragment.ERR_COLON;
+                return false;
+            }
+            m_nErroType = InputBasePageFragment.SUCCESSFUL;
+
+            return ret;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if (result) {
+                installCACert();
+            } else {
+                endConnection(result);
+            }
+        }
+    }
+
+    private void DownloadCACertificate(){
+        if (element.getTarger().startsWith("WIFI")) {
+            m_InformCtrlCA = new InformCtrl();
+            String url = String.format("%s:%s", element.getHost(), element.getPort());
+            m_InformCtrlCA.SetURL(url);
+            //Open thread download cert
+            new DownloadCACertificateTask().execute();
+        } else {
+            new CertificateEnrollTask().execute(scepRequester);
+        }
+    }
+
+    /**
+     * Download and install certificate
+     */
+    private void installCACert() {
+        //Extract certificate from .mobileconfig file
+        String cacert = m_InformCtrlCA.GetRtn();
+        cacert = cacert.substring(cacert.indexOf("<?xml"));
+        cacert = cacert.substring(0, cacert.indexOf("</plist>") + 8);
+        XmlPullParserAided m_p_aided = new XmlPullParserAided(this, cacert, 2);	// 最上位dictの階層は2になる
+        boolean ret = m_p_aided.TakeApartProfileList();
+        if (!ret) {
+            showMessage(getString(R.string.error_install_certificate));
+            return;
+        }
+        List<XmlStringData> listPayloadContent = m_p_aided.GetDictionary().GetArrayString();
+        cacert = listPayloadContent.get(listPayloadContent.size() - 1).GetData();
+        cacert = String.format("%s\n%s\n%s", "-----BEGIN CERTIFICATE-----", cacert, "-----END CERTIFICATE-----");
+        //Install certificate
+        Intent intent = KeyChain.createInstallIntent();
+        try {
+            javax.security.cert.X509Certificate x509 = javax.security.cert.X509Certificate.getInstance(cacert.getBytes());
+            intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
+            intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
+            this.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
+        } catch (Exception e) {
+            showMessage(getString(R.string.error_install_certificate));
+        }
     }
 }
