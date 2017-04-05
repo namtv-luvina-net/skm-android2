@@ -12,4 +12,5 @@
     <color name="text_button_inactive">#CEC8D7</color>
     <color name="text_delete_apply">#FF3B30</color>
     <color name="text_color">#3C3C3C</color>
+    <color name="product_info_bg_color">#efeff4</color>
 </resources>

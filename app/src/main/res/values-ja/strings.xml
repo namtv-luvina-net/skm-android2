@@ -179,6 +179,7 @@
     <string name="label_issuer_serial_number">シリアル番号</string>
     <!-- Signature Algorithm-->
     <string name="label_signature_algorithm">署名アルゴリズム</string>
+    <string name="label_signature_algorithm_item">アルゴリズム</string>
     <string name="label_signature_not_valid_before">有効になる日付</string>
     <string name="label_signature_not_valid_after">無効になる日付</string>
     <!-- Public Key Algorithm-->
@@ -316,4 +317,14 @@
     <string name="text_start_reapply">利用を継続するには\n再申請が必要です</string>
     <string name="apply_start">申請開始</string>
     <string name="notif_title">証明書の更新が必要です。</string>
+    <string name="notif_setting">通知設定</string>
+    <string name="list_cert">証明書一覧</string>
+    <string name="label_other_setting">その他</string>
+    <string name="label_product_setting">製品情報</string>
+    <string name="label_library_setting">ライブラリ</string>
+    <string name="product_name_version_info">Soliton KeyManager\nバージョン 2.0</string>
+    <string name="diagnostics">診断情報</string>
+    <string name="send_diagnostics">診断情報の送信</string>
+    <string name="no_cert_installed">現在インストールされている証明書はありません</string>
+    <string name="error_input_before_expiry">期限切れ日数は、1〜120の間で入力してください。</string>
 </resources>

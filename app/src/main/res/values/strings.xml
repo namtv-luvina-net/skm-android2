@@ -178,6 +178,7 @@
     <string name="label_issuer_serial_number">Serial Number</string>
     <!-- Signature Algorithm-->
     <string name="label_signature_algorithm">Signature Algorithm</string>
+    <string name="label_algorithm_label">Algorithm</string>
     <string name="label_signature_not_valid_before">Not Valid Before</string>
     <string name="label_signature_not_valid_after">Not Valid After</string>
     <!-- Public Key Algorithm-->
@@ -315,4 +316,14 @@
     <string name="text_start_reapply">Re-applying is necessary\nto continue using</string>
     <string name="apply_start">Apply Start</string>
     <string name="notif_title">Certificate renewal is required.</string>
+    <string name="notif_setting">Notification settings</string>
+    <string name="list_cert">Certificate list</string>
+    <string name="label_other_setting">Other</string>
+    <string name="label_product_setting">Product name</string>
+    <string name="label_library_setting">Library</string>
+    <string name="product_name_version_info">Soliton KeyManager\nVersion 2.0</string>
+    <string name="diagnostics">Diagnostics</string>
+    <string name="send_diagnostics">Send Diagnostics Snapshot</string>
+    <string name="no_cert_installed">No certificates are currently installed</string>
+    <string name="error_input_before_expiry">The number of days must be between 1 and 120</string>
 </resources>

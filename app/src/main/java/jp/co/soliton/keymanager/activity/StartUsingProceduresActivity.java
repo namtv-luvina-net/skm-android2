@@ -31,6 +31,8 @@ import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.common.CommonUtils;
+import jp.co.soliton.keymanager.scep.cert.X509Utils;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -301,7 +303,96 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                     }
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
                     element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
-//                    element.setExpirationDate("2017/03/20");
+                    //retrieve data certificate
+                    for (int i = 0; i < arr.length; i++) {
+                        if (arr[i] == null || arr[i].length() <= 0) {
+                            continue;
+                        }
+                        if(arr[i].toString().startsWith("C=")) {
+                            element.setSubjectCountryName(arr[i].toString().replace("C=","").trim());
+                        }
+                        if(arr[i].toString().startsWith("ST=")) {
+                            element.setSubjectStateOrProvinceName(arr[i].toString().replace("ST=","").trim());
+                        }
+                        if(arr[i].toString().startsWith("L=")) {
+                            element.setSubjectLocalityName(arr[i].toString().replace("L=","").trim());
+                        }
+                        if(arr[i].toString().startsWith("O=")) {
+                            element.setSubjectOrganizationName(arr[i].toString().replace("O=","").trim());
+                        }
+                        if(arr[i].toString().startsWith("CN=")) {
+                            element.setSubjectCommonName(arr[i].toString().replace("CN=","").trim());
+                        }
+                        if(arr[i].toString().startsWith("E=")) {
+                            element.setSubjectEmailAddress (arr[i].toString().replace("E=","").trim());
+                        }
+                    }
+                    str = certRep.getCertificate().getIssuerDN().toString();
+                    String [] arrIssuer = str.split(",");
+                    for (int i = 0; i < arrIssuer.length; i++) {
+                        if (arrIssuer[i] == null || arrIssuer[i].length() <= 0) {
+                            continue;
+                        }
+                        if(arrIssuer[i].toString().startsWith("C=")) {
+                            element.setIssuerCountryName(arrIssuer[i].toString().replace("C=","").trim());
+                        }
+                        if(arrIssuer[i].toString().startsWith("ST=")) {
+                            element.setIssuerStateOrProvinceName(arrIssuer[i].toString().replace("ST=","").trim());
+                        }
+                        if(arrIssuer[i].toString().startsWith("L=")) {
+                            element.setIssuerLocalityName(arrIssuer[i].toString().replace("L=","").trim());
+                        }
+                        if(arrIssuer[i].toString().startsWith("O=")) {
+                            element.setIssuerOrganizationName(arrIssuer[i].toString().replace("O=","").trim());
+                        }
+                        if(arrIssuer[i].toString().startsWith("CN=")) {
+                            element.setIssuerCommonName(arrIssuer[i].toString().replace("CN=","").trim());
+                        }
+                        if(arrIssuer[i].toString().startsWith("E=")) {
+                            element.setIssuerEmailAdress(arrIssuer[i].toString().replace("E=","").trim());
+                        }
+                        if(arrIssuer[i].toString().startsWith("OU=")) {
+                            element.setIssuerOrganizationUnitName(arrIssuer[i].toString().replace("OU=","").trim());
+                        }
+                    }
+                    element.setVersion(String.valueOf(certRep.getCertificate().getVersion()));
+                    element.setSerialNumber(certRep.getCertificate().getSerialNumber().toString());
+                    element.setSignatureAlogrithm(certRep.getCertificate().getSigAlgName());
+                    if (certRep.getCertificate().getNotBefore() != null) {
+                        element.setNotValidBefore(dateFormat.format(certRep.getCertificate().getNotBefore()));
+                    }
+                    if (certRep.getCertificate().getNotAfter() != null) {
+                        element.setNotValidAfter(dateFormat.format(certRep.getCertificate().getNotAfter()));
+                    }
+                    element.setPublicKeyAlogrithm(certRep.getCertificate().getPublicKey().getAlgorithm());
+                    element.setPublicKeyData(bytesToHex(certRep.getCertificate().getPublicKey().getEncoded()));
+                    element.setPublicSignature(bytesToHex(certRep.getCertificate().getSignature()));
+                    element.setCertificateAuthority(String.valueOf(certRep.getCertificate().getBasicConstraints()));
+                    StringBuilder builder = new StringBuilder();
+                    String [] keyUsage = {"digitalSignature", "nonRepudiation", "keyEncipherment", "dataEncipherment", "keyAgreement", "keyCertSign", "cRLSign", "encipherOnly", "decipherOnly"};
+                    int maxLength = Math.min(keyUsage.length, certRep.getCertificate().getKeyUsage().length);
+                    for (int i = 0; i < maxLength; i++) {
+                        if (!certRep.getCertificate().getKeyUsage()[i]) {
+                            continue;
+                        }
+                        if (builder.length() <= 0) {
+                            builder.append(keyUsage[i]);
+                        } else {
+                            builder.append("," + keyUsage[i]);
+                        }
+                    }
+                    element.setUsage(builder.toString());
+                    element.setSubjectKeyIdentifier(bytesToHex(X509Utils.getSubjectKeyIdentifier(certRep.getCertificate())));
+                    element.setAuthorityKeyIdentifier(bytesToHex(X509Utils.getAuthorityKeyIdentifier(certRep.getCertificate())));
+                    element.setClrDistributionPointUri(X509Utils.getCRLURL(certRep.getCertificate()));
+                    List<String> ocspUrlList = X509Utils.getAIALocations(certRep.getCertificate());
+                    if (ocspUrlList != null && !ocspUrlList.isEmpty()) {
+                        element.setCertificateAuthorityUri(ocspUrlList.get(0));
+                    }
+                    element.setPurpose(X509Utils.getPurpose(certRep.getCertificate()));
+                    element.setNotiEnableFlag(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG));
+                    element.setNotiEnableBeforeFlag(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG));
+                    element.setNotiEnableBefore(CommonUtils.getPrefInteger(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE));
                 } else {
                     return false;
                 }
@@ -335,6 +426,17 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         // メインスレッドに反映させる処理
         protected void onPostExecute(Boolean result) {
             Log.d("CertificateEnrollTask", "onPostExecute - " + "result");
+        }
+        public String bytesToHex(byte[] in) {
+            final StringBuilder builder = new StringBuilder();
+            for(byte b : in) {
+                if (builder.length() > 0) {
+                    builder.append(String.format(":%02x", b));
+                } else {
+                    builder.append(String.format("%02x", b));
+                }
+            }
+            return builder.toString();
         }
     }
 
@@ -409,7 +511,8 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
                 mgr.updateElementCertificate(element);
                 AlarmReceiver alarm = new AlarmReceiver();
-                alarm.setOnetimeTimer(getApplicationContext(), String.valueOf(element.getId()));
+                alarm.setupNotification(getApplicationContext());
+                //alarm.setOnetimeTimer(getApplicationContext(), String.valueOf(element.getId()));
                 Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
                 intent.putExtra("ELEMENT_APPLY", element);
                 finish();

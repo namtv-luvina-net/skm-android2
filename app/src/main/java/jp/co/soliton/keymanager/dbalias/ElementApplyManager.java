@@ -102,6 +102,10 @@ public class ElementApplyManager {
                 elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
                 elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
                 elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
+                elementApply.setNotiEnableFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_flag")));
+                elementApply.setNotiEnableBeforeFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before_flag")));
+                elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
+                elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
 
                 elementApplyList.add(elementApply);
             } while (cursor.moveToNext());
@@ -130,6 +134,8 @@ public class ElementApplyManager {
                 elementApply.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
                 elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
                 elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+                elementApply.setNotiEnableFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_flag")));
+                elementApply.setNotiEnableBeforeFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before_flag")));
                 elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
                 elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
 
@@ -189,6 +195,40 @@ public class ElementApplyManager {
         elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
         elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
         elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
+
+        elementApply.setNotiEnableFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_flag")));
+        elementApply.setNotiEnableBeforeFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before_flag")));
+        elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
+
+        elementApply.setSubjectCountryName(cursor.getString(cursor.getColumnIndexOrThrow("subject_country_name")));
+        elementApply.setSubjectStateOrProvinceName(cursor.getString(cursor.getColumnIndexOrThrow("subject_state_or_province_name")));
+        elementApply.setSubjectLocalityName(cursor.getString(cursor.getColumnIndexOrThrow("subject_locality_name")));
+        elementApply.setSubjectOrganizationName(cursor.getString(cursor.getColumnIndexOrThrow("subject_organization_name")));
+        elementApply.setSubjectCommonName(cursor.getString(cursor.getColumnIndexOrThrow("subject_common_name")));
+        elementApply.setSubjectEmailAddress(cursor.getString(cursor.getColumnIndexOrThrow("subject_email_address")));
+        elementApply.setIssuerCountryName(cursor.getString(cursor.getColumnIndexOrThrow("issuer_country_name")));
+        elementApply.setIssuerStateOrProvinceName(cursor.getString(cursor.getColumnIndexOrThrow("issuer_state_or_province_name")));
+        elementApply.setIssuerLocalityName(cursor.getString(cursor.getColumnIndexOrThrow("issuer_locality_name")));
+        elementApply.setIssuerOrganizationName(cursor.getString(cursor.getColumnIndexOrThrow("issuer_organization_name")));
+        elementApply.setIssuerOrganizationUnitName(cursor.getString(cursor.getColumnIndexOrThrow("issuer_organization_unit_name")));
+        elementApply.setIssuerCommonName(cursor.getString(cursor.getColumnIndexOrThrow("issuer_common_name")));
+        elementApply.setIssuerEmailAdress(cursor.getString(cursor.getColumnIndexOrThrow("issuer_email_address")));
+        elementApply.setVersion(cursor.getString(cursor.getColumnIndexOrThrow("version")));
+        elementApply.setSerialNumber(cursor.getString(cursor.getColumnIndexOrThrow("serial_number")));
+        elementApply.setSignatureAlogrithm(cursor.getString(cursor.getColumnIndexOrThrow("signature_alogrithm")));
+        elementApply.setNotValidBefore(cursor.getString(cursor.getColumnIndexOrThrow("not_valid_before")));
+        elementApply.setNotValidAfter(cursor.getString(cursor.getColumnIndexOrThrow("not_valid_after")));
+        elementApply.setPublicKeyAlogrithm(cursor.getString(cursor.getColumnIndexOrThrow("public_key_alogrithm")));
+        elementApply.setPublicKeyData(cursor.getString(cursor.getColumnIndexOrThrow("public_key_data")));
+        elementApply.setPublicSignature(cursor.getString(cursor.getColumnIndexOrThrow("public_signature")));
+        elementApply.setCertificateAuthority(cursor.getString(cursor.getColumnIndexOrThrow("certificate_authority")));
+        elementApply.setUsage(cursor.getString(cursor.getColumnIndexOrThrow("usage")));
+        elementApply.setSubjectKeyIdentifier(cursor.getString(cursor.getColumnIndexOrThrow("subject_key_identifier")));
+        elementApply.setAuthorityKeyIdentifier(cursor.getString(cursor.getColumnIndexOrThrow("authority_key_identifier")));
+        elementApply.setClrDistributionPointUri(cursor.getString(cursor.getColumnIndexOrThrow("clr_distribution_point_uri")));
+        elementApply.setCertificateAuthorityUri(cursor.getString(cursor.getColumnIndexOrThrow("certificate_authority_uri")));
+        elementApply.setPurpose(cursor.getString(cursor.getColumnIndexOrThrow("purpose")));
+
         return elementApply;
     }
 
@@ -212,6 +252,28 @@ public class ElementApplyManager {
         db.close(); // Closing database connection
     }
 
+    public void updateNotifSettingElement(boolean notifFlag, boolean notifBeforeFlag, int notifBefore, String id) {
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("noti_enable_flag", notifFlag ? 1 : 0);
+        values.put("noti_enable_before_flag", notifBeforeFlag ? 1 : 0);
+        values.put("noti_enable_before", notifBefore);
+        db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
+        db.close(); // Closing database connection
+    }
+
+    public void updateNotifSetting(boolean notifFlag, boolean notifBeforeFlag, int notifBefore) {
+        SQLiteDatabase db = databaseHandler.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("noti_enable_flag", notifFlag ? 1 : 0);
+        values.put("noti_enable_before_flag", notifBeforeFlag ? 1 : 0);
+        values.put("noti_enable_before", notifBefore);
+        db.update(TABLE_ELEMENT_APPLY, values, "status IN (" +
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED) + "," +
+                String.valueOf(ElementApply.STATUS_APPLY_CLOSED) + ")", null);
+        db.close();
+    }
+
     public void updateElementCertificate(ElementApply element) {
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -219,6 +281,40 @@ public class ElementApplyManager {
         values.put("cn_value", element.getcNValue());
         values.put("sn_value", element.getsNValue());
         values.put("status", ElementApply.STATUS_APPLY_APPROVED);
+
+        values.put("noti_enable_flag", element.isNotiEnableFlag() ? 1 : 0);
+        values.put("noti_enable_before_flag", element.isNotiEnableBeforeFlag() ? 1 : 0);
+        values.put("noti_enable_before", element.getNotiEnableBefore());
+
+        values.put("subject_country_name", element.getSubjectCountryName());
+        values.put("subject_state_or_province_name", element.getSubjectStateOrProvinceName());
+        values.put("subject_locality_name", element.getSubjectLocalityName());
+        values.put("subject_organization_name", element.getSubjectOrganizationName());
+        values.put("subject_common_name", element.getSubjectCommonName());
+        values.put("subject_email_address", element.getSubjectEmailAddress());
+        values.put("issuer_country_name", element.getIssuerCountryName());
+        values.put("issuer_state_or_province_name", element.getIssuerStateOrProvinceName());
+        values.put("issuer_locality_name", element.getIssuerLocalityName());
+        values.put("issuer_organization_name", element.getIssuerOrganizationName());
+        values.put("issuer_organization_unit_name", element.getIssuerOrganizationUnitName());
+        values.put("issuer_common_name", element.getIssuerCommonName());
+        values.put("issuer_email_address", element.getIssuerEmailAdress());
+        values.put("version", element.getVersion());
+        values.put("serial_number", element.getSerialNumber());
+        values.put("signature_alogrithm", element.getSignatureAlogrithm());
+        values.put("not_valid_before", element.getNotValidBefore());
+        values.put("not_valid_after", element.getNotValidAfter());
+        values.put("public_key_alogrithm", element.getPublicKeyAlogrithm());
+        values.put("public_key_data", element.getPublicKeyData());
+        values.put("public_signature", element.getPublicSignature());
+        values.put("certificate_authority", element.getCertificateAuthority());
+        values.put("usage", element.getUsage());
+        values.put("subject_key_identifier", element.getSubjectKeyIdentifier());
+        values.put("authority_key_identifier", element.getAuthorityKeyIdentifier());
+        values.put("clr_distribution_point_uri", element.getClrDistributionPointUri());
+        values.put("certificate_authority_uri", element.getCertificateAuthorityUri());
+        values.put("purpose", element.getPurpose());
+
         db.update(TABLE_ELEMENT_APPLY, values, "id="+element.getId(), null);
         db.close(); // Closing database connection
     }
