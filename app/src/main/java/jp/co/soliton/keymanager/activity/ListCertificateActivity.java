@@ -36,6 +36,7 @@ public class ListCertificateActivity extends Activity {
         title = (TextView) findViewById(R.id.tvTitleHeader);
         title.setText(getString(R.string.title_list_certificate));
         list = (ListView)findViewById(R.id.listConfirm);
+        list.setSelector(android.R.color.transparent);
         elementMgr = new ElementApplyManager(getApplicationContext());
     }
 

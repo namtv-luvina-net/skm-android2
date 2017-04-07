@@ -159,6 +159,5 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             viewHolder.txtName.setText(listElementApply.get(position).getUserId());
         }
         return convertView;
-
     }
 }
