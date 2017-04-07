@@ -100,9 +100,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             List<ElementApply> lsElement = elementMgr.getAllCertificate();
             AlarmManager am =(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             Calendar cal = Calendar.getInstance();
-            Intent intent = new Intent(context, AlarmReceiver.class);
             int index = 0;
             int startIndex = 1000;
+            Intent intent = new Intent(context, AlarmReceiver.class);
             for (ElementApply el : lsElement) {
                 if (!el.isNotiEnableFlag() && !el.isNotiEnableBeforeFlag()) {
                     continue;
@@ -110,22 +110,21 @@ public class AlarmReceiver extends BroadcastReceiver {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date expirationDate = formatter.parse(el.getExpirationDate());
                 cal.setTime(expirationDate);
-                if (el.isNotiEnableFlag()) {
+                if (el.isNotiEnableFlag() && expirationDate.after(Calendar.getInstance().getTime())) {
                     intent.removeExtra(StringList.ELEMENT_APPLY_ID);
-                    intent.putExtra(StringList.ELEMENT_APPLY_ID, el.getId());
+                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(el.getId()));
 
-                    PendingIntent pi = PendingIntent.getBroadcast(context, startIndex + index, intent, PendingIntent.FLAG_ONE_SHOT);
+                    PendingIntent pi = PendingIntent.getBroadcast(context, startIndex + index, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     am.set(AlarmManager.RTC_WAKEUP, expirationDate.getTime(), pi);
                     index++;
                 }
-                if (el.isNotiEnableBeforeFlag()) {
+                int before = el.getNotiEnableBefore();
+                cal.add(Calendar.DAY_OF_MONTH, before * -1);
+                if (el.isNotiEnableBeforeFlag() && cal.getTime().after(Calendar.getInstance().getTime())) {
                     intent.removeExtra(StringList.ELEMENT_APPLY_ID);
-                    intent.putExtra(StringList.ELEMENT_APPLY_ID, el.getId());
+                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(el.getId()));
 
-                    int before = el.getNotiEnableBefore();
-                    cal.add(Calendar.DAY_OF_MONTH, before * -1);
-
-                    PendingIntent pi = PendingIntent.getBroadcast(context, startIndex + index, intent, PendingIntent.FLAG_ONE_SHOT);
+                    PendingIntent pi = PendingIntent.getBroadcast(context, startIndex + index, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     am.set(AlarmManager.RTC_WAKEUP, cal.getTime().getTime(), pi);
                     index++;
                 }

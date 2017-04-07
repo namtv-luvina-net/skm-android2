@@ -179,7 +179,7 @@
     <string name="label_issuer_serial_number">シリアル番号</string>
     <!-- Signature Algorithm-->
     <string name="label_signature_algorithm">署名アルゴリズム</string>
-    <string name="label_signature_algorithm_item">アルゴリズム</string>
+    <string name="label_algorithm_label">アルゴリズム</string>
     <string name="label_signature_not_valid_before">有効になる日付</string>
     <string name="label_signature_not_valid_after">無効になる日付</string>
     <!-- Public Key Algorithm-->
