@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/background_color_white"
-            android:text="@string/input_id_and_password"
+            android:text="@string/input_password"
             android:gravity="center|top"
             android:textSize="@dimen/text_size_title"
             android:maxLines="1"
