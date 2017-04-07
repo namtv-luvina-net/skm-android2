@@ -178,6 +178,7 @@
     <string name="label_issuer_serial_number">Serial Number</string>
     <!-- Signature Algorithm-->
     <string name="label_signature_algorithm">Signature Algorithm</string>
+    <string name="label_algorithm_label">Algorithm</string>
     <string name="label_signature_not_valid_before">Not Valid Before</string>
     <string name="label_signature_not_valid_after">Not Valid After</string>
     <!-- Public Key Algorithm-->
@@ -309,10 +310,20 @@
     <string name="title_expiration_date">Expiration :</string>
     <string name="txt_complete_using_procedures">Start using procedure has been completed</string>
     <string name="approval_confirmation">Approval Confirmation</string>
-    <string name="btn_update">Apply</string>
+    <string name="btn_update">&#160;&#160;Apply&#160;&#160;</string>
     <string name="btn_add">＋New</string>
     <string name="title_list_certificate">Select certificate</string>
     <string name="text_start_reapply">Re-applying is necessary\nto continue using</string>
     <string name="apply_start">Apply Start</string>
     <string name="notif_title">Certificate renewal is required.</string>
+    <string name="notif_setting">Notification settings</string>
+    <string name="list_cert">Certificate list</string>
+    <string name="label_other_setting">Other</string>
+    <string name="label_product_setting">Product name</string>
+    <string name="label_library_setting">Library</string>
+    <string name="product_name_version_info">Soliton KeyManager\nVersion 2.0</string>
+    <string name="diagnostics">Diagnostics</string>
+    <string name="send_diagnostics">Send Diagnostics Snapshot</string>
+    <string name="no_cert_installed">No certificates are currently installed</string>
+    <string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
 </resources>

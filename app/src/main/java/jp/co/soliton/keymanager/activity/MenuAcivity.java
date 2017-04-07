@@ -29,10 +29,10 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 public class MenuAcivity extends Activity {
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 
-    private LinearLayout zoneMenuCtr;
     private Button btnMenuStart;
     private Button btnMenuAPID;
     private Button btnMenuConfirmApply;
+    private Button btnSetting;
     private int totalApply;
     private ElementApplyManager elementMgr;
 
@@ -43,7 +43,7 @@ public class MenuAcivity extends Activity {
         btnMenuStart = (Button) findViewById(R.id.btnMenuStart);
         btnMenuAPID = (Button) findViewById(R.id.btnMenuAPID);
         btnMenuConfirmApply = (Button) findViewById(R.id.btnMenuConfirmApply);
-        zoneMenuCtr = (LinearLayout) findViewById(R.id.zoneMenuCtr);
+        btnSetting = (Button) findViewById(R.id.btnSetting);
         elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
@@ -104,6 +104,14 @@ public class MenuAcivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuAcivity.this, APIDActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuAcivity.this, SettingActivity.class);
                 startActivity(intent);
             }
         });

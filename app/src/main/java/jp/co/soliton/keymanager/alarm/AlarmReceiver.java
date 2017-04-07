@@ -1,7 +1,9 @@
 package jp.co.soliton.keymanager.alarm;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import android.app.AlarmManager;
 import android.app.NotificationManager;
@@ -14,6 +16,7 @@ import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.AlarmReapplyActivity;
@@ -82,6 +85,52 @@ public class AlarmReceiver extends BroadcastReceiver {
 //            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 10000, pi);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void cancelNotification(Context context) {
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
+
+    public void setupNotification(Context context) {
+        try {
+            cancelNotification(context);
+            ElementApplyManager elementMgr = new ElementApplyManager(context);
+            List<ElementApply> lsElement = elementMgr.getAllCertificate();
+            AlarmManager am =(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            Calendar cal = Calendar.getInstance();
+            int index = 0;
+            int startIndex = 1000;
+            Intent intent = new Intent(context, AlarmReceiver.class);
+            for (ElementApply el : lsElement) {
+                if (!el.isNotiEnableFlag() && !el.isNotiEnableBeforeFlag()) {
+                    continue;
+                }
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date expirationDate = formatter.parse(el.getExpirationDate());
+                cal.setTime(expirationDate);
+                if (el.isNotiEnableFlag() && expirationDate.after(Calendar.getInstance().getTime())) {
+                    intent.removeExtra(StringList.ELEMENT_APPLY_ID);
+                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(el.getId()));
+
+                    PendingIntent pi = PendingIntent.getBroadcast(context, startIndex + index, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    am.set(AlarmManager.RTC_WAKEUP, expirationDate.getTime(), pi);
+                    index++;
+                }
+                int before = el.getNotiEnableBefore();
+                cal.add(Calendar.DAY_OF_MONTH, before * -1);
+                if (el.isNotiEnableBeforeFlag() && cal.getTime().after(Calendar.getInstance().getTime())) {
+                    intent.removeExtra(StringList.ELEMENT_APPLY_ID);
+                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(el.getId()));
+
+                    PendingIntent pi = PendingIntent.getBroadcast(context, startIndex + index, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    am.set(AlarmManager.RTC_WAKEUP, cal.getTime().getTime(), pi);
+                    index++;
+                }
+            }
+        } catch (Exception ex) {
+            LogCtrl.Logger(LogCtrl.m_strError, ex.toString(), context);
         }
     }
 }

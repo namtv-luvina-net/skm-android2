@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#e8effb">
+    <include layout="@layout/layout_header"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvNoCertInstalled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_cert_installed"
+            android:paddingTop="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:visibility="gone"/>
+        <ListView
+            android:id="@+id/listSettingCert"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:divider="@color/background_color_white"
+            android:dividerHeight="1dp"
+            android:layout_weight="7"
+            android:background="@drawable/background"/>
+    </LinearLayout>
+</LinearLayout>

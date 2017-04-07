@@ -1,53 +1,43 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.adapter.AdapterListCertificate;
+import jp.co.soliton.keymanager.adapter.AdapterSettingListCertificate;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 /**
- * Created by lexuanvinh on 02/27/2017.
+ * Created by luongdolong on 4/3/2017.
  */
 
-public class ListCertificateActivity extends Activity {
-
+public class SettingListCertificateActivity extends Activity {
     private ListView list;
-    private AdapterListCertificate adapterListCertificate;
+    private AdapterSettingListCertificate adapterListCertificate;
     private ElementApplyManager elementMgr;
     private List<ElementApply> listCertificate;
     private TextView title;
+    private TextView tvNoCertInstalled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_certificate);
+        setContentView(R.layout.activity_setting_list_certificate);
         title = (TextView) findViewById(R.id.tvTitleHeader);
-        title.setText(getString(R.string.title_list_certificate));
-        list = (ListView)findViewById(R.id.listConfirm);
-        list.setSelector(android.R.color.transparent);
+        tvNoCertInstalled = (TextView) findViewById(R.id.tvNoCertInstalled);
+        title.setText(getString(R.string.list_cert));
+        list = (ListView)findViewById(R.id.listSettingCert);
         elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
     public void btnBackClick(View v) {
         finish();
-    }
-
-    public void btnNewClick(View v) {
-        InputApplyInfo.deletePref(ListCertificateActivity.this);
-        Intent intent = new Intent(ListCertificateActivity.this, ViewPagerInputActivity.class);
-        startActivity(intent);
     }
 
     /**
@@ -56,12 +46,13 @@ public class ListCertificateActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!elementMgr.hasCertificate()) {
-            finish();
-        }
-
         listCertificate = elementMgr.getAllCertificate();
-        adapterListCertificate = new AdapterListCertificate(this, listCertificate);
+        if (listCertificate == null || listCertificate.isEmpty()) {
+            tvNoCertInstalled.setVisibility(View.VISIBLE);
+        } else {
+            tvNoCertInstalled.setVisibility(View.GONE);
+        }
+        adapterListCertificate = new AdapterSettingListCertificate(this, listCertificate);
         list.setAdapter(adapterListCertificate);
     }
 }

@@ -350,4 +350,8 @@ public class StringList {
 	public static String GO_TO_LIST_APPLY = "0";
 	public static String ELEMENT_APPLY_ID = "ELEMENT_APPLY_ID";
 	public static String UPDATE_APPLY = "UPDATE_APPLY";
+	public static String KEY_OPENED_APP = "OPENED_APP";
+	public static String KEY_NOTIF_ENABLE_FLAG = "KEY_NOTIF_ENABLE_FLAG";
+	public static String KEY_NOTIF_ENABLE_BEFORE_FLAG = "KEY_NOTIF_ENABLE_BEFORE_FLAG";
+	public static String KEY_NOTIF_ENABLE_BEFORE = "KEY_NOTIF_ENABLE_BEFORE";
 }
