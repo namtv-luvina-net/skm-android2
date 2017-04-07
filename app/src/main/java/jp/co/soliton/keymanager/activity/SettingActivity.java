@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import jp.co.soliton.keymanager.R;
@@ -15,20 +16,20 @@ import jp.co.soliton.keymanager.R;
 
 public class SettingActivity  extends Activity {
     private TextView titleScreen;
-    private Button btnSettingProductInfo;
-    private Button btnSettingNotification;
-    private Button btnSettingListCert;
-    private Button btnSettingLibrary;
+    private RelativeLayout menuSettingCertList;
+    private RelativeLayout menuSettingNotif;
+    private RelativeLayout menuSettingProduct;
+    private RelativeLayout menuSettingLibrary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         titleScreen = (TextView) findViewById(R.id.tvTitleHeader);
-        btnSettingProductInfo = (Button) findViewById(R.id.btnSettingProductInfo);
-        btnSettingNotification = (Button) findViewById(R.id.btnSettingNotification);
-        btnSettingListCert = (Button) findViewById(R.id.btnSettingListCert);
-        btnSettingLibrary = (Button) findViewById(R.id.btnSettingLibrary);
+        menuSettingCertList = (RelativeLayout) findViewById(R.id.menuSettingCertList);
+        menuSettingNotif = (RelativeLayout) findViewById(R.id.menuSettingNotif);
+        menuSettingProduct = (RelativeLayout) findViewById(R.id.menuSettingProduct);
+        menuSettingLibrary = (RelativeLayout) findViewById(R.id.menuSettingLibrary);
     }
 
     @Override
@@ -43,14 +44,14 @@ public class SettingActivity  extends Activity {
 
     public void setupControl() {
         titleScreen.setText(getString(R.string.label_settings));
-        btnSettingProductInfo.setOnClickListener(new View.OnClickListener() {
+        menuSettingCertList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, ProductInfoActivity.class);
+                Intent intent = new Intent(SettingActivity.this, SettingListCertificateActivity.class);
                 startActivity(intent);
             }
         });
-        btnSettingNotification.setOnClickListener(new View.OnClickListener() {
+        menuSettingNotif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingActivity.this, NotificationSettingActivity.class);
@@ -58,14 +59,14 @@ public class SettingActivity  extends Activity {
                 startActivity(intent);
             }
         });
-        btnSettingListCert.setOnClickListener(new View.OnClickListener() {
+        menuSettingProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, SettingListCertificateActivity.class);
+                Intent intent = new Intent(SettingActivity.this, ProductInfoActivity.class);
                 startActivity(intent);
             }
         });
-        btnSettingLibrary.setOnClickListener(new View.OnClickListener() {
+        menuSettingLibrary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingActivity.this, LibraryInfoActivity.class);

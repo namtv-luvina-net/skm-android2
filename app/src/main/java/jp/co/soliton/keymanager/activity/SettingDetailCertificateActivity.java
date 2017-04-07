@@ -1,6 +1,8 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +12,6 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
-import jp.co.soliton.keymanager.customview.DialogMenuCertDetail;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
@@ -102,6 +103,32 @@ public class SettingDetailCertificateActivity extends Activity {
     }
 
     public void onMenuSettingClick(View v) {
+        final CharSequence[] items = {getResources().getString(R.string.label_dialog_delete_cert),
+                                    getResources().getString(R.string.label_notification_settings),
+                                    getResources().getString(R.string.label_dialog_Cancle)};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.select_apid));
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if (item == 0) {
+                    dialog.dismiss();
+                    confirmDeleteCert();
+                } else if (item == 1) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(SettingDetailCertificateActivity.this, NotificationSettingActivity.class);
+                    intent.putExtra(NotificationSettingActivity.KEY_NOTIF_MODE, NotificationSettingActivity.NotifModeEnum.ONE);
+                    intent.putExtra(StringList.ELEMENT_APPLY_ID, id);
+                    startActivity(intent);
+                } else if (item == 3) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+        /*
         final DialogMenuCertDetail dialog = new DialogMenuCertDetail(this);
         dialog.setOnDeleteCert(new View.OnClickListener() {
             @Override
@@ -120,7 +147,7 @@ public class SettingDetailCertificateActivity extends Activity {
                 startActivity(intent);
             }
         });
-        dialog.show();
+        dialog.show();*/
     }
 
     /**

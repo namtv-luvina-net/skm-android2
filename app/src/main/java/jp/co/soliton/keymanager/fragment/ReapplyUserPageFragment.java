@@ -1,5 +1,6 @@
 package jp.co.soliton.keymanager.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -123,9 +125,9 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
             }
         });
         if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getUserId())) {
-            txtPassword.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            //txtPassword.requestFocus();
+            //InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
         }
     }
 
@@ -139,6 +141,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         super.setMenuVisibility(visible);
         if (visible) {
             initValueControl();
+            hideKeyboard(pagerReapplyActivity);
         }
     }
 
@@ -147,6 +150,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             initValueControl();
+            hideKeyboard(pagerReapplyActivity);
         }
     }
 
@@ -176,6 +180,13 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         challenge = false;
         //open thread logon to server
         new LogonApplyTask().execute();
+    }
+
+    private void hideKeyboard(Activity activity) {
+        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
     }
 
     /**

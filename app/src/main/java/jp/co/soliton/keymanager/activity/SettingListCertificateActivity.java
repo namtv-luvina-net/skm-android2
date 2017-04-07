@@ -49,7 +49,6 @@ public class SettingListCertificateActivity extends Activity {
         listCertificate = elementMgr.getAllCertificate();
         if (listCertificate == null || listCertificate.isEmpty()) {
             tvNoCertInstalled.setVisibility(View.VISIBLE);
-            return;
         } else {
             tvNoCertInstalled.setVisibility(View.GONE);
         }

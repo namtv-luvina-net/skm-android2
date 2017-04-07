@@ -91,8 +91,8 @@ public class NotificationSettingActivity extends Activity {
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE,
                     new Integer(CommonUtils.toInt(tvNotifBefore.getText().toString().trim())));
 
-            elementMgr.updateNotifSetting(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
-                                    CommonUtils.toInt(tvNotifBefore.getText().toString().trim()));
+            //elementMgr.updateNotifSetting(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
+            //                        CommonUtils.toInt(tvNotifBefore.getText().toString().trim()));
         }
         AlarmReceiver alarm = new AlarmReceiver();
         alarm.setupNotification(getApplicationContext());
