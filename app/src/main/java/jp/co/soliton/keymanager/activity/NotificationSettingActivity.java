@@ -8,6 +8,11 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
@@ -25,6 +30,7 @@ public class NotificationSettingActivity extends Activity {
     public enum NotifModeEnum {
         ALL, ONE;
     }
+    private TextView tvDetailNotifSave;
     private TextView textViewBack;
     private Switch swNotifFlag;
     private Switch swNotifBeforeFlag;
@@ -35,6 +41,7 @@ public class NotificationSettingActivity extends Activity {
     private NotifModeEnum mode;
     private String idCert;
     private ElementApplyManager elementMgr;
+    private int maxBeforeDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +55,14 @@ public class NotificationSettingActivity extends Activity {
         if (NotifModeEnum.ONE == mode) {
             idCert = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
         }
+        tvDetailNotifSave = (TextView) findViewById(R.id.tvDetailNotifSave);
         textViewBack = (TextView) findViewById(R.id.textViewBack);
         swNotifFlag = (Switch) findViewById(R.id.swNotifFlag);
         swNotifBeforeFlag = (Switch) findViewById(R.id.swNotifBeforeFlag);
         tvNotifBefore = (TextView) findViewById(R.id.tvNotifBefore);
         btnDayBeforeMinus = (Button) findViewById(R.id.btnDayBeforeMinus);
         btnDayBeforePlus = (Button) findViewById(R.id.btnDayBeforePlus);
-
+        maxBeforeDate = 120;
         elementMgr = new ElementApplyManager(this);
     }
 
@@ -95,16 +103,49 @@ public class NotificationSettingActivity extends Activity {
 
         if (NotifModeEnum.ONE == mode) {
             ElementApply element = elementMgr.getElementApply(idCert);
-            textViewBack.setText(R.string.back);
+            textViewBack.setText(R.string.label_dialog_Cancle);
             swNotifFlag.setChecked(element.isNotiEnableFlag());
             swNotifBeforeFlag.setChecked(element.isNotiEnableBeforeFlag());
             tvNotifBefore.setText(String.valueOf(element.getNotiEnableBefore()));
+            try {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date expirationDate = formatter.parse(element.getExpirationDate());
+                if (Calendar.getInstance().getTime().after(expirationDate)) {
+                    swNotifFlag.setEnabled(false);
+                    swNotifBeforeFlag.setEnabled(false);
+                    tvNotifBefore.setEnabled(false);
+                    btnDayBeforeMinus.setEnabled(false);
+                    btnDayBeforePlus.setEnabled(false);
+                    tvDetailNotifSave.setClickable(false);
+                } else {
+                    tvNotifBefore.setEnabled(swNotifBeforeFlag.isChecked());
+                    btnDayBeforeMinus.setEnabled(swNotifBeforeFlag.isChecked());
+                    btnDayBeforePlus.setEnabled(swNotifBeforeFlag.isChecked());
+                    tvDetailNotifSave.setClickable(true);
+                }
+                //Comparing dates
+                long difference = expirationDate.getTime() - Calendar.getInstance().getTime().getTime();
+                long differenceDates = difference / (24 * 60 * 60 * 1000);
+                if (difference > 0){
+                    differenceDates++;
+                }
+                if (differenceDates < 120) {
+                    maxBeforeDate = (int)differenceDates;
+                }
+            } catch (Exception ex) {
+                LogCtrl.Logger(LogCtrl.m_strError, ex.toString(), getApplicationContext());
+            }
         } else {
             textViewBack.setText(R.string.label_settings);
             swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG));
             swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
             tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefInteger(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE)));
+
+            tvNotifBefore.setEnabled(swNotifBeforeFlag.isChecked());
+            btnDayBeforeMinus.setEnabled(swNotifBeforeFlag.isChecked());
+            btnDayBeforePlus.setEnabled(swNotifBeforeFlag.isChecked());
         }
+
         final int oldValue = CommonUtils.toInt(tvNotifBefore.getText().toString());
         swNotifBeforeFlag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,7 +156,7 @@ public class NotificationSettingActivity extends Activity {
                         tvNotifBefore.setText(oldValue);
                     }
                     if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) <= 0 ||
-                            CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > 120) {
+                            CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > maxBeforeDate) {
                         tvNotifBefore.setText(String.valueOf(oldValue));
                     }
                 }
@@ -129,7 +170,7 @@ public class NotificationSettingActivity extends Activity {
             public void onClick(View v) {
                 if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) || !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
                     tvNotifBefore.setText("1");
-                } else if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) < 120){
+                } else if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) < maxBeforeDate){
                     tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) + 1));
                 }
             }
@@ -138,7 +179,7 @@ public class NotificationSettingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) || !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
-                    tvNotifBefore.setText("120");
+                    tvNotifBefore.setText(String.valueOf(maxBeforeDate));
                 } else if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > 1){
                     tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) - 1));
                 }
@@ -151,7 +192,7 @@ public class NotificationSettingActivity extends Activity {
             return true;
         }
         if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) || !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
-            showMessage(getString(R.string.error_input_before_expiry), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
+            showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
                     tvNotifBefore.setText("1");
@@ -160,7 +201,7 @@ public class NotificationSettingActivity extends Activity {
             return false;
         }
         if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) <= 0) {
-            showMessage(getString(R.string.error_input_before_expiry), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
+            showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
                     tvNotifBefore.setText("1");
@@ -168,11 +209,11 @@ public class NotificationSettingActivity extends Activity {
             });
             return false;
         }
-        if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > 120) {
-            showMessage(getString(R.string.error_input_before_expiry), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
+        if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > maxBeforeDate) {
+            showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
-                    tvNotifBefore.setText("120");
+                    tvNotifBefore.setText(String.valueOf(maxBeforeDate));
                 }
             });
             return false;
@@ -190,5 +231,9 @@ public class NotificationSettingActivity extends Activity {
         dlgMessage.setOnOkDismissMessageListener(listener);
         dlgMessage.setTitleDialog(titleDialog);
         dlgMessage.show();
+    }
+
+    private String makeMsgNotRangeExpiry() {
+        return String.format(getString(R.string.error_input_before_expiry), maxBeforeDate);
     }
 }

@@ -325,5 +325,5 @@
     <string name="diagnostics">Diagnostics</string>
     <string name="send_diagnostics">Send Diagnostics Snapshot</string>
     <string name="no_cert_installed">No certificates are currently installed</string>
-    <string name="error_input_before_expiry">The number of days must be between 1 and 120</string>
+    <string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
 </resources>
