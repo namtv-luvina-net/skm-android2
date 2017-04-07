@@ -325,6 +325,6 @@
     <string name="product_name_version_info">Soliton KeyManager\nバージョン 2.0</string>
     <string name="diagnostics">診断情報</string>
     <string name="send_diagnostics">診断情報の送信</string>
-    <string name="no_cert_installed">現在インストールされている証明書はありません</string>
+    <string name="no_cert_installed">現在インストールされている証明書は\nありません</string>
     <string name="error_input_before_expiry">期限切れ日数は、1〜120の間で入力してください。</string>
 </resources>

@@ -70,6 +70,7 @@
         android:drawableLeft="@mipmap/type04_72px"
         android:drawablePadding="5dip"
         android:textSize="20sp"
+        android:textAllCaps="false"
         android:gravity="left|center_vertical"
         android:text="@string/product_name_version_info"/>
     <TextView
@@ -94,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_color_white"
+        android:textAllCaps="false"
         android:layout_gravity="center"
         android:paddingBottom="15dp"
         android:paddingTop="15dp"
