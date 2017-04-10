@@ -70,15 +70,20 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
         txtReason.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                }
+	            if (!hasFocus) {
+		            txtReason.setText(txtReason.getText().toString().trim());
+		            hideKeyboard(v, getContext());
+		            updateStatusSkipButton();
+	            } else {
+		            btnSkipReason.setVisibility(View.INVISIBLE);
+	            }
             }
         });
         txtReason.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+	                txtReason.clearFocus();
                     if (!nullOrEmpty(txtReason.getText().toString())) {
                         nextAction();
                         return true;
@@ -88,6 +93,20 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
             }
         });
     }
+
+	private void updateStatusSkipButton() {
+		if (txtReason.getText().toString().trim().length() == 0) {
+			btnSkipReason.setVisibility(View.VISIBLE);
+		} else {
+			btnSkipReason.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	@Override
+	public void clearFocusEditText() {
+		super.clearFocusEditText();
+		updateStatusSkipButton();
+	}
 
     @Override
     public void onResume() {

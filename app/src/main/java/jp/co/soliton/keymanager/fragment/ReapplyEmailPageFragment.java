@@ -78,15 +78,20 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
         txtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                }
+	            if (!hasFocus) {
+		            txtEmail.setText(txtEmail.getText().toString().trim());
+		            hideKeyboard(v, getContext());
+		            updateStatusSkipButton();
+	            } else {
+		            btnSkipEmail.setVisibility(View.INVISIBLE);
+	            }
             }
         });
         txtEmail.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+	                txtEmail.clearFocus();
                     if (!nullOrEmpty(txtEmail.getText().toString())) {
                         nextAction();
                         return true;
@@ -96,6 +101,20 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
             }
         });
     }
+
+	@Override
+	public void clearFocusEditText() {
+		super.clearFocusEditText();
+		updateStatusSkipButton();
+	}
+
+	private void updateStatusSkipButton() {
+		if (txtEmail.getText().toString().trim().length() == 0) {
+			btnSkipEmail.setVisibility(View.VISIBLE);
+		} else {
+			btnSkipEmail.setVisibility(View.INVISIBLE);
+		}
+	}
 
     @Override
     public void onResume() {

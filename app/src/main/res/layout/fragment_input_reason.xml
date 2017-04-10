@@ -13,7 +13,9 @@
         android:gravity="center"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:weightSum="3">
+        android:weightSum="3"
+		android:focusable="true"
+		android:focusableInTouchMode="true">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,11 +33,12 @@
             android:id="@+id/txtReason"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_underline"
-            android:inputType="text|textVisiblePassword|textNoSuggestions"
+            android:background="@drawable/round_corner_white_edittext"
+            android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
             android:hint="@string/input"
             android:layout_weight="1"
-            android:maxLines="1"
+            android:maxLines="4"
+   	        android:minLines="4"
             android:textSize="@dimen/text_size_value"
             android:maxLength="1024"
             android:paddingLeft="10dp"
@@ -43,7 +46,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
-            android:gravity="bottom"
+            android:gravity="top"
             android:scrollbars="vertical"
             />
         <LinearLayout

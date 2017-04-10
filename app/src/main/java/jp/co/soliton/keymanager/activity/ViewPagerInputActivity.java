@@ -98,8 +98,11 @@ public class ViewPagerInputActivity extends FragmentActivity {
             float x = ev.getRawX() + v.getLeft() - scrcoords[0];
             float y = ev.getRawY() + v.getTop() - scrcoords[1];
 
-            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-                hideKeyboard(this);
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
+	            hideKeyboard(this);
+	            v.clearFocus();
+	            ((InputBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
+            }
         }
         return super.dispatchTouchEvent(ev);
     }
