@@ -947,7 +947,7 @@ public class XmlPullParserAided /*extends Activity*/{
 	}
 
 	public boolean TakeApartApplicationList() {
-		LogCtrl.Logger(LogCtrl.m_strInfo, "XmlPullparserAided::TakeApartApplicationList Start", m_ctx);
+		LogCtrl.getInstance(m_ctx).loggerInfo("XmlPullparserAided::TakeApartApplicationList Start");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -1260,7 +1260,7 @@ public class XmlPullParserAided /*extends Activity*/{
 	// AndroidIDからAPIDの基礎文字列を生成
 	private static String GetAndroididToApid(Context ctx) {
 		 String str_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
-		 LogCtrl.Logger(LogCtrl.m_strInfo, "XmlPullParserAded::GetAndroididToApid ID=" + str_id, ctx);
+		LogCtrl.getInstance(ctx).loggerInfo("XmlPullParserAded::GetAndroididToApid ID=" + str_id);
 
 		 while(str_id.length() < 40) {
 			 str_id += str_id;
@@ -1285,6 +1285,7 @@ public class XmlPullParserAided /*extends Activity*/{
 
 	// アカウントから疑似APIDを作成(VPNとアプリ用)
 	private static String GetAccountToApid(Context ctx) {
+		LogCtrl logCtrl = LogCtrl.getInstance(ctx);
 		Account[] accountsall = AccountManager.get(ctx).getAccounts();
 		for (Account account_debug : accountsall) {
 			String name = account_debug.name;
@@ -1292,20 +1293,14 @@ public class XmlPullParserAided /*extends Activity*/{
 			int describeContents = account_debug.describeContents();
 			int hashCode = account_debug.hashCode();
 
-			LogCtrl.Logger(LogCtrl.m_strInfo, "XmlPullParserAded::GetAccountToApid dbg name=" + name, ctx);
-			LogCtrl.Logger(LogCtrl.m_strInfo, "XmlPullParserAded::GetAccountToApid dbg type=" + type, ctx);
-			LogCtrl.Logger(LogCtrl.m_strInfo,
-					"XmlPullParserAded::GetAccountToApid dbg describe=" + Integer.toString(describeContents), ctx);
-			LogCtrl.Logger(LogCtrl.m_strInfo,
-					"XmlPullParserAded::GetAccountToApid dbg hashCode=" + Integer.toString(hashCode), ctx);
-
+			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg name=" + name);
+			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg type=" + type);
+			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg describe=" + Integer.toString(describeContents));
+			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg hashCode=" + Integer.toString(hashCode));
 		}
-
 		Account[] accounts = AccountManager.get(ctx).getAccountsByType("com.google");//getAccounts();
 		Account account = accounts[0];
-
-		LogCtrl.Logger(LogCtrl.m_strInfo, "XmlPullParserAded::GetAccountToApid  account name=" + account.name, ctx);
-
+		LogCtrl.getInstance(ctx).loggerInfo("XmlPullParserAded::GetAccountToApid  account name=" + account.name);
 		int hashCode = account.hashCode();
 		String hashStr = Integer.toString(hashCode);
 		while(hashStr.length() < 40) {
@@ -1315,7 +1310,7 @@ public class XmlPullParserAided /*extends Activity*/{
 
 		hashStr = encodeSHA1(hashStr);
 
-		LogCtrl.Logger(LogCtrl.m_strInfo, "GetAccountToApid = " + hashStr, ctx);
+		logCtrl.loggerInfo("GetAccountToApid = " + hashStr);
 
 		return hashStr;
 	}

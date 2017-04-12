@@ -87,7 +87,7 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         ByteArrayOutputStream byteArrayOutputStreamObj=null;
 
         boolean bRet = true;
-
+		LogCtrl logCtrl = LogCtrl.getInstance(this);
         try {
             //Contextから入力ストリームの取得
             inputStreamObj=openFileInput(StringList.m_strLoginUserOutputFile);
@@ -102,14 +102,14 @@ public class APIDActivity extends Activity implements View.OnClickListener {
             //ByteArrayOutputStreamからbyte配列に変換
             byArrData_read = byteArrayOutputStreamObj.toByteArray();
         } catch (Exception e) {
-            LogCtrl.Logger(LogCtrl.m_strDebug, "ReadAndSetLoginUserInfo: "+ e.getMessage(), this);
+            logCtrl.loggerDebug("ReadAndSetLoginUserInfo: "+ e.getMessage());
             bRet = false;
         } finally{
             try {
                 if (inputStreamObj!=null) inputStreamObj.close();
                 if (byteArrayOutputStreamObj!=null) byteArrayOutputStreamObj.close();
             } catch (Exception e2) {
-                LogCtrl.Logger(LogCtrl.m_strDebug, "ReadAndSetLoginUserInfo e2: " + e2.getMessage(), this);
+                logCtrl.loggerDebug("ReadAndSetLoginUserInfo e2: " + e2.getMessage());
                 bRet = false;
             }
 

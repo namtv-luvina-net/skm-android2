@@ -348,29 +348,31 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerReapplyActivity);
             HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerReapplyActivity);
             boolean ret = conn.RunHttpApplyLoginUrlConnection(pagerReapplyActivity.getInformCtrl());
 
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", pagerReapplyActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", pagerReapplyActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", pagerReapplyActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", pagerReapplyActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             } else if (pagerReapplyActivity.getInformCtrl().GetRtn().startsWith("NG")) {
-                m_nErroType = ERR_LOGIN_FAIL;
+	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
+	            m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             // 取得したCookieをログイン時のCookieとして保持する.
@@ -383,7 +385,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
 
             ret = m_p_aided.TakeApartUserAuthenticationResponse(pagerReapplyActivity.getInformCtrl());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", pagerReapplyActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }

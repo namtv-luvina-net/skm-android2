@@ -61,7 +61,8 @@ public class CertificateUtility {
 			}
 		} catch (CertStoreException e) {
 			e.printStackTrace();
-			LogCtrl.Logger(LogCtrl.m_strError, "CertificateUtility::certStoreToKeyChain CertStoreException::" + e.toString(), context);
+			LogCtrl.getInstance(context).loggerError("CertificateUtility::certStoreToKeyChain CertStoreException::" + e
+					.toString());
 		}
 	}
 
@@ -77,7 +78,8 @@ public class CertificateUtility {
 			context.startActivityForResult(intent, requestCode);
 		} catch (CertificateEncodingException e) {
 			e.printStackTrace();
-			LogCtrl.Logger(LogCtrl.m_strError, "CertificateUtility::certificateToKeyChain CertificateEncodingException::" + e.toString(), context);
+			LogCtrl.getInstance(context).loggerError("CertificateUtility::certificateToKeyChain CertificateEncodingException::"
+					+ e.toString());
 		}
 	}
 

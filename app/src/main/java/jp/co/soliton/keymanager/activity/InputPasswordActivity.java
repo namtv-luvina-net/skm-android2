@@ -223,26 +223,27 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpApplyLoginUrlConnection(m_InformCtrl);
-
+			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", getApplicationContext());
+                logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
                 m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
                 m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
                 m_nErroType = InputBasePageFragment.ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
+	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
                 m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
                 return false;
             }
@@ -256,7 +257,7 @@ public class InputPasswordActivity extends Activity {
 
             ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
@@ -312,26 +313,27 @@ public class InputPasswordActivity extends Activity {
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
             cancelApply = "";
-
+			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", getApplicationContext());
+                logCtrlAsyncTask.loggerError("DropApplyTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", getApplicationContext());
+                logCtrlAsyncTask.loggerError("DropApplyTask Forbidden.");
                 m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("DropApplyTask Unauthorized.");
                 m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("DropApplyTask ERR:");
                 m_nErroType = InputBasePageFragment.ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
+	            logCtrlAsyncTask.loggerError("DropApplyTask NG");
                 m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
                 return false;
             }

@@ -50,6 +50,7 @@ public class HttpConnectionCtrl {
 	
 	private Context m_ctx;
 	private String m_str_user_agtpro = "";
+	private LogCtrl logCtrl;
 	
 	// コンストラクタ
 	//public HttpConnectionCtrl() {
@@ -65,7 +66,7 @@ public class HttpConnectionCtrl {
 		
 	//	trustAllHosts();	// 証明書認証を回避するための手続き2-1
 		
-		
+		logCtrl = LogCtrl.getInstance(context);
 	}
 	
 	private void SetUserAgentProfile() {
@@ -82,7 +83,7 @@ public class HttpConnectionCtrl {
 			//LogCtrl.Logger(LogCtrl.m_strDebug, "UserAgent: " + m_str_user_agtpro, m_ctx);
 		} catch (Exception e) {
 			e.printStackTrace();
-			LogCtrl.Logger(LogCtrl.m_strError, e.toString(), m_ctx);
+			logCtrl.loggerError(e.toString());
 		}
 	}
 	
@@ -590,7 +591,7 @@ public class HttpConnectionCtrl {
 	
 	// アプリケーションインストール
 	public boolean RunHttpAppInstConnection(InformCtrl Inf, String str_apk) {
-		LogCtrl.Logger(LogCtrl.m_strInfo, "RunHttpAppInstConnection", m_ctx);
+		logCtrl.loggerInfo("RunHttpAppInstConnection");
 		HttpURLConnection http = null;
 		
 		try {
@@ -639,7 +640,7 @@ public class HttpConnectionCtrl {
 	}
 
 	public boolean RunHttpProbeHostCerConnection(InformCtrl Inf) {
-		LogCtrl.Logger(LogCtrl.m_strInfo, "RunHttpProbeHostCerConnection", m_ctx);
+		logCtrl.loggerInfo("RunHttpProbeHostCerConnection");
 		HttpURLConnection http = null;
 
 		try {
@@ -956,7 +957,7 @@ public class HttpConnectionCtrl {
 			
 			// 入力ストリーム
 			int input_ret = http.getResponseCode();		// response code を取得
-			LogCtrl.Logger(LogCtrl.m_strInfo, "HttpConnectionCtrl::ApkDlandInstall Get ResponseCode" + Integer.toString(input_ret), m_ctx);
+			logCtrl.loggerInfo("HttpConnectionCtrl::ApkDlandInstall Get ResponseCode" + Integer.toString(input_ret));
 			Inf.SetResponseCode(input_ret);
 			if(input_ret != StringList.RES_200_OK) {
 				http.disconnect();
@@ -992,7 +993,7 @@ public class HttpConnectionCtrl {
 			
 			
 		} catch (IOException e) {
-			LogCtrl.Logger(LogCtrl.m_strError, "HttpConnectionCtrl::ApkDlandInstall::IOException "+ e.toString(), m_ctx);
+			logCtrl.loggerError("HttpConnectionCtrl::ApkDlandInstall::IOException "+ e.toString());
 			return false;
 		}
 		return true;

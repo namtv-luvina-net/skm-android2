@@ -83,6 +83,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private DevicePolicyManager m_DPM;
     private MDMControl mdmctrl;
     private ComponentName m_DeviceAdmin;
+	private LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
         element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
         scepRequester = getScepRequester();
+	    logCtrl = LogCtrl.getInstance(this);
         new GetDeviceCertTask().execute();
     }
 
@@ -116,26 +118,27 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             ////////////////////////////////////////////////////////////////////////////
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpDeviceCertUrlConnection(m_InformCtrl);
-
+			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("GetDeviceCertTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("GetDeviceCertTask Forbidden.");
                 m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("GetDeviceCertTask Unauthorized.");
                 m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("GetDeviceCertTask ERR:");
                 m_nErroType = InputBasePageFragment.ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
+	            logCtrlAsyncTask.loggerError("GetDeviceCertTask NG:");
                 m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
                 return false;
             }
@@ -149,7 +152,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
             ret = m_p_aided.TakeApartScepInfoResponse(m_InformCtrl);
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
@@ -159,7 +162,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             m_p_aided_profile = m_p_aided;
             ret = m_p_aided_profile.TakeApartProfile();
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "CertLoginAcrivity::onClick  "+ "TakeApartProfile false", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("CertLoginAcrivity::onClick TakeApartProfile false");
                 //	m_ErrorMessage.setText(R.string.EnrollErrorMessage);
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
@@ -243,6 +246,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
         @Override
         protected Boolean doInBackground(Requester... params) {
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             try {
                 Requester requester = params[0];
                 // Generate Key Pair
@@ -397,19 +401,20 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                     return false;
                 }
             } catch (RequesterException e) {
-                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask RequesterException::" + e.toString(), StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("CertificateEnrollTask RequesterException::" + e
+			            .toString());
                 //	e.printStackTrace();
                 return false;
             } catch (NoSuchAlgorithmException e) {
-                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask NoSuchAlgorithmException::" + e.toString(), StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("CertificateEnrollTask NoSuchAlgorithmException::" + e.toString());
                 //	e.printStackTrace();
                 return false;
             } catch (NoSuchProviderException e) {
-                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask NoSuchProviderException::" + e.toString(), StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("CertificateEnrollTask NoSuchProviderException::" + e.toString());
                 //	e.printStackTrace();
                 return false;
             } catch (Exception e) {
-                LogCtrl.Logger(LogCtrl.m_strError, "CertificateEnrollTask Exception::" + e.toString(), StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("CertificateEnrollTask Exception::" + e.toString());
                 //	e.printStackTrace();
                 return false;
             }
@@ -476,9 +481,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 SetEditMemberChild(p_data);
             }
         }
-
-        LogCtrl.Logger(LogCtrl.m_strDebug, "CertLoginAcrivity::SetScepItem "+ "Subject: " + m_strSubject, this);
-
+	    logCtrl.loggerDebug("CertLoginAcrivity::SetScepItem Subject: " + m_strSubject);
         return true;
     }
 
@@ -486,8 +489,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         String strKeyName = data.GetKeyName();	// キー名
         int    i_type = data.GetType();		// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
         String strData = data.GetData();		// 要素
-        LogCtrl.Logger(LogCtrl.m_strInfo, "CertLoginAcrivity::SetEditMemberChild "
-                + "Key= " +  strKeyName + " , Data= " + strData , this);
+	    logCtrl.loggerInfo("CertLoginAcrivity::SetEditMemberChild Key= " +  strKeyName + " , Data= " + strData);
 
         // Chalenge
         if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_challenge)) {	// Challenge
@@ -503,7 +505,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        LogCtrl.Logger(LogCtrl.m_strInfo, "onActivityResult start " + "REC CODE = " + Integer.toString(requestCode), this);
+	    logCtrl.loggerInfo("onActivityResult start REC CODE = " + Integer.toString(requestCode));
         if (requestCode == m_nEnrollRtnCode) {
             // After CertificateEnrollTask
             Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
@@ -566,7 +568,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
     // MDMのチェックインの呼び出し
     private void CallMDMCheckIn() {
-        LogCtrl.Logger(LogCtrl.m_strDebug, "CertLoginActivity "+ "CallMDMActivity()", this);
+	    logCtrl.loggerDebug("CertLoginActivity CallMDMActivity()");
 
         // 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
         OldMdmCheckOut();
@@ -590,7 +592,7 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 
         java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
         if(filename_mdm.exists()) {
-            LogCtrl.Logger(LogCtrl.m_strInfo, "MDMCheckinActivity "+ "OldMdmCheckOut()", this);
+	        logCtrl.loggerInfo("MDMCheckinActivity OldMdmCheckOut()");
             MDMFlgs mdm = new MDMFlgs();
             boolean bRet = mdm.ReadAndSetScepMdmInfo(this);
             if(mdm.GetCheckOut() == true) {
@@ -667,25 +669,26 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         @Override
         protected Boolean doInBackground(Void... params) {
             HttpConnectionCtrl conn = new HttpConnectionCtrl(StartUsingProceduresActivity.this);
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             //send request to server
             boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrlCA);
             //parse result return
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask " + "Network error", StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("DownloadCACertificateTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrlCA.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + " Forbidden.", StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("DownloadCACertificateTask Forbidden.");
                 m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrlCA.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "Unauthorized.", StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("DownloadCACertificateTask Unauthorized.");
                 m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrlCA.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "ERR:", StartUsingProceduresActivity.this);
+	            logCtrlAsyncTask.loggerError("DownloadCACertificateTask ERR:");
                 m_nErroType = InputBasePageFragment.ERR_COLON;
                 return false;
             }

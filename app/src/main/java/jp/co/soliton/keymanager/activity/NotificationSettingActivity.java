@@ -133,7 +133,7 @@ public class NotificationSettingActivity extends Activity {
                     maxBeforeDate = (int)differenceDates;
                 }
             } catch (Exception ex) {
-                LogCtrl.Logger(LogCtrl.m_strError, ex.toString(), getApplicationContext());
+	            LogCtrl.getInstance(getApplicationContext()).loggerError(ex.toString());
             }
         } else {
             textViewBack.setText(R.string.label_settings);

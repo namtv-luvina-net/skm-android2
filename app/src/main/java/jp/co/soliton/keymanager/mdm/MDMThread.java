@@ -105,7 +105,7 @@ public class MDMThread {
 						}
 						
 						if (ret == false) {
-							LogCtrl.Logger(LogCtrl.m_strError, "MDMThread::MDMRunThread " + "Reply Error.", context);
+							LogCtrl.getInstance(context).loggerError("MDMThread::MDMRunThread Reply Error.");
 							break;
 						}
 					}

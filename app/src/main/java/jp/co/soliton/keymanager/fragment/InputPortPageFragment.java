@@ -261,26 +261,27 @@ public class InputPortPageFragment extends InputBasePageFragment {
     private class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
             HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
             //send request to server
             boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrl);
             //parse result return
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask " + "Network error", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Network error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + " Forbidden.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "Unauthorized.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "ERR:", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             }

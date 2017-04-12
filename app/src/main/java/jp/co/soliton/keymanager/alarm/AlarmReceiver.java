@@ -130,7 +130,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 }
             }
         } catch (Exception ex) {
-            LogCtrl.Logger(LogCtrl.m_strError, ex.toString(), context);
+	        LogCtrl.getInstance(context).loggerError(ex.toString());
         }
     }
 }

@@ -231,31 +231,33 @@ public class InputHostPageFragment extends InputBasePageFragment {
     private class ConnectApplyTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
             HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
             //execute send request to server
             boolean ret = conn.RunHttpProbeHostCerConnection(m_InformCtrl);
             //check result return from server
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask " + "Network error", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("ConnectApplyTask " + "Network error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + " Forbidden.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("ConnectApplyTask  " + " Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "Unauthorized.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("ConnectApplyTask  " + "Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "ERR:", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("ConnectApplyTask  " + "ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             }
-            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.not_installed_ca).toString())) {
-                m_nErroType = NOT_INSTALL_CA;
+	        if (m_InformCtrl.GetRtn().startsWith(getText(R.string.not_installed_ca).toString())) {
+		        logCtrlAsyncTask.loggerError("ConnectApplyTask  " + getText(R.string.not_installed_ca));
+		        m_nErroType = NOT_INSTALL_CA;
             } else {
                 m_nErroType = SUCCESSFUL;
             }
