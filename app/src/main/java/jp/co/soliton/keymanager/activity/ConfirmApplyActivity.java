@@ -22,13 +22,13 @@ import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
-import jp.co.soliton.keymanager.fragment.InputPlacePageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -375,6 +375,7 @@ public class ConfirmApplyActivity extends Activity {
         }
         @Override
         protected Boolean doInBackground(Void... params) {
+	        LogCtrl logCtrl = LogCtrl.getInstance(getApplicationContext());
             boolean ret;
             //Call to server
             ret = conn.RunHttpApplyCerUrlConnection(m_InformCtrl);
@@ -412,14 +413,17 @@ public class ConfirmApplyActivity extends Activity {
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             }
             if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR).toString())) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             }
@@ -427,6 +431,7 @@ public class ConfirmApplyActivity extends Activity {
             m_p_aided = new XmlPullParserAided(ConfirmApplyActivity.this, m_InformCtrl.GetRtn(), 2);    // 最上位dictの階層は2になる
             ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
             if (ret == false) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground TakeApartDevice false");
                 reTry = false;
                 m_nErroType = ERR_NETWORK;
                 return false;

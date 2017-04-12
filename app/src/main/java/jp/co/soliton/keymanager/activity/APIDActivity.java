@@ -67,14 +67,16 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     }
 
     private void SetParametorFromFile(XmlStringData p_data) {
-
+		LogCtrl logCtrl = LogCtrl.getInstance(this);
         String strKeyName = p_data.GetKeyName();
         String strData = p_data.GetData();
         //
         if(strKeyName.equalsIgnoreCase(StringList.m_str_Apid_Wifi)) {
             m_strAPIDWifi = strData;
+	        logCtrl.loggerDebug("LoginUserOutputFile Wifi APID=" + strData);
         } else if(strKeyName.equalsIgnoreCase(StringList.m_str_Apid_VPN)) {
             m_strAPIDVPN = strData;
+	        logCtrl.loggerDebug("LoginUserOutputFile VPN APID=" + strData);
         }
     }
 

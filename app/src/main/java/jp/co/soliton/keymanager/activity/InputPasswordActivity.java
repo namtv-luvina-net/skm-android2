@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class InputPasswordActivity extends Activity {
     private int m_nErroType;
     private InformCtrl m_InformCtrl;
     private ElementApply element;
+	private LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class InputPasswordActivity extends Activity {
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
         }
+        logCtrl = LogCtrl.getInstance(this);
     }
 
     public void clickBack(View v) {
@@ -76,9 +79,9 @@ public class InputPasswordActivity extends Activity {
     }
 
     public void clickNext(View v) {
+	    logCtrl.loggerInfo("CertLoginAcrivity::onClick  " + "Push LoginButton");
         String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
         m_InformCtrl.SetURL(url);
-
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
@@ -99,14 +102,19 @@ public class InputPasswordActivity extends Activity {
         String strUserid = txtUserId.getText().toString().trim();
         String strPasswd = txtPassword.getText().toString();
         String rtnserial = element.getTarger().replace("WIFI", "").replace("APP", "");
+	    String str_url = m_InformCtrl.GetURL();
         // ログインメッセージ
         // URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
         String message;
-        try {
-            message = "Action=logon" + "&" + StringList.m_strUserID + URLEncoder.encode(strUserid, "UTF-8") +
-                    "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
-                    "&" + StringList.m_strSerial + rtnserial;
-        } catch (Exception ex) {
+	    try {
+		    message = "Action=logon" + "&" + StringList.m_strUserID + URLEncoder.encode(strUserid, "UTF-8") +
+		            "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
+		            "&" + StringList.m_strSerial + rtnserial;
+
+	        logCtrl.loggerInfo("http_user_login-- " + "USER ID=" + strUserid);
+		    logCtrl.loggerInfo("http_user_login-- " + "URL=" + str_url);
+        } catch (UnsupportedEncodingException ex) {
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterLogon UnsupportedEncodingException "+ ex.toString());
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }
@@ -127,6 +135,8 @@ public class InputPasswordActivity extends Activity {
         String message;
         try {
             message = "Action=drop";
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop "+ m_InformCtrl.GetURL());
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop "+ m_InformCtrl.GetUserID());
         } catch (Exception ex) {
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;

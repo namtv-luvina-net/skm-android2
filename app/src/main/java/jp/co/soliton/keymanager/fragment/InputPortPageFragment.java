@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,21 +17,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import javax.security.cert.X509Certificate;
-import java.util.List;
-
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import javax.security.cert.X509Certificate;
+import java.util.List;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -45,9 +40,11 @@ public class InputPortPageFragment extends InputBasePageFragment {
     private TextView zoneInputPortTitle;
     private LinearLayout zoneInputPort;
     public static String payloadDisplayName = "EACert";
+	private LogCtrl logCtrl;
 
     public static Fragment newInstance(Context context) {
         InputPortPageFragment f = new InputPortPageFragment();
+	    f.logCtrl = LogCtrl.getInstance(context);
         return f;
     }
 
@@ -139,6 +136,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
+	    logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
         pagerInputActivity.getInputApplyInfo().setPort(txtPort.getText().toString().trim());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         progressDialog.show();

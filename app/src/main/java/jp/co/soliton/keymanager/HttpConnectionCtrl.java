@@ -51,7 +51,7 @@ public class HttpConnectionCtrl {
 	private Context m_ctx;
 	private String m_str_user_agtpro = "";
 	private LogCtrl logCtrl;
-	
+
 	// コンストラクタ
 	//public HttpConnectionCtrl() {
 	//	trustAllHosts();	// 証明書認証を回避するための手続き2-1
