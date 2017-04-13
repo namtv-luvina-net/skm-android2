@@ -61,6 +61,7 @@ public class InputPasswordActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_password);
+	    logCtrl = LogCtrl.getInstance(this);
         id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
         cancelApply = getIntent().getStringExtra("CANCEL_APPLY");
         txtUserId = (TextView) findViewById(R.id.txtUserId);
@@ -71,7 +72,6 @@ public class InputPasswordActivity extends Activity {
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
         }
-        logCtrl = LogCtrl.getInstance(this);
     }
 
     public void clickBack(View v) {
@@ -321,10 +321,10 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
             cancelApply = "";
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
                 logCtrlAsyncTask.loggerError("DropApplyTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;

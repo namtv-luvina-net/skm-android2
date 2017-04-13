@@ -379,7 +379,7 @@ public class ConfirmApplyActivity extends Activity {
         }
         @Override
         protected Boolean doInBackground(Void... params) {
-	        LogCtrl logCtrl = LogCtrl.getInstance(getApplicationContext());
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             boolean ret;
             //Call to server
             ret = conn.RunHttpApplyCerUrlConnection(m_InformCtrl);
@@ -405,32 +405,32 @@ public class ConfirmApplyActivity extends Activity {
                 return true;
             }
             if (m_InformCtrl.GetRtn().startsWith("NG")) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground NG");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground NG");
                 m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith("EPS-ap Service is stopped.")) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground EPS-ap Service is stopped.");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground EPS-ap Service is stopped.");
                 m_nErroType = ERR_ESP_AP_STOP;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith("No session")) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground No session.");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground No session.");
                 m_nErroType = ERR_SESSION_TIMEOUT;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Forbidden.");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Unauthorized.");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             }
             if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR).toString())) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground ERR:");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             }
@@ -438,7 +438,7 @@ public class ConfirmApplyActivity extends Activity {
             m_p_aided = new XmlPullParserAided(ConfirmApplyActivity.this, m_InformCtrl.GetRtn(), 2);    // 最上位dictの階層は2になる
             ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
             if (ret == false) {
-	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground TakeApartDevice false");
+	            logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground TakeApartDevice false");
                 reTry = false;
                 m_nErroType = ERR_NETWORK;
                 return false;

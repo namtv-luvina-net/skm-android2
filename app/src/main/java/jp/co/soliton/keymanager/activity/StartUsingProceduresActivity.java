@@ -89,11 +89,11 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_using_procedures);
+	    logCtrl = LogCtrl.getInstance(this);
         Intent intent = getIntent();
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
         element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
         scepRequester = getScepRequester();
-	    logCtrl = LogCtrl.getInstance(this);
         new GetDeviceCertTask().execute();
     }
 
@@ -116,9 +116,9 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
-            HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
-            boolean ret = conn.RunHttpDeviceCertUrlConnection(m_InformCtrl);
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
+	        HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
+	        boolean ret = conn.RunHttpDeviceCertUrlConnection(m_InformCtrl);
             if (ret == false) {
 	            logCtrlAsyncTask.loggerError("GetDeviceCertTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
@@ -669,8 +669,8 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private class DownloadCACertificateTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
-            HttpConnectionCtrl conn = new HttpConnectionCtrl(StartUsingProceduresActivity.this);
 	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
+	        HttpConnectionCtrl conn = new HttpConnectionCtrl(StartUsingProceduresActivity.this);
             //send request to server
             boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrlCA);
             //parse result return

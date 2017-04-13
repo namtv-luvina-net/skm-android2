@@ -79,19 +79,6 @@ public class InputReasonPageFragment extends InputBasePageFragment {
                 }
             }
         });
-//        txtReason.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-//	                txtReason.clearFocus();
-//                    if (!nullOrEmpty(txtReason.getText().toString())) {
-//                        nextAction();
-//                        return true;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
     }
 
 	@Override

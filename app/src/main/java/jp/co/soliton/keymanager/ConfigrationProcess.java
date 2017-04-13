@@ -24,11 +24,11 @@ public class ConfigrationProcess {
     
 	public ConfigrationProcess(Context ctx, DevicePolicyManager dpm, ComponentName cmpname) {
 		m_ctx = ctx;
+		logCtrl = LogCtrl.getInstance(ctx);
 		
 		// initialize Device policy manager, device administrator
     	m_DPM = dpm;
     	m_DeviceAdmin = cmpname;
-    	logCtrl = LogCtrl.getInstance(ctx);
 	}
 	
     

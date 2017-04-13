@@ -43,7 +43,8 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apid);
-        this.layoutShareAPID = (LinearLayout)findViewById(R.id.layoutShareAPID);
+	    logCtrl = LogCtrl.getInstance(this);
+	    this.layoutShareAPID = (LinearLayout)findViewById(R.id.layoutShareAPID);
         layoutShareAPID.setOnClickListener(this);
         ReadAndSetLoginUserInfo();
 
@@ -55,7 +56,6 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         this.tvWIFIID = (TextView)findViewById(R.id.tvWIFIID);
         tvVPNID.setText(strVpnID);
         tvWIFIID.setText(strUDID);
-	    logCtrl = LogCtrl.getInstance(this);
     }
 
     private String GetUDID() {
@@ -69,7 +69,6 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     }
 
     private void SetParametorFromFile(XmlStringData p_data) {
-		LogCtrl logCtrl = LogCtrl.getInstance(this);
         String strKeyName = p_data.GetKeyName();
         String strData = p_data.GetData();
         //

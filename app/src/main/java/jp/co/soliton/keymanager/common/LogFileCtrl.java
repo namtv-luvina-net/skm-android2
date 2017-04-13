@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class LogFileCtrl {
 
 	public static final String PREFIX_LOG = "skm_";
-	public static final String SUFFIX_LOG = ".txt";
+	public static final String SUFFIX_LOG = ".log";
 
 	public static void deleteOldLogFile(Context context) {
 		File files = context.getFilesDir();

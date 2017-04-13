@@ -61,12 +61,12 @@ public class HttpConnectionCtrl {
 	// コンストラクタ
 	public HttpConnectionCtrl(Context context) {
 		m_ctx = context;
+		logCtrl = LogCtrl.getInstance(context);
 		
 		SetUserAgentProfile();
 		
 	//	trustAllHosts();	// 証明書認証を回避するための手続き2-1
-		
-		logCtrl = LogCtrl.getInstance(context);
+
 	}
 	
 	private void SetUserAgentProfile() {
