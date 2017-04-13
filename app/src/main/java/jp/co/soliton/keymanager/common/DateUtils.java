@@ -11,35 +11,35 @@ import java.util.Date;
  */
 
 public class DateUtils {
-	public static final String STRING_DATE_FORMAT = "yyyyMMdd";
+	public static final String STRING_DATE_FORMAT_FOR_LOG = "yyyyMMdd";
+	public static final String STRING_DATE_FORMAT_FOR_ZIP = "yyyyMMddHHmmss";
+	public static final String STRING_DATE_FORMAT_SYSTEM_TIME = "yyyy-MM-dd HH:mm:ss";
 	public static final int NUM_DATE_VALID = 3;
 
-	public static String getCurrentDate() {
+	public static String getCurrentDateLog() {
 		Date currentDate = Calendar.getInstance().getTime();
-		return convertDateToString(currentDate);
+		return convertDateToString(STRING_DATE_FORMAT_FOR_LOG, currentDate);
 	}
 
-	public static String convertDateToString(Date date) {
-		String strDate = new SimpleDateFormat(STRING_DATE_FORMAT).format(date).toString();
-		System.out.println(strDate);
+	public static String getCurrentDateZip() {
+		Date currentDate = Calendar.getInstance().getTime();
+		return convertDateToString(STRING_DATE_FORMAT_FOR_ZIP, currentDate);
+	}
+
+	public static String getCurrentDateSystem() {
+		Date currentDate = Calendar.getInstance().getTime();
+		return convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME, currentDate);
+	}
+
+	public static String convertDateToString(String type, Date date) {
+		String strDate = new SimpleDateFormat(type).format(date).toString();
 		return strDate;
-	}
-
-	public static Date convertSringToDate(String strDate){
-		DateFormat dateFormat = new SimpleDateFormat(STRING_DATE_FORMAT);
-		Date date = new Date();
-		try {
-			date = dateFormat.parse(strDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return date;
 	}
 
 	public static boolean isDateValid(String strDateToCompare){
 		try {
 			Date currentDate = Calendar.getInstance().getTime();
-			Date dateCompare = convertSringToDate(strDateToCompare);
+			Date dateCompare = convertSringToDate(STRING_DATE_FORMAT_FOR_LOG, strDateToCompare);
 			if (currentDate.before(dateCompare)) {
 				return false;
 			}
@@ -53,5 +53,16 @@ public class DateUtils {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public static Date convertSringToDate(String type, String strDate){
+		DateFormat dateFormat = new SimpleDateFormat(type);
+		Date date = new Date();
+		try {
+			date = dateFormat.parse(strDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 }

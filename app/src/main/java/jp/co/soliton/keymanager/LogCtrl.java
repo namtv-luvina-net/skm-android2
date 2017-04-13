@@ -89,7 +89,7 @@ public class LogCtrl {
 
 		// ユーザーがアクセスできない内部領域に作成する http://blog.lciel.jp/blog/2014/02/08/android-about-storage/
 		// # 26472
-		String log_path = ctx./*getExternalFilesDir(null)*/getFilesDir().getPath() + "/" + LogFileCtrl.getLogName();
+		String log_path = ctx./*getExternalFilesDir(null)*/getFilesDir().getPath() + File.separator + LogFileCtrl.getLogName();
 
 	//	String log_path = Environment.getExternalStorageDirectory().getPath() + "/" + m_strlog_csv;
 		String log_str = printDate() + "," + msgtype + "," + msg + "\n";
