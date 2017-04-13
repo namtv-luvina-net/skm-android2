@@ -48,20 +48,19 @@ public class InfoDevice {
 		pathFileInfo = context.getFilesDir().getPath() + File.separator + NAME_FILE_INFO;
 	}
 
-	public File prepareFileZip() {
+	public File createFileZip() {
 		String nameFileZip = String.format(patternNameZipFile, getVersionName(), DateUtils.getCurrentDateZip());
-		String pathFileZip = context.getFilesDir().getPath() + File.separator + nameFileZip;
-		File fileZip = new File(pathFileZip);
+		File outputDir = context.getExternalCacheDir();
+		File outputFile = new File(outputDir, nameFileZip);
 		try {
-			fileZip.createNewFile();
+			outputFile.createNewFile();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		createFileInfo();
 		ArrayList<String> listFileToZip = LogFileCtrl.getListLogFile(context);
 		listFileToZip.add(pathFileInfo);
-		new Compress(listFileToZip, pathFileZip).zip();
-		return fileZip;
+		new Compress(listFileToZip, outputFile.getAbsolutePath()).zip();
+		return outputFile;
 	}
 
 	private String getVersionName() {
@@ -83,7 +82,7 @@ public class InfoDevice {
 		return version;
 	}
 
-	private File createFileInfo() {
+	public String createFileInfo() {
 		StringBuilder outputDataBuilder = getInfoDevice();
 		File fileInfo = new File(pathFileInfo);
 		try {
@@ -92,7 +91,7 @@ public class InfoDevice {
 			e.printStackTrace();
 		}
 		saveFileInfo(fileInfo, outputDataBuilder);
-		return fileInfo;
+		return outputDataBuilder.toString();
 	}
 
 	private StringBuilder getInfoDevice() {

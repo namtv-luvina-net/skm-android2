@@ -10,14 +10,15 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.common.CommonUtils;
+import jp.co.soliton.keymanager.common.InfoDevice;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by luongdolong on 3/31/2017.
@@ -46,12 +47,19 @@ public class ProductInfoActivity extends Activity {
         btnLogSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
+	            InfoDevice infoDevice = InfoDevice.getInstance(ProductInfoActivity.this);
+	            String contentMail = infoDevice.createFileInfo();
+	            File zipFile = infoDevice.createFileZip();
+	            Uri uriPathFileZip = Uri.fromFile(zipFile);
+
+	            Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setType("*/*");
                 //intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(crashLogFile));
                 intent.setData(new Uri.Builder().scheme("mailto").build());
                 intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle));
-                intent.putExtra(Intent.EXTRA_TEXT, buildBodyMailDiagnostics());
+                intent.putExtra(Intent.EXTRA_TEXT, contentMail);
+	            // the attachment
+	            intent .putExtra(Intent.EXTRA_STREAM, uriPathFileZip);
 
                 startActivity(Intent.createChooser(intent, "Send via email"));
             }
