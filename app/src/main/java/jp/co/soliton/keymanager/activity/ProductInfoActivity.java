@@ -14,6 +14,7 @@ import android.widget.Button;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
@@ -106,6 +107,7 @@ public class ProductInfoActivity extends Activity {
                                         totalInternalMemory, availableInternalMemory, totalExternalMemory, availableExternalMemory);
             return result;
         } catch (Exception ex) {
+	        LogCtrl.getInstance(this).loggerInfo("ProductInfoActivity:buildBodyMailDiagnostics:" + ex.getMessage());
             return "";
         }
     }

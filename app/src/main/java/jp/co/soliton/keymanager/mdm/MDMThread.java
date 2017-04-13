@@ -111,6 +111,7 @@ public class MDMThread {
 					}
 					
 				} catch (InterruptedException e) {
+					LogCtrl.getInstance(context).loggerError("MDMThread::MDMRunThread InterruptedException : " + e.toString());
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}

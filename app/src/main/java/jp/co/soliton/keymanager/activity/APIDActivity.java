@@ -37,6 +37,7 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     private String m_strAPIDWifi = "";	// APID Wi-Fi #21391
     private String m_strAPIDVPN = "";	// APID VPN #21391
     private String m_strAPID = "";	// APID VPN #21391
+	LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         this.tvWIFIID = (TextView)findViewById(R.id.tvWIFIID);
         tvVPNID.setText(strVpnID);
         tvWIFIID.setText(strUDID);
+	    logCtrl = LogCtrl.getInstance(this);
     }
 
     private String GetUDID() {
@@ -89,7 +91,6 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         ByteArrayOutputStream byteArrayOutputStreamObj=null;
 
         boolean bRet = true;
-		LogCtrl logCtrl = LogCtrl.getInstance(this);
         try {
             //Contextから入力ストリームの取得
             inputStreamObj=openFileInput(StringList.m_strLoginUserOutputFile);
@@ -153,6 +154,7 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         try {
             startActivity(Intent.createChooser(email, ""));
         } catch (android.content.ActivityNotFoundException ex) {
+			logCtrl.loggerDebug("APIDActivity:sendMail: There are no email clients installed.");
             Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }

@@ -115,14 +115,17 @@ public class SSLUtils {
          */
         public static KeyChainKeyManager fromAlias(Context context, String alias)
                 throws CertificateException {
+	        LogCtrl logCtrl = LogCtrl.getInstance(context);
             X509Certificate[] certificateChain;
             try {
                 certificateChain = KeyChain.getCertificateChain(context, alias);
             } catch (KeyChainException e) {
                 logError(alias, "certificate chain", e);
+	            logCtrl.loggerError(alias + " :certificate chain : " + e.toString());
                 throw new CertificateException(e);
             } catch (InterruptedException e) {
                 logError(alias, "certificate chain", e);
+	            logCtrl.loggerError(alias + " :certificate chain : " + e.toString());
                 throw new CertificateException(e);
             }
 
@@ -131,13 +134,16 @@ public class SSLUtils {
                 privateKey = KeyChain.getPrivateKey(context, alias);
             } catch (KeyChainException e) {
                 logError(alias, "private key", e);
+	            logCtrl.loggerError(alias + " : private key : " + e.toString());
                 throw new CertificateException(e);
             } catch (InterruptedException e) {
+	            logCtrl.loggerError(alias + " : private key : " + e.toString());
                 logError(alias, "private key", e);
                 throw new CertificateException(e);
             }
 
             if (certificateChain == null || privateKey == null) {
+	            logCtrl.loggerError("SSLUtils::KeyChainKeyManager:: Can't access certificate from keystore");
                 throw new CertificateException("Can't access certificate from keystore");
             }
 

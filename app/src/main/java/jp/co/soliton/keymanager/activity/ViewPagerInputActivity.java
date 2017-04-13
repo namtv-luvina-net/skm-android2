@@ -10,27 +10,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.util.ArrayList;
-
-import jp.co.soliton.keymanager.ConfigrationProcess;
-import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.InputApplyInfo;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.adapter.ViewPagerAdapter;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
-import jp.co.soliton.keymanager.fragment.InputPlacePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
-import jp.co.soliton.keymanager.fragment.InputUserPageFragment;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
+
+import java.util.ArrayList;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -135,6 +126,8 @@ public class ViewPagerInputActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    LogCtrl.getInstance(this).loggerInfo("ViewPagerInputActivity:onActivityResult  requestCode = " + requestCode + ". " +
+			    "resultCode = " + requestCode);
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
         } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {

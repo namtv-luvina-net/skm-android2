@@ -19,6 +19,7 @@ public class ConfigrationProcess {
 	private Context m_ctx;
 	DevicePolicyManager m_DPM;
     ComponentName m_DeviceAdmin;
+	LogCtrl logCtrl;
     
     
 	public ConfigrationProcess(Context ctx, DevicePolicyManager dpm, ComponentName cmpname) {
@@ -27,7 +28,7 @@ public class ConfigrationProcess {
 		// initialize Device policy manager, device administrator
     	m_DPM = dpm;
     	m_DeviceAdmin = cmpname;
-    	
+    	logCtrl = LogCtrl.getInstance(ctx);
 	}
 	
     
@@ -46,6 +47,7 @@ public class ConfigrationProcess {
 	    		Log.i("DeviceAdmin passwordquality2= ", Integer.toString(i_qual));
 			}
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::allowSimple::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -65,6 +67,7 @@ public class ConfigrationProcess {
 	    		Log.i("DeviceAdmin passwordquality2= ", Integer.toString(i_qual));
 			}
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::requireAlphanumeric::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -84,6 +87,7 @@ public class ConfigrationProcess {
     		i_qual =m_DPM.getPasswordMinimumLength(m_DeviceAdmin);
     		Log.i("DeviceAdmin minLength2= ", Integer.toString(i_qual));
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::minLength::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -95,6 +99,7 @@ public class ConfigrationProcess {
     		
     		// ★★現状、対応されているAPIが存在しない★★
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::minComplexChars::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -125,6 +130,7 @@ public class ConfigrationProcess {
     		Log.i("DeviceAdmin passwordquality2= ", Long.toString(l_maxpin));
 		} catch (Exception e) {
 			//e.printStackTrace();
+			logCtrl.loggerError("ConfigrationProcess::maxPINAgeInDays::Exception : " + e.toString());
 			Log.e("maxPINAgeInDays error:", e.toString());
 		}
 	}
@@ -145,6 +151,7 @@ public class ConfigrationProcess {
     		
     		//m_DPM.lockNow();		// 即時デバイスロック(デバッグ用)
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::maxInactivity::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -169,6 +176,7 @@ public class ConfigrationProcess {
     		i_qual =m_DPM.getPasswordHistoryLength(m_DeviceAdmin);
     		Log.i("DeviceAdmin pinHistory2= ", Integer.toString(i_qual));
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::pinHistory::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -180,6 +188,7 @@ public class ConfigrationProcess {
     		
     		// ★★現状、対応されているAPIが存在しない★★
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::maxGracePeriod::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -196,6 +205,7 @@ public class ConfigrationProcess {
     		int i_qual = m_DPM.getMaximumFailedPasswordsForWipe(m_DeviceAdmin);
     		Log.i("DeviceAdmin maxFailedAttempts2= ", Integer.toString(i_qual));
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::maxFailedAttempts::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}
@@ -227,6 +237,7 @@ public class ConfigrationProcess {
 	        Log.v("onCreate", "get_uuid2 " + uuuid );
 			
 		} catch (Exception e) {
+			logCtrl.loggerError("ConfigrationProcess::PayloadCertificateUUID::Exception : " + e.toString());
 			e.printStackTrace();
 		}
 	}

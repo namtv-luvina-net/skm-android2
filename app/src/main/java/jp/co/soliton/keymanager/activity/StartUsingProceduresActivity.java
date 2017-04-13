@@ -505,7 +505,8 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    logCtrl.loggerInfo("onActivityResult start REC CODE = " + Integer.toString(requestCode));
+	    logCtrl.loggerInfo("StartUsingProceduresActivity:onActivityResult start REC CODE = " + Integer.toString
+			    (requestCode));
         if (requestCode == m_nEnrollRtnCode) {
             // After CertificateEnrollTask
             Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
@@ -745,6 +746,8 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
             intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
             this.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
         } catch (Exception e) {
+	        logCtrl.loggerInfo("StartUsingProceduresActivity:installCACert : " + getString(R.string
+			        .error_install_certificate));
             showMessage(getString(R.string.error_install_certificate));
         }
     }

@@ -13,7 +13,7 @@ import java.util.Date;
 public class DateUtils {
 	public static final String STRING_DATE_FORMAT_FOR_LOG = "yyyyMMdd";
 	public static final String STRING_DATE_FORMAT_FOR_ZIP = "yyyyMMddHHmmss";
-	public static final String STRING_DATE_FORMAT_SYSTEM_TIME = "yyyy-MM-dd HH:mm:ss";
+	public static final String STRING_DATE_FORMAT_SYSTEM_TIME = "yyyy/MM/dd HH:mm:ss";
 	public static final int NUM_DATE_VALID = 3;
 
 	public static String getCurrentDateLog() {

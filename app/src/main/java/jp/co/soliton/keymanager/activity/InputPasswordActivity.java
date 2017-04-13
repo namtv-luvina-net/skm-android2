@@ -135,9 +135,10 @@ public class InputPasswordActivity extends Activity {
         String message;
         try {
             message = "Action=drop";
-	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop "+ m_InformCtrl.GetURL());
-	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop "+ m_InformCtrl.GetUserID());
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop1 "+ m_InformCtrl.GetURL());
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop2"+ m_InformCtrl.GetUserID());
         } catch (Exception ex) {
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop3 " + ex.toString());
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }

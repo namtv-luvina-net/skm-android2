@@ -210,6 +210,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                     "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
                     "&" + StringList.m_strSerial + rtnserial;
         } catch (Exception ex) {
+	        LogCtrl.getInstance(pagerReapplyActivity).loggerInfo("ReapplyUserPageFragment:makeParameterLogon: " + ex.toString());
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }

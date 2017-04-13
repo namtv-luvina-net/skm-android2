@@ -299,6 +299,8 @@ public class ConfirmApplyActivity extends Activity {
             try {
                 message_ma = message_ma + URLEncoder.encode(inputApplyInfo.getEmail(), "UTF-8");
             } catch (UnsupportedEncodingException ex) {
+	            LogCtrl.getInstance(this).loggerInfo("CompleteApplyActivity:makeParameterApply:Email:: " + "Message=" + ex
+			            .getMessage());
                 Log.i(StringList.m_str_SKMTag, "apply:: " + "Message=" + ex.getMessage());
             }
         }
@@ -306,6 +308,8 @@ public class ConfirmApplyActivity extends Activity {
             try {
                 message_dc = message_dc + URLEncoder.encode(inputApplyInfo.getReason(), "UTF-8");
             } catch (UnsupportedEncodingException ex) {
+	            LogCtrl.getInstance(this).loggerInfo("CompleteApplyActivity:makeParameterApply:Reason:: " + "Message=" + ex
+			            .getMessage());
                 Log.i(StringList.m_str_SKMTag, "apply:: " + "Message=" + ex.getMessage());
             }
         }
@@ -401,14 +405,17 @@ public class ConfirmApplyActivity extends Activity {
                 return true;
             }
             if (m_InformCtrl.GetRtn().startsWith("NG")) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground NG");
                 m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith("EPS-ap Service is stopped.")) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground EPS-ap Service is stopped.");
                 m_nErroType = ERR_ESP_AP_STOP;
                 return false;
             }
             if (m_InformCtrl.GetRtn().startsWith("No session")) {
+	            logCtrl.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground No session.");
                 m_nErroType = ERR_SESSION_TIMEOUT;
                 return false;
             }

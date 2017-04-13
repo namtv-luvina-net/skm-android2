@@ -208,6 +208,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
         XmlPullParserAided m_p_aided = new XmlPullParserAided(pagerInputActivity, cacert, 2);	// 最上位dictの階層は2になる
         boolean ret = m_p_aided.TakeApartProfileList();
         if (!ret) {
+	        logCtrl.loggerError("InputPortPageFragment:downloadCert1: " + getString(R.string.error_install_certificate));
             showMessage(getString(R.string.error_install_certificate));
             return;
         }
@@ -222,6 +223,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
             intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
             pagerInputActivity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
         } catch (Exception e) {
+	        logCtrl.loggerError("InputPortPageFragment:downloadCert2: " + getString(R.string.error_install_certificate));
             showMessage(getString(R.string.error_install_certificate));
         }
     }
