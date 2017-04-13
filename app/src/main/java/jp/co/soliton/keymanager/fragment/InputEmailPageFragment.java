@@ -128,6 +128,7 @@ public class InputEmailPageFragment extends InputBasePageFragment {
                 pagerInputActivity.gotoPage(5);
             }
         });
+	    updateStatusSkipButton();
     }
 
     @Override
@@ -170,6 +171,7 @@ public class InputEmailPageFragment extends InputBasePageFragment {
         if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getEmail())) {
             txtEmail.setText(pagerInputActivity.getInputApplyInfo().getEmail());
         }
+        updateStatusSkipButton();
         setStatusControl();
     }
 

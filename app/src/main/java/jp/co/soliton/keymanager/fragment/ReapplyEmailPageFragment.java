@@ -128,6 +128,7 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
                 pagerReapplyActivity.gotoPage(2);
             }
         });
+	    updateStatusSkipButton();
     }
 
     @Override
@@ -170,6 +171,7 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
         if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getEmail())) {
             txtEmail.setText(pagerReapplyActivity.getInputApplyInfo().getEmail());
         }
+	    updateStatusSkipButton();
         setStatusControl();
     }
 

@@ -79,19 +79,19 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
 	            }
             }
         });
-        txtReason.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-	                txtReason.clearFocus();
-                    if (!nullOrEmpty(txtReason.getText().toString())) {
-                        nextAction();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+//        txtReason.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+//	                txtReason.clearFocus();
+//                    if (!nullOrEmpty(txtReason.getText().toString())) {
+//                        nextAction();
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
 
 	private void updateStatusSkipButton() {
@@ -120,6 +120,7 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
                 pagerReapplyActivity.gotoConfirmApply();
             }
         });
+	    updateStatusSkipButton();
     }
 
     @Override
@@ -159,6 +160,7 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
         if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getReason())) {
             txtReason.setText(pagerReapplyActivity.getInputApplyInfo().getReason());
         }
+	    updateStatusSkipButton();
         setStatusControl();
     }
 
