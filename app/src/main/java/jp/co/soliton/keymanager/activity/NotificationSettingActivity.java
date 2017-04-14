@@ -1,17 +1,13 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
+import android.view.inputmethod.InputMethodManager;
+import android.widget.*;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
@@ -21,16 +17,19 @@ import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by luongdolong on 3/31/2017.
  */
 
-public class NotificationSettingActivity extends Activity {
+public class NotificationSettingActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
     public static final String KEY_NOTIF_MODE = "KEY_NOTIF_MODE";
     public enum NotifModeEnum {
         ALL, ONE;
     }
-    private TextView tvDetailNotifSave;
     private TextView textViewBack;
     private Switch swNotifFlag;
     private Switch swNotifBeforeFlag;
@@ -42,6 +41,7 @@ public class NotificationSettingActivity extends Activity {
     private String idCert;
     private ElementApplyManager elementMgr;
     private int maxBeforeDate;
+	String numDateNotifBefore = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,6 @@ public class NotificationSettingActivity extends Activity {
         if (NotifModeEnum.ONE == mode) {
             idCert = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
         }
-        tvDetailNotifSave = (TextView) findViewById(R.id.tvDetailNotifSave);
         textViewBack = (TextView) findViewById(R.id.textViewBack);
         swNotifFlag = (Switch) findViewById(R.id.swNotifFlag);
         swNotifBeforeFlag = (Switch) findViewById(R.id.swNotifBeforeFlag);
@@ -66,37 +65,64 @@ public class NotificationSettingActivity extends Activity {
         elementMgr = new ElementApplyManager(this);
     }
 
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if (buttonView == swNotifBeforeFlag) {
+			final int oldValue = CommonUtils.toInt(tvNotifBefore.getText().toString());
+			if (!isChecked) {
+				if (CommonUtils.isEmpty(getTextNotifBefore()) ||
+						!CommonUtils.isNumber(getTextNotifBefore())) {
+					tvNotifBefore.setText(oldValue);
+				}
+				if (CommonUtils.toInt(getTextNotifBefore()) <= 0 ||
+						CommonUtils.toInt(getTextNotifBefore()) > maxBeforeDate) {
+					tvNotifBefore.setText(String.valueOf(oldValue));
+				}
+			}
+			updateEnableViewExpired(isChecked);
+		}
+		btnSaveNotifClick();
+	}
+
     @Override
     protected void onResume() {
         super.onResume();
         setupControl();
+	    swNotifFlag.setOnCheckedChangeListener(this);
+	    swNotifBeforeFlag.setOnCheckedChangeListener(this);
     }
+
+	private void hideKeyboard(Activity activity) {
+		if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+			InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+		}
+	}
 
     public void btnBackClick(View v) {
         finish();
     }
 
-    public void btnSaveNotifClick(View v) {
+    public void btnSaveNotifClick() {
         if (!isValidateInput()) {
             return;
         }
         if (NotifModeEnum.ONE == mode) {
-            elementMgr.updateNotifSettingElement(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
-                    CommonUtils.toInt(tvNotifBefore.getText().toString().trim()), idCert);
+	        elementMgr.updateNotifSettingElement(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
+                    CommonUtils.toInt(getTextNotifBefore()), idCert);
         } else {
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG,
                     new Boolean(swNotifFlag.isChecked()));
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG,
                     new Boolean(swNotifBeforeFlag.isChecked()));
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE,
-                    new Integer(CommonUtils.toInt(tvNotifBefore.getText().toString().trim())));
+                    new Integer(CommonUtils.toInt(getTextNotifBefore())));
 
             //elementMgr.updateNotifSetting(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
             //                        CommonUtils.toInt(tvNotifBefore.getText().toString().trim()));
         }
         AlarmReceiver alarm = new AlarmReceiver();
         alarm.setupNotification(getApplicationContext());
-        finish();
     }
 
     public void setupControl() {
@@ -113,15 +139,9 @@ public class NotificationSettingActivity extends Activity {
                 if (Calendar.getInstance().getTime().after(expirationDate)) {
                     swNotifFlag.setEnabled(false);
                     swNotifBeforeFlag.setEnabled(false);
-                    tvNotifBefore.setEnabled(false);
-                    btnDayBeforeMinus.setEnabled(false);
-                    btnDayBeforePlus.setEnabled(false);
-                    tvDetailNotifSave.setClickable(false);
+	                updateEnableViewExpired(false);
                 } else {
-                    tvNotifBefore.setEnabled(swNotifBeforeFlag.isChecked());
-                    btnDayBeforeMinus.setEnabled(swNotifBeforeFlag.isChecked());
-                    btnDayBeforePlus.setEnabled(swNotifBeforeFlag.isChecked());
-                    tvDetailNotifSave.setClickable(true);
+	                updateEnableViewExpired(swNotifBeforeFlag.isChecked());
                 }
                 //Comparing dates
                 long difference = expirationDate.getTime() - Calendar.getInstance().getTime().getTime();
@@ -139,59 +159,81 @@ public class NotificationSettingActivity extends Activity {
             textViewBack.setText(R.string.label_settings);
             swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG));
             swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
-            tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefInteger(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE)));
+            tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefIntegerWithDefaultValue(getApplicationContext(), StringList
+		            .KEY_NOTIF_ENABLE_BEFORE, 14)));
 
-            tvNotifBefore.setEnabled(swNotifBeforeFlag.isChecked());
-            btnDayBeforeMinus.setEnabled(swNotifBeforeFlag.isChecked());
-            btnDayBeforePlus.setEnabled(swNotifBeforeFlag.isChecked());
+	        updateEnableViewExpired(swNotifBeforeFlag.isChecked());
         }
 
-        final int oldValue = CommonUtils.toInt(tvNotifBefore.getText().toString());
-        swNotifBeforeFlag.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
-                    if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) ||
-                            !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
-                        tvNotifBefore.setText(oldValue);
-                    }
-                    if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) <= 0 ||
-                            CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > maxBeforeDate) {
-                        tvNotifBefore.setText(String.valueOf(oldValue));
-                    }
-                }
-                tvNotifBefore.setEnabled(isChecked);
-                btnDayBeforeMinus.setEnabled(isChecked);
-                btnDayBeforePlus.setEnabled(isChecked);
-            }
+        findViewById(R.id.rootView).setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+		        View currentFocus = getCurrentFocus();
+		        if (currentFocus instanceof EditText) {
+			        hideKeyboard(NotificationSettingActivity.this);
+			        currentFocus.clearFocus();
+		        }
+	        }
         });
+
         btnDayBeforePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) || !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
+                if (CommonUtils.isEmpty(getTextNotifBefore()) || !CommonUtils.isNumber(getTextNotifBefore())) {
                     tvNotifBefore.setText("1");
-                } else if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) < maxBeforeDate){
-                    tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) + 1));
+                } else if (CommonUtils.toInt(getTextNotifBefore()) < maxBeforeDate){
+                    tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(getTextNotifBefore()) + 1));
                 }
+                btnSaveNotifClick();
             }
         });
         btnDayBeforeMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) || !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
+                if (CommonUtils.isEmpty(getTextNotifBefore()) || !CommonUtils.isNumber(getTextNotifBefore())) {
                     tvNotifBefore.setText(String.valueOf(maxBeforeDate));
-                } else if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > 1){
-                    tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) - 1));
+                } else if (CommonUtils.toInt(getTextNotifBefore()) > 1){
+                    tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(getTextNotifBefore()) - 1));
                 }
+                btnSaveNotifClick();
             }
         });
-    }
 
-    private boolean isValidateInput() {
+	    tvNotifBefore.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		    @Override
+		    public void onFocusChange(View v, boolean hasFocus) {
+			    if (hasFocus) {
+				    numDateNotifBefore = tvNotifBefore.getText().toString();
+			    } else {
+				    hideKeyboard(NotificationSettingActivity.this);
+				    if (!numDateNotifBefore.equalsIgnoreCase(tvNotifBefore.getText().toString())) {
+					    btnSaveNotifClick();
+				    }
+			    }
+		    }
+	    });
+	    tvNotifBefore.setOnKeyListener(new View.OnKeyListener() {
+		    @Override
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+			    if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+				    tvNotifBefore.clearFocus();
+			    }
+			    return false;
+		    }
+	    });
+    }
+    
+	private void updateEnableViewExpired(boolean isChecked) {
+		tvNotifBefore.setEnabled(isChecked);
+		btnDayBeforeMinus.setEnabled(isChecked);
+		btnDayBeforePlus.setEnabled(isChecked);
+	}
+
+	private boolean isValidateInput() {
         if (!swNotifBeforeFlag.isChecked()) {
             return true;
         }
-        if (CommonUtils.isEmpty(tvNotifBefore.getText().toString().trim()) || !CommonUtils.isNumber(tvNotifBefore.getText().toString().trim())) {
+        if (CommonUtils.isEmpty(getTextNotifBefore()) || !CommonUtils.isNumber(getTextNotifBefore())) {
             showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
@@ -200,7 +242,7 @@ public class NotificationSettingActivity extends Activity {
             });
             return false;
         }
-        if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) <= 0) {
+        if (CommonUtils.toInt(getTextNotifBefore()) <= 0) {
             showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
@@ -209,7 +251,7 @@ public class NotificationSettingActivity extends Activity {
             });
             return false;
         }
-        if (CommonUtils.toInt(tvNotifBefore.getText().toString().trim()) > maxBeforeDate) {
+        if (CommonUtils.toInt(getTextNotifBefore()) > maxBeforeDate) {
             showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
                 @Override
                 public void onOkDismissMessage() {
@@ -221,7 +263,12 @@ public class NotificationSettingActivity extends Activity {
         return true;
     }
 
-    /**
+	@NonNull
+	private String getTextNotifBefore() {
+		return tvNotifBefore.getText().toString().trim();
+	}
+
+	/**
      * Show message
      *
      * @param message
