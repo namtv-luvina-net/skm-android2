@@ -35,6 +35,7 @@ public class LogCtrl {
 
 	public static LogCtrl instance;
 	private Context context;
+	private String nameLogFile = null;
 
 	public static LogCtrl getInstance(Context context){
 		if (instance == null) {
@@ -47,6 +48,12 @@ public class LogCtrl {
 		}
 		instance.context = context;
 		return instance;
+	}
+
+	public void createNameLogFile() {
+		if (nameLogFile == null) {
+			nameLogFile = LogFileCtrl.getLogName();
+		}
 	}
 
 	private LogCtrl() {
@@ -89,14 +96,12 @@ public class LogCtrl {
 
 		// ユーザーがアクセスできない内部領域に作成する http://blog.lciel.jp/blog/2014/02/08/android-about-storage/
 		// # 26472
-		String log_path = ctx./*getExternalFilesDir(null)*/getFilesDir().getPath() + File.separator + LogFileCtrl.getLogName();
+		String log_path = ctx./*getExternalFilesDir(null)*/getFilesDir().getPath() + File.separator + nameLogFile;
 
 	//	String log_path = Environment.getExternalStorageDirectory().getPath() + "/" + m_strlog_csv;
 		String log_str = printDate() + "," + msgtype + "," + msg + "\n";
 
 		//Log.i(StringList.m_str_SKMTag, log_path);
-
-
 
 		OutputStream out;
 	    try {

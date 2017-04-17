@@ -27,7 +27,6 @@ public class InfoDevice {
 
 	public static final String NAME_FILE_INFO = "info.txt";
 	String pathFileInfo = "";
-	String patternNameZipFile = "skm_and%1s_diag_%2s.zip";
 	String newLine = "\n";
 
 	private Context context;
@@ -48,38 +47,8 @@ public class InfoDevice {
 		pathFileInfo = context.getFilesDir().getPath() + File.separator + NAME_FILE_INFO;
 	}
 
-	public File createFileZip() {
-		String nameFileZip = String.format(patternNameZipFile, getVersionName(), DateUtils.getCurrentDateZip());
-		File outputDir = context.getExternalCacheDir();
-		File outputFile = new File(outputDir, nameFileZip);
-		try {
-			outputFile.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		ArrayList<String> listFileToZip = LogFileCtrl.getListLogFile(context);
-		listFileToZip.add(pathFileInfo);
-		new Compress(listFileToZip, outputFile.getAbsolutePath()).zip();
-		return outputFile;
-	}
-
-	private String getVersionName() {
-		Integer lengthVersion = 4;
-		PackageManager manager = context.getPackageManager();
-		PackageInfo info = null;
-		try {
-			info = manager.getPackageInfo(context.getPackageName(), 0);
-		} catch (PackageManager.NameNotFoundException e) {
-			e.printStackTrace();
-		}
-		String version = info.versionName.replace(".", "");
-		while (version.length() < lengthVersion) {
-			version += "0";
-		}
-		if (version.length() > lengthVersion) {
-			version = version.substring(0, lengthVersion);
-		}
-		return version;
+	public String getPathFileInfo() {
+		return pathFileInfo;
 	}
 
 	public String createFileInfo() {

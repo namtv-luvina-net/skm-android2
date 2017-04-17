@@ -14,7 +14,6 @@ public class DateUtils {
 	public static final String STRING_DATE_FORMAT_FOR_LOG = "yyyyMMdd";
 	public static final String STRING_DATE_FORMAT_FOR_ZIP = "yyyyMMddHHmmss";
 	public static final String STRING_DATE_FORMAT_SYSTEM_TIME = "yyyy/MM/dd HH:mm:ss";
-	public static final int NUM_DATE_VALID = 3;
 
 	public static String getCurrentDateLog() {
 		Date currentDate = Calendar.getInstance().getTime();
@@ -43,12 +42,7 @@ public class DateUtils {
 			if (currentDate.before(dateCompare)) {
 				return false;
 			}
-			long diff = Math.abs(currentDate.getTime() - dateCompare.getTime());
-			long diffDays = diff / (24 * 60 * 60 * 1000);
-			System.out.println("diffDate = " + diffDays);
-			if (diffDays < NUM_DATE_VALID) {
-				return true;
-			}
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -4,22 +4,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.common.CommonUtils;
-import jp.co.soliton.keymanager.common.InfoDevice;
+import jp.co.soliton.keymanager.common.*;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -136,6 +139,7 @@ public class ProductInfoActivity extends Activity {
 
 	private class ProcessInfoAndZipTask extends AsyncTask<Void, Void, ContentZip> {
 
+		String patternNameZipFile = "skm_and%1s_diag_%2s.zip";
 		@Override
 		protected void onPreExecute() {
 			progressDialog.show();
@@ -146,11 +150,48 @@ public class ProductInfoActivity extends Activity {
 			ContentZip contentZip = new ContentZip();
 			InfoDevice infoDevice = InfoDevice.getInstance(ProductInfoActivity.this);
 			contentZip.contentMail = infoDevice.createFileInfo();
-			File zipFile = infoDevice.createFileZip();
+			File zipFile = createFileZip(infoDevice);
 			contentZip.uriFileAttach = Uri.fromFile(zipFile);
 			return contentZip;
 		}
 
+		private File createFileZip(InfoDevice infoDevice) {
+			String nameFileZip = String.format(patternNameZipFile, getVersionName(), DateUtils.getCurrentDateZip());
+			File outputDir = getApplicationContext().getExternalCacheDir();
+			File outputFile = new File(outputDir, nameFileZip);
+			try {
+				outputFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			ArrayList<String> listFileToZip = LogFileCtrl.getListLogFile(getApplicationContext());
+			listFileToZip.add(infoDevice.getPathFileInfo());
+			Log.d("datnd", "createFileZip: datnd =================================================");
+			for (String file : listFileToZip) {
+				Log.d("datnd", "createFileZip: datnd == " + file);
+			}
+			new Compress(listFileToZip, outputFile.getAbsolutePath()).zip();
+			return outputFile;
+		}
+
+		private String getVersionName() {
+			Integer lengthVersion = 4;
+			PackageManager manager = getApplicationContext().getPackageManager();
+			PackageInfo info = null;
+			try {
+				info = manager.getPackageInfo(getApplicationContext().getPackageName(), 0);
+			} catch (PackageManager.NameNotFoundException e) {
+				e.printStackTrace();
+			}
+			String version = info.versionName.replace(".", "");
+			while (version.length() < lengthVersion) {
+				version += "0";
+			}
+			if (version.length() > lengthVersion) {
+				version = version.substring(0, lengthVersion);
+			}
+			return version;
+		}
 		@Override
 		protected void onPostExecute(ContentZip contentZip) {
 			super.onPostExecute(contentZip);
