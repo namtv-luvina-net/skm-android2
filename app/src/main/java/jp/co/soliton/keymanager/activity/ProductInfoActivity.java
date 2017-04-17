@@ -60,9 +60,8 @@ public class ProductInfoActivity extends Activity {
     }
 
 	private void endConnectionAndSentEmail(ContentZip contentZip) {
-		Intent intent = new Intent(Intent.ACTION_SENDTO);
+		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("*/*");
-		intent.setData(new Uri.Builder().scheme("mailto").build());
 		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle));
 		intent.putExtra(Intent.EXTRA_TEXT, contentZip.contentMail);
 		// the attachment
@@ -70,7 +69,7 @@ public class ProductInfoActivity extends Activity {
 		startActivityForResult(Intent.createChooser(intent, "Send via email"), 100);
 	}
 
-    private String buildBodyMailDiagnostics() {
+	private String buildBodyMailDiagnostics() {
         try {
             // Version
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
