@@ -129,7 +129,7 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 
         if (NotifModeEnum.ONE == mode) {
             ElementApply element = elementMgr.getElementApply(idCert);
-            textViewBack.setText(R.string.label_dialog_Cancle);
+            textViewBack.setText(R.string.back);
             swNotifFlag.setChecked(element.isNotiEnableFlag());
             swNotifBeforeFlag.setChecked(element.isNotiEnableBeforeFlag());
             tvNotifBefore.setText(String.valueOf(element.getNotiEnableBefore()));
