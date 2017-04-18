@@ -179,6 +179,9 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
         btnDayBeforePlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+	            if (Integer.parseInt(getTextNotifBefore()) == MAX_BEFORE_DATE) {
+		            return;
+	            }
                 tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(getTextNotifBefore()) + 1));
 	            btnSaveNotifClick();
             }
@@ -186,6 +189,9 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
         btnDayBeforeMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+	            if (Integer.parseInt(getTextNotifBefore()) == MIN_BEFORE_DATE) {
+		            return;
+	            }
                 tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(getTextNotifBefore()) - 1));
                 btnSaveNotifClick();
             }
