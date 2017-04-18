@@ -1,24 +1,66 @@
 apply plugin: 'com.android.application'
 
 android {
+    def buildNum = '0'
+    def versionStr = '200'
     compileSdkVersion 24
     buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "jp.co.soliton.keymanager"
         minSdkVersion 14
         targetSdkVersion 24
-       // testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 1
+        versionName '2.0.0'
+    }
+    signingConfigs {
+        beta {
+            keyAlias 'KeyManager_Beta'
+            keyPassword 'password'
+            storeFile file('../../keystore/KeyManager_Beta.keystore')
+            storePassword 'password'
+        }
+        release {
+            keyAlias 'Soliton_Release'
+            keyPassword 'password'
+            storeFile file('../../keystore/Soliton_Release.keystore')
+            storePassword 'password'
+        }
     }
     buildTypes {
-        release {
-            minifyEnabled false
+        beta {
+            debuggable true
+            jniDebuggable true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.beta
+            zipAlignEnabled true
+        }
+        release {
+            debuggable false
+            jniDebuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
         }
     }
     lintOptions {
         disable 'LongLogTag'
     }
-}
+    android.applicationVariants.all { variant ->
+        variant.buildConfigField 'String', 'BUILD_NUM', "\"${buildNum}\""
+        variant.buildConfigField 'String', 'VERSION_STR', "\"${versionStr}\""
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            def newName
+            if (variant.buildType.name.equals('release')) {
+                newName = "SolitonKeyManagerV${versionStr}_Android.apk"
+            } else {
+                newName = "SolitonKeyManagerV${versionStr}${buildNum}_${variant.buildType.name}_Android.apk"
+            }
+            output.outputFile = new File(file.parent, newName)
+        }
+    }}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
