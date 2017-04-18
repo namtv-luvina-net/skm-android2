@@ -177,7 +177,7 @@
     <string name="label_issuer_version">Version</string>
     <string name="label_issuer_serial_number">Serial Number</string>
     <!-- Signature Algorithm-->
-    <string name="label_signature_algorithm">Signature Algorithm</string>
+    <string name="label_signature_algorithm">Signature</string>
     <string name="label_algorithm_label">Algorithm</string>
     <string name="label_signature_not_valid_before">Not Valid Before</string>
     <string name="label_signature_not_valid_after">Not Valid After</string>
@@ -326,4 +326,5 @@
     <string name="send_diagnostics">Send Diagnostics Snapshot</string>
     <string name="no_cert_installed">No certificates are currently installed</string>
     <string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
+	<string name="validity_period">Validity Period</string>
 </resources>

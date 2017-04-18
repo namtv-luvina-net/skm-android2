@@ -2,28 +2,19 @@ package jp.co.soliton.keymanager.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ParseException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import jp.co.soliton.keymanager.InputApplyInfo;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lexuanvinh on 02/27/2017.
@@ -32,6 +23,7 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
     // Param in AdapterListConfirmApply
     private List<ElementApply> listElementApply;
+	private Context context;
 
     /**
      * This Item View
@@ -51,6 +43,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
      */
     public AdapterListCertificate(Context context, List<ElementApply> listElementApply) {
         super(context, 0);
+	    this.context = context;
         this.listElementApply = listElementApply;
     }
 
@@ -142,9 +135,13 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                 viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
             }
             final int id = listElementApply.get(position).getId();
+	        final String userId = listElementApply.get(position).getUserId();
             viewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+	                LogCtrl logCtrl = LogCtrl.getInstance(context);
+	                logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate id: " + id);
+	                logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + userId);
                     InputApplyInfo.deletePref(getContext());
                     Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
                     intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));

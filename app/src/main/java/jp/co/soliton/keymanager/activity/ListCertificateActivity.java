@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import jp.co.soliton.keymanager.InputApplyInfo;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterListCertificate;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -59,8 +60,8 @@ public class ListCertificateActivity extends Activity {
         if (!elementMgr.hasCertificate()) {
             finish();
         }
-
         listCertificate = elementMgr.getAllCertificate();
+	    LogCtrl.getInstance(this).loggerInfo("ListCertificateActivity::ListSize = " + listCertificate.size());
         adapterListCertificate = new AdapterListCertificate(this, listCertificate);
         list.setAdapter(adapterListCertificate);
     }

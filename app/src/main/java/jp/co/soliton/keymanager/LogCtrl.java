@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+import jp.co.soliton.keymanager.common.LogFileCtrl;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -32,12 +33,50 @@ public class LogCtrl {
 	public final static String m_strlog_zippass = "ZskmLogPass.zip";
 	public final static String m_str_zippassword = "9dk2@ml";	// ZIPファイル解凍パスワード
 
-	public LogCtrl() {
+	public static LogCtrl instance;
+	private Context context;
+	private String nameLogFile = null;
+
+	public static LogCtrl getInstance(Context context){
+		if (instance == null) {
+			synchronized (LogCtrl.class) {
+				if (instance == null) {
+					instance = new LogCtrl();
+					LogFileCtrl.deleteOldLogFile(context);
+				}
+			}
+		}
+		instance.context = context;
+		return instance;
+	}
+
+	public void createNameLogFile() {
+		if (nameLogFile == null) {
+			nameLogFile = LogFileCtrl.getLogName();
+		}
+	}
+
+	private LogCtrl() {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
 
-	public static void Logger(String msgtype, String msg, Context ctx) {
+	public void loggerInfo(String msg){
+		Logger(m_strInfo, msg, context);
+	}
 
+	public void loggerVerbose(String msg){
+		Logger(m_strVerbose, msg, context);
+	}
+
+	public void loggerDebug(String msg){
+		Logger(m_strDebug, msg, context);
+	}
+
+	public void loggerError(String msg){
+		Logger(m_strError, msg, context);
+	}
+
+	private synchronized void Logger(String msgtype, String msg, Context ctx) {
 		if(msgtype.equalsIgnoreCase(m_strInfo) == true) {
 			Log.i(StringList.m_str_SKMTag, msg);
 		} else if(msgtype.equalsIgnoreCase(m_strVerbose) == true) {
@@ -57,14 +96,12 @@ public class LogCtrl {
 
 		// ユーザーがアクセスできない内部領域に作成する http://blog.lciel.jp/blog/2014/02/08/android-about-storage/
 		// # 26472
-		String log_path = ctx./*getExternalFilesDir(null)*/getFilesDir().getPath() + "/" + m_strlog_csv;
+		String log_path = ctx./*getExternalFilesDir(null)*/getFilesDir().getPath() + File.separator + nameLogFile;
 
 	//	String log_path = Environment.getExternalStorageDirectory().getPath() + "/" + m_strlog_csv;
 		String log_str = printDate() + "," + msgtype + "," + msg + "\n";
 
 		//Log.i(StringList.m_str_SKMTag, log_path);
-
-
 
 		OutputStream out;
 	    try {

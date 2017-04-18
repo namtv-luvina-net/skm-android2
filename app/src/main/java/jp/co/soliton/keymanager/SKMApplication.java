@@ -16,8 +16,9 @@ public class SKMApplication extends Application {
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_OPENED_APP, new Boolean(true));
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG, new Boolean(true));
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG, new Boolean(true));
-            CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE, new Integer(7));
+            CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE, new Integer(14));
         }
+	    LogCtrl.getInstance(this).createNameLogFile();
     }
 
     @Override

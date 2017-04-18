@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -54,11 +55,13 @@ public class InputPasswordActivity extends Activity {
     private int m_nErroType;
     private InformCtrl m_InformCtrl;
     private ElementApply element;
+	private LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_password);
+	    logCtrl = LogCtrl.getInstance(this);
         id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
         cancelApply = getIntent().getStringExtra("CANCEL_APPLY");
         txtUserId = (TextView) findViewById(R.id.txtUserId);
@@ -76,9 +79,9 @@ public class InputPasswordActivity extends Activity {
     }
 
     public void clickNext(View v) {
+	    logCtrl.loggerInfo("CertLoginAcrivity::onClick  " + "Push LoginButton");
         String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
         m_InformCtrl.SetURL(url);
-
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
@@ -99,14 +102,19 @@ public class InputPasswordActivity extends Activity {
         String strUserid = txtUserId.getText().toString().trim();
         String strPasswd = txtPassword.getText().toString();
         String rtnserial = element.getTarger().replace("WIFI", "").replace("APP", "");
+	    String str_url = m_InformCtrl.GetURL();
         // ログインメッセージ
         // URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
         String message;
-        try {
-            message = "Action=logon" + "&" + StringList.m_strUserID + URLEncoder.encode(strUserid, "UTF-8") +
-                    "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
-                    "&" + StringList.m_strSerial + rtnserial;
-        } catch (Exception ex) {
+	    try {
+		    message = "Action=logon" + "&" + StringList.m_strUserID + URLEncoder.encode(strUserid, "UTF-8") +
+		            "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
+		            "&" + StringList.m_strSerial + rtnserial;
+
+	        logCtrl.loggerInfo("http_user_login-- " + "USER ID=" + strUserid);
+		    logCtrl.loggerInfo("http_user_login-- " + "URL=" + str_url);
+        } catch (UnsupportedEncodingException ex) {
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterLogon UnsupportedEncodingException "+ ex.toString());
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }
@@ -127,7 +135,10 @@ public class InputPasswordActivity extends Activity {
         String message;
         try {
             message = "Action=drop";
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop1 "+ m_InformCtrl.GetURL());
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop2"+ m_InformCtrl.GetUserID());
         } catch (Exception ex) {
+	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop3 " + ex.toString());
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }
@@ -223,26 +234,27 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpApplyLoginUrlConnection(m_InformCtrl);
-
+			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", getApplicationContext());
+                logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
                 m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
                 m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
                 m_nErroType = InputBasePageFragment.ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
+	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
                 m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
                 return false;
             }
@@ -256,7 +268,7 @@ public class InputPasswordActivity extends Activity {
 
             ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
@@ -309,29 +321,30 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
             cancelApply = "";
-
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", getApplicationContext());
+                logCtrlAsyncTask.loggerError("DropApplyTask Network error");
                 m_nErroType = InputBasePageFragment.ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", getApplicationContext());
+                logCtrlAsyncTask.loggerError("DropApplyTask Forbidden.");
                 m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("DropApplyTask Unauthorized.");
                 m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", getApplicationContext());
+	            logCtrlAsyncTask.loggerError("DropApplyTask ERR:");
                 m_nErroType = InputBasePageFragment.ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
+	            logCtrlAsyncTask.loggerError("DropApplyTask NG");
                 m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
                 return false;
             }

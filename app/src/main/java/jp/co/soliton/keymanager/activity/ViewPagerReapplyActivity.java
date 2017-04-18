@@ -18,11 +18,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.InputApplyInfo;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.adapter.ViewPagerReaaplyAdapter;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -81,7 +77,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
         setChangePage();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override
@@ -110,8 +106,11 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
             float x = ev.getRawX() + v.getLeft() - scrcoords[0];
             float y = ev.getRawY() + v.getTop() - scrcoords[1];
 
-            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-                hideKeyboard(this);
+            if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
+	            hideKeyboard(this);
+	            v.clearFocus();
+	            ((ReapplyBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
+            }
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -125,6 +124,8 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    LogCtrl.getInstance(this).loggerInfo("ViewPagerReapplyActivity:onActivityResult requestCode = " + requestCode + ". " +
+			    "resultCode = " + requestCode);
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
         }

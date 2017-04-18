@@ -4,19 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.common.CommonUtils;
+import jp.co.soliton.keymanager.common.*;
+import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by luongdolong on 3/31/2017.
@@ -24,11 +31,13 @@ import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 
 public class ProductInfoActivity extends Activity {
     private Button btnLogSendMail;
+	DialogApplyProgressBar progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
         btnLogSendMail = (Button) findViewById(R.id.btnLogSendMail);
+	    progressDialog = new DialogApplyProgressBar(this);
     }
 
     @Override
@@ -45,19 +54,22 @@ public class ProductInfoActivity extends Activity {
         btnLogSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setType("*/*");
-                //intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(crashLogFile));
-                intent.setData(new Uri.Builder().scheme("mailto").build());
-                intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle));
-                intent.putExtra(Intent.EXTRA_TEXT, buildBodyMailDiagnostics());
-
-                startActivity(Intent.createChooser(intent, "Send via email"));
+	            new ProcessInfoAndZipTask().execute();
             }
         });
     }
 
-    private String buildBodyMailDiagnostics() {
+	private void endConnectionAndSentEmail(ContentZip contentZip) {
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("*/*");
+		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle));
+		intent.putExtra(Intent.EXTRA_TEXT, contentZip.contentMail);
+		// the attachment
+		intent .putExtra(Intent.EXTRA_STREAM, contentZip.uriFileAttach);
+		startActivityForResult(Intent.createChooser(intent, "Send via email"), 100);
+	}
+
+	private String buildBodyMailDiagnostics() {
         try {
             // Version
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -106,6 +118,7 @@ public class ProductInfoActivity extends Activity {
                                         totalInternalMemory, availableInternalMemory, totalExternalMemory, availableExternalMemory);
             return result;
         } catch (Exception ex) {
+	        LogCtrl.getInstance(this).loggerInfo("ProductInfoActivity:buildBodyMailDiagnostics:" + ex.getMessage());
             return "";
         }
     }
@@ -117,4 +130,68 @@ public class ProductInfoActivity extends Activity {
     private String GetVpnApid() {
         return XmlPullParserAided.GetVpnApid(this);
     }
+
+	private class ContentZip {
+		public String contentMail;
+		public Uri uriFileAttach;
+	}
+
+	private class ProcessInfoAndZipTask extends AsyncTask<Void, Void, ContentZip> {
+
+		String patternNameZipFile = "skm_and%1s_diag_%2s.zip";
+		@Override
+		protected void onPreExecute() {
+			progressDialog.show();
+		}
+
+		@Override
+		protected ContentZip doInBackground(Void... params) {
+			ContentZip contentZip = new ContentZip();
+			InfoDevice infoDevice = InfoDevice.getInstance(ProductInfoActivity.this);
+			contentZip.contentMail = infoDevice.createFileInfo();
+			File zipFile = createFileZip(infoDevice);
+			contentZip.uriFileAttach = Uri.fromFile(zipFile);
+			return contentZip;
+		}
+
+		private File createFileZip(InfoDevice infoDevice) {
+			String nameFileZip = String.format(patternNameZipFile, getVersionName(), DateUtils.getCurrentDateZip());
+			File outputDir = getApplicationContext().getExternalCacheDir();
+			File outputFile = new File(outputDir, nameFileZip);
+			try {
+				outputFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			ArrayList<String> listFileToZip = LogFileCtrl.getListLogFile(getApplicationContext());
+			listFileToZip.add(infoDevice.getPathFileInfo());
+			new Compress(listFileToZip, outputFile.getAbsolutePath()).zip();
+			return outputFile;
+		}
+
+		private String getVersionName() {
+			Integer lengthVersion = 4;
+			PackageManager manager = getApplicationContext().getPackageManager();
+			PackageInfo info = null;
+			try {
+				info = manager.getPackageInfo(getApplicationContext().getPackageName(), 0);
+			} catch (PackageManager.NameNotFoundException e) {
+				e.printStackTrace();
+			}
+			String version = info.versionName.replace(".", "");
+			while (version.length() < lengthVersion) {
+				version += "0";
+			}
+			if (version.length() > lengthVersion) {
+				version = version.substring(0, lengthVersion);
+			}
+			return version;
+		}
+		@Override
+		protected void onPostExecute(ContentZip contentZip) {
+			super.onPostExecute(contentZip);
+			progressDialog.dismiss();
+			endConnectionAndSentEmail(contentZip);
+		}
+	}
 }

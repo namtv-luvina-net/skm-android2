@@ -625,6 +625,91 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/line_cert"/>
+	    <TextView
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:paddingBottom="10dp"
+			    android:paddingTop="50dp"
+			    android:paddingLeft="20dp"
+			    android:textSize="20sp"
+			    android:background="#ddebfc"
+			    android:text="@string/validity_period"/>
+	    <TextView
+		    android:layout_width="match_parent"
+		    android:layout_height="1dp"
+		    android:layout_marginLeft="20dp"
+		    android:background="@color/line_cert"/>
+	    <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/background_color_white">
+		    <TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:background="@color/background_color_white"
+				    android:paddingBottom="20dp"
+				    android:paddingTop="20dp"
+				    android:paddingLeft="20dp"
+				    android:textSize="20sp"
+				    android:textColor="@color/color_black"
+				    android:gravity="left|center_vertical"
+				    android:text="@string/label_signature_not_valid_before"/>
+		    <TextView
+				    android:id="@+id/tvDetailNotValidBefore"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:background="@color/background_color_white"
+				    android:paddingBottom="20dp"
+				    android:paddingTop="20dp"
+				    android:paddingRight="10dp"
+				    android:singleLine="true"
+				    android:maxLines="1"
+				    android:textSize="20sp"
+				    android:textColor="@color/text_cert_content_detail"
+				    android:gravity="right|center_vertical"
+				    android:text="2017/12/12 12:12:12"/>
+	    </LinearLayout>
+	    <TextView
+			    android:layout_width="match_parent"
+			    android:layout_height="1dp"
+			    android:layout_marginLeft="20dp"
+			    android:background="@color/line_cert"/>
+	    <LinearLayout
+			    android:orientation="horizontal"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/background_color_white">
+		    <TextView
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:background="@color/background_color_white"
+				    android:paddingBottom="20dp"
+				    android:paddingTop="20dp"
+				    android:paddingLeft="20dp"
+				    android:textSize="20sp"
+				    android:textColor="@color/color_black"
+				    android:gravity="left|center_vertical"
+				    android:text="@string/label_signature_not_valid_after"/>
+		    <TextView
+				    android:id="@+id/tvDetailNotValidAfter"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:background="@color/background_color_white"
+				    android:paddingBottom="20dp"
+				    android:paddingTop="20dp"
+				    android:paddingRight="10dp"
+				    android:singleLine="true"
+				    android:maxLines="1"
+				    android:textSize="20sp"
+				    android:textColor="@color/text_cert_content_detail"
+				    android:gravity="right|center_vertical"
+				    android:text="2017/12/12 12:12:12"/>
+	    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_cert"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -668,78 +753,6 @@
                 android:textColor="@color/text_cert_content_detail"
                 android:gravity="right|center_vertical"
                 android:text="RSA3"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="20dp"
-            android:background="@color/line_cert"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_color_white">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color_white"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:textSize="20sp"
-                android:textColor="@color/color_black"
-                android:gravity="left|center_vertical"
-                android:text="@string/label_signature_not_valid_before"/>
-            <TextView
-                android:id="@+id/tvDetailNotValidBefore"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color_white"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:paddingRight="10dp"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:textSize="20sp"
-                android:textColor="@color/text_cert_content_detail"
-                android:gravity="right|center_vertical"
-                android:text="2017/12/12 12:12:12"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="20dp"
-            android:background="@color/line_cert"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_color_white">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color_white"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:textSize="20sp"
-                android:textColor="@color/color_black"
-                android:gravity="left|center_vertical"
-                android:text="@string/label_signature_not_valid_after"/>
-            <TextView
-                android:id="@+id/tvDetailNotValidAfter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color_white"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp"
-                android:paddingRight="10dp"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:textSize="20sp"
-                android:textColor="@color/text_cert_content_detail"
-                android:gravity="right|center_vertical"
-                android:text="2017/12/12 12:12:12"/>
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"

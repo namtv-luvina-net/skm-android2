@@ -37,12 +37,14 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     private String m_strAPIDWifi = "";	// APID Wi-Fi #21391
     private String m_strAPIDVPN = "";	// APID VPN #21391
     private String m_strAPID = "";	// APID VPN #21391
+	LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apid);
-        this.layoutShareAPID = (LinearLayout)findViewById(R.id.layoutShareAPID);
+	    logCtrl = LogCtrl.getInstance(this);
+	    this.layoutShareAPID = (LinearLayout)findViewById(R.id.layoutShareAPID);
         layoutShareAPID.setOnClickListener(this);
         ReadAndSetLoginUserInfo();
 
@@ -67,14 +69,15 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     }
 
     private void SetParametorFromFile(XmlStringData p_data) {
-
         String strKeyName = p_data.GetKeyName();
         String strData = p_data.GetData();
         //
         if(strKeyName.equalsIgnoreCase(StringList.m_str_Apid_Wifi)) {
             m_strAPIDWifi = strData;
+	        logCtrl.loggerDebug("LoginUserOutputFile Wifi APID=" + strData);
         } else if(strKeyName.equalsIgnoreCase(StringList.m_str_Apid_VPN)) {
             m_strAPIDVPN = strData;
+	        logCtrl.loggerDebug("LoginUserOutputFile VPN APID=" + strData);
         }
     }
 
@@ -87,7 +90,6 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         ByteArrayOutputStream byteArrayOutputStreamObj=null;
 
         boolean bRet = true;
-
         try {
             //Contextから入力ストリームの取得
             inputStreamObj=openFileInput(StringList.m_strLoginUserOutputFile);
@@ -102,14 +104,14 @@ public class APIDActivity extends Activity implements View.OnClickListener {
             //ByteArrayOutputStreamからbyte配列に変換
             byArrData_read = byteArrayOutputStreamObj.toByteArray();
         } catch (Exception e) {
-            LogCtrl.Logger(LogCtrl.m_strDebug, "ReadAndSetLoginUserInfo: "+ e.getMessage(), this);
+            logCtrl.loggerDebug("ReadAndSetLoginUserInfo: "+ e.getMessage());
             bRet = false;
         } finally{
             try {
                 if (inputStreamObj!=null) inputStreamObj.close();
                 if (byteArrayOutputStreamObj!=null) byteArrayOutputStreamObj.close();
             } catch (Exception e2) {
-                LogCtrl.Logger(LogCtrl.m_strDebug, "ReadAndSetLoginUserInfo e2: " + e2.getMessage(), this);
+                logCtrl.loggerDebug("ReadAndSetLoginUserInfo e2: " + e2.getMessage());
                 bRet = false;
             }
 
@@ -151,6 +153,7 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         try {
             startActivity(Intent.createChooser(email, ""));
         } catch (android.content.ActivityNotFoundException ex) {
+			logCtrl.loggerDebug("APIDActivity:sendMail: There are no email clients installed.");
             Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }

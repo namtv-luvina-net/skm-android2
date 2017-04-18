@@ -105,12 +105,13 @@ public class MDMThread {
 						}
 						
 						if (ret == false) {
-							LogCtrl.Logger(LogCtrl.m_strError, "MDMThread::MDMRunThread " + "Reply Error.", context);
+							LogCtrl.getInstance(context).loggerError("MDMThread::MDMRunThread Reply Error.");
 							break;
 						}
 					}
 					
 				} catch (InterruptedException e) {
+					LogCtrl.getInstance(context).loggerError("MDMThread::MDMRunThread InterruptedException : " + e.toString());
 					// TODO 自動生成された catch ブロック
 					e.printStackTrace();
 				}

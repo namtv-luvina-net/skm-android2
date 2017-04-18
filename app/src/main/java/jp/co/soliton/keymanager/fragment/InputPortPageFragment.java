@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,21 +17,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import javax.security.cert.X509Certificate;
-import java.util.List;
-
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import javax.security.cert.X509Certificate;
+import java.util.List;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -45,9 +40,11 @@ public class InputPortPageFragment extends InputBasePageFragment {
     private TextView zoneInputPortTitle;
     private LinearLayout zoneInputPort;
     public static String payloadDisplayName = "EACert";
+	private LogCtrl logCtrl;
 
     public static Fragment newInstance(Context context) {
         InputPortPageFragment f = new InputPortPageFragment();
+	    f.logCtrl = LogCtrl.getInstance(context);
         return f;
     }
 
@@ -139,6 +136,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
+	    logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
         pagerInputActivity.getInputApplyInfo().setPort(txtPort.getText().toString().trim());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         progressDialog.show();
@@ -210,6 +208,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
         XmlPullParserAided m_p_aided = new XmlPullParserAided(pagerInputActivity, cacert, 2);	// 最上位dictの階層は2になる
         boolean ret = m_p_aided.TakeApartProfileList();
         if (!ret) {
+	        logCtrl.loggerError("InputPortPageFragment:downloadCert1: " + getString(R.string.error_install_certificate));
             showMessage(getString(R.string.error_install_certificate));
             return;
         }
@@ -224,6 +223,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
             intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
             pagerInputActivity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
         } catch (Exception e) {
+	        logCtrl.loggerError("InputPortPageFragment:downloadCert2: " + getString(R.string.error_install_certificate));
             showMessage(getString(R.string.error_install_certificate));
         }
     }
@@ -261,26 +261,27 @@ public class InputPortPageFragment extends InputBasePageFragment {
     private class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
             HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
             //send request to server
             boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrl);
             //parse result return
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask " + "Network error", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Network error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + " Forbidden.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "Unauthorized.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "ConnectApplyTask  " + "ERR:", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("DownloadCertificateTask ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             }

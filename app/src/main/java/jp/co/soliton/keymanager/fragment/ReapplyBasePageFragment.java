@@ -92,4 +92,10 @@ public class ReapplyBasePageFragment extends Fragment {
      */
     public void nextAction() {
     }
+
+	/**
+	 * Clear focus EditText
+	 */
+	public void clearFocusEditText() {
+	}
 }

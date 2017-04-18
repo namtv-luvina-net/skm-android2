@@ -71,23 +71,29 @@ public class InputReasonPageFragment extends InputBasePageFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
+	                txtReason.setText(txtReason.getText().toString().trim());
                     hideKeyboard(v, getContext());
+	                updateStatusSkipButton();
+                } else {
+	                btnSkipReason.setVisibility(View.INVISIBLE);
                 }
-            }
-        });
-        txtReason.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (!nullOrEmpty(txtReason.getText().toString())) {
-                        nextAction();
-                        return true;
-                    }
-                }
-                return false;
             }
         });
     }
+
+	@Override
+	public void clearFocusEditText() {
+		super.clearFocusEditText();
+		updateStatusSkipButton();
+	}
+
+	private void updateStatusSkipButton() {
+		if (txtReason.getText().toString().trim().length() == 0) {
+			btnSkipReason.setVisibility(View.VISIBLE);
+		} else {
+			btnSkipReason.setVisibility(View.INVISIBLE);
+		}
+	}
 
     @Override
     public void onResume() {
@@ -101,6 +107,7 @@ public class InputReasonPageFragment extends InputBasePageFragment {
                 pagerInputActivity.gotoConfirmApply();
             }
         });
+	    updateStatusSkipButton();
     }
 
     @Override
@@ -140,6 +147,7 @@ public class InputReasonPageFragment extends InputBasePageFragment {
         if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getReason())) {
             txtReason.setText(pagerInputActivity.getInputApplyInfo().getReason());
         }
+	    updateStatusSkipButton();
         setStatusControl();
     }
 

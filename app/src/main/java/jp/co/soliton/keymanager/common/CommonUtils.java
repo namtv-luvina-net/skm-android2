@@ -79,6 +79,18 @@ public class CommonUtils {
         SharedPreferences pref = context.getSharedPreferences(StringList.m_str_store_preference, Context.MODE_PRIVATE);
         return pref.getInt(key, 0);
     }
+    /**
+     * get Integer from SharedPreferences
+     *
+     * @author luongdolong
+     * @param context app context
+     * @param key key
+     * @return value
+     */
+    public static int getPrefIntegerWithDefaultValue(Context context, String key, int defaultValue) {
+        SharedPreferences pref = context.getSharedPreferences(StringList.m_str_store_preference, Context.MODE_PRIVATE);
+        return pref.getInt(key, defaultValue);
+    }
 
     /**
      * get Long from SharedPreferences

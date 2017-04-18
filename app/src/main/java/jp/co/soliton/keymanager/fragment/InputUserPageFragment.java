@@ -225,6 +225,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
                     "&" + StringList.m_strSerial + rtnserial;
         } catch (Exception ex) {
+	        LogCtrl.getInstance(pagerInputActivity).loggerInfo("InputUserPageFragment:makeParameterLogon: " + ex.toString());
             Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
             return false;
         }
@@ -365,29 +366,31 @@ public class InputUserPageFragment extends InputBasePageFragment {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
+	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
             HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
             boolean ret = conn.RunHttpApplyLoginUrlConnection(pagerInputActivity.getInformCtrl());
 
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask " + "Network error", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + " Forbidden.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "Unauthorized.", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.ERR).toString())) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask  " + "ERR:", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
                 m_nErroType = ERR_COLON;
                 return false;
             } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith("NG")) {
-                m_nErroType = ERR_LOGIN_FAIL;
+	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
+	            m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             // 取得したCookieをログイン時のCookieとして保持する.
@@ -400,7 +403,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
 
             ret = m_p_aided.TakeApartUserAuthenticationResponse(pagerInputActivity.getInformCtrl());
             if (ret == false) {
-                LogCtrl.Logger(LogCtrl.m_strError, "LogonApplyTask-- " + "TakeApartDevice false", pagerInputActivity);
+	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }

@@ -50,7 +50,8 @@ public class HttpConnectionCtrl {
 	
 	private Context m_ctx;
 	private String m_str_user_agtpro = "";
-	
+	private LogCtrl logCtrl;
+
 	// コンストラクタ
 	//public HttpConnectionCtrl() {
 	//	trustAllHosts();	// 証明書認証を回避するための手続き2-1
@@ -60,15 +61,16 @@ public class HttpConnectionCtrl {
 	// コンストラクタ
 	public HttpConnectionCtrl(Context context) {
 		m_ctx = context;
+		logCtrl = LogCtrl.getInstance(context);
 		
 		SetUserAgentProfile();
 		
 	//	trustAllHosts();	// 証明書認証を回避するための手続き2-1
-		
-		
+
 	}
 	
 	private void SetUserAgentProfile() {
+		logCtrl.loggerInfo("HttpConnectionCtrl:SetUserAgentProfile");
 		try {
 			// Apllication version
 			PackageInfo packageInfo = null;
@@ -81,14 +83,16 @@ public class HttpConnectionCtrl {
 			Log.d("UserAgent: ", m_str_user_agtpro);
 			//LogCtrl.Logger(LogCtrl.m_strDebug, "UserAgent: " + m_str_user_agtpro, m_ctx);
 		} catch (Exception e) {
+			logCtrl.loggerError("HttpConnectionCtrl::SetUserAgentProfile::Exception : " + e.toString());
 			e.printStackTrace();
-			LogCtrl.Logger(LogCtrl.m_strError, e.toString(), m_ctx);
+			logCtrl.loggerError(e.toString());
 		}
 	}
 	
 	// プロファイルリスト取得
 	// EPS-ap 1.2.x以降
 	public boolean RunHttpGetProfileList(InformCtrl Inf) {
+		logCtrl.loggerInfo("HttpConnectionCtrl:RunHttpGetProfileList");
 		Log.i("HttpConnectionCtrl::RunHttpGetProfileList ", "start");
 		
 		HttpURLConnection http = null;
@@ -130,16 +134,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException : " + e.toString());
 			return false;
 		}
 	}
 	
 	// プロファイル取得
 	public boolean RunHttpGetProfileMember(InformCtrl Inf, String str_profile_number) {
+		logCtrl.loggerInfo("RunHttpGetProfileMember");
 		Log.i("HttpConnectionCtrl::RunHttpGetProfileMember ", "start");
 		
 		HttpURLConnection http = null;
@@ -183,16 +190,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 	
 	// SCEP
 	public boolean RunHttpGetScepProfile(InformCtrl Inf, String strArias) {
+		logCtrl.loggerInfo("RunHttpGetScepProfile");
 		Log.i("HttpConnectionCtrl::RunHttpGetScepProfile ", "start");
 		
 		HttpURLConnection http = null;
@@ -237,16 +247,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 	
 	// ログイン
 	public boolean RunHttpLoginUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpLoginUrlConnection");
 		Log.i("HttpConnectionCtrl::RunHttpLoginUrlConnection ", "start");
 		
 		HttpURLConnection http = null;
@@ -290,10 +303,12 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException" + e.toString());
 			return false;
 		}
 
@@ -301,6 +316,7 @@ public class HttpConnectionCtrl {
 
 	// ログアウト
 	public boolean RunHttpLogoutUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpLogoutUrlConnection");
 		HttpURLConnection http = null;
 		
 		try { 			
@@ -345,10 +361,12 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLogoutUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLogoutUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLogoutUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLogoutUrlConnection::IOException" + e.toString());
 			return false;
 		}
 
@@ -356,6 +374,7 @@ public class HttpConnectionCtrl {
 	
 	// enroll
 	public boolean RunHttpEnrollUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpEnrollUrlConnection");
 		HttpURLConnection http = null;
 		
 		try { 			
@@ -390,15 +409,18 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 	
 	public boolean RunHttpDeviceCertUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpDeviceCertUrlConnection");
 		Log.i("HttpConnectionCtrl::RunHttpDeviceCertUrlConnection ", "start");
 		HttpURLConnection http = null;
 		
@@ -433,15 +455,17 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
-			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 	
 	public boolean RunHttpApplyUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpApplyUrlConnection");
 		HttpURLConnection http = null;
 		
 		try {
@@ -482,10 +506,12 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
@@ -493,7 +519,8 @@ public class HttpConnectionCtrl {
 	// MDM通信
 	// MDM関連の通信は、ヘッダ情報は不変で、URLは通信フォーマットの中に入っているものを使うので(api.phpみたいな追加はなし)
 	// 関数は共通とする.
-	public boolean RunHttpMDMConnection(InformCtrl Inf) {		
+	public boolean RunHttpMDMConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpMDMConnection");
 		Log.i("HttpConnectionCtrl::RunHttpMDMConnection ", "start");
 		HttpURLConnection http = null;
 		
@@ -528,16 +555,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpMDMConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpMDMConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpMDMConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpMDMConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 	
 	// アプリケーションリスト取得
 	public boolean RunHttpGetApplicationList(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpGetApplicationList");
 		Log.i("HttpConnectionCtrl::RunHttpGetProfileList ", "start");
 		
 		HttpURLConnection http = null;
@@ -580,17 +610,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpLoginUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 	
 	// アプリケーションインストール
 	public boolean RunHttpAppInstConnection(InformCtrl Inf, String str_apk) {
-		LogCtrl.Logger(LogCtrl.m_strInfo, "RunHttpAppInstConnection", m_ctx);
+		logCtrl.loggerInfo("RunHttpAppInstConnection");
 		HttpURLConnection http = null;
 		
 		try {
@@ -630,16 +662,18 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	public boolean RunHttpProbeHostCerConnection(InformCtrl Inf) {
-		LogCtrl.Logger(LogCtrl.m_strInfo, "RunHttpProbeHostCerConnection", m_ctx);
+		logCtrl.loggerInfo("RunHttpProbeHostCerConnection");
 		HttpURLConnection http = null;
 
 		try {
@@ -675,15 +709,18 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpProbeHostCerConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpProbeHostCerConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpProbeHostCerConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpProbeHostCerConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	public boolean RunHttpDownloadCertificate(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpDownloadCertificate");
 		HttpURLConnection http = null;
 
 		try {
@@ -719,16 +756,20 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException" + e.toString
+					());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	// ログイン
 	public boolean RunHttpApplyLoginUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpApplyLoginUrlConnection");
 		Log.i("HttpConnectionCtrl::RunHttpApplyLoginUrlConnection ", "start");
 
 		HttpURLConnection http = null;
@@ -770,16 +811,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyLoginUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyLoginUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyLoginUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyLoginUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	// ログイン
 	public boolean RunHttpDropUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpDropUrlConnection");
 		Log.i("HttpConnectionCtrl::RunHttpDropUrlConnection ", "start");
 
 		HttpURLConnection http = null;
@@ -822,15 +866,18 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	public boolean RunHttpApplyAPSapConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpApplyAPSapConnection");
 		Log.i("HttpConnectionCtrl::RunHttpApplyAPSapConnection ", "start");
 
 		HttpURLConnection http;
@@ -869,16 +916,19 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyAPSapConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyAPSapConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyAPSapConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyAPSapConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	// ログイン
 	public boolean RunHttpApplyCerUrlConnection(InformCtrl Inf) {
+		logCtrl.loggerInfo("RunHttpApplyCerUrlConnection");
 		Log.i("HttpConnectionCtrl::RunHttpApplyCerUrlConnection ", "start");
 
 		HttpURLConnection http = null;
@@ -921,20 +971,23 @@ public class HttpConnectionCtrl {
 		} catch (MalformedURLException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::MalformedURLException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::MalformedURLException" + e.toString());
 			return false;
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::IOException", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::RunHttpApplyCerUrlConnection::IOException" + e.toString());
 			return false;
 		}
 	}
 
 	private boolean PostPacketKayCyain(HttpURLConnection http, InformCtrl Inf, int i_packetsize) {
+		logCtrl.loggerInfo("PostPacketKayCyain");
 		return true;
 	}
 	
 	private boolean ApkDlandInstall(HttpURLConnection http, InformCtrl Inf, String str_apk) {
-		
+		logCtrl.loggerInfo("ApkDlandInstall");
 		try {
 
 			// 送受信定義
@@ -956,7 +1009,7 @@ public class HttpConnectionCtrl {
 			
 			// 入力ストリーム
 			int input_ret = http.getResponseCode();		// response code を取得
-			LogCtrl.Logger(LogCtrl.m_strInfo, "HttpConnectionCtrl::ApkDlandInstall Get ResponseCode" + Integer.toString(input_ret), m_ctx);
+			logCtrl.loggerInfo("HttpConnectionCtrl::ApkDlandInstall Get ResponseCode" + Integer.toString(input_ret));
 			Inf.SetResponseCode(input_ret);
 			if(input_ret != StringList.RES_200_OK) {
 				http.disconnect();
@@ -966,6 +1019,7 @@ public class HttpConnectionCtrl {
 			// SDカードの設定
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) == false) {
 				// SDカード領域が存在しないときは抜ける
+				logCtrl.loggerError("HttpConnectionCtrl::ApkDlandInstall: "+m_ctx.getString(R.string.instapp_nosdcard));
 				Toast.makeText(m_ctx, R.string.instapp_nosdcard, Toast.LENGTH_SHORT).show();
 				return false;
 			}
@@ -992,7 +1046,7 @@ public class HttpConnectionCtrl {
 			
 			
 		} catch (IOException e) {
-			LogCtrl.Logger(LogCtrl.m_strError, "HttpConnectionCtrl::ApkDlandInstall::IOException "+ e.toString(), m_ctx);
+			logCtrl.loggerError("HttpConnectionCtrl::ApkDlandInstall::IOException "+ e.toString());
 			return false;
 		}
 		return true;
@@ -1000,7 +1054,7 @@ public class HttpConnectionCtrl {
 	
 	// パケットの送受信
 	private boolean PostPacket(HttpURLConnection http, InformCtrl Inf, int i_packetsize) {
-		
+		logCtrl.loggerInfo("PostPacket");
 		try {
 
 			// 送受信定義
@@ -1097,6 +1151,7 @@ public class HttpConnectionCtrl {
 		} catch (IOException e) {
 			// FIXME
 			Log.e("HttpConnectionCtrl::PostPacket::IOException ", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::PostPacket::IOException " + e.toString());
 		//	LogCtrl.Logger(LogCtrl.m_strError, "HttpConnectionCtrl::PostPacket::IOException "+ e.toString(), m_ctx);
 			return false;
 		} /*catch (javax.security.cert.CertificateException e) {
@@ -1104,18 +1159,17 @@ public class HttpConnectionCtrl {
 			e.printStackTrace();
 		}*/ catch (Exception e) {
 			Log.e("HttpConnectionCtrl::PostPacket::Other Exception ", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::PostPacket::Other Exception " + e.toString());
 		//	LogCtrl.Logger(LogCtrl.m_strError, "HttpConnectionCtrl::PostPacket::Other Exception "+ e.toString(), m_ctx);
 			e.printStackTrace();
 			return false;
 		}
-		
 		return true;
 	}
 
 	private boolean PostProbeCertPacket(HttpURLConnection http, InformCtrl Inf, int i_packetsize) {
-
+		logCtrl.loggerInfo("PostProbeCertPacket");
 		try {
-
 			// 送受信定義
 			http.setDoInput(true);
 			http.setDoOutput(true);
@@ -1181,6 +1235,7 @@ public class HttpConnectionCtrl {
 			http.disconnect();
 		} catch (IOException e) {
 			Log.e("HttpConnectionCtrl::PostProbeCertPacket::IOException ", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::PostProbeCertPacket::IOException " + e.toString());
 			if (e instanceof SSLHandshakeException) {
 				Inf.SetRtn(m_ctx.getString(R.string.not_installed_ca));
 				return true;
@@ -1189,6 +1244,7 @@ public class HttpConnectionCtrl {
 			}
 		} catch (Exception e) {
 			Log.e("HttpConnectionCtrl::PostProbeCertPacket::Other Exception ", e.toString());
+			logCtrl.loggerError("HttpConnectionCtrl::PostProbeCertPacket::Other Exception " + e.toString());
 			return false;
 		}
 		return true;
@@ -1226,11 +1282,12 @@ public class HttpConnectionCtrl {
 			sc.init(null, trustAllCerts, new java.security.SecureRandom());
 			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		} catch (Exception e) {
-			e.printStackTrace();         
+			e.printStackTrace();
 		} 
 	} 
 	
 	private static void CACertAccess(Context context, String strArias) {
+		LogCtrl.getInstance(context).loggerInfo("CACertAccess");
 //		System.setProperty("javax.net.ssl.trustStore", /*"C:\\tmp\\cer\\cacerts"*/"epsapCA");
 //		System.setProperty("javax.net.ssl.trustStorePassword", "password");
 //		System.setProperty("javax.net.ssl.keyStore", /*"C:\\tmp\\cer\\testcert.p12"*/"epsap");
@@ -1283,12 +1340,12 @@ public class HttpConnectionCtrl {
 //		} catch (KeyStoreException e) {
 			// TODO 自動生成された catch ブロック
 //			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
+//		} catch (NoSuchAlgorithmException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (CertificateException e) {
+//			e.printStackTrace();
+//		} catch (CertificateException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+//			e.printStackTrace();
 //		} catch (FileNotFoundException e) {
 			// TODO 自動生成された catch ブロック
 //			e.printStackTrace();
@@ -1298,14 +1355,15 @@ public class HttpConnectionCtrl {
 //		} catch (UnrecoverableKeyException e) {
 			// TODO 自動生成された catch ブロック
 //			e.printStackTrace();
-		} catch (KeyManagementException e) {
+//		} catch (KeyManagementException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (KeyStoreException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (UnrecoverableKeyException e) {
+//			e.printStackTrace();
+//		} catch (KeyStoreException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+		} catch (Exception e) {
+			LogCtrl.getInstance(context).loggerError("HttpConnectionCtrl::CACertAccess : " + e.toString());
 			e.printStackTrace();
 		}
 	}
