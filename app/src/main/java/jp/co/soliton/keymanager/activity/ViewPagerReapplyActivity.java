@@ -77,7 +77,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
         setChangePage();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override

@@ -34,17 +34,22 @@ public class LogFileCtrl {
 				}
 			}
 		}
+
+		ArrayList<String> listFileName = new ArrayList<>();
 		if (listTmp.size() > MAXIMUM_LOG_FILES) {
 			Collections.sort(listTmp);
 			Collections.reverse(listTmp);
-			while (listTmp.size() > MAXIMUM_LOG_FILES) {
-				deleteFile(context, listTmp.get(MAXIMUM_LOG_FILES));
-				listTmp.remove(MAXIMUM_LOG_FILES);
+			for (int i = 0; i < listTmp.size(); i++) {
+				if (i < MAXIMUM_LOG_FILES) {
+					listFileName.add(context.getFilesDir().getPath() + File.separator + listTmp.get(i));
+				} else {
+					deleteFile(context, listTmp.get(i));
+				}
 			}
-		}
-		ArrayList<String> listFileName = new ArrayList<>();
-		for (int i = 0; i < listTmp.size() ; i++) {
-			listFileName.add(context.getFilesDir().getPath() + File.separator + listTmp.get(i));
+		} else {
+			for (int i = 0; i < listTmp.size(); i++) {
+				listFileName.add(context.getFilesDir().getPath() + File.separator + listTmp.get(i));
+			}
 		}
 		return listFileName;
 	}

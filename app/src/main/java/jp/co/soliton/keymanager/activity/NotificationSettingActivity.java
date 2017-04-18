@@ -139,19 +139,13 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 		        cal.setTime(expirationDate);
                 if (Calendar.getInstance().getTime().after(cal.getTime())) {
 	                swNotifFlag.setEnabled(false);
+	                swNotifBeforeFlag.setEnabled(false);
+	                updateEnableViewExpired(false);
                 }else {
 	                swNotifFlag.setEnabled(true);
-                }
-		        int before = element.getNotiEnableBefore();
-		        cal.add(Calendar.DAY_OF_MONTH, before * -1);
-		        if (Calendar.getInstance().getTime().after(cal.getTime())) {
-                    swNotifBeforeFlag.setEnabled(false);
-	                updateEnableViewExpired(false);
-                } else {
-			        swNotifBeforeFlag.setEnabled(true);
+	                swNotifBeforeFlag.setEnabled(true);
 	                updateEnableViewExpired(swNotifBeforeFlag.isChecked());
-		        }
-
+                }
             } catch (Exception ex) {
 		        LogCtrl.getInstance(getApplicationContext()).loggerError(ex.toString());
             }

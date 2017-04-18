@@ -165,10 +165,6 @@ public class ProductInfoActivity extends Activity {
 			}
 			ArrayList<String> listFileToZip = LogFileCtrl.getListLogFile(getApplicationContext());
 			listFileToZip.add(infoDevice.getPathFileInfo());
-			Log.d("datnd", "createFileZip: datnd =================================================");
-			for (String file : listFileToZip) {
-				Log.d("datnd", "createFileZip: datnd == " + file);
-			}
 			new Compress(listFileToZip, outputFile.getAbsolutePath()).zip();
 			return outputFile;
 		}

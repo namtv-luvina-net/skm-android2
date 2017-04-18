@@ -42,7 +42,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         ElementApply element = mgr.getElementApply(id);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_notification)
+                        .setSmallIcon(getNotificationIcon())
+		                .setColor(context.getResources().getColor(R.color.product_icon_notification))
                         .setContentTitle(context.getString(R.string.notif_title))
                         .setContentText(element.getUserId());
         Intent resultIntent = new Intent(context, AlarmReapplyActivity.class);
@@ -65,8 +66,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //Release the lock
         wl.release();
-
     }
+
+	private int getNotificationIcon() {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+			return R.mipmap.ic_notification5;
+		}
+		return R.mipmap.ic_notification;
+	}
 
     public void setOnetimeTimer(Context context, String elementId){
 
