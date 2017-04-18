@@ -49,6 +49,18 @@ public class DateUtils {
 		return false;
 	}
 
+	public static Date convertSringToDateSystemTime(String strDate){
+		return convertSringToDate(STRING_DATE_FORMAT_SYSTEM_TIME, strDate);
+	}
+
+	public static Date convertSringToDateLog(String strDate){
+		return convertSringToDate(STRING_DATE_FORMAT_FOR_LOG, strDate);
+	}
+
+	public static Date convertSringToDateZip(String strDate){
+		return convertSringToDate(STRING_DATE_FORMAT_FOR_ZIP, strDate);
+	}
+
 	public static Date convertSringToDate(String type, String strDate){
 		DateFormat dateFormat = new SimpleDateFormat(type);
 		Date date = new Date();
