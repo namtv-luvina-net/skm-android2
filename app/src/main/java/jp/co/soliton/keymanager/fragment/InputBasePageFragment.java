@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
@@ -97,5 +98,9 @@ public class InputBasePageFragment extends Fragment {
 	 * Clear focus EditText
 	 */
 	public void clearFocusEditText() {
+		View v = pagerInputActivity.getCurrentFocus();
+		if (v != null && v instanceof EditText) {
+			v.clearFocus();
+		}
 	}
 }

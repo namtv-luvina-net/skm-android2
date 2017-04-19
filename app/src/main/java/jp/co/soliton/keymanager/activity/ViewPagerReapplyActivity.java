@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.adapter.ViewPagerReaaplyAdapter;
+import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ReapplyBasePageFragment;
@@ -30,7 +31,7 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
  * Activity for input screen apply
  */
 
-public class ViewPagerReapplyActivity extends FragmentActivity {
+public class ViewPagerReapplyActivity extends FragmentActivity implements DetectsSoftKeyboard.DetectsListenner {
     public static int REQUEST_CODE_APPLY_COMPLETE = 4953;
 
     private InputApplyViewPager mViewPager;
@@ -43,6 +44,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     private ElementApplyManager elementMgr;
     private RelativeLayout groupCircle;
     public String idConfirmApply;
+	boolean isShowingKeyboard = false;
 
     /** Called when the activity is first created. */
     @Override
@@ -144,6 +146,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
         mViewPager.setPagingEnabled(false);
         mViewPager.setCurrentItem(0);
         initButtonCircle();
+	    DetectsSoftKeyboard.addListenner(findViewById(R.id.activityRoot), this);
     }
 
     /**
@@ -284,4 +287,16 @@ public class ViewPagerReapplyActivity extends FragmentActivity {
     public InformCtrl getInformCtrl() {
         return m_InformCtrl;
     }
+
+	@Override
+	public void onSoftKeyboardShown(boolean isShowing) {
+		if (!isShowing) {
+			if (isShowingKeyboard) {
+				((ReapplyBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
+				isShowingKeyboard = false;
+			}
+		} else {
+			isShowingKeyboard = true;
+		}
+	}
 }

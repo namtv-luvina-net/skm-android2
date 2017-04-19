@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.adapter.ViewPagerAdapter;
+import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  * Activity for input screen apply
  */
 
-public class ViewPagerInputActivity extends FragmentActivity {
+public class ViewPagerInputActivity extends FragmentActivity implements DetectsSoftKeyboard.DetectsListenner{
     public static int REQUEST_CODE_APPLY_COMPLETE        = 4953;
     public static int REQUEST_CODE_INSTALL_CERTIFICATION = 4954;
 
@@ -41,6 +42,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
     private InputApplyInfo inputApplyInfo;
     private ElementApplyManager elementMgr;
     public double d_android_version;
+	boolean isShowingKeyboard = false;
 
     /** Called when the activity is first created. */
     @Override
@@ -91,7 +93,6 @@ public class ViewPagerInputActivity extends FragmentActivity {
 
             if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
 	            hideKeyboard(this);
-	            v.clearFocus();
 	            ((InputBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
             }
         }
@@ -148,6 +149,7 @@ public class ViewPagerInputActivity extends FragmentActivity {
         mViewPager.setCurrentItem(0);
         initButtonCircle();
         d_android_version = ConfigrationProcess.getAndroidOsVersion();
+	    DetectsSoftKeyboard.addListenner(findViewById(R.id.activityRoot), this);
     }
 
     /**
@@ -311,4 +313,16 @@ public class ViewPagerInputActivity extends FragmentActivity {
     public InformCtrl getInformCtrl() {
         return m_InformCtrl;
     }
+
+	@Override
+	public void onSoftKeyboardShown(boolean isShowing) {
+		if (!isShowing) {
+			if (isShowingKeyboard) {
+				((InputBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
+				isShowingKeyboard = false;
+			}
+		} else {
+			isShowingKeyboard = true;
+		}
+	}
 }

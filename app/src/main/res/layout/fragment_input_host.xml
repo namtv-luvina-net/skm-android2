@@ -13,7 +13,9 @@
         android:gravity="center"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,6 +59,8 @@
         android:layout_marginEnd="25dp"
         android:layout_marginTop="10dp"
         android:weightSum="2"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         >
         <jp.co.soliton.keymanager.customview.AutoResizeTextView
             android:layout_width="match_parent"
