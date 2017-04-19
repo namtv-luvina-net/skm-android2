@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -179,23 +178,11 @@ public class ProductInfoActivity extends Activity {
 		}
 
 		private String getVersionName() {
-			Integer lengthVersion = 4;
-			PackageManager manager = getApplicationContext().getPackageManager();
-			PackageInfo info = null;
-			try {
-				info = manager.getPackageInfo(getApplicationContext().getPackageName(), 0);
-			} catch (PackageManager.NameNotFoundException e) {
-				e.printStackTrace();
-			}
-			String version = info.versionName.replace(".", "");
-			while (version.length() < lengthVersion) {
-				version += "0";
-			}
-			if (version.length() > lengthVersion) {
-				version = version.substring(0, lengthVersion);
-			}
+			String version = BuildConfig.VERSION_NAME + BuildConfig.BUILD_NUM;
+			version = version.replace(".", "");
 			return version;
 		}
+
 		@Override
 		protected void onPostExecute(ContentZip contentZip) {
 			super.onPostExecute(contentZip);
