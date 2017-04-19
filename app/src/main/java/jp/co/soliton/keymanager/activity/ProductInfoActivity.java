@@ -1,6 +1,7 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,7 +16,6 @@ import jp.co.soliton.keymanager.BuildConfig;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.common.*;
-import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 
 import java.io.File;
@@ -30,7 +30,7 @@ import java.util.Calendar;
 
 public class ProductInfoActivity extends Activity {
     private Button btnLogSendMail;
-	DialogApplyProgressBar progressDialog;
+	ProgressDialog progressDialog;
 	private Button btnSettingProductInfo;
 
     @Override
@@ -39,7 +39,7 @@ public class ProductInfoActivity extends Activity {
         setContentView(R.layout.activity_product_info);
         btnLogSendMail = (Button) findViewById(R.id.btnLogSendMail);
 	    btnSettingProductInfo = (Button) findViewById(R.id.btnSettingProductInfo);
-	    progressDialog = new DialogApplyProgressBar(this);
+	    progressDialog = new ProgressDialog(this);
     }
 
     @Override
@@ -62,6 +62,8 @@ public class ProductInfoActivity extends Activity {
         btnLogSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+	            progressDialog.show();
+	            progressDialog.setMessage(getApplicationContext().getString(R.string.creating_diagnostic_infomation));
 	            new ProcessInfoAndZipTask().execute();
             }
         });
@@ -147,10 +149,6 @@ public class ProductInfoActivity extends Activity {
 	private class ProcessInfoAndZipTask extends AsyncTask<Void, Void, ContentZip> {
 
 		String patternNameZipFile = "skm_and%1s_diag_%2s.zip";
-		@Override
-		protected void onPreExecute() {
-			progressDialog.show();
-		}
 
 		@Override
 		protected ContentZip doInBackground(Void... params) {

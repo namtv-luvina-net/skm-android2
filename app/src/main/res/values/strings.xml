@@ -328,4 +328,5 @@
     <string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
 	<string name="validity_period">Validity Period</string>
 	<string name="version">Version</string>
+	<string name="creating_diagnostic_infomation">Creating diagnostic information...</string>
 </resources>
