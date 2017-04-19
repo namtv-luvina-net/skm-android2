@@ -36,14 +36,14 @@
             android:layout_marginBottom="10dp"
             android:text="Expired" />
         <TextView
-            android:id="@+id/txtName"
+            android:id="@+id/txtCN"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="15dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/text_color"
-            android:text="name" />
+            android:text="Common Name" />
     </LinearLayout>
 
     <LinearLayout

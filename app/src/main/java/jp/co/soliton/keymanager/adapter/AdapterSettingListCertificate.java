@@ -33,7 +33,7 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
      */
     public class ViewHolder {
         public TextView txtStatus;
-        public TextView txtName;
+        public TextView txtCN;
         public ImageView icCertificate;
         public LinearLayout llSettingCert;
     }
@@ -86,7 +86,7 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_setting_certificate, parent, false);
             viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatusCert);
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.txtNameCert);
+            viewHolder.txtCN = (TextView) convertView.findViewById(R.id.txtCommonNameCert);
             viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icSettingCertificate);
             viewHolder.llSettingCert = (LinearLayout) convertView.findViewById(R.id.llSettingCert);
             convertView.setTag(viewHolder);
@@ -144,7 +144,7 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
             ex.printStackTrace();
         }
         if (listElementApply.get(position).getUserId() != null) {
-            viewHolder.txtName.setText(listElementApply.get(position).getUserId());
+            viewHolder.txtCN.setText(listElementApply.get(position).getcNValue());
         }
         return convertView;
     }

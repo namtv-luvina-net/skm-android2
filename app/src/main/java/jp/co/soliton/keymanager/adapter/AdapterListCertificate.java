@@ -30,7 +30,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
      */
     public class ViewHolder {
         public TextView txtStatus;
-        public TextView txtName;
+        public TextView txtCN;
         public TextView btnUpdate;
         public ImageView icCertificate;
     }
@@ -84,7 +84,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_certificate, parent, false);
             viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatus);
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.txtName);
+            viewHolder.txtCN = (TextView) convertView.findViewById(R.id.txtCN);
             viewHolder.btnUpdate = (TextView) convertView.findViewById(R.id.btnUpdate);
             viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icCertificate);
             convertView.setTag(viewHolder);
@@ -153,7 +153,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             ex.printStackTrace();
         }
         if (listElementApply.get(position).getUserId() != null) {
-            viewHolder.txtName.setText(listElementApply.get(position).getUserId());
+            viewHolder.txtCN.setText(listElementApply.get(position).getcNValue());
         }
         return convertView;
     }
