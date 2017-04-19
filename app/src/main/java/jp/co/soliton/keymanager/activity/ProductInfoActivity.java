@@ -10,9 +10,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import jp.co.soliton.keymanager.BuildConfig;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.common.*;
@@ -32,11 +32,14 @@ import java.util.Calendar;
 public class ProductInfoActivity extends Activity {
     private Button btnLogSendMail;
 	DialogApplyProgressBar progressDialog;
+	private Button btnSettingProductInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
         btnLogSendMail = (Button) findViewById(R.id.btnLogSendMail);
+	    btnSettingProductInfo = (Button) findViewById(R.id.btnSettingProductInfo);
 	    progressDialog = new DialogApplyProgressBar(this);
     }
 
@@ -51,6 +54,12 @@ public class ProductInfoActivity extends Activity {
     }
 
     public void setupControl() {
+	    String nameApp = getString(R.string.app_name);
+	    String version = getString(R.string.version);
+	    String verApp = BuildConfig.VERSION_NAME;
+	    String productInfo = nameApp + "\n" + version +" " +verApp;
+	    btnSettingProductInfo.setText(productInfo);
+
         btnLogSendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

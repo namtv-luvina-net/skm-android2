@@ -327,4 +327,5 @@
     <string name="no_cert_installed">No certificates are currently installed</string>
     <string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
 	<string name="validity_period">Validity Period</string>
+	<string name="version">Version</string>
 </resources>

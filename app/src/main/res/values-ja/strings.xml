@@ -328,4 +328,5 @@
     <string name="no_cert_installed">現在インストールされている証明書はありません</string>
     <string name="error_input_before_expiry">期限切れ日数は、1〜%dの間で入力してください。</string>
 	<string name="validity_period">有効期間</string>
+	<string name="version">バージョン</string>
 </resources>
