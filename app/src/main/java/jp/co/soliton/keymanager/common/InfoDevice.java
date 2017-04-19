@@ -12,7 +12,11 @@ import jp.co.soliton.keymanager.BuildConfig;
 import jp.co.soliton.keymanager.R;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.text.DecimalFormat;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +74,7 @@ public class InfoDevice {
 		outputDataBuilder.append(newLine);
 
 		outputDataBuilder.append(makeInfoLine("System time", DateUtils.getCurrentDateSystem()));
+		outputDataBuilder.append(makeInfoLine("IP address", getIPAddress()));
 		outputDataBuilder.append(newLine);
 
 		outputDataBuilder.append(makeInfoLine("BOARD", Build.BOARD));
@@ -177,6 +182,28 @@ public class InfoDevice {
 
 	private String makeInfoLine(String str1, String str2) {
 		return str1 + " : " + str2 + "\n";
+	}
+
+	private String getIPAddress() {
+		try {
+			List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+			for (NetworkInterface intf : interfaces) {
+				List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+				for (InetAddress addr : addrs) {
+					if (!addr.isLoopbackAddress()) {
+						String sAddr = addr.getHostAddress();
+						//boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+						boolean isIPv4 = sAddr.indexOf(':')<0;
+						if (isIPv4) {
+							return sAddr;
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return "";
 	}
 
 	private String getFormattedKernelVersion() {
