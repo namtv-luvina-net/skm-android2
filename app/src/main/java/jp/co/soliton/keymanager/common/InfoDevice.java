@@ -3,12 +3,9 @@ package jp.co.soliton.keymanager.common;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.*;
 import android.text.format.Formatter;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import jp.co.soliton.keymanager.BuildConfig;
@@ -16,7 +13,6 @@ import jp.co.soliton.keymanager.R;
 
 import java.io.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,7 +66,6 @@ public class InfoDevice {
 		String appVer = context.getResources().getString(R.string.app_name) + " " + context.getResources().getString(R
 				.string.main_versionname) + BuildConfig.VERSION_NAME + "." + BuildConfig.BUILD_NUM + (BuildConfig
 				.BUILD_TYPE.equals("debug") ? "d" : BuildConfig.BUILD_TYPE.equals("trace") ? "t" : "");
-		Log.d("datnd", "getInfoDevice: ver= " + appVer);
 		outputDataBuilder.append(appVer);
 		outputDataBuilder.append(newLine);
 
