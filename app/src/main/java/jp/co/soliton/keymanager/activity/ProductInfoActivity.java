@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
@@ -70,13 +71,14 @@ public class ProductInfoActivity extends Activity {
     }
 
 	private void endConnectionAndSentEmail(ContentZip contentZip) {
-		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.setType("*/*");
+		Uri contentUri = FileProvider.getUriForFile(this, "jp.co.soliton.keymanager", contentZip.file);
+		Intent intent = new Intent(Intent.ACTION_SEND, contentUri);
+		intent.setType("application/octet-stream");
+		intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle));
 		intent.putExtra(Intent.EXTRA_TEXT, contentZip.contentMail);
-		// the attachment
-		intent .putExtra(Intent.EXTRA_STREAM, contentZip.uriFileAttach);
-		startActivityForResult(Intent.createChooser(intent, "Send via email"), 100);
+		intent.putExtra(Intent.EXTRA_STREAM, contentUri);
+		startActivity(Intent.createChooser(intent, null));
 	}
 
 	private String buildBodyMailDiagnostics() {
@@ -143,7 +145,7 @@ public class ProductInfoActivity extends Activity {
 
 	private class ContentZip {
 		public String contentMail;
-		public Uri uriFileAttach;
+		public File file;
 	}
 
 	private class ProcessInfoAndZipTask extends AsyncTask<Void, Void, ContentZip> {
@@ -156,13 +158,14 @@ public class ProductInfoActivity extends Activity {
 			InfoDevice infoDevice = InfoDevice.getInstance(ProductInfoActivity.this);
 			contentZip.contentMail = infoDevice.createFileInfo();
 			File zipFile = createFileZip(infoDevice);
-			contentZip.uriFileAttach = Uri.fromFile(zipFile);
+			contentZip.file = zipFile;
 			return contentZip;
 		}
 
 		private File createFileZip(InfoDevice infoDevice) {
-			String nameFileZip = String.format(patternNameZipFile, getVersionName(), DateUtils.getCurrentDateZip());
 			File outputDir = getApplicationContext().getExternalCacheDir();
+			clearOldCacheFiles(outputDir);
+			String nameFileZip = String.format(patternNameZipFile, getVersionName(), DateUtils.getCurrentDateZip());
 			File outputFile = new File(outputDir, nameFileZip);
 			try {
 				outputFile.createNewFile();
@@ -173,6 +176,19 @@ public class ProductInfoActivity extends Activity {
 			listFileToZip.add(infoDevice.getPathFileInfo());
 			new Compress(listFileToZip, outputFile.getAbsolutePath()).zip();
 			return outputFile;
+		}
+
+		private void clearOldCacheFiles(File files) {
+			for (String fileName : files.list()) {
+				if (isZipFile(fileName)) {
+					File file = new File(files, fileName);
+					file.delete();
+				}
+			}
+		}
+
+		private boolean isZipFile(String fileName) {
+			return fileName.startsWith("skm_and") && fileName.endsWith(".zip");
 		}
 
 		private String getVersionName() {

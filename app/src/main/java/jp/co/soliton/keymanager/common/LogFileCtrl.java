@@ -28,7 +28,8 @@ public class LogFileCtrl {
 			if (isFileNameLogValid(fileName)) {
 				String dateCreatedFile = getDateCreatedFile(fileName);
 				if (!DateUtils.isDateValid(dateCreatedFile)) {
-					deleteFile(context, fileName);
+					File file = new File(files, fileName);
+					file.delete();
 				} else {
 					listTmp.add(fileName);
 				}
@@ -43,7 +44,8 @@ public class LogFileCtrl {
 				if (i < MAXIMUM_LOG_FILES) {
 					listFileName.add(context.getFilesDir().getPath() + File.separator + listTmp.get(i));
 				} else {
-					deleteFile(context, listTmp.get(i));
+					File file = new File(files, listTmp.get(i));
+					file.delete();
 				}
 			}
 		} else {
@@ -52,12 +54,6 @@ public class LogFileCtrl {
 			}
 		}
 		return listFileName;
-	}
-
-	private static void deleteFile(Context context, String child) {
-		File dir = context.getFilesDir();
-		File file = new File(dir, child);
-		boolean deleted = file.delete();
 	}
 
 	private static boolean isFileNameLogValid(String fileName) {

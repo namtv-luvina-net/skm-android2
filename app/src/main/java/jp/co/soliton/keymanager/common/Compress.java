@@ -27,7 +27,7 @@ public class Compress {
 	public void zip() {
 		try  {
 			BufferedInputStream origin = null;
-			FileOutputStream dest = new FileOutputStream(_zipFile);
+			FileOutputStream dest = new FileOutputStream(_zipFile, false);
 			ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
 			byte data[] = new byte[BUFFER];
 			for(int i=0; i < _files.size(); i++) {
