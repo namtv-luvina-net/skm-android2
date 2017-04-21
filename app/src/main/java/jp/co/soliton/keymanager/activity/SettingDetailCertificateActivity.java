@@ -184,16 +184,20 @@ public class SettingDetailCertificateActivity extends Activity {
         setTextForControl(tvDetailNotValidAfter, elementApply.getNotValidAfter());
 
         setTextForControl(tvDetailPublicAlgorithm, elementApply.getPublicKeyAlogrithm());
-        setTextForControl(tvDetailPublicData, elementApply.getPublicKeyData());
-        setTextForControl(tvDetailSignature, elementApply.getPublicSignature());
+	    String detailPublicData = elementApply.getPublicKeyData().toUpperCase().replace(":", " ");
+        setTextForControl(tvDetailPublicData, detailPublicData);
+	    String detailSignature = elementApply.getPublicSignature().toUpperCase().replace(":", " ");
+	    setTextForControl(tvDetailSignature, detailSignature);
         if (Integer.parseInt(elementApply.getCertificateAuthority()) >= 0) {
             tvDetailCertificateAuthority.setText("TRUE");
         } else {
             tvDetailCertificateAuthority.setText("FALSE");
         }
         setTextForControl(tvDetailUsage, elementApply.getUsage());
-        setTextForControl(tvDetailKeyIdentifier, elementApply.getSubjectKeyIdentifier());
-        setTextForControl(tvDetailAuthorKeyIdentifier, elementApply.getAuthorityKeyIdentifier());
+	    String detailKeyIdentifier = elementApply.getSubjectKeyIdentifier().toUpperCase().replace(":", " ");
+        setTextForControl(tvDetailKeyIdentifier, detailKeyIdentifier);
+	    String detailAuthorKeyIdentifier = elementApply.getAuthorityKeyIdentifier().toUpperCase().replace(":", " ");
+	    setTextForControl(tvDetailAuthorKeyIdentifier, detailAuthorKeyIdentifier);
         setTextForControl(tvDetailCLRUri, elementApply.getClrDistributionPointUri());
         setTextForControl(tvDetailInformationAccessUri, elementApply.getCertificateAuthorityUri());
         setTextForControl(tvDetailPurpose, elementApply.getPurpose());
