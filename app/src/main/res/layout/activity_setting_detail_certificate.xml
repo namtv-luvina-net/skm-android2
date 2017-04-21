@@ -635,10 +635,9 @@
 			    android:background="#ddebfc"
 			    android:text="@string/validity_period"/>
 	    <TextView
-		    android:layout_width="match_parent"
-		    android:layout_height="1dp"
-		    android:layout_marginLeft="20dp"
-		    android:background="@color/line_cert"/>
+			    android:layout_width="match_parent"
+			    android:layout_height="1dp"
+			    android:background="@color/line_cert"/>
 	    <LinearLayout
 			    android:orientation="horizontal"
 			    android:layout_width="match_parent"
