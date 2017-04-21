@@ -3,6 +3,7 @@ package jp.co.soliton.keymanager.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -40,42 +41,52 @@ public class MenuAcivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        btnMenuStart = (Button) findViewById(R.id.btnMenuStart);
-        btnMenuAPID = (Button) findViewById(R.id.btnMenuAPID);
-        btnMenuConfirmApply = (Button) findViewById(R.id.btnMenuConfirmApply);
-        btnSetting = (Button) findViewById(R.id.btnSetting);
-        elementMgr = new ElementApplyManager(getApplicationContext());
+	    setOrientation();
+//        btnMenuStart = (Button) findViewById(R.id.btnMenuStart);
+//        btnMenuAPID = (Button) findViewById(R.id.btnMenuAPID);
+//        btnMenuConfirmApply = (Button) findViewById(R.id.btnMenuConfirmApply);
+//        btnSetting = (Button) findViewById(R.id.btnSetting);
+//        elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
-    @Override
+	private void setOrientation() {
+		boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+		if (tabletSize) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
+	}
+
+	@Override
     protected void onResume() {
         super.onResume();
-        if (StringList.GO_TO_LIST_APPLY.equals("1")) {
-            StringList.GO_TO_LIST_APPLY = "0";
-            Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
-            startActivity(intent);
-        }
-        totalApply = elementMgr.getCountElementApply();
-        if (totalApply <= 0) {
-            btnMenuConfirmApply.setVisibility(View.GONE);
-        } else {
-            btnMenuConfirmApply.setVisibility(View.VISIBLE);
-            btnMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (totalApply == 1) {
-                        List<ElementApply> listElementApply = elementMgr.getAllElementApply();
-                        Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
-                        intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
-        }
-        setupControl();
+//        if (StringList.GO_TO_LIST_APPLY.equals("1")) {
+//            StringList.GO_TO_LIST_APPLY = "0";
+//            Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
+//            startActivity(intent);
+//        }
+//        totalApply = elementMgr.getCountElementApply();
+//        if (totalApply <= 0) {
+//            btnMenuConfirmApply.setVisibility(View.GONE);
+//        } else {
+//            btnMenuConfirmApply.setVisibility(View.VISIBLE);
+//            btnMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (totalApply == 1) {
+//                        List<ElementApply> listElementApply = elementMgr.getAllElementApply();
+//                        Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
+//                        intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
+//                        startActivity(intent);
+//                    } else {
+//                        Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
+//                        startActivity(intent);
+//                    }
+//                }
+//            });
+//        }
+//        setupControl();
 
         if(android.os.Build.VERSION.SDK_INT >= 23) {
             NewPermissionSet();
