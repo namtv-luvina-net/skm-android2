@@ -329,4 +329,6 @@
 	<string name="validity_period">Validity Period</string>
 	<string name="version">Version</string>
 	<string name="creating_diagnostic_infomation">Creating diagnostic information...</string>
+	<string name="guide_1">Let\'s start simple setup.</string>
+	<string name="guide_2">Select the item onthe right to start appying</string>
 </resources>
