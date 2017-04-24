@@ -4,7 +4,7 @@
     <item name="add_cert" type="color">#007aff</item>
     <item name="background_group_cert" type="color">#efeff4</item>
     <item name="line_cert" type="color">#c8c7cc</item>
-    <item name="text_cert_content_detail" type="color">#385487</item>
+    <item name="text_cert_content_detail" type="color">#8e8e93</item>
     <color name="color_red">#ED0201</color>
     <color name="color_black">#000</color>
     <color name="text_color_active">#007AFF</color>

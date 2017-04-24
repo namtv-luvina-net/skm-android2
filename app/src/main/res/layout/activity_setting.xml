@@ -9,10 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:paddingTop="50dp"
+        android:paddingTop="25dp"
         android:paddingLeft="20dp"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:background="#ddebfc"
+        android:textAllCaps="true"
         android:text="@string/label_list_certificate"/>
     <TextView
         android:layout_width="match_parent"
@@ -37,11 +38,12 @@
             android:clickable="false"
             android:background="@android:color/transparent"
             android:layout_toLeftOf="@+id/ivBtnSetting1End"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:textAllCaps="false"
+            android:paddingTop="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:gravity="left|center_vertical"
             android:text="@string/list_cert"/>
         <ImageView
@@ -73,11 +75,12 @@
             android:clickable="false"
             android:background="@android:color/transparent"
             android:layout_toLeftOf="@+id/ivBtnSetting2End"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
+            android:textAllCaps="false"
             android:gravity="left|center_vertical"
             android:text="@string/notif_setting"/>
         <ImageView
@@ -100,9 +103,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:paddingTop="50dp"
+        android:paddingTop="25dp"
         android:paddingLeft="20dp"
-        android:textSize="20sp"
+        android:textSize="17sp"
+        android:textAllCaps="true"
         android:text="@string/label_other_setting"/>
     <TextView
         android:layout_width="match_parent"
@@ -127,11 +131,12 @@
             android:clickable="false"
             android:background="@android:color/transparent"
             android:layout_toLeftOf="@+id/ivBtnSetting3End"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
+            android:textAllCaps="false"
             android:gravity="left|center_vertical"
             android:text="@string/label_product_setting"/>
         <ImageView
@@ -163,11 +168,12 @@
             android:clickable="false"
             android:background="@android:color/transparent"
             android:layout_toLeftOf="@+id/ivBtnSetting4End"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:textSize="20sp"
+            android:textSize="17sp"
+            android:textAllCaps="false"
             android:gravity="left|center_vertical"
             android:text="@string/label_library_setting"/>
         <ImageView

@@ -316,10 +316,10 @@
     <string name="text_start_reapply">Re-applying is necessary\nto continue using</string>
     <string name="apply_start">Apply Start</string>
     <string name="notif_title">Certificate renewal is required.</string>
-    <string name="notif_setting">Notification settings</string>
-    <string name="list_cert">Certificate list</string>
+    <string name="notif_setting">Notification Settings</string>
+    <string name="list_cert">Certificates</string>
     <string name="label_other_setting">Other</string>
-    <string name="label_product_setting">Product name</string>
+    <string name="label_product_setting">Product Name</string>
     <string name="label_library_setting">Library</string>
     <string name="product_name_version_info">Soliton KeyManager\nVersion 2.0</string>
     <string name="diagnostics">Diagnostics</string>
