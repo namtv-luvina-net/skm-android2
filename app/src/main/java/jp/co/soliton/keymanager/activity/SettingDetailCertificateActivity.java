@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import jp.co.soliton.keymanager.R;
@@ -54,6 +57,8 @@ public class SettingDetailCertificateActivity extends Activity {
     private TextView tvDetailCLRUri;
     private TextView tvDetailInformationAccessUri;
     private TextView tvDetailPurpose;
+    private TextView textViewBack;
+    private LinearLayout moreOption;
 
     private String id;
 
@@ -64,6 +69,8 @@ public class SettingDetailCertificateActivity extends Activity {
         id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
         elementMgr = new ElementApplyManager(this);
         tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
+	    moreOption = (LinearLayout) findViewById(R.id.more_option);
+	    textViewBack = (TextView) findViewById(R.id.textViewBack);
         tvDetailSubjectCountry = (TextView) findViewById(R.id.tvDetailSubjectCountry);
         tvDetailSubjectSpName = (TextView) findViewById(R.id.tvDetailSubjectSpName);
         tvDetailSubjectLocal = (TextView) findViewById(R.id.tvDetailSubjectLocal);
@@ -161,8 +168,9 @@ public class SettingDetailCertificateActivity extends Activity {
 
     private void showDataDetail() {
         ElementApply elementApply = elementMgr.getElementApply(id);
-        setTextForControl(tvTitleHeader, elementApply.getUserId());
-        setTextForControl(tvDetailSubjectCountry, elementApply.getSubjectCountryName());
+	    setTextForControl(tvTitleHeader, elementApply.getcNValue());
+	    updateTitle();
+	    setTextForControl(tvDetailSubjectCountry, elementApply.getSubjectCountryName());
         setTextForControl(tvDetailSubjectSpName, elementApply.getSubjectStateOrProvinceName());
         setTextForControl(tvDetailSubjectLocal, elementApply.getSubjectLocalityName());
         setTextForControl(tvDetailSubjectOrgName, elementApply.getSubjectOrganizationName());
@@ -203,7 +211,25 @@ public class SettingDetailCertificateActivity extends Activity {
         setTextForControl(tvDetailPurpose, elementApply.getPurpose());
     }
 
-    private void setTextForControl(TextView tv, String text) {
+	private void updateTitle() {
+		tvTitleHeader.measure(0, 0);
+		textViewBack.measure(0, 0);
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		int width = displayMetrics.widthPixels;
+
+		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
+			textViewBack.setText("");
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+			params.addRule(RelativeLayout.RIGHT_OF, textViewBack.getId());
+			params.addRule(RelativeLayout.LEFT_OF, moreOption.getId());
+			tvTitleHeader.setLayoutParams(params);
+		}
+	}
+
+	private void setTextForControl(TextView tv, String text) {
         if (nullOrEmpty(text)) {
             tv.setText("");
         } else {

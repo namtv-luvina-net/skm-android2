@@ -189,6 +189,7 @@ public class ElementApplyManager {
         elementApply.setPortSSL(cursor.getString(cursor.getColumnIndexOrThrow("port_ssl")));
         elementApply.setPort(cursor.getString(cursor.getColumnIndexOrThrow("port")));
         elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
+	    elementApply.setcNValue(cursor.getString(cursor.getColumnIndexOrThrow("cn_value")));
         elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
         elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
         elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));

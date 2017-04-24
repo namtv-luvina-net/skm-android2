@@ -3,8 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/product_info_bg_color">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/background">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -12,7 +12,7 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/textViewBack"
-            android:layout_width="110dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -25,21 +25,28 @@
             android:textColor="@color/add_cert"
             />
 
-        <jp.co.soliton.keymanager.customview.AutoResizeTextView
+        <TextView
             android:id="@+id/tvTitleHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
+            android:singleLine="true"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:textSize="@dimen/text_size_value"
             android:textColor="@color/color_black"
             android:text="@string/label_product_setting"/>
-        <View
-            android:layout_width="110dp"
-            android:layout_height="25dp"
-            android:background="@android:color/transparent"/>
-    </LinearLayout>
+	    <TextView
+			    android:id="@+id/spaceRightTitle"
+			    android:layout_width="wrap_content"
+			    android:layout_height="35dp"
+			    android:drawableRight="@drawable/ic_back2"
+	            android:layout_gravity="center"
+	            android:visibility="invisible"
+	            android:layout_alignParentRight="true"
+			    />
+    </RelativeLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -48,9 +55,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:paddingTop="50dp"
+        android:paddingTop="25dp"
         android:paddingLeft="20dp"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textAllCaps="true"
         android:text="@string/label_product_setting"/>
     <TextView
@@ -63,14 +70,14 @@
         android:layout_height="wrap_content"
         android:background="@color/background_color_white"
         android:clickable="false"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
         android:drawableLeft="@mipmap/type04_72px"
         android:drawablePadding="15dip"
         android:lineSpacingMultiplier="1.2"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:textAllCaps="false"
         android:gravity="left|center_vertical"
         android:text="@string/product_name_version_info"/>
@@ -82,9 +89,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:paddingTop="50dp"
+        android:paddingTop="25dp"
         android:paddingLeft="20dp"
-        android:textSize="18sp"
+        android:textSize="17sp"
         android:textAllCaps="true"
         android:text="@string/diagnostics"/>
     <TextView
@@ -98,9 +105,9 @@
         android:background="@color/background_color_white"
         android:textAllCaps="false"
         android:layout_gravity="center"
-        android:paddingBottom="15dp"
-        android:paddingTop="15dp"
-        android:textSize="20sp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textSize="17sp"
         android:textColor="@color/text_color_active"
         android:gravity="center"
         android:text="@string/send_diagnostics"/>

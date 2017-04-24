@@ -11,8 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import jp.co.soliton.keymanager.BuildConfig;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
@@ -33,12 +36,18 @@ public class ProductInfoActivity extends Activity {
     private Button btnLogSendMail;
 	ProgressDialog progressDialog;
 	private Button btnSettingProductInfo;
+	private TextView textViewBack;
+	private TextView tvTitleHeader;
+	private TextView spaceRightTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
         btnLogSendMail = (Button) findViewById(R.id.btnLogSendMail);
+	    textViewBack = (TextView) findViewById(R.id.textViewBack);
+	    tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
+	    spaceRightTitle = (TextView) findViewById(R.id.spaceRightTitle);
 	    btnSettingProductInfo = (Button) findViewById(R.id.btnSettingProductInfo);
 	    progressDialog = new ProgressDialog(this);
     }
@@ -68,7 +77,26 @@ public class ProductInfoActivity extends Activity {
 	            new ProcessInfoAndZipTask().execute();
             }
         });
+	    updateTitle();
     }
+
+	private void updateTitle() {
+		tvTitleHeader.measure(0, 0);
+		textViewBack.measure(0, 0);
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		int width = displayMetrics.widthPixels;
+
+		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
+			textViewBack.setText("");
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+			params.addRule(RelativeLayout.RIGHT_OF, textViewBack.getId());
+			params.addRule(RelativeLayout.LEFT_OF, spaceRightTitle.getId());
+			tvTitleHeader.setLayoutParams(params);
+		}
+	}
 
 	private void endConnectionAndSentEmail(ContentZip contentZip) {
 		Uri contentUri = FileProvider.getUriForFile(this, "jp.co.soliton.keymanager", contentZip.file);

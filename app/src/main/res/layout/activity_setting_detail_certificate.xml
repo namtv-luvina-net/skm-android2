@@ -5,7 +5,7 @@
               android:orientation="vertical"
               android:background="#e8effb"
               android:baselineAligned="false">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<RelativeLayout
 	              android:layout_width="match_parent"
 	              android:layout_height="wrap_content"
 	              android:layout_marginTop="10dp"
@@ -13,9 +13,11 @@
 	              android:orientation="horizontal">
 		<TextView
 				android:id="@+id/textViewBack"
-				android:layout_width="160dp"
+				android:layout_width="wrap_content"
 				android:layout_height="35dp"
 				android:layout_alignParentLeft="true"
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp"
 				android:layout_centerVertical="true"
 				android:drawableLeft="@drawable/ic_back2"
 				android:gravity="center_vertical"
@@ -25,23 +27,28 @@
 				android:textSize="@dimen/text_size_value"
 				android:textColor="@color/add_cert" />
 
-		<jp.co.soliton.keymanager.customview.AutoResizeTextView
+		<TextView
 				android:id="@+id/tvTitleHeader"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_weight="1"
+				android:singleLine="true"
 				android:maxLines="1"
+				android:layout_centerInParent="true"
 				android:gravity="center"
 				android:textSize="@dimen/text_size_value"
 				android:textColor="@color/text_color"
 				android:text=""/>
 		<LinearLayout
-				android:layout_width="160dp"
+				android:id="@+id/more_option"
+				android:layout_width="wrap_content"
 				android:layout_height="25dp"
 				android:orientation="horizontal"
 				android:layout_gravity="center"
+				android:layout_centerInParent="true"
+				android:layout_alignParentRight="true"
 				android:gravity="end"
 				android:paddingRight="20dp"
+				android:paddingLeft="10dp"
 				android:background="@android:color/transparent">
 			<Button
 					android:layout_width="25dp"
@@ -49,7 +56,7 @@
 					android:onClick="onMenuSettingClick"
 					android:background="@drawable/ic_menu_48"/>
 		</LinearLayout>
-	</LinearLayout>
+	</RelativeLayout>
 	<ScrollView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -68,6 +75,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_subject_name"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -291,6 +299,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_issuer_name"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -618,6 +627,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/validity_period"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -629,6 +639,7 @@
 					android:layout_height="wrap_content"
 					android:background="@color/background_color_white">
 				<TextView
+						android:id="@+id/tvTitleNotValidBefore"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:background="@color/background_color_white"
@@ -700,6 +711,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_signature_algorithm"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -747,6 +759,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_public_key_algorithm"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -866,6 +879,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_basic_constraints"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -913,6 +927,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_key_usage"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -960,6 +975,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_subject_key_identifier"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -1007,6 +1023,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_authority_key_identifier"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -1054,6 +1071,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_crl_distribution_points"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -1101,6 +1119,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_certificate_authority_information_access"/>
 			<TextView
 					android:layout_width="match_parent"
@@ -1148,6 +1167,7 @@
 					android:paddingLeft="20dp"
 					android:textSize="17sp"
 					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_extended_key_usage"/>
 			<TextView
 					android:layout_width="match_parent"
