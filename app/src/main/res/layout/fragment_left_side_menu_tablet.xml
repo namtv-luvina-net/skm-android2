@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+	<RelativeLayout
+			android:id="@+id/header_left_side"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/high_header_left_side_tablet">
+
+		<Button
+				android:id="@+id/btnSetting"
+				android:layout_width="@dimen/size_icon_setting"
+				android:layout_height="@dimen/size_icon_setting"
+				android:layout_marginTop="@dimen/margin_icon_setting"
+				android:layout_marginRight="@dimen/margin_icon_setting"
+				android:layout_alignParentRight="true"
+				android:background="@drawable/gear_white"/>
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Select Item"
+				android:textColor="@color/color_title_menu"
+				android:textSize="@dimen/tv_title_left_side"
+				android:layout_centerHorizontal="true"
+				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="@dimen/margin_left_side"/>
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@color/color_title_menu"
+				android:layout_marginLeft="@dimen/margin_left_side"
+				android:layout_marginRight="@dimen/margin_left_side"
+				android:layout_alignParentBottom="true"/>
+	</RelativeLayout>
+
+	<RelativeLayout
+			android:id="@+id/content_left_size"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentStart="true">
+		<TextView
+				android:id="@+id/tv_guide_1"
+				android:layout_above="@+id/tv_guide_2"
+				android:layout_marginBottom="@dimen/margin_guide_left_side"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/guide_1"
+				android:textSize="@dimen/tv_content_left_side"
+				android:textColor="@color/color_guide"
+				android:gravity="center_horizontal"
+				/>
+		<TextView
+				android:id="@+id/tv_guide_2"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/guide_2"
+				android:layout_centerInParent="true"
+				android:gravity="center"
+				android:textSize="@dimen/tv_content_left_side"
+				android:textColor="@color/color_guide"
+				/>
+		<TextView
+				android:id="@+id/tv_guide_3"
+				android:layout_below="@id/tv_guide_2"
+				android:layout_marginTop="@dimen/margin_guide_left_side"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Various information can be seen from the icon Setting above."
+				android:textSize="@dimen/tv_content_left_side"
+				android:textColor="@color/color_guide"
+				android:gravity="center_horizontal"
+				/>
+
+	</RelativeLayout>
+</RelativeLayout>

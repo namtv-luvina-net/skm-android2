@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="height_img_item_menu">275.00dp</dimen>
+	<dimen name="height_item_apid">50.00dp</dimen>
+	<dimen name="height_item_content_apid">66.67dp</dimen>
+	<dimen name="height_item_menu">466.67dp</dimen>
+	<dimen name="height_title_item_menu">100.00dp</dimen>
+	<dimen name="high_header_left_side_tablet">141.67dp</dimen>
+	<dimen name="margin_content_apid">166.67dp</dimen>
+	<dimen name="margin_guide_left_side">116.67dp</dimen>
+	<dimen name="margin_icon_setting">16.67dp</dimen>
+	<dimen name="margin_item_menu">16.67dp</dimen>
+	<dimen name="margin_left_side">33.33dp</dimen>
+	<dimen name="min_width_title_apid_detail">116.67dp</dimen>
+	<dimen name="min_width_title_item_apid">83.33dp</dimen>
+	<dimen name="pading_content_item_apid">8.33dp</dimen>
+	<dimen name="size_icon_setting">36.67dp</dimen>
+	<dimen name="text_size_title_item_apid">18.33dp</dimen>
+	<dimen name="title_item_menu">38.33dp</dimen>
+	<dimen name="width_item_menu">541.67dp</dimen>
+	<dimen name="text_size_btn_content_apid">26.67sp</dimen>
+	<dimen name="text_size_content_item_apid">23.33sp</dimen>
+	<dimen name="tv_content_left_side">33.33sp</dimen>
+	<dimen name="tv_title_left_side">40.00sp</dimen>
+</resources>

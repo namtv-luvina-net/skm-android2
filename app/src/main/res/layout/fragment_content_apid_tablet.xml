@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/margin_content_apid"
+                android:layout_marginRight="@dimen/margin_content_apid">
+
+
+	<RelativeLayout
+			android:id="@+id/rl_wifi"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_item_content_apid"
+			android:layout_above="@+id/space_apid">
+
+		<TextView
+				android:id="@+id/title_wifi"
+				android:layout_width="wrap_content"
+				android:minWidth="@dimen/min_width_title_apid_detail"
+				android:layout_height="match_parent"
+				android:layout_centerVertical="true"
+				android:gravity="center"
+				android:textColor="@color/background_color_white"
+				android:textSize="@dimen/text_size_btn_content_apid"
+				android:background="@drawable/background_apid_left"
+				android:text="@string/main_apid_wifi"/>
+
+		<TextView
+				android:id="@+id/content_wifi"
+				android:layout_toRightOf="@id/title_wifi"
+				android:layout_width="match_parent"
+				android:maxLines="1"
+				android:paddingLeft="@dimen/margin_left_side"
+				android:paddingRight="@dimen/margin_left_side"
+				android:gravity="center"
+				android:text="b41bb724fe334a8c1f99bd8ed6cfe3a121a18f6a"
+				android:textSize="@dimen/text_size_btn_content_apid"
+				android:textColor="#b5b5b6"
+				android:background="@drawable/background_apid_right"
+				android:layout_height="match_parent"/>
+	</RelativeLayout>
+
+	<android.support.v4.widget.Space
+			android:id="@+id/space_apid"
+			android:layout_width="match_parent"
+			android:layout_centerVertical="true"
+			android:layout_height="@dimen/margin_item_menu"/>
+
+	<RelativeLayout
+			android:id="@+id/rl_apid"
+			android:layout_below="@id/space_apid"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_item_content_apid">
+
+		<TextView
+				android:id="@+id/title_apid"
+				android:layout_width="wrap_content"
+				android:minWidth="@dimen/min_width_title_apid_detail"
+				android:layout_height="match_parent"
+				android:layout_centerVertical="true"
+				android:gravity="center"
+				android:textColor="@color/background_color_white"
+				android:textSize="@dimen/text_size_btn_content_apid"
+				android:background="@drawable/background_apid_left"
+				android:text="VPN"/>
+
+		<TextView
+				android:id="@+id/content_apid"
+				android:layout_toRightOf="@id/title_apid"
+				android:layout_width="match_parent"
+				android:paddingLeft="@dimen/margin_left_side"
+				android:paddingRight="@dimen/margin_left_side"
+				android:maxLines="1"
+				android:gravity="center"
+				android:text="b41bb724fe334a8c1f99bd8ed6cfe3a121a18f6a"
+				android:textSize="@dimen/text_size_btn_content_apid"
+				android:textColor="#b5b5b6"
+				android:background="@drawable/background_apid_right"
+				android:layout_height="match_parent"/>
+	</RelativeLayout>
+
+	<RelativeLayout
+			android:id="@+id/rl_btn_ctrl"
+			android:layout_below="@id/rl_apid"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_item_content_apid"
+			android:layout_marginTop="@dimen/margin_left_side">
+		<android.support.v4.widget.Space
+				android:id="@+id/space_between_button_ctrl"
+				android:layout_centerInParent="true"
+				android:layout_width="@dimen/margin_left_side"
+				android:layout_height="match_parent"/>
+		<Button
+				android:id="@+id/btn1"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:text="@string/copy"
+				android:textSize="@dimen/text_size_btn_content_apid"
+				android:textAllCaps="false"
+				android:textColor="@color/background_color_white"
+				android:background="@drawable/background_btn_ctrl_apid"
+				android:layout_toLeftOf="@id/space_between_button_ctrl"/>
+
+		<Button
+				android:id="@+id/btn2"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:text="@string/mail"
+				android:textSize="@dimen/text_size_btn_content_apid"
+				android:textAllCaps="false"
+				android:textColor="@color/background_color_white"
+				android:background="@drawable/background_btn_ctrl_apid"
+				android:layout_toRightOf="@id/space_between_button_ctrl"/>
+	</RelativeLayout>
+</LinearLayout>
