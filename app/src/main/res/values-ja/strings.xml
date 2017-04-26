@@ -3,6 +3,7 @@
 
     <string name="hello">Hello World, EPS_ap300Activity!</string>
     <string name="app_name">Soliton KeyManager</string>
+    <string name="app_name_icon">KeyManager</string>
     <string name="ApplicationTitle">Soliton KeyManager</string>
     <string name="NGkey">NG</string>
     <string name="LoginErrorMessage">Connection error</string>

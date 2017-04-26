@@ -45,7 +45,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setSmallIcon(getNotificationIcon())
 		                .setColor(context.getResources().getColor(R.color.product_icon_notification))
                         .setContentTitle(context.getString(R.string.notif_title))
-                        .setContentText(element.getUserId());
+                        .setContentText(element.getcNValue());
         Intent resultIntent = new Intent(context, AlarmReapplyActivity.class);
         resultIntent.putExtra(StringList.ELEMENT_APPLY_ID, id);
 
