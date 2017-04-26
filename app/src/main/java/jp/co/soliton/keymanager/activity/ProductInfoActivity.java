@@ -103,7 +103,8 @@ public class ProductInfoActivity extends Activity {
 		Intent intent = new Intent(Intent.ACTION_SEND, contentUri);
 		intent.setType("application/octet-stream");
 		intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle));
+		intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.main_log_mailtitle) + " - " + contentZip.file
+				.getName());
 		intent.putExtra(Intent.EXTRA_TEXT, contentZip.contentMail);
 		intent.putExtra(Intent.EXTRA_STREAM, contentUri);
 		startActivity(Intent.createChooser(intent, null));

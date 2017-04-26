@@ -63,15 +63,16 @@
 						android:id="@+id/rl_wifi"
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/height_item_apid"
-						android:layout_above="@+id/space_apid">
+						android:layout_below="@+id/space_apid">
 
 					<TextView
 							android:id="@+id/title_wifi"
 							android:layout_width="wrap_content"
-							android:minWidth="@dimen/min_width_title_item_apid"
 							android:layout_height="match_parent"
 							android:layout_centerVertical="true"
 							android:gravity="center"
+							android:paddingRight="@dimen/margin_item_menu"
+							android:paddingLeft="@dimen/margin_item_menu"
 							android:textColor="@color/background_color_white"
 							android:textSize="@dimen/text_size_title_item_apid"
 							android:background="@drawable/background_apid_left"
@@ -93,26 +94,27 @@
 				</RelativeLayout>
 
 				<RelativeLayout
-						android:id="@+id/rl_apid"
-						android:layout_below="@id/space_apid"
+						android:id="@+id/rl_vpn"
+						android:layout_above="@id/space_apid"
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/height_item_apid">
 
 					<TextView
-							android:id="@+id/title_apid"
+							android:id="@+id/title_vpn"
 							android:layout_width="wrap_content"
-							android:minWidth="@dimen/min_width_title_item_apid"
 							android:layout_height="match_parent"
 							android:layout_centerVertical="true"
 							android:gravity="center"
+							android:paddingRight="@dimen/margin_item_menu"
+							android:paddingLeft="@dimen/margin_item_menu"
 							android:textColor="@color/background_color_white"
 							android:textSize="@dimen/text_size_title_item_apid"
 							android:background="@drawable/background_apid_left"
-							android:text="VPN"/>
+							android:text="@string/main_apid_vpn"/>
 
 					<TextView
-							android:id="@+id/content_apid"
-							android:layout_toRightOf="@id/title_apid"
+							android:id="@+id/content_vpn"
+							android:layout_toRightOf="@id/title_vpn"
 							android:layout_width="match_parent"
 							android:paddingLeft="@dimen/pading_content_item_apid"
 							android:paddingRight="@dimen/pading_content_item_apid"
@@ -154,7 +156,7 @@
 			<TextView
 					android:id="@+id/txt_approval_confirmation"
 					android:layout_width="match_parent"
-					android:text="@string/start_apply"
+					android:text="@string/approval_confirmation"
 					android:gravity="center"
 					android:textSize="@dimen/title_item_menu"
 					android:textColor="@color/text_color"

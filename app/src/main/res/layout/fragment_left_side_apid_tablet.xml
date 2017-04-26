@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/left_panel_background">
 	<RelativeLayout
 			android:id="@+id/header_left_side"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/high_header_left_side_tablet">
 		<TextView
-				android:id="@+id/btnSetting"
+				android:id="@+id/tvBack"
 				android:layout_width="wrap_content"
 				android:layout_height="35dp"
 				android:layout_marginTop="@dimen/margin_icon_setting"
@@ -16,11 +17,10 @@
 				android:layout_alignParentLeft="true"
 				android:drawableLeft="@drawable/ic_back_white"
 				android:gravity="center_vertical"
-				android:onClick="btnBackClick"
 				android:clickable="true"
 				android:text="@string/back"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_title_menu"/>
+				android:textColor="@drawable/text_selector"/>
 
 		<TextView
 				android:layout_width="wrap_content"
@@ -55,8 +55,9 @@
 				android:layout_height="wrap_content"
 				android:text="@string/apid_guide_1"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_guide"
+				android:textColor="@color/color_desc_menu"
 				android:gravity="center_horizontal"
+				android:lineSpacingMultiplier="1.5"
 				/>
 		<TextView
 				android:id="@+id/tv_guide_2"
@@ -68,7 +69,8 @@
 				android:layout_centerInParent="true"
 				android:gravity="center"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_guide"
+				android:textColor="@color/color_desc_menu"
+				android:lineSpacingMultiplier="1.5"
 				/>
 
 	</RelativeLayout>

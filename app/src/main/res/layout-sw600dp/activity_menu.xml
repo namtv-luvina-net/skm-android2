@@ -12,12 +12,10 @@
 		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
-				android:layout_weight="165"
-				android:background="@drawable/left_panel_background">
-			<fragment
+				android:layout_weight="165">
+			<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:name="jp.co.soliton.keymanager.fragment.LeftSideMenuTabletFragment"
 					android:id="@+id/fragment_left_side_menu_tablet"/>
 		</RelativeLayout>
 
@@ -28,10 +26,9 @@
 				android:layout_gravity="center"
 				android:gravity="center"
 				android:background="@color/background_color_gray">
-			<fragment
+			<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:name="jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment"
 					android:id="@+id/fragment_content_menu_tablet"/>
 		</RelativeLayout>
 	</LinearLayout>

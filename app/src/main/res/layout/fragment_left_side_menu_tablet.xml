@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:background="@drawable/left_panel_background" >
 	<RelativeLayout
 			android:id="@+id/header_left_side"
 			android:layout_width="match_parent"
@@ -15,12 +16,12 @@
 				android:layout_marginTop="@dimen/margin_icon_setting"
 				android:layout_marginRight="@dimen/margin_icon_setting"
 				android:layout_alignParentRight="true"
-				android:background="@drawable/gear_white"/>
+				android:background="@drawable/gear_guide"/>
 
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Select Item"
+				android:text="@string/title_left_menu"
 				android:textColor="@color/color_title_menu"
 				android:textSize="@dimen/tv_title_left_side"
 				android:layout_centerHorizontal="true"
@@ -51,8 +52,9 @@
 				android:layout_height="wrap_content"
 				android:text="@string/guide_1"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_guide"
+				android:textColor="@color/color_desc_menu"
 				android:gravity="center_horizontal"
+				android:lineSpacingMultiplier="1.5"
 				/>
 		<TextView
 				android:id="@+id/tv_guide_2"
@@ -62,7 +64,8 @@
 				android:layout_centerInParent="true"
 				android:gravity="center"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_guide"
+				android:textColor="@color/color_desc_menu"
+				android:lineSpacingMultiplier="1.5"
 				/>
 		<TextView
 				android:id="@+id/tv_guide_3"
@@ -70,10 +73,11 @@
 				android:layout_marginTop="@dimen/margin_guide_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Various information can be seen from the icon Setting above."
+				android:text="Various information can be seen from the icon Setting above. Various information can be seen from the icon Setting above."
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_guide"
+				android:textColor="@color/color_desc_menu"
 				android:gravity="center_horizontal"
+				android:lineSpacingMultiplier="1.5"
 				/>
 
 	</RelativeLayout>

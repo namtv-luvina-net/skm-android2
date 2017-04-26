@@ -99,16 +99,14 @@ public class ContentMenuPhoneFragment extends Fragment {
 		btnMenuAPID.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), APIDActivity.class);
-				startActivity(intent);
+				((MenuAcivity)getActivity()).startActivityAPID();
 			}
 		});
 
 		btnSetting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), SettingActivity.class);
-				startActivity(intent);
+				((MenuAcivity)getActivity()).startSettingActivity();
 			}
 		});
 

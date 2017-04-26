@@ -45,7 +45,7 @@
     <string name="main_apid_mailmsg">Send from Android</string>
     <string name="main_versionname">Ver.</string>
     <string name="main_apid_wifi">Wi-Fi</string>
-    <string name="main_apid_vpn">VPN and apps</string>
+    <string name="main_apid_vpn">VPN and Apps</string>
     <string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
     <string name="main_txt_gosupport">Support >></string>
     <string name="profile_devicepolicy_msg1">*To uninstall this product, ¥nexit DevicePolicy Control first and then uninstall.</string>
@@ -335,4 +335,9 @@
 	<string name="creating_diagnostic_infomation">Creating diagnostic information...</string>
 	<string name="guide_1">Let\'s start simple setup.</string>
 	<string name="guide_2">Select the item onthe right to start applying</string>
+	<string name="guide_31">Various information can be seen from the icon </string>
+	<string name="guide_32"> above</string>
+	<string name="title_left_menu">Select Item</string>
+	<string name="hint_host_name" translatable="false">epsap.example.com</string>
+	<string name="hint_email_name" translatable="false">name@example.com</string>
 </resources>

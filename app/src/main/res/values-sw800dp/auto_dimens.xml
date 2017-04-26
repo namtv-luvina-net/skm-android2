@@ -20,6 +20,6 @@
 	<dimen name="width_item_menu">338.54dp</dimen>
 	<dimen name="text_size_btn_content_apid">16.67sp</dimen>
 	<dimen name="text_size_content_item_apid">14.58sp</dimen>
-	<dimen name="tv_content_left_side">20.83sp</dimen>
+	<dimen name="tv_content_left_side">18.75dp</dimen>
 	<dimen name="tv_title_left_side">25.00sp</dimen>
 </resources>

@@ -330,4 +330,13 @@
 	<string name="validity_period">有効期間</string>
 	<string name="version">バージョン</string>
 	<string name="creating_diagnostic_infomation">診断情報を作成しています...</string>
+	<string name="copy">コピー</string>
+	<string name="mail">メール</string>
+	<string name="guide_1">簡単な設定を始めましょう。</string>
+	<string name="guide_2">右の項目を選択して\n申請を開始します。</string>
+	<string name="guide_31">各種情報は上の\n</string>
+	<string name="guide_32">"アイコンから見ることができます。"</string>
+	<string name="apid_guide_1">コピーをタップすると\nクリップボードにコピーされます。</string>
+	<string name="apid_guide_2">メールをタップすると\nメーラーが起動します。</string>
+	<string name="title_left_menu">項目を選択</string>
 </resources>
