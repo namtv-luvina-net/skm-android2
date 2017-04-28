@@ -22,6 +22,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -157,7 +158,22 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     public void finishInstallCertificate(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
-            pagerInputActivity.gotoPage(2);
+	        if (pagerInputActivity.d_android_version >= 4.3){
+		        progressDialog.show();
+		        String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
+		        m_InformCtrl.SetURL(url);
+		        new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
+			        @Override
+			        public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+				        progressDialog.dismiss();
+				        m_InformCtrl = informCtrl;
+				        m_nErroType = errorType;
+				        checkCertificateInstalled(result);
+			        }
+		        }).execute();
+	        }else {
+		        pagerInputActivity.gotoPage(2);
+	        }
         }
     }
 
@@ -169,11 +185,15 @@ public class InputPortPageFragment extends InputBasePageFragment {
         zoneInputPortTitle.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
     }
 
-    /**
-     * Processing after connect to server
-     *
-     * @param result
-     */
+    private void checkCertificateInstalled(boolean result) {
+	    if (result) {
+		    if (m_nErroType == SUCCESSFUL) {
+			    pagerInputActivity.hideInputPort(true);
+			    pagerInputActivity.gotoPage(2);
+		    }
+	    }
+    }
+
     private void endConnection(boolean result) {
         progressDialog.dismiss();
         if (result) {

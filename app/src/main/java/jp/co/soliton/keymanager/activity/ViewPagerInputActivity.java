@@ -44,6 +44,9 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
     public double d_android_version;
 	boolean isShowingKeyboard = false;
 
+	private String hostName;
+	private String portName;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -324,5 +327,20 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
 		} else {
 			isShowingKeyboard = true;
 		}
+	}
+
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+
+	public void setPortName(String portName) {
+		this.portName = portName;
+	}
+	public String getHostName() {
+		return hostName;
+	}
+
+	public String getPortName() {
+		return portName;
 	}
 }

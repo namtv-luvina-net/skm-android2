@@ -1,7 +1,6 @@
 package jp.co.soliton.keymanager.fragment;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,11 +13,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
 /**
@@ -158,9 +156,18 @@ public class InputHostPageFragment extends InputBasePageFragment {
         if (m_InformCtrl == null) {
             m_InformCtrl = new InformCtrl();
         }
-        String url = String.format("%s:%s", txtHostname.getText().toString().trim(), txtSecurePort.getText().toString().trim());
+	    pagerInputActivity.setHostName(txtHostname.getText().toString().trim());
+	    pagerInputActivity.setPortName(txtSecurePort.getText().toString().trim());
+	    String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
         m_InformCtrl.SetURL(url);
-        new ConnectApplyTask().execute();
+	    new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
+		    @Override
+		    public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+			    m_InformCtrl = informCtrl;
+			    m_nErroType = errorType;
+			    endConnection(result);
+		    }
+	    }).execute();
     }
 
     /**
@@ -225,49 +232,4 @@ public class InputHostPageFragment extends InputBasePageFragment {
         }
     }
 
-    /**
-     * Task connect to server
-     */
-    private class ConnectApplyTask extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
-            HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
-            //execute send request to server
-            boolean ret = conn.RunHttpProbeHostCerConnection(m_InformCtrl);
-            //check result return from server
-            if (ret == false) {
-	            logCtrlAsyncTask.loggerError("ConnectApplyTask " + "Network error");
-                m_nErroType = ERR_NETWORK;
-                return false;
-            }
-            // ログイン結果
-            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-	            logCtrlAsyncTask.loggerError("ConnectApplyTask  " + " Forbidden.");
-                m_nErroType = ERR_FORBIDDEN;
-                return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-	            logCtrlAsyncTask.loggerError("ConnectApplyTask  " + "Unauthorized.");
-                m_nErroType = ERR_UNAUTHORIZED;
-                return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-	            logCtrlAsyncTask.loggerError("ConnectApplyTask  " + "ERR:");
-                m_nErroType = ERR_COLON;
-                return false;
-            }
-	        if (m_InformCtrl.GetRtn().startsWith(getText(R.string.not_installed_ca).toString())) {
-		        logCtrlAsyncTask.loggerError("ConnectApplyTask  " + getText(R.string.not_installed_ca));
-		        m_nErroType = NOT_INSTALL_CA;
-            } else {
-                m_nErroType = SUCCESSFUL;
-            }
-            return ret;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            endConnection(result);
-        }
-    }
 }
