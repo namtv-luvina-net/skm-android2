@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="horizontal">
+		<RelativeLayout
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="match_parent"
+				android:background="@drawable/left_panel_background"/>
+		<RelativeLayout
+				android:layout_width="0dp"
+				android:layout_weight="2.1"
+				android:layout_height="match_parent"
+				android:paddingLeft="@dimen/margin_content_input_tablet">
+			<include layout="@layout/fragment_title_input" />
+			<include layout="@layout/fragment_footer_input" />
+			<RelativeLayout
+					android:id="@+id/rl_port"
+					android:layout_width="match_parent"
+					android:layout_height="33dp"
+					android:layout_marginTop="200dp"
+					android:paddingRight="@dimen/margin_right_user_input_tablet"
+					>
+				<TextView
+						android:id="@+id/txt_port"
+						android:layout_width="wrap_content"
+						android:textSize="@dimen/tv_content_left_side"
+						android:text="@string/input_http_port_number"
+						android:maxLines="1"
+						android:layout_centerVertical="true"
+						android:singleLine="true"
+						android:gravity="right"
+						android:textAllCaps="true"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:layout_height="wrap_content"/>
+				<EditText
+						android:id="@+id/edit_port"
+						android:layout_toRightOf="@+id/txt_port"
+						android:layout_width="match_parent"
+						android:maxLines="1"
+						android:singleLine="true"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:maxLength="256"
+						android:inputType="text|textVisiblePassword|textNoSuggestions"
+						android:background="@drawable/round_corner_white_edittext"
+						android:text="80"
+						android:hint="80"
+						android:textSize="@dimen/tv_title_left_side"
+						android:layout_height="match_parent"/>
+			</RelativeLayout>
+		</RelativeLayout>
+	</LinearLayout>
+
+	<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:visibility="gone"
+			android:background="@drawable/abc"/>
+
+
+
+</RelativeLayout>

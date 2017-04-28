@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	              android:orientation="horizontal"
+	              android:layout_width="match_parent"
+	              android:layout_alignParentBottom="true"
+	              android:layout_height="@dimen/height_btn_footer_input_tablet"
+	              android:layout_marginTop="@dimen/margin_footer_input_tablet"
+	              android:layout_marginBottom="@dimen/margin_footer_input_tablet">
+
+		<TextView
+				android:id="@+id/btn3"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:text="Skip"
+				android:textColor="@color/text_color_active"
+				android:textSize="@dimen/tv_button_input_tablet"
+				android:layout_marginRight="@dimen/margin_item_menu"
+				android:layout_weight="1"/>
+		<Button
+				android:id="@+id/btnBack"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/back"
+				android:textSize="@dimen/tv_button_input_tablet"
+				android:textColor="@drawable/text_selector"
+				android:background="@drawable/background_btn_ctrl_apid"
+				android:layout_weight="1"/>
+
+		<Button
+				android:id="@+id/btnNext"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/next"
+				android:textSize="@dimen/tv_button_input_tablet"
+				android:textColor="@drawable/text_selector"
+				android:background="@drawable/background_btn_ctrl_apid"
+				android:layout_marginLeft="@dimen/margin_item_menu"
+				android:layout_weight="1"/>
+	</LinearLayout>
+</RelativeLayout>

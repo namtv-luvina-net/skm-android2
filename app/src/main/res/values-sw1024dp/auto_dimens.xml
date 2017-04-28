@@ -18,7 +18,7 @@
 	<dimen name="text_size_title_item_apid">14.67dp</dimen>
 	<dimen name="title_item_menu">30.67dp</dimen>
 	<dimen name="width_item_menu">433.33dp</dimen>
-	<dimen name="text_size_btn_content_apid">21.33sp</dimen>
+	<dimen name="text_size_btn_content_tablet">21.33sp</dimen>
 	<dimen name="text_size_content_item_apid">18.67sp</dimen>
 	<dimen name="tv_content_left_side">24.00dp</dimen>
 	<dimen name="tv_title_left_side">32.00sp</dimen>

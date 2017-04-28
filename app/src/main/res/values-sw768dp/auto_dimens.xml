@@ -18,8 +18,15 @@
 	<dimen name="text_size_title_item_apid">11.00dp</dimen>
 	<dimen name="title_item_menu">23.00dp</dimen>
 	<dimen name="width_item_menu">325.00dp</dimen>
-	<dimen name="text_size_btn_content_apid">16.00sp</dimen>
+	<dimen name="text_size_btn_content_tablet">16.00sp</dimen>
 	<dimen name="text_size_content_item_apid">14.00sp</dimen>
 	<dimen name="tv_content_left_side">18.00dp</dimen>
 	<dimen name="tv_title_left_side">24.00sp</dimen>
+	<dimen name="tv_button_input_tablet">20.00sp</dimen>
+	<dimen name="margin_content_input_apply_tablet">75.00dp</dimen>
+	<dimen name="margin_footer_input_tablet">32.00dp</dimen>
+	<dimen name="height_title_input_tablet">100.00dp</dimen>
+	<dimen name="height_btn_footer_input_tablet">50.00dp</dimen>
+	<dimen name="margin_content_input_tablet">60.00dp</dimen>
+	<dimen name="margin_right_user_input_tablet">110.00dp</dimen>
 </resources>
