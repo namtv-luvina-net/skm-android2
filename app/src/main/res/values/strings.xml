@@ -353,4 +353,8 @@
 	<string name="title_destination_email_address">Email Address :</string>
 	<string name="title_reason_for_apply">Reason for Apply :</string>
 	<string name="input_host_name_and_port_number">Host Name/HTTPS Port Number</string>
+	<string name="input_download_ca_certificate">Download CA Certificate</string>
+	<string name="input_select_store">Certificate storage location</string>
+	<string name="input_user_id_password">User ID/Password</string>
+	<string name="input_email">Destination Email Address</string>
 </resources>
