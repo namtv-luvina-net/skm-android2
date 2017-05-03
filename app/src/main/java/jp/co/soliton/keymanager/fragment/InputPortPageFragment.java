@@ -9,6 +9,7 @@ import android.security.KeyChain;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import java.util.List;
 public class InputPortPageFragment extends InputBasePageFragment {
     private EditText txtPort;
     private TextView zoneInputPortTitle;
+	private TextView txtGuideDownloadCaCertificate;
     private LinearLayout zoneInputPort;
     public static String payloadDisplayName = "EACert";
 	private LogCtrl logCtrl;
@@ -54,6 +56,12 @@ public class InputPortPageFragment extends InputBasePageFragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_port, null);
         txtPort = (EditText) root.findViewById(R.id.txtPort);
         zoneInputPortTitle = (TextView) root.findViewById(R.id.zoneInputPortTitle);
+        txtGuideDownloadCaCertificate = (TextView) root.findViewById(R.id.tv_guide_download_ca_certificate);
+	    if (pagerInputActivity.d_android_version < 4.3) {
+		    txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
+	    }else {
+		    txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
+	    }
         zoneInputPort = (LinearLayout) root.findViewById(R.id.zoneInputPort);
         initValueControl();
         return root;
