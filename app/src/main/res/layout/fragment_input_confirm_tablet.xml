@@ -22,8 +22,9 @@
 			<RelativeLayout
 					android:id="@+id/rl_on_line"
 					android:layout_marginTop="@dimen/margin_right_user_input_tablet"
-					android:layout_marginBottom="25dp"
+					android:layout_marginBottom="35dp"
 					android:layout_width="match_parent"
+					android:orientation="vertical"
 					android:layout_height="0dp"
 					android:layout_weight="1">
 				<LinearLayout
@@ -32,70 +33,62 @@
 						android:layout_height="wrap_content"
 						android:orientation="horizontal"
 				        android:layout_alignParentBottom="true"
-				        android:layout_marginBottom="@dimen/tv_content_left_side"
 						>
 					<TextView
 							android:layout_width="0dp"
 							android:layout_weight="2"
 							android:textSize="@dimen/tv_button_input_tablet"
-							android:text="Day La Place"
+							android:text="@string/title_store"
+							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
 							android:layout_height="match_parent"/>
+
 					<TextView
-							android:layout_width="wrap_content"
-							android:textSize="@dimen/tv_button_input_tablet"
-							android:text=" :"
-							android:gravity="right|center_vertical"
-							android:layout_height="match_parent"/>
-					<TextView
+							android:id="@+id/txt_store"
 							android:layout_width="0dp"
 							android:layout_weight="3"
 							android:paddingLeft="@dimen/margin_item_menu"
 							android:textSize="@dimen/tv_content_left_side"
 							android:text="VPN hay Wi-Fi"
+							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
 							android:layout_height="match_parent"/>
 				</LinearLayout>
 				<LinearLayout
 						android:id="@+id/ll_user_id"
-						android:layout_above="@+id/ll_place"
+						android:layout_above="@id/ll_place"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:orientation="horizontal"
-				        android:layout_marginBottom="33dp"
+				        android:layout_marginBottom="30dp"
 						>
 					<TextView
 							android:layout_width="0dp"
 							android:layout_weight="2"
 							android:textSize="@dimen/tv_button_input_tablet"
-							android:text="Day La UserId"
+							android:text="@string/title_id"
+							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
 							android:layout_height="match_parent"/>
 					<TextView
-							android:layout_width="wrap_content"
-							android:textSize="@dimen/tv_button_input_tablet"
-							android:text=" :"
-							android:gravity="right|center_vertical"
-							android:layout_height="match_parent"/>
-					<TextView
+							android:id="@+id/txt_user_id"
 							android:layout_width="0dp"
 							android:layout_weight="3"
 							android:paddingLeft="@dimen/margin_item_menu"
 							android:textSize="@dimen/tv_content_left_side"
 							android:text="anhvt"
+							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
 							android:layout_height="match_parent"/>
 				</LinearLayout>
 				<LinearLayout
-						android:layout_width="match_parent"
 						android:layout_above="@id/ll_user_id"
+						android:layout_width="match_parent"
 						android:orientation="vertical"
-						android:layout_marginBottom="35dp"
-						android:layout_height="wrap_content">
+						android:layout_height="match_parent">
 
 					<LinearLayout
 							android:id="@+id/host"
-							android:layout_above="@+id/ll_place"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
 							android:layout_marginBottom="10dp"
@@ -105,51 +98,43 @@
 								android:layout_width="0dp"
 								android:layout_weight="2"
 								android:textSize="@dimen/tv_button_input_tablet"
-								android:text="Day La Host"
+								android:text="@string/title_host_name"
+								android:textColor="@color/text_color"
 								android:gravity="right|center_vertical"
 								android:layout_height="match_parent"/>
 						<TextView
-								android:layout_width="wrap_content"
-								android:textSize="@dimen/tv_button_input_tablet"
-								android:text=" :"
-								android:gravity="right|center_vertical"
-								android:layout_height="match_parent"/>
-						<TextView
+								android:id="@+id/txt_host_name"
 								android:layout_width="0dp"
 								android:layout_weight="3"
 								android:paddingLeft="@dimen/margin_item_menu"
 								android:textSize="@dimen/tv_content_left_side"
 								android:text="10.0.1.68"
+								android:textColor="@color/text_color"
 								android:gravity="left|center_vertical"
 								android:layout_height="match_parent"/>
 					</LinearLayout>
 
 					<LinearLayout
 							android:id="@+id/ll_port"
-							android:layout_above="@+id/ll_place"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:orientation="horizontal"
-							>
+							android:orientation="horizontal" >
 						<TextView
 								android:layout_width="0dp"
 								android:layout_weight="2"
 								android:textSize="@dimen/tv_button_input_tablet"
-								android:text="Day La Port"
+								android:text="@string/title_port_number"
+								android:textColor="@color/text_color"
 								android:gravity="right|center_vertical"
 								android:layout_height="match_parent"/>
 						<TextView
-								android:layout_width="wrap_content"
-								android:textSize="@dimen/tv_button_input_tablet"
-								android:text=" :"
-								android:gravity="right|center_vertical"
-								android:layout_height="match_parent"/>
-						<TextView
+								android:id="@+id/txt_port_number"
 								android:layout_width="0dp"
 								android:layout_weight="3"
 								android:paddingLeft="@dimen/margin_item_menu"
 								android:textSize="@dimen/tv_content_left_side"
 								android:text="433"
+								android:textColor="@color/text_color"
 								android:gravity="left|center_vertical"
 								android:layout_height="match_parent"/>
 					</LinearLayout>
@@ -179,21 +164,18 @@
 							android:layout_width="0dp"
 							android:layout_weight="2"
 							android:textSize="@dimen/tv_button_input_tablet"
-							android:text="Day La Email"
+							android:text="@string/title_destination_email_address"
+							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
 							android:layout_height="match_parent"/>
 					<TextView
-							android:layout_width="wrap_content"
-							android:textSize="@dimen/tv_button_input_tablet"
-							android:text=" :"
-							android:gravity="right|center_vertical"
-							android:layout_height="match_parent"/>
-					<TextView
+							android:id="@+id/txt_email"
 							android:layout_width="0dp"
 							android:layout_weight="3"
 							android:paddingLeft="@dimen/margin_item_menu"
 							android:textSize="@dimen/tv_content_left_side"
 							android:text="Noi dung email"
+							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
 							android:layout_height="match_parent"/>
 				</LinearLayout>
@@ -209,35 +191,24 @@
 							android:layout_width="0dp"
 							android:layout_weight="2"
 							android:textSize="@dimen/tv_button_input_tablet"
-							android:text="Day La Reason"
+							android:text="@string/title_reason_for_apply"
+							android:textColor="@color/text_color"
 							android:gravity="right|top"
 							android:layout_height="match_parent"/>
 					<TextView
-							android:layout_width="wrap_content"
-							android:textSize="@dimen/tv_button_input_tablet"
-							android:text=" :"
-							android:gravity="right|top"
-							android:layout_height="match_parent"/>
-
-					<TextView
+							android:id="@+id/txt_reason"
 							android:layout_width="0dp"
 							android:layout_weight="3"
 							android:paddingLeft="@dimen/margin_item_menu"
 							android:textSize="@dimen/tv_content_left_side"
 							android:text="Noi dung reason"
+							android:textColor="@color/text_color"
 							android:gravity="left|top"
 							android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
 							android:scrollbars="vertical"
-							android:layout_height="match_parent"
-							android:id="@+id/textView2"/>
+							android:layout_height="match_parent"/>
 				</LinearLayout>
 			</RelativeLayout>
 		</LinearLayout>
 	</LinearLayout>
-
-	<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:visibility="gone"
-			android:background="@drawable/abc"/>
 </RelativeLayout>

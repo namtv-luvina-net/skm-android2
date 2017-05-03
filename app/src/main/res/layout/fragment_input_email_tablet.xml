@@ -30,7 +30,8 @@
 						android:id="@+id/txt_port"
 						android:layout_width="wrap_content"
 						android:textSize="@dimen/tv_content_left_side"
-						android:text="@string/input_http_port_number"
+						android:text="@string/title_input_email"
+						android:textColor="@color/text_color"
 						android:maxLines="1"
 						android:layout_centerVertical="true"
 						android:singleLine="true"
@@ -49,20 +50,11 @@
 						android:maxLength="256"
 						android:inputType="text|textVisiblePassword|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
-						android:text="80"
-						android:hint="80"
+						android:hint="@string/hint_email_name"
+						android:textColor="@color/text_color"
 						android:textSize="@dimen/tv_title_left_side"
 						android:layout_height="match_parent"/>
 			</RelativeLayout>
 		</RelativeLayout>
 	</LinearLayout>
-
-	<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:visibility="gone"
-			android:background="@drawable/abc"/>
-
-
-
 </RelativeLayout>

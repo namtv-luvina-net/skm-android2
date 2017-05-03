@@ -24,14 +24,14 @@
 					android:layout_width="match_parent"
 					android:layout_height="33dp"
 					android:layout_marginTop="200dp"
-					android:paddingRight="@dimen/margin_right_user_input_tablet"
-					>
+					android:paddingRight="@dimen/margin_right_user_input_tablet">
 				<TextView
-						android:id="@+id/txt_host"
+						android:id="@+id/txt_title_user_id"
 						android:layout_width="0dp"
 						android:layout_weight="17"
 						android:textSize="@dimen/tv_content_left_side"
-						android:text="@string/input_host_name"
+						android:text="@string/title_user_id"
+						android:textColor="@color/text_color"
 						android:maxLines="1"
 						android:singleLine="true"
 						android:gravity="right"
@@ -43,13 +43,14 @@
 						android:layout_width="0dp"
 						android:layout_weight="35"
 						android:maxLines="1"
+						android:textColor="@color/text_color"
 						android:singleLine="true"
 						android:paddingLeft="@dimen/margin_item_menu"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:maxLength="256"
 						android:inputType="text|textVisiblePassword|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
-						android:hint="@string/hint_host_name"
+						android:hint="@string/certlogin_userid_title"
 						android:textSize="@dimen/tv_title_left_side"
 						android:layout_height="match_parent"/>
 			</LinearLayout>
@@ -66,7 +67,8 @@
 						android:layout_width="0dp"
 						android:layout_weight="17"
 						android:textSize="@dimen/tv_content_left_side"
-						android:text="@string/input_host_name"
+						android:text="@string/title_password"
+						android:textColor="@color/text_color"
 						android:maxLines="1"
 						android:singleLine="true"
 						android:gravity="right"
@@ -83,20 +85,12 @@
 						android:paddingRight="@dimen/margin_right_user_input_tablet"
 						android:inputType="text|textVisiblePassword|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
-						android:hint="443"
+						android:hint="@string/certlogin_password_title"
+						android:textColor="@color/text_color"
 						android:textSize="@dimen/tv_title_left_side"
 						android:gravity="bottom"
 						android:layout_height="match_parent"/>
 			</LinearLayout>
 		</RelativeLayout>
 	</LinearLayout>
-
-	<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:visibility="gone"
-			android:background="@drawable/abc"/>
-
-
-	
 </RelativeLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/zoneDlgApplyMsg"
+    android:layout_width="320dp"
+    android:layout_gravity="center"
+    android:layout_height="300dp"
+    android:background="@drawable/round_corner_white">
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_above="@+id/zoneDlgMsgFooter" >
+        <TextView
+	        android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/text_color_inactive"
+            android:text="Message"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/txt_title" />
+        <TextView
+            android:id="@+id/txt_content_dialog"
+            android:layout_below="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:textColor="@color/text_color_inactive"
+            android:text="This is message"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/zoneDlgMsgFooter"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#bbc3d1"/>
+        <Button
+            android:id="@+id/btnDlgApplyOK"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:background="@android:color/transparent"
+            android:textSize="24sp"
+            android:textColor="@color/text_color_active"
+            android:text="OK"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</RelativeLayout>

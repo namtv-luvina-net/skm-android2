@@ -27,6 +27,7 @@
 					android:background="@drawable/round_corner_white_edittext"
 					android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
 					android:textSize="@dimen/text_size_value"
+					android:textColor="@color/text_color"
 					android:maxLength="1024"
 					android:paddingLeft="10dp"
 					android:layout_marginTop="120dp"
@@ -35,13 +36,4 @@
 					/>
 	</RelativeLayout>
 	</LinearLayout>
-
-	<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:visibility="gone"
-			android:background="@drawable/abc"/>
-
-
-
 </RelativeLayout>
