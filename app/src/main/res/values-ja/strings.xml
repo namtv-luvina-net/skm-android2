@@ -244,7 +244,10 @@
     <string name="reason_for_apply">申請理由</string>
     <string name="download_ca_certificate">CA証明書ダウンロード</string>
     <string name="download">ダウンロード</string>
-    <string name="download_ca_description">ダウンロードをタップすると別の画面に移動します。画面の指示に従いCA証明書のインストールを行ってください。</string>
+	<string name="download_ca_description42">ダウンロードをタップし、CA証明書をインストールしてください。</string>
+	<string name="download_ca_description43">
+		<![CDATA[ダウンロードをタップし、CA証明書をインストールしてください。証明書の名前を指定する画面では<b>「<u>VPNとアプリ</u>」</b>を選択してください。]]>
+	</string>
     <string name="target_place">証明書の格納先を選択</string>
     <string name="confirm_content">内容確認</string>
     <string name="apply">申請</string>

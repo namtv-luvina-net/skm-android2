@@ -70,11 +70,12 @@
             android:gravity="bottom"
             />
         <TextView
+	        android:id="@+id/tv_guide_download_ca_certificate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/background_color_white"
-            android:text="@string/download_ca_description"
+            android:text="@string/download_ca_description42"
             android:gravity="left|top"
             android:textSize="18sp"
             android:layout_marginStart="10dp"

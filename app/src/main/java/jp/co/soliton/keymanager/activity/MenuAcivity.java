@@ -60,7 +60,7 @@ public class MenuAcivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (!isFocusMenuTablet) {
+		if (!isFocusMenuTablet && isTablet) {
 			goToMenu();
 		} else {
 			super.onBackPressed();

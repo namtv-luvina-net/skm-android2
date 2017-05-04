@@ -243,7 +243,10 @@
     <string name="reason_for_apply">Reason for apply</string>
     <string name="download_ca_certificate">Download CA Certificate</string>
     <string name="download">Download</string>
-    <string name="download_ca_description">Once you tap Download, CA certificate installation wizard will start. To install CA certificate, follow the instructions on the wizard.</string>
+    <string name="download_ca_description42">Tap Download to install CA certificate.</string>
+    <string name="download_ca_description43">
+	    <![CDATA[Tap Download to install CA certificate. On the Certificate Dialog, choose <b>「<u>VPN and Apps.</u>」</b>]]>
+    </string>
     <string name="target_place">Select certificate storage location</string>
     <string name="confirm_content">Confirm Content</string>
     <string name="apply">Apply</string>

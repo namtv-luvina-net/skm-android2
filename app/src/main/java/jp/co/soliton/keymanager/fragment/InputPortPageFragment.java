@@ -9,6 +9,7 @@ import android.security.KeyChain;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -38,6 +40,7 @@ import java.util.List;
 public class InputPortPageFragment extends InputBasePageFragment {
     private EditText txtPort;
     private TextView zoneInputPortTitle;
+	private TextView txtGuideDownloadCaCertificate;
     private LinearLayout zoneInputPort;
     public static String payloadDisplayName = "EACert";
 	private LogCtrl logCtrl;
@@ -53,6 +56,12 @@ public class InputPortPageFragment extends InputBasePageFragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_port, null);
         txtPort = (EditText) root.findViewById(R.id.txtPort);
         zoneInputPortTitle = (TextView) root.findViewById(R.id.zoneInputPortTitle);
+        txtGuideDownloadCaCertificate = (TextView) root.findViewById(R.id.tv_guide_download_ca_certificate);
+	    if (pagerInputActivity.d_android_version < 4.3) {
+		    txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
+	    }else {
+		    txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
+	    }
         zoneInputPort = (LinearLayout) root.findViewById(R.id.zoneInputPort);
         initValueControl();
         return root;
@@ -157,7 +166,22 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     public void finishInstallCertificate(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
-            pagerInputActivity.gotoPage(2);
+	        if (pagerInputActivity.d_android_version >= 4.3){
+		        progressDialog.show();
+		        String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
+		        m_InformCtrl.SetURL(url);
+		        new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
+			        @Override
+			        public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+				        progressDialog.dismiss();
+				        m_InformCtrl = informCtrl;
+				        m_nErroType = errorType;
+				        checkCertificateInstalled(result);
+			        }
+		        }).execute();
+	        }else {
+		        pagerInputActivity.gotoPage(2);
+	        }
         }
     }
 
@@ -169,11 +193,15 @@ public class InputPortPageFragment extends InputBasePageFragment {
         zoneInputPortTitle.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
     }
 
-    /**
-     * Processing after connect to server
-     *
-     * @param result
-     */
+    private void checkCertificateInstalled(boolean result) {
+	    if (result) {
+		    if (m_nErroType == SUCCESSFUL) {
+			    pagerInputActivity.hideInputPort(true);
+			    pagerInputActivity.gotoPage(2);
+		    }
+	    }
+    }
+
     private void endConnection(boolean result) {
         progressDialog.dismiss();
         if (result) {
