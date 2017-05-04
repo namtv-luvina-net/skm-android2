@@ -357,4 +357,6 @@
 	<string name="input_select_store">Certificate storage location</string>
 	<string name="input_user_id_password">User ID/Password</string>
 	<string name="input_email">Destination Email Address</string>
+	<string name="input_reason_for_apply">Reason for Apply</string>
+	<string name="input_confirm_content">Confirm Content</string>
 </resources>

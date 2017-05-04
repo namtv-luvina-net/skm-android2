@@ -3,31 +3,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-	<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="horizontal">
+		<include layout="@layout/fragment_title_input" />
 		<RelativeLayout
-				android:layout_width="0dp"
-				android:layout_weight="1"
-				android:layout_height="match_parent"
-				android:background="@drawable/left_panel_background"/>
-		<RelativeLayout
-				android:layout_width="0dp"
-				android:layout_weight="2.1"
-				android:layout_height="match_parent"
-				android:paddingLeft="@dimen/margin_content_input_tablet">
-			<include layout="@layout/fragment_title_input" />
-			<include layout="@layout/fragment_footer_input" />
-			<RelativeLayout
-					android:id="@+id/rl_port"
+					android:id="@+id/rl_email"
 					android:layout_width="match_parent"
+					android:layout_marginLeft="@dimen/margin_content_input_tablet"
 					android:layout_height="33dp"
 					android:layout_marginTop="200dp"
-					android:paddingRight="@dimen/margin_right_user_input_tablet"
-					>
+					android:paddingRight="@dimen/margin_right_user_input_tablet" >
 				<TextView
-						android:id="@+id/txt_port"
+						android:id="@+id/txt_email"
 						android:layout_width="wrap_content"
 						android:textSize="@dimen/tv_content_left_side"
 						android:text="@string/title_input_email"
@@ -40,7 +25,7 @@
 						android:paddingRight="@dimen/margin_item_menu"
 						android:layout_height="wrap_content"/>
 				<EditText
-						android:id="@+id/edit_port"
+						android:id="@+id/edit_email"
 						android:layout_toRightOf="@+id/txt_port"
 						android:layout_width="match_parent"
 						android:maxLines="1"
@@ -54,7 +39,5 @@
 						android:textColor="@color/text_color"
 						android:textSize="@dimen/tv_title_left_side"
 						android:layout_height="match_parent"/>
-			</RelativeLayout>
 		</RelativeLayout>
-	</LinearLayout>
 </RelativeLayout>

@@ -19,6 +19,7 @@
 			android:textColor="@drawable/text_selector"/>
 
 	<RelativeLayout
+			android:id="@+id/rl_left_side_guide_input"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_marginLeft="@dimen/margin_left_side"
@@ -27,7 +28,7 @@
 		<TextView
 				android:id="@+id/tv_host_name_and_port_number"
 				android:layout_above="@+id/tv_download_ca_certificate"
-				android:layout_marginBottom="@dimen/margin_guide_left_side"
+				android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/input_host_name_and_port_number"
@@ -39,7 +40,7 @@
 		<TextView
 				android:id="@+id/tv_download_ca_certificate"
 				android:layout_above="@+id/tv_select_store"
-				android:layout_marginBottom="@dimen/margin_guide_left_side"
+				android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/input_download_ca_certificate"
@@ -51,7 +52,7 @@
 		<TextView
 				android:id="@+id/tv_select_store"
 				android:layout_above="@+id/tv_input_id_and_password"
-				android:layout_marginBottom="@dimen/margin_guide_left_side"
+				android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/input_select_store"
@@ -74,7 +75,7 @@
 		<TextView
 				android:id="@+id/tv_input_email"
 				android:layout_below="@id/tv_input_id_and_password"
-				android:layout_marginTop="@dimen/margin_guide_left_side"
+				android:layout_marginTop="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/input_email"
@@ -86,10 +87,10 @@
 		<TextView
 				android:id="@+id/tv_input_reason"
 				android:layout_below="@id/tv_input_email"
-				android:layout_marginTop="@dimen/margin_guide_left_side"
+				android:layout_marginTop="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text=""
+				android:text="@string/input_reason_for_apply"
 				android:textSize="@dimen/tv_content_left_side"
 				android:textColor="@color/color_desc_menu"
 				android:gravity="center_horizontal"
@@ -98,10 +99,10 @@
 		<TextView
 				android:id="@+id/tv_confirm_input"
 				android:layout_below="@id/tv_input_reason"
-				android:layout_marginTop="@dimen/margin_guide_left_side"
+				android:layout_marginTop="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Various information can be seen from the icon Setting above. Various information can be seen from the icon Setting above."
+				android:text="@string/input_confirm_content"
 				android:textSize="@dimen/tv_content_left_side"
 				android:textColor="@color/color_desc_menu"
 				android:gravity="center_horizontal"

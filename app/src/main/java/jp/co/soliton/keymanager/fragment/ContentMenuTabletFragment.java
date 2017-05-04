@@ -1,19 +1,22 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+import jp.co.soliton.keymanager.manager.APIDManager;
+import jp.co.soliton.keymanager.manager.TabletInputFragmentManager;
 
 import java.util.List;
 
@@ -31,11 +34,16 @@ public class ContentMenuTabletFragment extends Fragment {
 	TextView contentWifi;
 	TextView titleWifi;
 	TextView titleVPN;
+	private APIDManager apidManager;
+	FragmentManager fragmentManager;
+	TabletInputFragmentManager tabletInputFragmentManager;
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		elementMgr = new ElementApplyManager(getActivity());
+		fragmentManager = getFragmentManager();
+		tabletInputFragmentManager = new TabletInputFragmentManager(fragmentManager);
 	}
 
 	@Nullable
@@ -49,6 +57,7 @@ public class ContentMenuTabletFragment extends Fragment {
 		contentWifi = (TextView) view.findViewById(R.id.content_wifi);
 		titleWifi = (TextView) view.findViewById(R.id.title_wifi);
 		titleVPN = (TextView) view.findViewById(R.id.title_vpn);
+		apidManager = new APIDManager(getActivity());
 		return view;
 	}
 
@@ -58,8 +67,8 @@ public class ContentMenuTabletFragment extends Fragment {
 		updateViewTitle();
 		updateMenuConfirm();
 		setupControl();
-		String strVpnID = ((MenuAcivity) getActivity()).getStrVpnID();
-		String strUDID = ((MenuAcivity) getActivity()).getStrUDID();
+		String strVpnID = apidManager.getStrVpnID();
+		String strUDID = apidManager.getStrUDID();
 		contentVPN.setText(strVpnID);
 		contentWifi.setText(strUDID);
 	}
@@ -89,9 +98,7 @@ public class ContentMenuTabletFragment extends Fragment {
 						Intent intent = new Intent(getActivity(), ListCertificateActivity.class);
 						startActivity(intent);
 					} else {
-						InputApplyInfo.deletePref(getActivity());
-						Intent intent = new Intent(getActivity(), ViewPagerInputActivity.class);
-						startActivity(intent);
+						tabletInputFragmentManager.startActivityStartApply();
 					}
 				}
 			});
@@ -99,7 +106,15 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuAPID.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-				((MenuAcivity)getActivity()).startActivityAPID();
+					((MenuAcivity)getActivity()).setFocusMenuTablet(false);
+					FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+					fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+					fragmentTransaction.replace(R.id.fragment_content_menu_tablet, new ContentAPIDTabletFragment());
+					fragmentTransaction.commit();
+
+					FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+					fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, new LeftSideAPIDTabletFragment());
+					fragmentTransaction1.commit();
 				}
 			});
 	}

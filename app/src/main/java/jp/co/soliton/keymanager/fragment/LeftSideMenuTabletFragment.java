@@ -1,21 +1,21 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.activity.SettingActivity;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -41,7 +41,8 @@ public class LeftSideMenuTabletFragment extends Fragment {
 		btnSetting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).startSettingActivity();
+				Intent intent = new Intent(getActivity(), SettingActivity.class);
+				startActivity(intent);
 			}
 		});
 		String str1 = getActivity().getString(R.string.guide_31);

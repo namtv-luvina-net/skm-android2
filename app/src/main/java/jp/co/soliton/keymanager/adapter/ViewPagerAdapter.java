@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputEmailPageFragment;
 import jp.co.soliton.keymanager.fragment.InputHostPageFragment;
 import jp.co.soliton.keymanager.fragment.InputUserPageFragment;

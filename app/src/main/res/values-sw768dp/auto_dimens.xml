@@ -8,6 +8,7 @@
 	<dimen name="high_header_left_side_tablet">85.00dp</dimen>
 	<dimen name="margin_content_apid">100.00dp</dimen>
 	<dimen name="margin_guide_left_side">70.00dp</dimen>
+	<dimen name="margin_guide_input_left_side">65.00dp</dimen>
 	<dimen name="margin_icon_setting">10.00dp</dimen>
 	<dimen name="margin_item_menu">10.00dp</dimen>
 	<dimen name="margin_left_side">20.00dp</dimen>
