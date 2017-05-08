@@ -115,7 +115,6 @@ public class InputEmailPageFragment extends InputBasePageFragment {
 		}
 	}
 
-
     @Override
     public void onResume() {
         super.onResume();

@@ -1,13 +1,12 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +14,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.activity.*;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
-import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
-import jp.co.soliton.keymanager.xmlparser.XmlStringData;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.List;
+import jp.co.soliton.keymanager.manager.APIDManager;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -36,16 +24,15 @@ import java.util.List;
 
 public class ContentAPIDTabletFragment extends Fragment {
 
-	Button btnCopy;
-	Button btnMail;
-	TextView contentWifi;
-	TextView contentVPN;
-	TextView titleVPN;
-	TextView titleWifi;
+	private Button btnCopy;
+	private Button btnMail;
+	private TextView contentWifi;
+	private TextView contentVPN;
+	private TextView titleVPN;
+	private TextView titleWifi;
 	private StringBuilder builderAPID;
-	LogCtrl logCtrl;
-	String strVpnID = "";
-	String strUDID = "";
+	private LogCtrl logCtrl;
+	private APIDManager apidManager;
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -63,6 +50,7 @@ public class ContentAPIDTabletFragment extends Fragment {
 		titleVPN = (TextView) view.findViewById(R.id.title_vpn);
 		titleWifi = (TextView) view.findViewById(R.id.title_wifi);
 		logCtrl = LogCtrl.getInstance(getActivity());
+		apidManager = new APIDManager(getActivity());
 		return view;
 	}
 
@@ -70,8 +58,8 @@ public class ContentAPIDTabletFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		updateViewTitle();
-		strVpnID = ((MenuAcivity) getActivity()).getStrVpnID();
-		strUDID = ((MenuAcivity) getActivity()).getStrUDID();
+		String strVpnID = apidManager.getStrVpnID();
+		String strUDID = apidManager.getStrUDID();
 		builderAPID = new StringBuilder();
 		builderAPID.append(getResources().getString(R.string.main_apid_vpn) + "\n");
 		builderAPID.append(strVpnID +"\n\n");

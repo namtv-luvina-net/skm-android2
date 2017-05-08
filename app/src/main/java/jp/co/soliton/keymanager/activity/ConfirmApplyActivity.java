@@ -235,7 +235,7 @@ public class ConfirmApplyActivity extends Activity {
             }
         } else {
             if (m_nErroType == RET_ESP_AP_OK) {
-                saveElementApply();
+	            saveElementApply();
                 applyFinish();
                 return;
             }
@@ -265,12 +265,12 @@ public class ConfirmApplyActivity extends Activity {
             return;
         }
         if (mapKey.containsKey(StringList.m_str_issubmitted) && mapKey.get(StringList.m_str_issubmitted)) {
-            saveElementApply();
+	        saveElementApply();
             applyFinish();
             return;
         }
         if (mapKey.containsKey(StringList.m_str_isEnroll) && mapKey.get(StringList.m_str_isEnroll)) {
-            saveElementApply();
+	        saveElementApply();
             applyFinish();
             return;
         }
@@ -341,7 +341,7 @@ public class ConfirmApplyActivity extends Activity {
     }
 
     private void saveElementApply() {
-        if (!ValidateParams.nullOrEmpty(update_apply)) {
+	    if (!ValidateParams.nullOrEmpty(update_apply)) {
             elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
         }
 

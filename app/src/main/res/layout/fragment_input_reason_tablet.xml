@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true" >
+		<include layout="@layout/fragment_title_input" />
+		<EditText
+				android:id="@+id/txtReason"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_reason_item_input_tablet"
+				android:background="@drawable/round_corner_white_edittext"
+				android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
+				android:textSize="@dimen/text_size_input_tablet"
+				android:layout_marginLeft="@dimen/margin_content_input_tablet"
+				android:layout_marginRight="@dimen/margin_content_input_tablet"
+				android:maxLength="1024"
+				android:layout_centerHorizontal="true"
+				android:textColor="@color/text_color"
+				android:paddingLeft="@dimen/margin_item_menu"
+				android:paddingRight="@dimen/margin_item_menu"
+				android:layout_marginTop="@dimen/margin_top_content_input_reason_tablet"
+				android:gravity="top"
+				android:scrollbars="vertical" />
+</RelativeLayout>

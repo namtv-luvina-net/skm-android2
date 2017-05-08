@@ -13,6 +13,7 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+import jp.co.soliton.keymanager.manager.APIDManager;
 
 import java.util.List;
 
@@ -27,11 +28,13 @@ public class ContentMenuPhoneFragment extends Fragment {
 	private Button btnMenuConfirmApply;
 	private Button btnSetting;
 	private ElementApplyManager elementMgr;
+	private APIDManager apidManager;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		elementMgr = new ElementApplyManager(getActivity());
+		apidManager = new APIDManager(getActivity());
 	}
 
 	@Nullable
@@ -99,14 +102,18 @@ public class ContentMenuPhoneFragment extends Fragment {
 		btnMenuAPID.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).startActivityAPID();
+				Intent intent = new Intent(getActivity(), APIDActivity.class);
+				intent.putExtra("m_strAPIDVPN", apidManager.getStrVpnID());
+				intent.putExtra("m_strAPIDWifi", apidManager.getStrUDID());
+				startActivity(intent);
 			}
 		});
 
 		btnSetting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).startSettingActivity();
+				Intent intent = new Intent(getActivity(), SettingActivity.class);
+				startActivity(intent);
 			}
 		});
 

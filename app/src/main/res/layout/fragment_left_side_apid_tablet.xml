@@ -55,7 +55,7 @@
 				android:layout_height="wrap_content"
 				android:text="@string/apid_guide_1"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_desc_menu"
+				android:textColor="@color/color_desc_menu_70"
 				android:gravity="center_horizontal"
 				android:lineSpacingMultiplier="1.5"
 				/>
@@ -69,7 +69,7 @@
 				android:layout_centerInParent="true"
 				android:gravity="center"
 				android:textSize="@dimen/tv_content_left_side"
-				android:textColor="@color/color_desc_menu"
+				android:textColor="@color/color_desc_menu_70"
 				android:lineSpacingMultiplier="1.5"
 				/>
 
