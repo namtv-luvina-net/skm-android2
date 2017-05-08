@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
@@ -17,6 +18,7 @@ import jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment;
 import jp.co.soliton.keymanager.fragment.LeftSideMenuTabletFragment;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION;
+import static jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment.COMPLETE_STATUS;
 import static jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment.INPUT_APPLY_STATUS;
 
 /**
@@ -68,6 +70,12 @@ public class MenuAcivity extends FragmentActivity {
 		if (!isFocusMenuTablet && isTablet) {
 			if (contentMenuTabletFragment.currentStatus == INPUT_APPLY_STATUS) {
 				contentMenuTabletFragment.pressBackInputApply();
+			} else if (contentMenuTabletFragment.currentStatus == COMPLETE_STATUS) {
+				InputApplyInfo.deletePref(this);
+				Intent intent = new Intent(MenuAcivity.this, MenuAcivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				finish();
 			}else {
 				goToMenu();
 			}

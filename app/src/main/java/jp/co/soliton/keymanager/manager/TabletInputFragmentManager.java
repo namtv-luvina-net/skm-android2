@@ -1,15 +1,13 @@
 package jp.co.soliton.keymanager.manager;
 
-import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.*;
+
+import static jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment.COMPLETE_STATUS;
 
 /**
  * Created by luongdolong on 2/8/2017.
@@ -63,6 +61,7 @@ public class TabletInputFragmentManager{
 	}
 
 	public void goApplyCompleted(){
+		contentMenuTabletFragment.currentStatus = COMPLETE_STATUS;
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance());
@@ -70,6 +69,7 @@ public class TabletInputFragmentManager{
 		leftSideInputTabletFragment.hideContent();
 	}
 	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
+		contentMenuTabletFragment.currentStatus = COMPLETE_STATUS;
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance(m_InformCtrl, element));

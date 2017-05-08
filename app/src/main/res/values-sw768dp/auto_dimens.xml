@@ -27,6 +27,7 @@
 	<dimen name="margin_items_input_confirm_tablet">30.00dp</dimen>
 	<dimen name="margin_items_input_host_tablet">50.00dp</dimen>
 	<dimen name="margin_left_side">20.00dp</dimen>
+	<dimen name="margin_left_side_menu">1.00dp</dimen>
 	<dimen name="margin_right_user_input_tablet">110.00dp</dimen>
 	<dimen name="margin_top_content_apply_success_tablet">160.00dp</dimen>
 	<dimen name="margin_top_content_input_host_tablet">200.00dp</dimen>

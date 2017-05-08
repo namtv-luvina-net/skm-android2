@@ -56,6 +56,11 @@ public class LeftSideInputTabletFragment extends Fragment {
 	}
 
 	public void highlightItem(int possition) {
+		if (possition == 0) {
+			tvBack.setVisibility(View.VISIBLE);
+		}else {
+			tvBack.setVisibility(View.INVISIBLE);
+		}
 		if (listTextTitle == null) {
 			return;
 		}

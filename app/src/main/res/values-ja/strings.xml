@@ -343,7 +343,7 @@
 	<string name="apid_guide_1">コピーをタップすると\nクリップボードにコピーされます。</string>
 	<string name="apid_guide_2">メールをタップすると\nメーラーが起動します。</string>
 	<string name="title_left_menu">項目を選択</string>
-	<string name="input_host_name_and_port_number">ホスト名・HTTPSポート番号</string>
+	<string name="input_host_name_and_port_number">ホスト名・\nHTTPSポート番号</string>
 	<string name="input_download_ca_certificate">CA証明書ダウンロード</string>
 	<string name="input_user_id_password">ユーザーID・パスワード</string>
 	<string name="input_email">通知先メールアドレス</string>

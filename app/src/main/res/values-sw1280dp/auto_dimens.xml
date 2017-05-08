@@ -18,7 +18,7 @@
 	<dimen name="margin_bottom_with_line_input_confirm_tablet">58.33dp</dimen>
 	<dimen name="margin_content_apid">166.67dp</dimen>
 	<dimen name="margin_content_input_apply_tablet">125.00dp</dimen>
-	<dimen name="margin_content_input_tablet">100.00dp</dimen>
+	<dimen name="margin_content_input_tablet">91.67dp</dimen>
 	<dimen name="margin_footer_input_tablet">53.33dp</dimen>
 	<dimen name="margin_guide_input_left_side">108.33dp</dimen>
 	<dimen name="margin_guide_left_side">116.67dp</dimen>
@@ -27,6 +27,7 @@
 	<dimen name="margin_items_input_confirm_tablet">50.00dp</dimen>
 	<dimen name="margin_items_input_host_tablet">83.33dp</dimen>
 	<dimen name="margin_left_side">33.33dp</dimen>
+	<dimen name="margin_left_side_menu">1.67dp</dimen>
 	<dimen name="margin_right_user_input_tablet">183.33dp</dimen>
 	<dimen name="margin_top_content_apply_success_tablet">266.67dp</dimen>
 	<dimen name="margin_top_content_input_host_tablet">333.33dp</dimen>

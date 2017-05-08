@@ -62,11 +62,18 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private String hostName;
 	private String portName;
 	private boolean isShowingKeyboard = false;
+	private Activity activity;
 
 	public static Fragment newInstance(TabletInputFragmentManager tabletInputFragmentManager) {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
 		f.tabletInputFragmentManager = tabletInputFragmentManager;
 		return f;
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		activity = (Activity) context;
 	}
 
 	@Nullable
@@ -79,7 +86,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		btnBack = (Button) view.findViewById(R.id.btnBack);
 		btnNext = (Button) view.findViewById(R.id.btnNext);
 		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
-		adapter = new ViewPagerTabletAdapter(getActivity(), getChildFragmentManager(), this);
+		adapter = new ViewPagerTabletAdapter(activity, getChildFragmentManager(), this);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
 		viewPager.setCurrentItem(0);
@@ -96,7 +103,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public boolean dispatchTouchEvent(View view, MotionEvent ev) {
-		View v = getActivity().getCurrentFocus();
+		View v = activity.getCurrentFocus();
 		if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
 				v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
 			int scrcoords[] = new int[2];
@@ -105,7 +112,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 			float y = ev.getRawY() + v.getTop() - scrcoords[1];
 
 			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
-				hideKeyboard(getActivity());
+				hideKeyboard(activity);
 				v.clearFocus();
 			}
 		}
@@ -122,10 +129,10 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		inputApplyInfo = InputApplyInfo.getPref(getActivity());
+		inputApplyInfo = InputApplyInfo.getPref(activity);
 		m_InformCtrl = new InformCtrl();
-		elementMgr = new ElementApplyManager(getActivity());
-		controlPagesInput = new ControlPagesInput(getActivity());
+		elementMgr = new ElementApplyManager(activity);
+		controlPagesInput = new ControlPagesInput(activity);
 	}
 
 	public void finishInstallCertificate(int resultCode) {
@@ -242,18 +249,12 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 					current = viewPager.getCurrentItem() - 1;
 				}
 				if (current < 0) {
-					InputApplyInfo.deletePref(getActivity());
-//					getActivity().finish();
+					InputApplyInfo.deletePref(activity);
 					tabletInputFragmentManager.gotoMenu();
 				} else {
 					viewPager.setCurrentItem(current, true);
 				}
 				setStatusBackNext(current);
-
-//				int current = getCurrentPage() -1;
-//				if (current >= 0) {
-//					gotoPage(current);
-//				}
 			}
 		});
 		btnNext.setOnClickListener(new View.OnClickListener() {
@@ -381,7 +382,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	public void onSoftKeyboardShown(boolean isShowing) {
 		if (!isShowing) {
 			if (isShowingKeyboard) {
-				View v = getActivity().getCurrentFocus();
+				View v = activity.getCurrentFocus();
 				if (v != null && v instanceof EditText) {
 					v.clearFocus();
 				}
