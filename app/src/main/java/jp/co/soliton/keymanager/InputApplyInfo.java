@@ -2,6 +2,7 @@ package jp.co.soliton.keymanager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /**
  * Created by luongdolong on 2/7/2017.
@@ -35,11 +36,13 @@ public class InputApplyInfo {
     }
 
     public String getPort() {
-        return port;
+	    Log.d("datnd", "getPort: " + port);
+	    return port;
     }
 
     public void setPort(String port) {
-        this.port = port;
+	    Log.d("datnd", "setPort: " + port);
+	    this.port = port;
     }
 
     public String getSecurePort() {

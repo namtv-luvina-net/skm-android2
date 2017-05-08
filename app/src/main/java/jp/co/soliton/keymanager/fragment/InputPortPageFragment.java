@@ -24,6 +24,8 @@ import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
+import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
+import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -157,7 +159,14 @@ public class InputPortPageFragment extends InputBasePageFragment {
         String url = String.format("%s:%s", pagerInputActivity.getInputApplyInfo().getHost(), txtPort.getText().toString().trim());
         m_InformCtrl.SetURL(url);
         //Open thread download cert
-        new DownloadCertificateTask().execute();
+        new DownloadCertificateTask(getActivity(), m_InformCtrl, m_nErroType, new DownloadCertificateTask.EndConnection() {
+	        @Override
+	        public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+		        m_InformCtrl = informCtrl;
+		        m_nErroType = errorType;
+                endConnection(result);
+	        }
+        }).execute();
     }
 
     /**
@@ -206,7 +215,12 @@ public class InputPortPageFragment extends InputBasePageFragment {
         progressDialog.dismiss();
         if (result) {
             //Download certificate
-            downloadCert();
+//            downloadCert();
+	        ControlPagesInput controlPagesInput = new ControlPagesInput(getActivity());
+	        String strDownloadCert = controlPagesInput.downloadCert(m_InformCtrl.GetRtn());
+	        if (strDownloadCert.length() > 0) {
+		        showMessage(strDownloadCert);
+	        }
         } else {
             //Show error message
             if (m_nErroType == ERR_FORBIDDEN) {
@@ -286,42 +300,42 @@ public class InputPortPageFragment extends InputBasePageFragment {
     /**
      * Task download certificate
      */
-    private class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(Void... params) {
-	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
-            HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
-            //send request to server
-            boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrl);
-            //parse result return
-            if (ret == false) {
-	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Network error");
-                m_nErroType = ERR_NETWORK;
-                return false;
-            }
-            // ログイン結果
-            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Forbidden.");
-                m_nErroType = ERR_FORBIDDEN;
-                return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Unauthorized.");
-                m_nErroType = ERR_UNAUTHORIZED;
-                return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-	            logCtrlAsyncTask.loggerError("DownloadCertificateTask ERR:");
-                m_nErroType = ERR_COLON;
-                return false;
-            }
-            m_nErroType = SUCCESSFUL;
-
-            return ret;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            endConnection(result);
-        }
-    }
+//    private class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
+//            HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
+//            //send request to server
+//            boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrl);
+//            //parse result return
+//            if (ret == false) {
+//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Network error");
+//                m_nErroType = ERR_NETWORK;
+//                return false;
+//            }
+//            // ログイン結果
+//            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Forbidden.");
+//                m_nErroType = ERR_FORBIDDEN;
+//                return false;
+//            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Unauthorized.");
+//                m_nErroType = ERR_UNAUTHORIZED;
+//                return false;
+//            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
+//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask ERR:");
+//                m_nErroType = ERR_COLON;
+//                return false;
+//            }
+//            m_nErroType = SUCCESSFUL;
+//
+//            return ret;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Boolean result) {
+//            super.onPostExecute(result);
+//            endConnection(result);
+//        }
+//    }
 }

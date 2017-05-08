@@ -362,4 +362,6 @@
 	<string name="input_email">Destination Email Address</string>
 	<string name="input_reason_for_apply">Reason for Apply</string>
 	<string name="input_confirm_content">Confirm Content</string>
+	<string name="title_input_host_and_port_secure">Host Name/HTTPS Port Number</string>
+	<string name="title_input_port_download_ca">Download CA Certificate</string>
 </resources>

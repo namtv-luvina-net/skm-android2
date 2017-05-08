@@ -16,6 +16,9 @@ import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment;
 import jp.co.soliton.keymanager.fragment.LeftSideMenuTabletFragment;
 
+import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION;
+import static jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment.INPUT_APPLY_STATUS;
+
 /**
  * Created by luongdolong on 2/3/2017.
  *
@@ -28,6 +31,7 @@ public class MenuAcivity extends FragmentActivity {
 	private boolean isTablet;
 	private LogCtrl logCtrl;
 	private boolean isFocusMenuTablet;
+	ContentMenuTabletFragment contentMenuTabletFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,8 @@ public class MenuAcivity extends FragmentActivity {
 			isFocusMenuTablet = true;
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			fragmentTransaction.add(R.id.fragment_left_side_menu_tablet, new LeftSideMenuTabletFragment());
-			fragmentTransaction.add(R.id.fragment_content_menu_tablet, new ContentMenuTabletFragment());
+			contentMenuTabletFragment = new ContentMenuTabletFragment();
+			fragmentTransaction.add(R.id.fragment_content_menu_tablet, contentMenuTabletFragment);
 			fragmentTransaction.commit();
 		}
 	}
@@ -61,7 +66,11 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		if (!isFocusMenuTablet && isTablet) {
-			goToMenu();
+			if (contentMenuTabletFragment.currentStatus == INPUT_APPLY_STATUS) {
+				contentMenuTabletFragment.pressBackInputApply();
+			}else {
+				goToMenu();
+			}
 		} else {
 			super.onBackPressed();
 		}
@@ -71,7 +80,8 @@ public class MenuAcivity extends FragmentActivity {
 		isFocusMenuTablet = true;
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.exit, R.anim.enter);
-		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, new ContentMenuTabletFragment());
+		contentMenuTabletFragment = new ContentMenuTabletFragment();
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, contentMenuTabletFragment);
 		fragmentTransaction.commit();
 
 		fragmentTransaction = fragmentManager.beginTransaction();
@@ -106,4 +116,13 @@ public class MenuAcivity extends FragmentActivity {
                     PERMISSIONS_REQUEST_READ_PHONE_STATE);
         }
     }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		LogCtrl.getInstance(this).loggerInfo("ViewPagerInputActivity:onActivityResult  requestCode = " + requestCode + ". " +
+				"resultCode = " + requestCode);
+		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {
+			contentMenuTabletFragment.finishInstallCertificate(resultCode);
+		}
+	}
 }

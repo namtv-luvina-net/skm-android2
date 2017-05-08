@@ -2,8 +2,11 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 /**
  * Created by nguyenducdat on 5/4/2017.
@@ -37,4 +40,5 @@ public abstract class TabletInputFragment extends Fragment {
 	 * Next action when click next button in every page
 	 */
 	public abstract void nextAction();
+	protected void clickSkipButton(){}
 }

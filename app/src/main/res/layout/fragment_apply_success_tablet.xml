@@ -6,8 +6,8 @@
                 android:paddingRight="@dimen/margin_content_input_tablet"
                 android:orientation="vertical">
 		<TextView
-				android:id="@+id/title_success"
-				android:text="Title Thong Bao Thanh Cong"
+				android:id="@+id/titleSuccess"
+				android:text="@string/apply_completed"
 				android:layout_gravity="center_horizontal"
 				android:textSize="@dimen/text_size_title"
 				android:textColor="@color/color_title_input"
@@ -21,7 +21,7 @@
 				android:layout_gravity="center_horizontal"
 				android:layout_marginTop="70dp"/>
 		<TextView
-					android:id="@+id/content_success"
+					android:id="@+id/contentSuccess"
 					android:text="Content Thong Bao Thanh Cong"
 					android:layout_gravity="center_horizontal"
 					android:textColor="@color/text_color_active"

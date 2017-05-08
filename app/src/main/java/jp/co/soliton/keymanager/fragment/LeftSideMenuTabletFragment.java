@@ -1,5 +1,7 @@
 package jp.co.soliton.keymanager.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +27,13 @@ public class LeftSideMenuTabletFragment extends Fragment {
 
 	Button btnSetting;
 	TextView textViewGuide3;
+	Activity activity;
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		this.activity = (Activity) context;
+	}
 
 	@Nullable
 	@Override
@@ -41,12 +50,12 @@ public class LeftSideMenuTabletFragment extends Fragment {
 		btnSetting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), SettingActivity.class);
+				Intent intent = new Intent(activity, SettingActivity.class);
 				startActivity(intent);
 			}
 		});
-		String str1 = getActivity().getString(R.string.guide_31);
-		String str2 = getActivity().getString(R.string.guide_32);
+		String str1 = activity.getString(R.string.guide_31);
+		String str2 = activity.getString(R.string.guide_32);
 		textViewGuide3.measure(0,0);
 		SpannableStringBuilder ssb = new SpannableStringBuilder();
 		ssb.append(str1 + "   " + str2);

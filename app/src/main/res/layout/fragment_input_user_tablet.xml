@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-                android:paddingLeft="@dimen/margin_content_input_tablet"
-              android:orientation="horizontal">
-		<include layout="@layout/fragment_title_input" />
+              android:layout_height="match_parent" >
+	<include layout="@layout/fragment_title_input" />
+	<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:paddingLeft="@dimen/margin_content_input_tablet">
 		<LinearLayout
 				android:id="@+id/rl_host"
 				android:layout_width="match_parent"
 				android:layout_height="33dp"
 				android:layout_marginTop="200dp"
-				android:paddingRight="@dimen/margin_right_user_input_tablet">
+				android:paddingRight="@dimen/margin_right_user_input_tablet"
+				android:focusable="true"
+				android:focusableInTouchMode="true" >
 			<TextView
 					android:id="@+id/txt_title_user_id"
 					android:layout_width="0dp"
@@ -25,7 +29,7 @@
 					android:paddingRight="@dimen/margin_item_menu"
 					android:layout_height="wrap_content"/>
 			<EditText
-					android:id="@+id/edit_host"
+					android:id="@+id/txtUserId"
 					android:layout_width="0dp"
 					android:layout_weight="35"
 					android:maxLines="1"
@@ -34,47 +38,49 @@
 					android:paddingLeft="@dimen/margin_item_menu"
 					android:paddingRight="@dimen/margin_item_menu"
 					android:maxLength="256"
+					android:text="test1"
 					android:inputType="text|textVisiblePassword|textNoSuggestions"
 					android:background="@drawable/round_corner_white_edittext"
-					android:hint="@string/certlogin_userid_title"
 					android:textSize="@dimen/tv_title_left_side"
 					android:layout_height="match_parent"/>
 		</LinearLayout>
 		<LinearLayout
-					android:id="@+id/rl_secure_port"
-					android:layout_below="@+id/rl_host"
-					android:layout_width="match_parent"
-					android:layout_height="33dp"
-					android:layout_marginTop="50dp"
+				android:id="@+id/rl_secure_port"
+				android:layout_below="@+id/rl_host"
+				android:layout_width="match_parent"
+				android:layout_height="33dp"
+				android:layout_marginTop="50dp"
+				android:paddingRight="@dimen/margin_right_user_input_tablet"
+				android:focusable="true"
+				android:focusableInTouchMode="true" >
+			<TextView
+					android:id="@+id/txt_port"
+					android:layout_width="0dp"
+					android:layout_weight="17"
+					android:textSize="@dimen/tv_content_left_side"
+					android:text="@string/title_password"
+					android:textColor="@color/text_color"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:gravity="right"
+					android:textAllCaps="true"
+					android:paddingRight="@dimen/margin_item_menu"
+					android:layout_height="wrap_content"/>
+			<EditText
+					android:id="@+id/txtPassword"
+					android:layout_width="0dp"
+					android:layout_weight="35"
+					android:maxLines="1"
+					android:text="luvina"
+					android:singleLine="true"
+					android:paddingLeft="@dimen/text_size_content_item_apid"
 					android:paddingRight="@dimen/margin_right_user_input_tablet"
-					>
-				<TextView
-						android:id="@+id/txt_port"
-						android:layout_width="0dp"
-						android:layout_weight="17"
-						android:textSize="@dimen/tv_content_left_side"
-						android:text="@string/title_password"
-						android:textColor="@color/text_color"
-						android:maxLines="1"
-						android:singleLine="true"
-						android:gravity="right"
-						android:textAllCaps="true"
-						android:paddingRight="@dimen/margin_item_menu"
-						android:layout_height="wrap_content"/>
-				<EditText
-						android:id="@+id/edit_port"
-						android:layout_width="0dp"
-						android:layout_weight="35"
-						android:maxLines="1"
-						android:singleLine="true"
-						android:paddingLeft="@dimen/text_size_content_item_apid"
-						android:paddingRight="@dimen/margin_right_user_input_tablet"
-						android:inputType="text|textVisiblePassword|textNoSuggestions"
-						android:background="@drawable/round_corner_white_edittext"
-						android:hint="@string/certlogin_password_title"
-						android:textColor="@color/text_color"
-						android:textSize="@dimen/tv_title_left_side"
-						android:gravity="bottom"
-						android:layout_height="match_parent"/>
-			</LinearLayout>
+					android:inputType="textPassword"
+					android:background="@drawable/round_corner_white_edittext"
+					android:textColor="@color/text_color"
+					android:textSize="@dimen/tv_title_left_side"
+					android:gravity="bottom"
+					android:layout_height="match_parent"/>
+		</LinearLayout>
+	</RelativeLayout>
 </RelativeLayout>

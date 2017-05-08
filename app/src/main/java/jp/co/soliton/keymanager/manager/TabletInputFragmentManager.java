@@ -1,11 +1,15 @@
 package jp.co.soliton.keymanager.manager;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import jp.co.soliton.keymanager.InformCtrl;
+import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.fragment.FooterInputTabletFragment;
-import jp.co.soliton.keymanager.fragment.LeftSideInputTabletFragment;
-import jp.co.soliton.keymanager.fragment.TabletBaseInputFragment;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.fragment.*;
 
 /**
  * Created by luongdolong on 2/8/2017.
@@ -16,22 +20,75 @@ import jp.co.soliton.keymanager.fragment.TabletBaseInputFragment;
 public class TabletInputFragmentManager{
 
 	FragmentManager fragmentManager;
-	FooterInputTabletFragment footerInputTabletFragment;
 	TabletBaseInputFragment tabletBaseInputFragment;
+	LeftSideInputTabletFragment leftSideInputTabletFragment;
+//	MenuAcivity menuAcivity;
+	ContentMenuTabletFragment contentMenuTabletFragment;
 
-	public TabletInputFragmentManager(FragmentManager fragmentManager) {
+	public TabletInputFragmentManager(ContentMenuTabletFragment contentMenuTabletFragment, FragmentManager fragmentManager) {
 		this.fragmentManager = fragmentManager;
+		this.contentMenuTabletFragment = contentMenuTabletFragment;
+	}
+
+	public void gotoMenu() {
+		contentMenuTabletFragment.goToMenu();
+	}
+
+	public void pressBackInputApply() {
+		tabletBaseInputFragment.clickBackButton();
 	}
 
 	public void startActivityStartApply() {
+		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+		leftSideInputTabletFragment = (LeftSideInputTabletFragment) LeftSideInputTabletFragment.newInstance();
+		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, leftSideInputTabletFragment);
+		fragmentTransaction1.commit();
+
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		tabletBaseInputFragment = (TabletBaseInputFragment) TabletBaseInputFragment.newInstance();
+		tabletBaseInputFragment = (TabletBaseInputFragment) TabletBaseInputFragment.newInstance(this);
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, tabletBaseInputFragment);
 		fragmentTransaction.commit();
+	}
 
+	public void startActivityAPID() {
 		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, LeftSideInputTabletFragment.newInstance());
+		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, new LeftSideAPIDTabletFragment());
 		fragmentTransaction1.commit();
+
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, new ContentAPIDTabletFragment());
+		fragmentTransaction.commit();
+	}
+
+	public void goApplyCompleted(){
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance());
+		fragmentTransaction.commit();
+		leftSideInputTabletFragment.hideContent();
+	}
+	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance(m_InformCtrl, element));
+		fragmentTransaction.commit();
+		leftSideInputTabletFragment.hideContent();
+	}
+
+	public void updateLeftSideInput(int possition) {
+		if (leftSideInputTabletFragment == null) {
+			return;
+		}
+		leftSideInputTabletFragment.highlightItem(possition);
+	}
+
+	/**
+	 * Finish install certificate
+	 * @param resultCode
+	 */
+	public void finishInstallCertificate(int resultCode) {
+		tabletBaseInputFragment.finishInstallCertificate(resultCode);
 	}
 }

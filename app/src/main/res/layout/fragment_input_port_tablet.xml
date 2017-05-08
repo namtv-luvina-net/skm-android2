@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rootViewInputPort"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/margin_content_input_tablet"
                 android:paddingRight="@dimen/margin_content_input_tablet"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 		<include layout="@layout/fragment_title_input" />
-		<RelativeLayout
+		<LinearLayout
 				android:id="@+id/rl_port"
 				android:layout_width="match_parent"
 				android:layout_height="33dp"
-				android:layout_marginTop="200dp" >
+				android:layout_marginTop="200dp"
+				android:orientation="horizontal"
+				android:focusable="true"
+				android:focusableInTouchMode="true" >
 			<TextView
 					android:id="@+id/txt_port"
 					android:layout_width="wrap_content"
@@ -26,7 +32,6 @@
 					android:layout_height="wrap_content"/>
 			<EditText
 					android:id="@+id/edit_port"
-					android:layout_toRightOf="@+id/txt_port"
 					android:layout_width="match_parent"
 					android:maxLines="1"
 					android:singleLine="true"
@@ -40,8 +45,9 @@
 					android:hint="80"
 					android:textSize="@dimen/tv_title_left_side"
 					android:layout_height="match_parent"/>
-		</RelativeLayout>
+		</LinearLayout>
 		<TextView
+				android:id="@+id/txt_des_download_ca"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/download_ca_description42"

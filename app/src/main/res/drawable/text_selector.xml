@@ -1,6 +1,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:state_selected="true" android:color="@color/color_desc_menu" />
-	<item android:state_focused="true" android:color="@color/color_desc_menu" />
-	<item android:state_pressed="true" android:color="@color/color_desc_menu" />
+	<item android:state_selected="true" android:color="@color/color_desc_menu_70" />
+	<item android:state_focused="true" android:color="@color/color_desc_menu_70" />
+	<item android:state_pressed="true" android:color="@color/color_desc_menu_70" />
 	<item android:color="@color/background_color_white" /> <!-- default case -->
 </selector>

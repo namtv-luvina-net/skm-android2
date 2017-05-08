@@ -14,12 +14,14 @@
 	              android:layout_marginTop="@dimen/margin_footer_input_tablet"
 	              android:layout_marginBottom="@dimen/margin_footer_input_tablet">
 
-		<TextView
+		<Button
 				android:id="@+id/btnSkip"
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
 				android:gravity="center"
 				android:text="Skip"
+				android:background="@android:color/transparent"
+				android:visibility="gone"
 				android:textColor="@color/text_color_active"
 				android:textSize="@dimen/tv_button_input_tablet"
 				android:layout_marginRight="@dimen/margin_item_menu"

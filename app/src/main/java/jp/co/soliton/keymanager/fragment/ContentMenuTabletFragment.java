@@ -1,16 +1,18 @@
 package jp.co.soliton.keymanager.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -25,6 +27,12 @@ import java.util.List;
  */
 
 public class ContentMenuTabletFragment extends Fragment {
+	public static final int RESET_STATUS = 0;
+	public static final int APID_STATUS = 1;
+	public static final int INPUT_APPLY_STATUS = 2;
+	public static final int COMPLETE_STATUS = 3;
+	public int currentStatus;
+
 
 	RelativeLayout rlMenuStart;
 	RelativeLayout rlMenuAPID;
@@ -35,15 +43,28 @@ public class ContentMenuTabletFragment extends Fragment {
 	TextView titleWifi;
 	TextView titleVPN;
 	private APIDManager apidManager;
-	FragmentManager fragmentManager;
 	TabletInputFragmentManager tabletInputFragmentManager;
+	Activity activity;
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		this.activity = (Activity) context;
+	}
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		elementMgr = new ElementApplyManager(getActivity());
-		fragmentManager = getFragmentManager();
-		tabletInputFragmentManager = new TabletInputFragmentManager(fragmentManager);
+		elementMgr = new ElementApplyManager(activity);
+		tabletInputFragmentManager = new TabletInputFragmentManager(this, getFragmentManager());
+	}
+
+	/**
+	 * Finish install certificate
+	 * @param resultCode
+	 */
+	public void finishInstallCertificate(int resultCode) {
+		tabletInputFragmentManager.finishInstallCertificate(resultCode);
 	}
 
 	@Nullable
@@ -57,7 +78,8 @@ public class ContentMenuTabletFragment extends Fragment {
 		contentWifi = (TextView) view.findViewById(R.id.content_wifi);
 		titleWifi = (TextView) view.findViewById(R.id.title_wifi);
 		titleVPN = (TextView) view.findViewById(R.id.title_vpn);
-		apidManager = new APIDManager(getActivity());
+		apidManager = new APIDManager(activity);
+		currentStatus = RESET_STATUS;
 		return view;
 	}
 
@@ -95,10 +117,13 @@ public class ContentMenuTabletFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					if (elementMgr.hasCertificate()) {
-						Intent intent = new Intent(getActivity(), ListCertificateActivity.class);
+						Intent intent = new Intent(activity, ListCertificateActivity.class);
 						startActivity(intent);
 					} else {
+						((MenuAcivity)activity).setFocusMenuTablet(false);
+						InputApplyInfo.deletePref(getActivity());
 						tabletInputFragmentManager.startActivityStartApply();
+						currentStatus = INPUT_APPLY_STATUS;
 					}
 				}
 			});
@@ -106,17 +131,24 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuAPID.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((MenuAcivity)getActivity()).setFocusMenuTablet(false);
-					FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-					fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-					fragmentTransaction.replace(R.id.fragment_content_menu_tablet, new ContentAPIDTabletFragment());
-					fragmentTransaction.commit();
-
-					FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-					fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, new LeftSideAPIDTabletFragment());
-					fragmentTransaction1.commit();
+					((MenuAcivity)activity).setFocusMenuTablet(false);
+					tabletInputFragmentManager.startActivityAPID();
+					currentStatus = APID_STATUS;
 				}
 			});
+	}
+
+	public void pressBackInputApply() {
+		tabletInputFragmentManager.pressBackInputApply();
+	}
+
+	public void goToMenu() {
+		currentStatus = RESET_STATUS;
+		if (activity == null) {
+			Log.d("datnd", "goToMenu: null roi");
+		}
+		InputApplyInfo.deletePref(activity);
+		((MenuAcivity)activity).goToMenu();
 	}
 
 	private void updateMenuConfirm() {
@@ -130,11 +162,11 @@ public class ContentMenuTabletFragment extends Fragment {
                 public void onClick(View v) {
                     if (totalApply == 1) {
                         List<ElementApply> listElementApply = elementMgr.getAllElementApply();
-                        Intent intent = new Intent(getActivity(), DetailConfirmActivity.class);
+                        Intent intent = new Intent(activity, DetailConfirmActivity.class);
                         intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
                         startActivity(intent);
                     } else {
-                        Intent intent = new Intent(getActivity(), ListConfirmActivity.class);
+                        Intent intent = new Intent(activity, ListConfirmActivity.class);
                         startActivity(intent);
                     }
                 }

@@ -4,7 +4,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 	<jp.co.soliton.keymanager.swipelayout.InputApplyViewPager
-			android:layout_width="match_parent" android:layout_height="match_parent"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
 			android:id="@+id/viewPager" />
 	<include layout="@layout/fragment_footer_input" />
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import jp.co.soliton.keymanager.fragment.InputEmailPageFragment;
 import jp.co.soliton.keymanager.fragment.InputHostPageFragment;
 import jp.co.soliton.keymanager.fragment.InputUserPageFragment;
@@ -24,7 +25,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
-        listFragment[0] = InputHostPageFragment.newInstance(context);
+	    Log.d("datnd", "ViewPagerAdapter: vao day");
+	    listFragment[0] = InputHostPageFragment.newInstance(context);
         listFragment[1] = InputPortPageFragment.newInstance(context);
         listFragment[2] = InputPlacePageFragment.newInstance(context);
         listFragment[3] = InputUserPageFragment.newInstance(context);

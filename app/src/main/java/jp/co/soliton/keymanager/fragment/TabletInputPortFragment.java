@@ -1,13 +1,37 @@
 package jp.co.soliton.keymanager.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.security.KeyChain;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import jp.co.soliton.keymanager.InformCtrl;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
+import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
+import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
+import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
+import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import javax.security.cert.X509Certificate;
+import java.util.List;
+
+import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -15,21 +39,242 @@ import jp.co.soliton.keymanager.R;
 
 public class TabletInputPortFragment extends TabletInputFragment {
 
-	public static Fragment newInstance(Context context) {
+	RelativeLayout rootViewInputPort;
+	EditText edtPort;
+	TextView txtGuideDownloadCaCertificate;
+	TextView titleInput;
+	private LogCtrl logCtrl;
+
+	TabletBaseInputFragment tabletBaseInputFragment;
+
+	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
 		TabletInputPortFragment f = new TabletInputPortFragment();
+		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.logCtrl = LogCtrl.getInstance(context);
 		return f;
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		Log.d("datnd", "onCreateView: TabletInputPortFragment");
 		View view = inflater.inflate(R.layout.fragment_input_port_tablet, container, false);
+		rootViewInputPort = (RelativeLayout) view.findViewById(R.id.rootViewInputPort);
+		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		titleInput.setText(getString(R.string.title_input_port_download_ca));
+		edtPort = (EditText) view.findViewById(R.id.edit_port);
+		txtGuideDownloadCaCertificate = (TextView) view.findViewById(R.id.txt_des_download_ca);
+		if (tabletBaseInputFragment.d_android_version < 4.3) {
+			txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
+		} else {
+			txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
+		}
+		initValueControl();
 		return view;
 	}
 
 	@Override
-	public void nextAction() {
-
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		if (tabletBaseInputFragment.progressDialog == null) {
+			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
+		}
 	}
 
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		edtPort.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				setStatusControl();
+			}
+		});
+
+		edtPort.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					hideKeyboard(v, getContext());
+				}
+			}
+		});
+		edtPort.setOnKeyListener(new View.OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+					if (!nullOrEmpty(edtPort.getText().toString())) {
+						nextAction();
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d("datnd", "onResume: TabletInputPortFragment");
+//		setStatusDefaultButtonFooter();
+	}
+
+	@Override
+	public void setMenuVisibility(final boolean visible) {
+		super.setMenuVisibility(visible);
+		if (visible) {
+			initValueControl();
+		}
+	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			initValueControl();
+		}
+	}
+
+	/**
+	 * Init value for control
+	 */
+	private void initValueControl() {
+		if (tabletBaseInputFragment == null || edtPort == null) {
+			return;
+		}
+		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getPort())) {
+			edtPort.setText(tabletBaseInputFragment.getInputApplyInfo().getPort());
+		}
+		setStatusControl();
+	}
+
+	/**
+	 * Set status control next/back
+	 */
+	private void setStatusControl() {
+		if (tabletBaseInputFragment.getCurrentPage() != 1) {
+			return;
+		}
+		if (nullOrEmpty(edtPort.getText().toString())) {
+			tabletBaseInputFragment.disableNext();
+		} else {
+			tabletBaseInputFragment.enableNext();
+		}
+	}
+
+	public void hideScreen(boolean hide) {
+		if (rootViewInputPort == null) {
+			return;
+		}
+		rootViewInputPort.setVisibility(hide ? View.INVISIBLE : View.VISIBLE);
+	}
+
+	@Override
+	public void nextAction() {
+//		if (tabletBaseInputFragment.getErroType() != NOT_INSTALL_CA) {
+//			Log.d("datnd", "nextAction: vao day roi != not install ca");
+//			tabletBaseInputFragment.gotoPage(2);
+//		} else {
+			Log.d("datnd", "nextAction: vao ELSE");
+			logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
+			tabletBaseInputFragment.getInputApplyInfo().setPort(edtPort.getText().toString().trim());
+			tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
+			tabletBaseInputFragment.progressDialog.show();
+			if (tabletBaseInputFragment.getInformCtrl() == null) {
+				tabletBaseInputFragment.setInformCtrl(new InformCtrl());
+			}
+			String url = String.format("%s:%s", tabletBaseInputFragment.getInputApplyInfo().getHost(), edtPort.getText()
+					.toString().trim());
+
+			tabletBaseInputFragment.getInformCtrl().SetURL(url);
+			new DownloadCertificateTask(getActivity(), tabletBaseInputFragment.getInformCtrl(), tabletBaseInputFragment
+					.getErroType(), new
+					DownloadCertificateTask.EndConnection() {
+						@Override
+						public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+							tabletBaseInputFragment.setInformCtrl(informCtrl);
+							tabletBaseInputFragment.setErroType(errorType);
+							endConnection(result);
+						}
+					}).execute();
+//		}
+	}
+
+	private void endConnection(boolean result) {
+		tabletBaseInputFragment.progressDialog.dismiss();
+		if (result) {
+			//Download certificate
+			String strDownloadCert = tabletBaseInputFragment.controlPagesInput.downloadCert(tabletBaseInputFragment
+					.getInformCtrl().GetRtn());
+			if (strDownloadCert.length() > 0) {
+				tabletBaseInputFragment.showMessage(strDownloadCert);
+			}
+		} else {
+			//Show error message
+			int m_nErroType = tabletBaseInputFragment.getErroType();
+			String strRtn = tabletBaseInputFragment.getInformCtrl().GetRtn();
+			if (m_nErroType == ERR_FORBIDDEN) {
+				String str_forbidden = getString(R.string.Forbidden);
+				tabletBaseInputFragment.showMessage(strRtn.substring(str_forbidden.length
+						()));
+			} else if (m_nErroType == ERR_UNAUTHORIZED) {
+				String str_unauth = getString(R.string.Unauthorized);
+				tabletBaseInputFragment.showMessage(strRtn.substring(str_unauth.length()));
+			} else if (m_nErroType == ERR_COLON) {
+				String str_err = getString(R.string.ERR);
+				tabletBaseInputFragment.showMessage(strRtn.substring(str_err.length()));
+			} else {
+				tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+			}
+		}
+	}
+
+	/**
+	 * Finish install certificate
+	 *
+	 * @param resultCode
+	 */
+	public void finishInstallCertificate(int resultCode) {
+		if (resultCode == Activity.RESULT_OK) {
+			if (tabletBaseInputFragment.d_android_version >= 4.3) {
+				tabletBaseInputFragment.progressDialog.show();
+				String host = tabletBaseInputFragment.getHostName();
+				String port = tabletBaseInputFragment.getPortName();
+				String url = String.format("%s:%s", host, port);
+				tabletBaseInputFragment.getInformCtrl().SetURL(url);
+				Log.d("datnd", "endConnect: finish cai dat- gio check lai = " + url);
+				new ConnectApplyTask(getActivity(), tabletBaseInputFragment.getInformCtrl(), tabletBaseInputFragment
+						.getErroType(), new ConnectApplyTask.EndConnection() {
+					@Override
+					public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+						Log.d("datnd", "endConnect: check lai thanh cong = " + result + " - " + errorType);
+						tabletBaseInputFragment.progressDialog.dismiss();
+						tabletBaseInputFragment.setInformCtrl(informCtrl);
+						tabletBaseInputFragment.setErroType(errorType);
+						checkCertificateInstalled(result);
+					}
+				}).execute();
+			} else {
+				tabletBaseInputFragment.gotoPage(2);
+			}
+		}
+	}
+
+	private void checkCertificateInstalled(boolean result) {
+		if (result) {
+			if (tabletBaseInputFragment.getErroType() == SUCCESSFUL) {
+				tabletBaseInputFragment.hideInputPort(true);
+				tabletBaseInputFragment.gotoPage(2);
+			}
+		}
+	}
 }

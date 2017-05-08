@@ -17,18 +17,17 @@ public class ViewPagerTabletAdapter extends FragmentPagerAdapter {
     private Context context;
     private Fragment[] listFragment;
 
-    public ViewPagerTabletAdapter(Context context, FragmentManager fm) {
+    public ViewPagerTabletAdapter(Context context, FragmentManager fm, TabletBaseInputFragment tabletBaseInputFragment) {
         super(fm);
         this.context = context;
-	    Log.d("datnd", "ViewPagerTabletAdapter: new ViewPagerTabletAdapter");
 	    listFragment = new Fragment[TOTAL_PAGES];
-	    listFragment[0] = TabletInputHostFragment.newInstance(context);
-        listFragment[1] = TabletInputPortFragment.newInstance(context);
-        listFragment[2] = TabletInputPlaceFragment.newInstance(context);
-        listFragment[3] = TabletInputUserFragment.newInstance(context);
-        listFragment[4] = TabletInputEmailFragment.newInstance(context);
-        listFragment[5] = TabletInputReasonFragment.newInstance(context);
-        listFragment[6] = TabletInputConfirmFragment.newInstance(context);
+	    listFragment[0] = TabletInputHostFragment.newInstance(context, tabletBaseInputFragment);
+        listFragment[1] = TabletInputPortFragment.newInstance(context, tabletBaseInputFragment);
+        listFragment[2] = TabletInputPlaceFragment.newInstance(context, tabletBaseInputFragment);
+        listFragment[3] = TabletInputUserFragment.newInstance(context, tabletBaseInputFragment);
+        listFragment[4] = TabletInputEmailFragment.newInstance(context, tabletBaseInputFragment);
+        listFragment[5] = TabletInputReasonFragment.newInstance(context, tabletBaseInputFragment);
+        listFragment[6] = TabletInputConfirmFragment.newInstance(context, tabletBaseInputFragment);
     }
 
     @Override

@@ -36,7 +36,7 @@ public class InputHostPageFragment extends InputBasePageFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_host_tablet, null);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_host, null);
         txtHostname = (EditText) root.findViewById(R.id.txtHostname);
         txtSecurePort = (EditText) root.findViewById(R.id.txtSecurePort);
         initValueControl();

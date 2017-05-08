@@ -4,7 +4,9 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/margin_content_input_tablet"
                 android:paddingRight="@dimen/margin_content_input_tablet"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
 	<include layout="@layout/fragment_title_input"/>
 
@@ -12,7 +14,9 @@
 			android:id="@+id/rl_host"
 			android:layout_width="match_parent"
 			android:layout_height="33dp"
-			android:layout_marginTop="200dp">
+			android:layout_marginTop="200dp"
+			android:focusable="true"
+			android:focusableInTouchMode="true" >
 
 		<TextView
 				android:id="@+id/txt_host"
@@ -41,6 +45,7 @@
 				android:background="@drawable/round_corner_white_edittext"
 				android:textColor="@color/text_color"
 				android:hint="@string/hint_host_name"
+				android:text="10.0.1.68"
 				android:textSize="@dimen/tv_title_left_side"
 				android:layout_height="match_parent"/>
 	</LinearLayout>
@@ -50,7 +55,9 @@
 			android:layout_below="@+id/rl_host"
 			android:layout_width="match_parent"
 			android:layout_height="33dp"
-			android:layout_marginTop="50dp">
+			android:layout_marginTop="50dp"
+			android:focusable="true"
+			android:focusableInTouchMode="true" >
 
 		<TextView
 				android:id="@+id/txt_port"
@@ -78,6 +85,7 @@
 				android:background="@drawable/round_corner_white_edittext"
 				android:textColor="@color/text_color"
 				android:hint="443"
+				android:text="443"
 				android:textSize="@dimen/tv_title_left_side"
 				android:gravity="bottom"
 				android:layout_height="match_parent"/>
