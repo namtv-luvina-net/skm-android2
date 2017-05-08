@@ -49,7 +49,6 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("datnd", "onCreateView: TabletInputHostFragment");
 		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
@@ -62,7 +61,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	public void onResume() {
 		super.onResume();
 		addTextChangedListenerForTextView();
-		Log.d("datnd", "onResume: TabletInputHostFragment");
+		setStatusControl();
 	}
 
 	private void addTextChangedListenerForTextView() {

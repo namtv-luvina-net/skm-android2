@@ -33,7 +33,6 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("datnd", "onCreateView: TabletInputEmailFragment");
 		View view = inflater.inflate(R.layout.fragment_input_email_tablet, container, false);
 		txtEmail = (EditText) view.findViewById(R.id.txtEmail);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
@@ -44,8 +43,6 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("datnd", "onResume: TabletInputEmailFragment");
-//		initValueControl();
 		addListenerForEditText();
 	}
 
@@ -138,7 +135,6 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 	}
 
 	private void updateStatusSkipButton() {
-		Log.d("datnd", "updateStatusSkipButton: update skip = " + txtEmail.getText().toString().trim().length());
 		if (txtEmail.getText().toString().trim().length() == 0) {
 			tabletBaseInputFragment.visibleSkip();
 		} else {
@@ -148,7 +144,6 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 
 	@Override
 	public void nextAction() {
-		Log.d("datnd", "nextAction: set email = " + txtEmail.getText().toString().trim());
 		tabletBaseInputFragment.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
 		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
 		if (!ValidateParams.isValidEmail(txtEmail.getText().toString().trim())) {

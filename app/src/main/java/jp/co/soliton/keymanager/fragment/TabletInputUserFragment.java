@@ -22,6 +22,7 @@ import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
+import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -54,13 +55,11 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("datnd", "onCreateView: TabletInputUserFragment");
 		View view = inflater.inflate(R.layout.fragment_input_user_tablet, container, false);
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.input_id_and_password));
-		initValueControl();
 		return view;
 	}
 
@@ -103,7 +102,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-
 			}
 
 			@Override
@@ -147,12 +145,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 		}
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		Log.d("datnd", "onResume: TabletInputUserFragment");
 	}
 
 	@Override
@@ -251,24 +243,15 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				saveElementApply();
 				inputApplyInfo.setPassword(null);
 				inputApplyInfo.savePref(getActivity());
-				Intent intent = new Intent(getActivity(), CompleteApplyActivity.class);
-//				intent.putExtra(StringList.BACK_AUTO, true);
-//				intent.putExtra(StringList.m_str_InformCtrl, tabletBaseInputFragment.getInformCtrl());
 				String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
 						inputApplyInfo.getUserId()));
 				ElementApply element = elementMgr.getElementApply(id);
-//				intent.putExtra("ELEMENT_APPLY", element);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//				startActivity(intent);
-//				getActivity().finish();
 				tabletBaseInputFragment.gotoCompleteApply(informCtrl, element);
-				//TODO need handle datnd
 			} else {
 				if (isSubmitted) {
 					saveElementApply();
 					Intent intent = new Intent(getActivity(), CompleteConfirmApplyActivity.class);
 					getActivity().finish();
-					//TODO need handle datnd
 					intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
 					String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
 							.getUserId()));
@@ -295,10 +278,11 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				String str_err = getString(R.string.ERR);
 				tabletBaseInputFragment.showMessage(strRtn.substring(str_err.length()));
 			} else if (m_nErroType == ERR_LOGIN_FAIL) {
-				tabletBaseInputFragment.showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
+				tabletBaseInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
 						txtPassword.setText("");
+						txtPassword.requestFocus();
 						InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 						imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 					}

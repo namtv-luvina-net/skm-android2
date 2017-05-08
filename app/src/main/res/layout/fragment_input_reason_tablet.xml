@@ -8,17 +8,18 @@
 		<EditText
 				android:id="@+id/txtReason"
 				android:layout_width="match_parent"
-				android:layout_height="360dp"
+				android:layout_height="@dimen/height_reason_item_input_tablet"
 				android:background="@drawable/round_corner_white_edittext"
 				android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
-				android:textSize="@dimen/text_size_value"
+				android:textSize="@dimen/text_size_input_tablet"
 				android:layout_marginLeft="@dimen/margin_content_input_tablet"
 				android:layout_marginRight="@dimen/margin_content_input_tablet"
+				android:maxLength="1024"
 				android:layout_centerHorizontal="true"
 				android:textColor="@color/text_color"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:layout_marginTop="120dp"
+				android:paddingLeft="@dimen/margin_item_menu"
+				android:paddingRight="@dimen/margin_item_menu"
+				android:layout_marginTop="@dimen/margin_top_content_input_reason_tablet"
 				android:gravity="top"
 				android:scrollbars="vertical" />
 </RelativeLayout>

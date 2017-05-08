@@ -17,13 +17,13 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textColor="@color/text_color_inactive"
-            android:text="Message"
+            android:text="@string/error"
             android:gravity="center_horizontal"
             android:layout_marginBottom="20dp"
-            android:id="@+id/txt_title" />
+            android:id="@+id/txtTitle" />
         <TextView
-            android:id="@+id/txt_content_dialog"
-            android:layout_below="@+id/txt_title"
+            android:id="@+id/txtDlgApplyMsg"
+            android:layout_below="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20sp"

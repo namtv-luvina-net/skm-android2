@@ -66,14 +66,14 @@ public class TabletInputSuccessFragment extends TabletInputFragment {
 		contentSuccess.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Activity activity = getActivity();
 				if (isBackToTopAuto) {
 					Intent intent = new Intent(getActivity(), StartUsingProceduresActivity.class);
 					intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
 					intent.putExtra("ELEMENT_APPLY", element);
-					getActivity().finish();
 					startActivity(intent);
+					activity.finish();
 				} else {
-					Activity activity = getActivity();
 					InputApplyInfo.deletePref(getActivity());
 					Intent intent = new Intent(activity, MenuAcivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

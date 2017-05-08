@@ -12,15 +12,15 @@
 		<LinearLayout
 				android:id="@+id/rl_port"
 				android:layout_width="match_parent"
-				android:layout_height="33dp"
-				android:layout_marginTop="200dp"
+				android:layout_height="@dimen/height_item_input_host_tablet"
+				android:layout_marginTop="@dimen/margin_top_content_input_host_tablet"
 				android:orientation="horizontal"
 				android:focusable="true"
 				android:focusableInTouchMode="true" >
 			<TextView
 					android:id="@+id/txt_port"
 					android:layout_width="wrap_content"
-					android:textSize="@dimen/tv_content_left_side"
+					android:textSize="@dimen/text_size_input_tablet"
 					android:text="@string/title_http_port_number"
 					android:textColor="@color/text_color"
 					android:maxLines="1"
@@ -37,13 +37,13 @@
 					android:singleLine="true"
 					android:paddingLeft="@dimen/margin_item_menu"
 					android:paddingRight="@dimen/margin_item_menu"
-					android:maxLength="256"
-					android:inputType="text|textVisiblePassword|textNoSuggestions"
+					android:inputType="number"
+					android:maxLength="5"
 					android:background="@drawable/round_corner_white_edittext"
 					android:textColor="@color/text_color"
 					android:text="80"
 					android:hint="80"
-					android:textSize="@dimen/tv_title_left_side"
+					android:textSize="@dimen/text_size_input_tablet"
 					android:layout_height="match_parent"/>
 		</LinearLayout>
 		<TextView
@@ -51,7 +51,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/download_ca_description42"
-				android:layout_marginTop="35dp"
-				android:textSize="18sp"
+				android:layout_marginTop="@dimen/margin_items_input_host_tablet"
+				android:textSize="@dimen/text_size_description_download_ca"
 				android:layout_below="@+id/rl_port"/>
 </RelativeLayout>

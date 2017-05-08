@@ -57,7 +57,6 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("datnd", "onCreateView: TabletInputPortFragment");
 		View view = inflater.inflate(R.layout.fragment_input_port_tablet, container, false);
 		rootViewInputPort = (RelativeLayout) view.findViewById(R.id.rootViewInputPort);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
@@ -122,13 +121,6 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		Log.d("datnd", "onResume: TabletInputPortFragment");
-//		setStatusDefaultButtonFooter();
-	}
-
-	@Override
 	public void setMenuVisibility(final boolean visible) {
 		super.setMenuVisibility(visible);
 		if (visible) {
@@ -180,11 +172,6 @@ public class TabletInputPortFragment extends TabletInputFragment {
 
 	@Override
 	public void nextAction() {
-//		if (tabletBaseInputFragment.getErroType() != NOT_INSTALL_CA) {
-//			Log.d("datnd", "nextAction: vao day roi != not install ca");
-//			tabletBaseInputFragment.gotoPage(2);
-//		} else {
-			Log.d("datnd", "nextAction: vao ELSE");
 			logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
 			tabletBaseInputFragment.getInputApplyInfo().setPort(edtPort.getText().toString().trim());
 			tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
@@ -206,7 +193,6 @@ public class TabletInputPortFragment extends TabletInputFragment {
 							endConnection(result);
 						}
 					}).execute();
-//		}
 	}
 
 	private void endConnection(boolean result) {
@@ -251,12 +237,10 @@ public class TabletInputPortFragment extends TabletInputFragment {
 				String port = tabletBaseInputFragment.getPortName();
 				String url = String.format("%s:%s", host, port);
 				tabletBaseInputFragment.getInformCtrl().SetURL(url);
-				Log.d("datnd", "endConnect: finish cai dat- gio check lai = " + url);
 				new ConnectApplyTask(getActivity(), tabletBaseInputFragment.getInformCtrl(), tabletBaseInputFragment
 						.getErroType(), new ConnectApplyTask.EndConnection() {
 					@Override
 					public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-						Log.d("datnd", "endConnect: check lai thanh cong = " + result + " - " + errorType);
 						tabletBaseInputFragment.progressDialog.dismiss();
 						tabletBaseInputFragment.setInformCtrl(informCtrl);
 						tabletBaseInputFragment.setErroType(errorType);

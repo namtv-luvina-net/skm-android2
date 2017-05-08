@@ -144,9 +144,6 @@ public class ContentMenuTabletFragment extends Fragment {
 
 	public void goToMenu() {
 		currentStatus = RESET_STATUS;
-		if (activity == null) {
-			Log.d("datnd", "goToMenu: null roi");
-		}
 		InputApplyInfo.deletePref(activity);
 		((MenuAcivity)activity).goToMenu();
 	}

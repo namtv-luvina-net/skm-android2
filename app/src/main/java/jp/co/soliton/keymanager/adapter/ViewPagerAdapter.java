@@ -25,7 +25,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
-	    Log.d("datnd", "ViewPagerAdapter: vao day");
 	    listFragment[0] = InputHostPageFragment.newInstance(context);
         listFragment[1] = InputPortPageFragment.newInstance(context);
         listFragment[2] = InputPlacePageFragment.newInstance(context);

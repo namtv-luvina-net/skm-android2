@@ -14,15 +14,15 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import jp.co.soliton.keymanager.ConfigrationProcess;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
-import jp.co.soliton.keymanager.customview.DialogApplyMessage;
+import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
+import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.TabletInputFragmentManager;
@@ -34,7 +34,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Created by nguyenducdat on 5/4/2017.
  */
 
-public class TabletBaseInputFragment extends Fragment {
+public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
 	public final static int ERR_FORBIDDEN    = 20;
 	public final static int ERR_UNAUTHORIZED = 21;
 	public final static int SUCCESSFUL       = 22;
@@ -61,6 +61,7 @@ public class TabletBaseInputFragment extends Fragment {
 	protected ControlPagesInput controlPagesInput;
 	private String hostName;
 	private String portName;
+	private boolean isShowingKeyboard = false;
 
 	public static Fragment newInstance(TabletInputFragmentManager tabletInputFragmentManager) {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
@@ -90,6 +91,7 @@ public class TabletBaseInputFragment extends Fragment {
 				return dispatchTouchEvent(v, event);
 			}
 		});
+		DetectsSoftKeyboard.addListenner(view, this);
 		return view;
 	}
 
@@ -190,13 +192,11 @@ public class TabletBaseInputFragment extends Fragment {
 	}
 
 	private void updateButtonFooterStatus(int position) {
-		Log.d("datnd", "updateButtonFooterStatus:  ============================================= " + position);
 		btnBack.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
 		btnNext.setVisibility(position == 2 ? View.INVISIBLE : View.VISIBLE);
 		if (position != 4 && position != 5) {
 			btnSkip.setVisibility(View.GONE);
 		}
-//		btnSkip.setVisibility((position == 4 || position == 5) ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class TabletBaseInputFragment extends Fragment {
 	 * @param message
 	 */
 	protected void showMessage(String message) {
-		DialogApplyMessage dlgMessage = new DialogApplyMessage(getContext(), message);
+		DialogMessageTablet dlgMessage = new DialogMessageTablet(getContext(), message);
 		dlgMessage.show();
 	}
 
@@ -294,8 +294,8 @@ public class TabletBaseInputFragment extends Fragment {
 	 *
 	 * @param message
 	 */
-	protected void showMessage(String message, DialogApplyMessage.OnOkDismissMessageListener listener) {
-		DialogApplyMessage dlgMessage = new DialogApplyMessage(getContext(), message);
+	protected void showMessage(String message, DialogMessageTablet.OnOkDismissMessageListener listener) {
+		DialogMessageTablet dlgMessage = new DialogMessageTablet(getContext(), message);
 		dlgMessage.setOnOkDismissMessageListener(listener);
 		dlgMessage.show();
 	}
@@ -305,11 +305,10 @@ public class TabletBaseInputFragment extends Fragment {
 	 * @param current
 	 */
 	public void setStatusBackNext(int current) {
-		Log.d("datnd", "setStatusBackNext: vao day = " + current);
-//		btnBack.setVisibility(current == 0 ? View.INVISIBLE : View.VISIBLE);
-//		btnNext.setVisibility(current == 2 ? View.INVISIBLE : View.VISIBLE);
 		if (current == 1) {
 			btnNext.setText(R.string.download);
+		} else if (current == 6) {
+			btnNext.setText(R.string.apply);
 		} else {
 			btnNext.setText(R.string.next);
 		}
@@ -320,24 +319,20 @@ public class TabletBaseInputFragment extends Fragment {
 	}
 
 	public void goneSkip() {
-		Log.d("datnd", "goneSkip: gone skip");
 		btnSkip.setVisibility(View.GONE);
 	}
 	public void invisibleSkip() {
 		btnSkip.setVisibility(View.INVISIBLE);
 	}
 	public void visibleSkip() {
-		Log.d("datnd", "visibleSkip: show skip");
 		btnSkip.setVisibility(View.VISIBLE);
 	}
 
 	public void invisibleBack() {
-		Log.d("datnd", "invisibleBack: an back");
 		btnBack.setVisibility(View.INVISIBLE);
 	}
 
 	public void visibleBack() {
-		Log.d("datnd", "visibleBack: show back");
 		btnBack.setVisibility(View.VISIBLE);
 	}
 
@@ -360,12 +355,10 @@ public class TabletBaseInputFragment extends Fragment {
 	}
 
 	public void invisibleNext() {
-		Log.d("datnd", "invisibleNext: an next");
 		btnNext.setVisibility(View.INVISIBLE);
 	}
 
 	public void visibleNext() {
-		Log.d("datnd", "visibleNext: show next");
 		btnNext.setVisibility(View.VISIBLE);
 	}
 
@@ -382,5 +375,20 @@ public class TabletBaseInputFragment extends Fragment {
 
 	public String getPortName() {
 		return portName;
+	}
+
+	@Override
+	public void onSoftKeyboardShown(boolean isShowing) {
+		if (!isShowing) {
+			if (isShowingKeyboard) {
+				View v = getActivity().getCurrentFocus();
+				if (v != null && v instanceof EditText) {
+					v.clearFocus();
+				}
+				isShowingKeyboard = false;
+			}
+		} else {
+			isShowingKeyboard = true;
+		}
 	}
 }

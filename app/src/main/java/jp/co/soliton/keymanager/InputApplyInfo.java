@@ -36,12 +36,10 @@ public class InputApplyInfo {
     }
 
     public String getPort() {
-	    Log.d("datnd", "getPort: " + port);
 	    return port;
     }
 
     public void setPort(String port) {
-	    Log.d("datnd", "setPort: " + port);
 	    this.port = port;
     }
 

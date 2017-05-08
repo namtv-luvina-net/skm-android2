@@ -11,22 +11,22 @@
 				android:layout_gravity="center_horizontal"
 				android:textSize="@dimen/text_size_title"
 				android:textColor="@color/color_title_input"
-				android:layout_marginTop="160dp"
+				android:layout_marginTop="@dimen/margin_top_content_apply_success_tablet"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 		<ImageView
-				android:layout_width="100dp"
-				android:layout_height="70dp"
+				android:layout_width="@dimen/width_img_succes_tablet"
+				android:layout_height="@dimen/height_img_succes_tablet"
 				android:background="@drawable/completed_apply_image"
 				android:layout_gravity="center_horizontal"
-				android:layout_marginTop="70dp"/>
+				android:layout_marginTop="@dimen/height_img_succes_tablet"/>
 		<TextView
 					android:id="@+id/contentSuccess"
 					android:text="Content Thong Bao Thanh Cong"
 					android:layout_gravity="center_horizontal"
 					android:textColor="@color/text_color_active"
 					android:textSize="@dimen/text_size_title"
-					android:layout_marginTop="160dp"
+					android:layout_marginTop="@dimen/margin_top_content_apply_success_tablet"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"/>
 </LinearLayout>

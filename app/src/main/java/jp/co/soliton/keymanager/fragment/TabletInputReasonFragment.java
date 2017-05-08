@@ -32,21 +32,17 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("datnd", "onCreateView: TabletInputReasonFragment");
 		View view = inflater.inflate(R.layout.fragment_input_reason_tablet, container, false);
 		txtReason = (EditText) view.findViewById(R.id.txtReason);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.title_reason_for_apply));
+		titleInput.setText(getString(R.string.input_reason_for_apply));
 		return view;
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("datnd", "onResume: 1");
-//		initValueControl();
 		addListenerForEditText();
-		Log.d("datnd", "onResume: TabletInputReasonFragment");
 	}
 
 	private void addListenerForEditText() {
@@ -71,7 +67,6 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 				if (!hasFocus) {
 					txtReason.setText(txtReason.getText().toString().trim());
 					hideKeyboard(v, getContext());
-					Log.d("datnd", "onFocusChange: 1");
 					updateStatusSkipButton();
 				} else {
 					tabletBaseInputFragment.goneSkip();
@@ -84,7 +79,6 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	public void setMenuVisibility(final boolean visible) {
 		super.setMenuVisibility(visible);
 		if (visible) {
-			Log.d("datnd", "setMenuVisibility: 2");
 			initValueControl();
 		}
 	}
@@ -93,7 +87,6 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		if (isVisibleToUser) {
-			Log.d("datnd", "setUserVisibleHint: 3");
 			initValueControl();
 		}
 	}
@@ -109,7 +102,6 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 			txtReason.setText(tabletBaseInputFragment.getInputApplyInfo().getReason());
 		}
 		setStatusControl();
-		Log.d("datnd", "initValueControl: 2");
 		updateStatusSkipButton();
 	}
 
@@ -128,7 +120,6 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	}
 
 	private void updateStatusSkipButton() {
-		Log.d("datnd", "updateStatusSkipButton: update skip = " + txtReason.getText().toString().trim().length());
 		if (txtReason.getText().toString().trim().length() == 0) {
 			tabletBaseInputFragment.visibleSkip();
 		} else {
@@ -137,7 +128,6 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	}
 	@Override
 	public void nextAction() {
-		Log.d("datnd", "nextAction: reason = " + txtReason.getText().toString().trim());
 		tabletBaseInputFragment.getInputApplyInfo().setReason(txtReason.getText().toString().trim());
 		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
 		tabletBaseInputFragment.gotoPage(6);

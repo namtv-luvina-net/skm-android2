@@ -39,7 +39,6 @@ public class TabletInputPlaceFragment extends TabletInputFragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("datnd", "onCreateView: TabletInputPlaceFragment");
 		View view = inflater.inflate(R.layout.fragment_input_store_tablet, container, false);
 		zoneInputPlace = (RelativeLayout) view.findViewById(R.id.zoneInputPlace);
 		btnTargetVPN = (RelativeLayout) view.findViewById(R.id.btnTargetVPN);

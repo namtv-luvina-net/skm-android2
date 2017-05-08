@@ -13,8 +13,8 @@
 	<LinearLayout
 			android:id="@+id/rl_host"
 			android:layout_width="match_parent"
-			android:layout_height="33dp"
-			android:layout_marginTop="200dp"
+			android:layout_height="@dimen/height_item_input_host_tablet"
+			android:layout_marginTop="@dimen/margin_top_content_input_host_tablet"
 			android:focusable="true"
 			android:focusableInTouchMode="true" >
 
@@ -22,13 +22,12 @@
 				android:id="@+id/txt_host"
 				android:layout_width="0dp"
 				android:layout_weight="9"
-				android:textSize="@dimen/tv_content_left_side"
+				android:textSize="@dimen/text_size_input_tablet"
 				android:textColor="@color/text_color"
 				android:text="@string/title_input_host_name"
 				android:maxLines="1"
 				android:singleLine="true"
 				android:paddingRight="@dimen/margin_item_menu"
-				android:textAllCaps="true"
 				android:gravity="right"
 				android:layout_height="wrap_content"/>
 
@@ -45,8 +44,7 @@
 				android:background="@drawable/round_corner_white_edittext"
 				android:textColor="@color/text_color"
 				android:hint="@string/hint_host_name"
-				android:text="10.0.1.68"
-				android:textSize="@dimen/tv_title_left_side"
+				android:textSize="@dimen/text_size_input_tablet"
 				android:layout_height="match_parent"/>
 	</LinearLayout>
 
@@ -54,8 +52,8 @@
 			android:id="@+id/rl_secure_port"
 			android:layout_below="@+id/rl_host"
 			android:layout_width="match_parent"
-			android:layout_height="33dp"
-			android:layout_marginTop="50dp"
+			android:layout_height="@dimen/height_item_input_host_tablet"
+			android:layout_marginTop="@dimen/margin_items_input_host_tablet"
 			android:focusable="true"
 			android:focusableInTouchMode="true" >
 
@@ -63,13 +61,12 @@
 				android:id="@+id/txt_port"
 				android:layout_width="0dp"
 				android:layout_weight="9"
-				android:textSize="@dimen/tv_content_left_side"
+				android:textSize="@dimen/text_size_input_tablet"
 				android:textColor="@color/text_color"
 				android:text="@string/title_https_port_number"
 				android:maxLines="1"
 				android:singleLine="true"
 				android:gravity="right"
-				android:textAllCaps="true"
 				android:paddingRight="@dimen/margin_item_menu"
 				android:layout_height="wrap_content"/>
 
@@ -81,12 +78,13 @@
 				android:singleLine="true"
 				android:paddingLeft="@dimen/text_size_content_item_apid"
 				android:paddingRight="@dimen/margin_item_menu"
-				android:inputType="text|textVisiblePassword|textNoSuggestions"
+				android:maxLength="5"
+				android:inputType="number"
 				android:background="@drawable/round_corner_white_edittext"
 				android:textColor="@color/text_color"
 				android:hint="443"
 				android:text="443"
-				android:textSize="@dimen/tv_title_left_side"
+				android:textSize="@dimen/text_size_input_tablet"
 				android:gravity="bottom"
 				android:layout_height="match_parent"/>
 	</LinearLayout>

@@ -18,6 +18,7 @@ import jp.co.soliton.keymanager.activity.ConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
+import jp.co.soliton.keymanager.customview.DialogMenuCertDetail;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -94,7 +95,6 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		initValueControl();
 	}
 
 	@Override
@@ -277,12 +277,10 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	private void applyFinish() {
 		this.inputApplyInfo.setPassword(null);
 		this.inputApplyInfo.savePref(getActivity());
-//		Intent intent = new Intent(getActivity(), CompleteApplyActivity.class);
-//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_APPLY_COMPLETE);
 		tabletBaseInputFragment.gotoCompleteApply();
 	}
 
+	
 	private void saveElementApply() {
 		if (!ValidateParams.nullOrEmpty(update_apply)) {
 			elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
@@ -320,13 +318,12 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		protected Boolean doInBackground(Void... params) {
 			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			boolean ret;
-			int m_nErroType = 0;
 			//Call to server
 			ret = conn.RunHttpApplyCerUrlConnection(m_InformCtrl);
 			//Parse result
 			if (!ret) {
 				if (errorCount > 10) {
-					m_nErroType = ERR_ESPAP_NOT_CONNECT;
+					tabletBaseInputFragment.setErroType(ERR_ESPAP_NOT_CONNECT);
 					reTry = false;
 				} else {
 					reTry = true;
@@ -337,41 +334,41 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			reTry = false;
 			//Check status of certificate
 			if (nullOrEmpty(m_InformCtrl.GetRtn())) {
-				m_nErroType = ERR_NETWORK;
+				tabletBaseInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("OK")) {
-				m_nErroType = RET_ESP_AP_OK;
+				tabletBaseInputFragment.setErroType(RET_ESP_AP_OK);
 				return true;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("NG")) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground NG");
-				m_nErroType = ERR_LOGIN_FAIL;
+				tabletBaseInputFragment.setErroType(ERR_LOGIN_FAIL);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("EPS-ap Service is stopped.")) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground EPS-ap Service is stopped.");
-				m_nErroType = ERR_ESP_AP_STOP;
+				tabletBaseInputFragment.setErroType(ERR_ESP_AP_STOP);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("No session")) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground No session.");
-				m_nErroType = ERR_SESSION_TIMEOUT;
+				tabletBaseInputFragment.setErroType(ERR_SESSION_TIMEOUT);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Forbidden.");
-				m_nErroType = ERR_FORBIDDEN;
+				tabletBaseInputFragment.setErroType(ERR_FORBIDDEN);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Unauthorized.");
-				m_nErroType = ERR_UNAUTHORIZED;
+				tabletBaseInputFragment.setErroType(ERR_UNAUTHORIZED);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR).toString())) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground ERR:");
-				m_nErroType = ERR_COLON;
+				tabletBaseInputFragment.setErroType(ERR_COLON);
 				return false;
 			}
 			// 取得XMLのパーサー
@@ -380,10 +377,9 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground TakeApartDevice false");
 				reTry = false;
-				m_nErroType = ERR_NETWORK;
+				tabletBaseInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
-			tabletBaseInputFragment.setErroType(m_nErroType);
 			parseXML();
 			return ret;
 		}
