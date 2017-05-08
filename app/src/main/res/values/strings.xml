@@ -233,8 +233,8 @@
     <string name="apply_confirmation">Apply confirmation</string>
     <string name="start_apply">Start apply</string>
     <string name="input_host_name">Input host name</string>
-    <string name="input_https_port_number">Input https port number</string>
-    <string name="input_http_port_number">Input http port number</string>
+    <string name="input_https_port_number">Https port number</string>
+    <string name="input_http_port_number">Http port number</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="input_id_and_password">Input ID/Password</string>
@@ -344,4 +344,24 @@
 	<string name="title_left_menu">Select Item</string>
 	<string name="hint_host_name" translatable="false">epsap.example.com</string>
 	<string name="hint_email_name" translatable="false">name@example.com</string>
+	<string name="title_input_host_name">Input Host name :</string>
+	<string name="title_https_port_number">HTTPS port number :</string>
+	<string name="title_http_port_number">HTTP port number :</string>
+	<string name="title_input_user_id_password">Input User ID/Password</string>
+	<string name="title_password">Password :</string>
+	<string name="title_input_email">Mail Address :</string>
+	<string name="title_port_number">Port Number :</string>
+	<string name="title_id">ID :</string>
+	<string name="title_store">Store :</string>
+	<string name="title_destination_email_address">Email Address :</string>
+	<string name="title_reason_for_apply">Reason for Apply :</string>
+	<string name="input_host_name_and_port_number">Host Name/HTTPS Port Number</string>
+	<string name="input_download_ca_certificate">Download CA Certificate</string>
+	<string name="input_select_store">Certificate storage location</string>
+	<string name="input_user_id_password">User ID/Password</string>
+	<string name="input_email">Destination Email Address</string>
+	<string name="input_reason_for_apply">Reason for Apply</string>
+	<string name="input_confirm_content">Confirm Content</string>
+	<string name="title_input_host_and_port_secure">Host Name/HTTPS Port Number</string>
+	<string name="title_input_port_download_ca">Download CA Certificate</string>
 </resources>
