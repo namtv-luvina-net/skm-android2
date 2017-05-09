@@ -255,7 +255,7 @@ public class ConfigrationProcess {
 	// OSバージョン確認
 	public static double getAndroidOsVersion() {
 		double ret_ver;
-		
+
 		String str_android_version = Build.VERSION.RELEASE;		// Androidバージョンを取得
 		//Log.i("getAndroidOsVersion Version= ", str_android_version);
 		

@@ -21,7 +21,7 @@
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/title_left_menu"
+				android:text="@string/select_item"
 				android:textColor="@color/color_title_menu"
 				android:textSize="@dimen/tv_title_left_side"
 				android:layout_centerHorizontal="true"

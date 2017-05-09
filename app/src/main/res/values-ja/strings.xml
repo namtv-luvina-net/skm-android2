@@ -1,134 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <string name="hello">Hello World, EPS_ap300Activity!</string>
-    <string name="app_name">Soliton KeyManager</string>
+	<string name="app_name">Soliton KeyManager</string>
     <string name="app_name_icon">KeyManager</string>
-    <string name="ApplicationTitle">Soliton KeyManager</string>
-    <string name="NGkey">NG</string>
-    <string name="LoginErrorMessage">Connection error</string>
-    <string name="LogoutErrorMessage">LogoutError</string>
-    <string name="EnrollErrorMessage">Enroll Error</string>
-    <string name="ConfigrationErrorMessage">Configration Error</string>
-    <string name="Property_key">key</string>
+	<string name="Property_key">key</string>
     <string name="Property_array">array</string>
-    <string name="Property_data">data</string>
-    <string name="Property_date">date</string>
-    <string name="Property_dict">dict</string>
-    <string name="Property_real">real</string>
-    <string name="Property_integer">integer</string>
-    <string name="Property_string">string</string>
-    <string name="Property_true">true</string>
-    <string name="Property_false">false</string>
-    <string name="User_Agent">Android Agent</string>
-    <string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Dialog_title_delpro">プロファイル削除</string>
-    <string name="Dialog_msg_delpro">プロファイルを削除します</string>
-    <string name="Dialog_title_wifiinfo">Wi-Fi設定</string>
+	<string name="Property_dict">dict</string>
+	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
+	<string name="Dialog_title_wifiinfo">Wi-Fi設定</string>
     <string name="Dialog_msg_wifiinfo">本バージョンのOSにおいては、手動でEAPの設定を行ってください。</string>
-    <string name="Dialog_msg_telpermissions">Soliton KeyManagerを起動するためには、通話の発信と管理の許可を行ってください。</string>
-    <string name="Certificate_import">証明書取得</string>
-    <string name="Forbidden">Forbidden</string>
+	<string name="Forbidden">Forbidden</string>
     <string name="Unauthorized">Unauthorized</string>
     <string name="ERR">ERR:</string>
-    <string name="MailRequest">問い合わせメール：</string>
-    <string name="PhoneRequest">問い合わせ電話：</string>
-    <string name="CertificateInstall">証明書のインストールが終了しました。Backボタンで前画面に戻ってください。</string>
-    <string name="ConnectionAddress">ホスト名またはIPアドレス</string>
-    <string name="main_header_title">接続</string>
-    <string name="main_connet_button">接続</string>
-    <string name="main_prodel_button">プロファイル削除</string>
-    <string name="main_apid_button">APID表示</string>
-    <string name="main_connect_msg">サーバーへアクセスします。</string>
-    <string name="main_prodel_msg">インストールしたプロファイルを削除します。</string>
-    <string name="main_apid_msg">表示とともにクリップボードへのコピーを行います。</string>
-    <string name="main_mail_button">メールで送信</string>
-    <string name="main_apid_mailtitle">Soliton KeyManager APID</string>
-    <string name="main_apid_mailmsg">Androidから送信</string>
-    <string name="main_apid_wifi">Wi-Fi</string>
+	<string name="main_apid_wifi">Wi-Fi</string>
     <string name="main_apid_vpn">VPNとアプリ</string>
     <string name="main_versionname">Ver.</string>
     <string name="main_log_mailtitle">Soliton KeyManager 診断情報</string>
-    <string name="main_txt_gosupport">サポート >></string>
-    <string name="profile_devicepolicy_msg1">※当製品をアンインストールするときには、\nDevicePolicy Controlを終了させてからアンインストールを行ってください。</string>
-    <string name="profile_devicepolicy_msg2">※設定情報を確認後、\n画面下部の「プロファイルを適用する」ボタンを押して設定を反映させてください。</string>
-    <string name="profile_ssid_title">SSID</string>
-    <string name="profile_secprio_title">暗号方式</string>
-    <string name="profile_pw_title">Password</string>
-    <string name="profile_shortcut_title">ショートカット</string>
-    <string name="profile_labelname_title">ラベル名</string>
-    <string name="profile_uri_title">Uniform Resource Identifier(URI)</string>
-    <string name="profile_appctrl_title">機能制限</string>
-    <string name="profile_appctrl_msgdefault">制限なし</string>
-    <string name="profile_profileset_button">プロファイルを適用する</string>
-    <string name="profile_err_noprofile">※ 有効なプロファイルの情報が存在しません。</string>
-    <string name="profile_err_getprofile">※ プロファイル情報が取得できませんでした。</string>
-    <string name="profile_err_different_form">形式の異なるパラメータが指定されました。</string>
-    <string name="profile_err_passcode_expiry">パスコードの有効期限を指定してください。</string>
-    <string name="profile_err_passcode_area">パスコードの有効期限の範囲は0以上、730以下でなくてはいけません。</string>
-    <string name="profile_err_passcode_record">範囲は0以上、50以下でなくてはいけません。</string>
-    <string name="profile_string_day">日</string>
-    <string name="profile_string_able">可</string>
-    <string name="profile_string_alphanumeric">英数を組み合わせる</string>
-    <string name="profile_string_count">回</string>
-    <string name="profile_err_consistence">プロファイル情報に不正があるため、プロファイルの適用が行えません。</string>
-    <string name="profile_err_profileset">プロファイルの設定に失敗しました。</string>
-    <string name="profile_err_passcode_failure">パスコードの失敗回数上限を指定してください。</string>
-    <string name="profile_err_ssid_len">SSIDの長さは1～32byteです(日本語は1文字あたり3byteになります)</string>
-    <string name="profile_err_ssidcode">SSIDに(\&quot;)は使用できません</string>
-    <string name="profile_err_wep">AndroidはWEP Enterpriseは未対応です</string>
-    <string name="profile_err_wifipass">Wi-Fiパスワードを指定してください。</string>
-    <string name="profile_err_wifipass_multi">パスワードにマルチバイトは使用できません</string>
-    <string name="profile_err_tls">TLSはサポート外です</string>
-    <string name="profile_err_chap">AndroidはCHAPは未対応です</string>
-    <string name="profile_err_uri">URIに指定できるのはhttpまたはhttpsのみです</string>
-    <string name="profile_appctrl_msgctrl">制限あり：</string>
-    <string name="profile_appctrl_camera">カメラ, </string>
-    <string name="guidance_msg01">証明書取得ページで&lt;証明書申請&gt;ボタンをタップして証明書インストールを開始します。</string>
-    <string name="guidance_msg02">CA証明書の画面では証明書名を変更する必要はありません。&lt;OK&gt;をタップしてください。</string>
-    <string name="guidance_msg03">ユーザー証明書の画面でも証明書名を変更する必要はありません。&lt;OK&gt;をタップしてください。</string>
-    <string name="guidance_msg04">インストール終了後、「設定」でWi-Fiなどの設定を行って下さい。</string>
-    <string name="guidance_next_button">&quot;証明書取得画面へ進む...</string>
-    <string name="certreq_noapply_title">未申請</string>
-    <string name="certreq_noapproval_title">未承認</string>
-    <string name="certreq_mailaddress_title">通知先メールアドレス</string>
-    <string name="certreq_memo_title">承認者へのメモ</string>
-    <string name="certreq_apply_button">申請する</string>
-    <string name="certreq_applycng_button">申請変更</string>
-    <string name="certreq_applyback_button">申請取り下げ</string>
-    <string name="mdm_header_title">MDM チェックイン</string>
-    <string name="mdm_devicepolicy_msg1">※当製品をアンインストールするときには、\nDevicePolicy Controlを終了させてからアンインストールを行ってください。\n(プロファイル削除で終了することができます)</string>
-    <string name="mdm_checkin_button">チェックイン</string>
-    <string name="mdm_run_button">MDM開始</string>
-    <string name="certlogin_header_title">証明書取得</string>
-    <string name="certlogin_userid_title">ユーザーID</string>
+	<string name="certlogin_userid_title">ユーザーID</string>
     <string name="certlogin_password_title">パスワード</string>
-    <string name="certlogin_start_button">証明書申請</string>
-    <string name="certlogin_start_msg">サーバーへアクセスします。</string>
-    <string name="certlogin_guide_button">証明書取得手順を確認する...</string>
-    <string name="certlogin_apid_button">APID表示</string>
-    <string name="certlogin_apid_msg">表示とともにクリップボードへのコピーを行います。</string>
-    <string name="certlogin_userauthentication_button">ユーザー認証</string>
-    <string name="certlogin_app_button">アプリケーション一覧</string>
-    <string name="profilelist_nodata_msg">データが存在しません。</string>
-    <string name="list_no_data">データが存在しません。</string>
-    <string name="progress_title">通信中</string>
-    <string name="progress_message">データ取得中・・・</string>
-    <string name="diag_logget_button">診断情報取得</string>
-    <string name="diag_logdel_button">診断情報削除</string>
-    <string name="diag_logdel_msg">診断情報を削除しました。</string>
-    <string name="diag_logdel_nolog">診断情報がありません。</string>
-    <string name="diag_log_nosdcard">診断情報を取得するためにはSDカードが必要です。</string>
-    <string name="instapp_nosdcard">SDカードが無いため、アプリのダウンロードができません。</string>
-    <string name="support_header_title">サポート</string>
-    <string name="support_apk_info">製品情報</string>
-    <string name="admin_receiver_enabled">デバイス管理者を有効にしました</string>
+	<string name="instapp_nosdcard">SDカードが無いため、アプリのダウンロードができません。</string>
+	<string name="admin_receiver_enabled">デバイス管理者を有効にしました</string>
     <string name="admin_receiver_disabled">デバイス管理者を無効にしました</string>
     <string name="admin_receiver_pwchange">デバイス管理者のパスワードを変更しました</string>
     <string name="admin_receiver_disabled_request">このアプリのデバイス管理者を無効にしますか</string>
     <string name="accept_language">ja</string>
-    <string name="certlogin_certspinner_msg">認証情報の使用</string>
-    <!--SKM V2.x-->
+	<!--SKM V2.x-->
     <!-- Common-->
     <string name="label_country_name">国名</string>
     <string name="label_state_or_province_name">州名または地方名</string>
@@ -137,42 +32,20 @@
     <string name="label_organizational_unit_name">組織単位名</string>
     <string name="label_common_name">コモンネーム</string>
     <string name="label_email_address">メールアドレス</string>
-    <string name="label_algorithm">アルゴリズム</string>
-    <string name="label_uri">URI</string>
-    <string name="label_SubjectDN_CN">件名DN:</string>
-    <string name="label_IssuerDN_CN">イシュアーDN:</string>
-    <string name="label_FinalDate_CA">最終日:</string>
-    <string name="label_add_list_certificate">CA証明書追加</string>
-    <string name="label_list_certificate">証明書</string>
-    <string name="label_menu">メニュー</string>
-    <string name="label_yes">はい</string>
-    <string name="label_ok">OK</string>
-    <string name="label_no">いいえ</string>
-    <string name="label_close">閉じる</string>
-    <!-- Settings-->
+	<string name="label_uri">URI</string>
+	<string name="label_list_certificate">証明書</string>
+	<!-- Settings-->
     <string name="label_settings">設定</string>
     <string name="label_notification_settings">通知設定</string>
-    <string name="label_notification_scheduled">スケジュールされた通知一覧</string>
-    <string name="label_expired_notification">期限切れ通知</string>
+	<string name="label_expired_notification">期限切れ通知</string>
     <string name="label_before_expired_notification">期限切れ間近通知</string>
     <string name="label_notification">通知</string>
-    <string name="label_date_final">証明書の有効期限を過ぎました。</string>
-    <string name="label_certificate_will_experied">証明書の有効期限が あと</string>
-    <string name="label_days">日で切れます。</string>
-    <string name="label_expired">期限切れ</string>
+	<string name="label_expired">期限切れ</string>
     <string name="label_day_before">日前</string>
-    <string name="label_dialog_choose_detail">選択してください。</string>
-    <string name="label_save">保存</string>
-    <string name="label_dialog_delete_cert">削除</string>
+	<string name="label_dialog_delete_cert">削除</string>
     <string name="label_dialog_Cancle">キャンセル</string>
-    <string name="label_confirm">確認</string>
-    <string name="label_msg_delete_confirm">削除してもよろしいですか？</string>
-    <string name="msg_dialog_delete_cert">証明書を削除する</string>
-    <string name="msg_cert_already_in_list">この証明書はすでにリストに入っています</string>
-    <!-- SKMNotification-->
-    <string name="msg_notification_before">有効期限前の証明書</string>
-    <string name="msg_no_notification">スケジュールされた通知がありません。</string>
-    <!-- Subject Name-->
+	<!-- SKMNotification-->
+	<!-- Subject Name-->
     <string name="label_subject_name">サブジェクト名</string>
     <!-- Issuer Name-->
     <string name="label_issuer_name">発行者名</string>
@@ -193,19 +66,9 @@
     <!--Key Usage-->
     <string name="label_key_usage">鍵用途</string>
     <string name="label_usage">使用法</string>
-    <string name="label_digital_signature">電子署名</string>
-    <string name="label_non_repudiation">否認防止</string>
-    <string name="label_key_encipherment">鍵暗号</string>
-    <string name="label_data_encipherment">データ暗号</string>
-    <string name="label_key_agreement">鍵交換</string>
-    <string name="label_key_cert_sign">電子署名の検証</string>
-    <string name="label_crl_sign">CRLの署名検証</string>
-    <string name="label_encipher_only">鍵交換時のデータ暗号用</string>
-    <string name="label_decipher_only">鍵交換次のデータ複合用</string>
-    <!--Subject Key Identitier-->
+	<!--Subject Key Identitier-->
     <string name="label_subject_key_identifier">サブジェクト鍵識別子</string>
-    <string name="label_key_identifier">鍵識別子</string>
-    <!-- Auuthority Key Identitier-->
+	<!-- Auuthority Key Identitier-->
     <string name="label_authority_key_identifier">証明書鍵識別子</string>
     <!--  CRL Distribution Points-->
     <string name="label_crl_distribution_points">CRL配布ポイント</string>
@@ -214,25 +77,10 @@
     <!--  Extended Key Usage-->
     <string name="label_extended_key_usage">拡張鍵用途</string>
     <string name="label_purpose">目的</string>
-    <string name="label_server_auth">サーバ認証</string>
-    <string name="label_client_auth">クライアント認証</string>
-    <string name="label_code_signing">コード署名</string>
-    <string name="label_email_protection">メール保護</string>
-    <string name="label_ipsec_end_system">IPSec エンドシステム</string>
-    <string name="label_ipsec_tunnel">IPSec トンネル</string>
-    <string name="label_ipsec_user">IPSec ユーザ</string>
-    <string name="label_ipsec_protection">IPSec保護</string>
-    <string name="label_time_stamping">タイムスタンプ</string>
-    <string name="label_ocsp_signing">OCSP署名</string>
-    <string-array name="certtype_strarray">
-        <item android:id="@+id/item_wifi" android:layout_width="wrap_content" android:layout_height="wrap_content">Wi-Fi</item>
-        <item android:id="@+id/item_vpn" android:layout_width="wrap_content" android:layout_height="wrap_content">VPNとアプリ</item>
-    </string-array>
-    <!-- SKM v2 new design -->
+	<!-- SKM v2 new design -->
     <string name="select_item">項目を選択</string>
     <string name="apid">APID</string>
-    <string name="apply_confirmation">承認確認</string>
-    <string name="start_apply">申請開始</string>
+	<string name="start_apply">申請開始</string>
     <string name="input_host_name">ホスト名を入力</string>
     <string name="input_https_port_number">HTTPSポート番号を入力</string>
     <string name="input_http_port_number">HTTPポート番号を入力</string>
@@ -258,25 +106,16 @@
     <string name="error">エラ―</string>
     <string name="notification_destination_email_address">通知先メールアドレス</string>
     <string name="input">入力する</string>
-    <string name="id">ID</string>
-    <string name="apply_completed">申請が完了しました</string>
+	<string name="apply_completed">申請が完了しました</string>
     <string name="back_to_top">トップへ戻る</string>
     <string name="back_to_top_auto">利用開始手続きを始める</string>
     <string name="not_installed_ca">not installed ca certification</string>
     <string name="connect_failed">接続に失敗しました。</string>
     <string name="error_install_certificate">Can not install certificate</string>
     <string name="apply_mail_error">通知先メールアドレスが不正です。</string>
-    <string name="apply_ok"></string>
-    <string name="apply_title"></string>
-    <string name="modify_title"></string>
-    <string name="enroll_title"></string>
-    <string name="login_failed">ユーザーIDまたはパスワードが違います。</string>
-    <string name="login_other_failed"></string>
-    <string name="apply_setstatus_error"></string>
-    <string name="epsap_stopped">NetAttest EPS-apサービスが停止しています。</string>
-    <string name="session_timeout">セッションタイムアウト</string>
-    <string name="unauthorized"></string>
-    <string name="connect_not_epsap">接続先アドレスまたはポート番号が違います。</string>
+	<string name="login_failed">ユーザーIDまたはパスワードが違います。</string>
+	<string name="session_timeout">セッションタイムアウト</string>
+	<string name="connect_not_epsap">接続先アドレスまたはポート番号が違います。</string>
     <string name="devicecheck_error">NetAttest EPS-apにAPIDが登録されていません。</string>
     <string name="registration_setting_invalid">端末登録設定が無効です。</string>
     <string name="apid_description">APIDをタップすると、メニューが表示されます</string>
@@ -342,7 +181,6 @@
 	<string name="guide_32">"アイコンから見ることができます。"</string>
 	<string name="apid_guide_1">コピーをタップすると\nクリップボードにコピーされます。</string>
 	<string name="apid_guide_2">メールをタップすると\nメーラーが起動します。</string>
-	<string name="title_left_menu">項目を選択</string>
 	<string name="input_host_name_and_port_number">ホスト名・\nHTTPSポート番号</string>
 	<string name="input_download_ca_certificate">CA証明書ダウンロード</string>
 	<string name="input_user_id_password">ユーザーID・パスワード</string>
@@ -352,14 +190,12 @@
 	<string name="title_input_email">"メールアドレス : "</string>
 	<string name="title_input_port_download_ca">CA証明書ダウンロード</string>
 	<string name="title_input_host_name">ホスト名を入力 :</string>
-	<string name="title_input_user_id_password">ユーザーID・パスワードを入力</string>
 	<string name="title_input_host_and_port_secure">ホスト名・HTTPSポート番号</string>
 	<string name="title_password">"パスワード : "</string>
 	<string name="title_reason_for_apply">申請理由 :</string>
 	<string name="title_destination_email_address">通知先メールアドレス:</string>
 	<string name="title_http_port_number">HTTPポート番号 :</string>
 	<string name="title_https_port_number">HTTPSポート番号 :</string>
-	<string name="title_id">ユーザーID :</string>
 	<string name="title_port_number">ポート番号 :</string>
 	<string name="title_store">ストア :</string>
 	<string name="input_select_store">証明書の格納先</string>

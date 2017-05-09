@@ -17,7 +17,6 @@
 	<dimen name="margin_bottom_img_wifi_input_store_tablet">35.16dp</dimen>
 	<dimen name="margin_bottom_with_line_input_confirm_tablet">41.02dp</dimen>
 	<dimen name="margin_content_apid">117.19dp</dimen>
-	<dimen name="margin_content_input_apply_tablet">87.89dp</dimen>
 	<dimen name="margin_content_input_tablet">64.45dp</dimen>
 	<dimen name="margin_footer_input_tablet">37.50dp</dimen>
 	<dimen name="margin_guide_input_left_side">76.17dp</dimen>
@@ -33,8 +32,6 @@
 	<dimen name="margin_top_content_input_host_tablet">234.38dp</dimen>
 	<dimen name="margin_top_content_input_reason_tablet">140.63dp</dimen>
 	<dimen name="margin_top_with_line_input_confirm_tablet">46.88dp</dimen>
-	<dimen name="min_width_title_apid_detail">82.03dp</dimen>
-	<dimen name="min_width_title_item_apid">58.59dp</dimen>
 	<dimen name="pading_content_item_apid">5.86dp</dimen>
 	<dimen name="size_icon_setting">25.78dp</dimen>
 	<dimen name="text_size_title_item_apid">12.89dp</dimen>

@@ -1,133 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, EPS_ap300Activity!</string>
-    <string name="app_name">Soliton KeyManager</string>
+	<string name="app_name">Soliton KeyManager</string>
     <string name="app_name_icon">KeyManager</string>
-    <string name="ApplicationTitle">Soliton KeyManager</string>
-    <string name="NGkey">NG</string>
-    <string name="LoginErrorMessage">Connection error</string>
-    <string name="LogoutErrorMessage">LogoutError</string>
-    <string name="EnrollErrorMessage">Enroll Error</string>
-    <string name="ConfigrationErrorMessage">Configration Error</string>
-    <string name="Property_key">key</string>
+	<string name="Property_key">key</string>
     <string name="Property_array">array</string>
-    <string name="Property_data">data</string>
-    <string name="Property_date">date</string>
-    <string name="Property_dict">dict</string>
-    <string name="Property_real">real</string>
-    <string name="Property_integer">integer</string>
-    <string name="Property_string">string</string>
-    <string name="Property_true">true</string>
-    <string name="Property_false">false</string>
-    <string name="User_Agent">Android Agent</string>
-    <string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Dialog_title_delpro">Delete Profile</string>
-    <string name="Dialog_msg_delpro">System will delete a profile.</string>
-    <string name="Dialog_title_wifiinfo">Wi-Fi Settings</string>
+	<string name="Property_dict">dict</string>
+	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
+	<string name="Dialog_title_wifiinfo">Wi-Fi Settings</string>
     <string name="Dialog_msg_wifiinfo">Set EAP manually with this OS version.</string>
-    <string name="Dialog_msg_telpermissions">To start up Soliton KeyManager, do the allow of make and manage phone calls.</string>
-    <string name="Certificate_import">Acquire Certificate</string>
-    <string name="Forbidden">Forbidden</string>
+	<string name="Forbidden">Forbidden</string>
     <string name="Unauthorized">Unauthorized</string>
     <string name="ERR">ERR:</string>
-    <string name="MailRequest">Inquiry Mail:</string>
-    <string name="PhoneRequest">Inquiry Call:</string>
-    <string name="CertificateInstall">Certificate installation has completed. Go back to the previous page with Back button.</string>
-    <string name="ConnectionAddress">Hostname or IP Address</string>
-    <string name="main_header_title">Connection</string>
-    <string name="main_connet_button">Connection</string>
-    <string name="main_prodel_button">Delete Profile</string>
-    <string name="main_apid_button">Show APID</string>
-    <string name="main_connect_msg">System will access to server.</string>
-    <string name="main_prodel_msg">System will delete the installed profile.</string>
-    <string name="main_apid_msg">System will display and copy to clipboard.</string>
-    <string name="main_mail_button">Send by Mail</string>
-    <string name="main_apid_mailtitle">Soliton KeyManager APID</string>
-    <string name="main_apid_mailmsg">Send from Android</string>
-    <string name="main_versionname">Ver.</string>
+	<string name="main_versionname">Ver.</string>
     <string name="main_apid_wifi">Wi-Fi</string>
     <string name="main_apid_vpn">VPN and Apps</string>
     <string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
-    <string name="main_txt_gosupport">Support >></string>
-    <string name="profile_devicepolicy_msg1">*To uninstall this product, ¥nexit DevicePolicy Control first and then uninstall.</string>
-    <string name="profile_devicepolicy_msg2">*After confirming setting information, apply settings by clicking "Apply Profile" button at the bottom of screen.</string>
-    <string name="profile_ssid_title">SSID</string>
-    <string name="profile_secprio_title">Encryption Type</string>
-    <string name="profile_pw_title">Password</string>
-    <string name="profile_shortcut_title">Shortcut</string>
-    <string name="profile_labelname_title">Label Name</string>
-    <string name="profile_uri_title">Uniform Resource Identifier(URI)</string>
-    <string name="profile_appctrl_title">Functional Restriction</string>
-    <string name="profile_appctrl_msgdefault">No Restriction</string>
-    <string name="profile_profileset_button">Apply Profile</string>
-    <string name="profile_err_noprofile">*No available profile information exists.</string>
-    <string name="profile_err_getprofile">*System could not acquire profile information.</string>
-    <string name="profile_err_different_form">Different format parameter has been specified.</string>
-    <string name="profile_err_passcode_expiry">Specify expiration period of passcode.</string>
-    <string name="profile_err_passcode_area">Passcode\'s expiration period range should be more than 0 and less than 730.</string>
-    <string name="profile_err_passcode_record">Range should be more than 0 and less than 50.</string>
-    <string name="profile_string_day">Day</string>
-    <string name="profile_string_able">OK</string>
-    <string name="profile_string_alphanumeric">Use Alphanumerical Values</string>
-    <string name="profile_string_count">Number of Times</string>
-    <string name="profile_err_consistence">System cannot apply profile because profile information is invalid.</string>
-    <string name="profile_err_profileset">Failed to set profile.</string>
-    <string name="profile_err_passcode_failure">Specify upper limit number of times for failure.</string>
-    <string name="profile_err_ssid_len">Length of SSID is from 1 to 32 bytes (Length of one Japanese character is 3 bytes).</string>
-    <string name="profile_err_ssidcode">You cannot use (\&quot;) for SSID.</string>
-    <string name="profile_err_wep">Android doesn\'t support WEP Enterprise.</string>
-    <string name="profile_err_wifipass">Specify Wi-Fi password.</string>
-    <string name="profile_err_wifipass_multi">You cannot use multibyte character for password.</string>
-    <string name="profile_err_tls">TLS is out of support.</string>
-    <string name="profile_err_chap">Android doesn\'t support CHAP.</string>
-    <string name="profile_err_uri">You can specify only http or https as URI.</string>
-    <string name="profile_appctrl_msgctrl">With Restriction:</string>
-    <string name="profile_appctrl_camera">Camera,</string>
-    <string name="guidance_msg01">At certificate acquisition page, tap &lt;Certificate Request&gt; button and start certificate installation.</string>
-    <string name="guidance_msg02">No need to change certificate name at CA certificate screen. Tap &lt;OK&gt; button.</string>
-    <string name="guidance_msg03">Also, no need to change certificate name at user certificate screen. Tap &lt;OK&gt; button.</string>
-    <string name="guidance_msg04">After installation, configure Wi-Fi settings and others at "Settings"</string>
-    <string name="guidance_next_button">Go to Certificate Acquisition Screen...</string>
-    <string name="certreq_noapply_title">Not Requested</string>
-    <string name="certreq_noapproval_title">Not Approved</string>
-    <string name="certreq_mailaddress_title">Destination Mail Address</string>
-    <string name="certreq_memo_title">Memo to Approver</string>
-    <string name="certreq_apply_button">Request</string>
-    <string name="certreq_applycng_button">Change Request</string>
-    <string name="certreq_applyback_button">Cancel Request</string>
-    <string name="mdm_header_title">MDM Check-in</string>
-    <string name="mdm_devicepolicy_msg1">*To uninstall this product, ¥nexit DevicePolicy Control first and then uninstall (You can exist at Delete Profile).</string>
-    <string name="mdm_checkin_button">Check-in </string>
-    <string name="mdm_run_button">Start MDM</string>
-    <string name="certlogin_header_title">Acquire Certificate</string>
-    <string name="certlogin_userid_title">User ID</string>
+	<string name="certlogin_userid_title">User ID</string>
     <string name="certlogin_password_title">Password</string>
-    <string name="certlogin_start_button">Request Certificate</string>
-    <string name="certlogin_start_msg">System will access to server.</string>
-    <string name="certlogin_guide_button">Confirming certificate acquisition process...</string>
-    <string name="certlogin_apid_button">Show APID</string>
-    <string name="certlogin_apid_msg">System will display and copy to clipboard.</string>
-    <string name="certlogin_userauthentication_button">User Authentication</string>
-    <string name="certlogin_app_button">Application List</string>
-    <string name="profilelist_nodata_msg">Data doesn\'t exist.</string>
-    <string name="list_no_data">Data doesn\'t exist.</string>
-    <string name="progress_title">Communicating...</string>
-    <string name="progress_message">Acquiring  data...</string>
-    <string name="diag_logget_button">Acquire Diagnostic Information</string>
-    <string name="diag_logdel_button">Delete Diagnostic Information</string>
-    <string name="diag_logdel_msg">System has deleted diagnostic information.</string>
-    <string name="diag_logdel_nolog">No diagnostic information.</string>
-    <string name="diag_log_nosdcard">To acquire diagnostic information, SD card is required.</string>
-    <string name="instapp_nosdcard">Unavailable to download application because SD card is required.</string>
-    <string name="support_header_title">Support</string>
-    <string name="support_apk_info">Product Information</string>
-    <string name="admin_receiver_enabled">Device administrator has been enabled.</string>
+	<string name="instapp_nosdcard">Unavailable to download application because SD card is required.</string>
+	<string name="admin_receiver_enabled">Device administrator has been enabled.</string>
     <string name="admin_receiver_disabled">Device administrator has been disabled.</string>
     <string name="admin_receiver_pwchange">Password of device administrator has been changed.</string>
     <string name="admin_receiver_disabled_request">Are you sure to disable device administrator for this application?</string>
     <string name="accept_language">en</string>
-    <string name="certlogin_certspinner_msg">Credential use</string>
-    <!--SKM V2.x-->
+	<!--SKM V2.x-->
     <!-- Common-->
     <string name="label_country_name">Country Name</string>
     <string name="label_state_or_province_name">State or Province Name</string>
@@ -136,42 +32,20 @@
     <string name="label_organizational_unit_name">Organization Unit Name</string>
     <string name="label_common_name">Common Name</string>
     <string name="label_email_address">Email Address</string>
-    <string name="label_algorithm">Alogrithm</string>
-    <string name="label_uri">URI</string>
-    <string name="label_SubjectDN_CN">SubjectDN:</string>
-    <string name="label_IssuerDN_CN">IssuerDN:</string>
-    <string name="label_FinalDate_CA">Final Date:</string>
-    <string name="label_add_list_certificate">Add List CA</string>
-    <string name="label_list_certificate">Certificate</string>
-    <string name="label_menu">Menu</string>
-    <string name="label_yes">Yes</string>
-    <string name="label_no">No</string>
-    <string name="label_ok">OK</string>
-    <string name="label_close">Close</string>
-    <!-- Settings-->
+	<string name="label_uri">URI</string>
+	<string name="label_list_certificate">Certificate</string>
+	<!-- Settings-->
     <string name="label_settings">Settings</string>
     <string name="label_notification_settings">Notification Settings</string>
-    <string name="label_notification_scheduled">Scheduled Notifications</string>
-    <string name="label_expired_notification">EXPIRED NOTIFICATION</string>
+	<string name="label_expired_notification">EXPIRED NOTIFICATION</string>
     <string name="label_before_expired_notification">BEFORE EXPIRATION NOTIFICATION</string>
     <string name="label_notification">Notification</string>
-    <string name="label_date_final">Certificate is experied</string>
-    <string name="label_certificate_will_experied">Certificate will experied in</string>
-    <string name="label_days">days</string>
-    <string name="label_expired">Expired</string>
+	<string name="label_expired">Expired</string>
     <string name="label_day_before">Day before</string>
-    <string name="label_dialog_choose_detail">Choose Certificate operation</string>
-    <string name="label_save">Save</string>
-    <string name="label_dialog_delete_cert">Delete</string>
+	<string name="label_dialog_delete_cert">Delete</string>
     <string name="label_dialog_Cancle">Cancel</string>
-    <string name="label_confirm">Confirmation</string>
-    <string name="label_msg_delete_confirm">Do you want to delete?</string>
-    <string name="msg_dialog_delete_cert">Delete Certificate</string>
-    <string name="msg_cert_already_in_list">This certificate is already in the list</string>
-    <!-- SKMNotification-->
-    <string name="msg_notification_before">Certificate before Expiry</string>
-    <string name="msg_no_notification">No scheduled notifications.</string>
-    <!-- Subject Name-->
+	<!-- SKMNotification-->
+	<!-- Subject Name-->
     <string name="label_subject_name">Subject Name</string>
     <!-- Issuer Name-->
     <string name="label_issuer_name">Issuer Name</string>
@@ -192,19 +66,9 @@
     <!--Key Usage-->
     <string name="label_key_usage">Key Usage</string>
     <string name="label_usage">Usage</string>
-    <string name="label_digital_signature">Digital Signature</string>
-    <string name="label_non_repudiation">Non Repudiation</string>
-    <string name="label_key_encipherment">Key Encipherment</string>
-    <string name="label_data_encipherment">Data Encipherment</string>
-    <string name="label_key_agreement">Key Agreement</string>
-    <string name="label_key_cert_sign">Key Cert Sign</string>
-    <string name="label_crl_sign">CRL Sing</string>
-    <string name="label_encipher_only">Encipher Only</string>
-    <string name="label_decipher_only">Decipher Only</string>
-    <!--Subject Key Identitier-->
+	<!--Subject Key Identitier-->
     <string name="label_subject_key_identifier">Subject Key Identifier</string>
-    <string name="label_key_identifier">Key Identifier</string>
-    <!-- Auuthority Key Identitier-->
+	<!-- Auuthority Key Identitier-->
     <string name="label_authority_key_identifier">Authority Key Identifier</string>
     <!--  CRL Distribution Points-->
     <string name="label_crl_distribution_points">CRL Distribution Points</string>
@@ -213,25 +77,10 @@
     <!--  Extended Key Usage-->
     <string name="label_extended_key_usage">Extended key Usage</string>
     <string name="label_purpose">Purpose</string>
-    <string name="label_server_auth">Server Auth</string>
-    <string name="label_client_auth">Client Auth</string>
-    <string name="label_code_signing">Code Signing</string>
-    <string name="label_email_protection">Email Protection</string>
-    <string name="label_ipsec_end_system">IPSec End System</string>
-    <string name="label_ipsec_tunnel">IPSec</string>
-    <string name="label_ipsec_user">IPSec User</string>
-    <string name="label_ipsec_protection">IPSec Protection</string>
-    <string name="label_time_stamping">TimeStamping</string>
-    <string name="label_ocsp_signing">OCSPstamping</string>
-    <string-array name="certtype_strarray">
-        <item >Wi-Fi</item>
-        <item >VPN and apps</item>
-    </string-array>
-    <!-- SKM v2 new design -->
+	<!-- SKM v2 new design -->
     <string name="select_item">Select item</string>
     <string name="apid">APID</string>
-    <string name="apply_confirmation">Apply confirmation</string>
-    <string name="start_apply">Start apply</string>
+	<string name="start_apply">Start apply</string>
     <string name="input_host_name">Input host name</string>
     <string name="input_https_port_number">Https port number</string>
     <string name="input_http_port_number">Http port number</string>
@@ -257,8 +106,7 @@
     <string name="error">Error</string>
     <string name="notification_destination_email_address">Notification destination email address</string>
     <string name="input">Input</string>
-    <string name="id">ID</string>
-    <string name="apply_completed">Apply Completed</string>
+	<string name="apply_completed">Apply Completed</string>
     <string name="back_to_top">Back to Top</string>
     <string name="back_to_top_auto">Start using procedures</string>
     <string name="not_installed_ca">not installed ca certification</string>
@@ -266,17 +114,9 @@
     <string name="error_install_certificate">Can not install certificate</string>
     <string name="apply_mail_error">Destination email address is invalid</string>
     <string name="registration_setting_invalid">Device registration is incorrect</string>
-    <string name="apply_ok"></string>
-    <string name="apply_title"></string>
-    <string name="modify_title"></string>
-    <string name="enroll_title"></string>
-    <string name="login_failed">User ID or Password you entered is incorrect.</string>
-    <string name="login_other_failed"></string>
-    <string name="apply_setstatus_error"></string>
-    <string name="epsap_stopped">NetAttest EPS-ap service is stopped.</string>
-    <string name="session_timeout">Session timed out</string>
-    <string name="unauthorized"></string>
-    <string name="connect_not_epsap">Destination address or port number you entered is incorrect.</string>
+	<string name="login_failed">User ID or Password you entered is incorrect.</string>
+	<string name="session_timeout">Session timed out</string>
+	<string name="connect_not_epsap">Destination address or port number you entered is incorrect.</string>
     <string name="devicecheck_error">Your APID is not registered on NetAttest EPS-ap.</string>
     <string name="apid_description">Tap APID to display the menu</string>
     <string name="apid_guide_1">Tap Copy to copy to clipboard</string>
@@ -341,17 +181,14 @@
 	<string name="guide_2">Select the item onthe right to start applying</string>
 	<string name="guide_31">Various information can be seen from the icon </string>
 	<string name="guide_32"> above</string>
-	<string name="title_left_menu">Select Item</string>
 	<string name="hint_host_name" translatable="false">epsap.example.com</string>
 	<string name="hint_email_name" translatable="false">name@example.com</string>
 	<string name="title_input_host_name">Input Host name :</string>
 	<string name="title_https_port_number">HTTPS port number :</string>
 	<string name="title_http_port_number">HTTP port number :</string>
-	<string name="title_input_user_id_password">Input User ID/Password</string>
 	<string name="title_password">Password :</string>
 	<string name="title_input_email">Mail Address :</string>
 	<string name="title_port_number">Port Number :</string>
-	<string name="title_id">ID :</string>
 	<string name="title_store">Store :</string>
 	<string name="title_destination_email_address">Email Address :</string>
 	<string name="title_reason_for_apply">Reason for Apply :</string>
