@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import android.os.Build;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.annotation.TargetApi;
@@ -248,13 +249,13 @@ public class WifiControl {
     	boolean bConnect = true;
 
     	// OSバージョン確認
-    	double d_android_version = ConfigrationProcess.getAndroidOsVersion();
+    	int sdk_int_version = Build.VERSION.SDK_INT;
 
     	if(wifiitem.GetEAPType() == NONE) {
     		Log.d("WifiControl::PublicConnectChild", "EAPType NONE. ");
     		wifiConfig = this.createPskConfig(wifiitem);
-    		if(d_android_version > 5.2) bConnect = false;
-    	} else if (d_android_version < 4.3){
+    		if(sdk_int_version > Build.VERSION_CODES.LOLLIPOP_MR1) bConnect = false;
+    	} else if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
     		Log.d("WifiControl::PublicConnectChild", "EAPType = " + wifiitem.GetEAPType());
     		wifiConfig =this.createEapConfigEAP(wifiitem);
     	} else {

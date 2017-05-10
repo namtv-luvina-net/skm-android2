@@ -1,6 +1,7 @@
 package jp.co.soliton.keymanager.fragment;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,7 @@ public class InputPlacePageFragment extends InputBasePageFragment {
         zoneInputPlace = (LinearLayout) root.findViewById(R.id.zoneInputPlace);
         btnTargetVPN = (Button) root.findViewById(R.id.btnTargetVPN);
         btnTargetWiFi = (Button) root.findViewById(R.id.btnTargetWifi);
-        if (pagerInputActivity.d_android_version < 4.3){
+        if (pagerInputActivity.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
             pagerInputActivity.getInputApplyInfo().setPlace(InputPlacePageFragment.TARGET_VPN);
             pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
             zoneInputPlace.setVisibility(View.GONE);

@@ -3,6 +3,7 @@ package jp.co.soliton.keymanager.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
-import jp.co.soliton.keymanager.ConfigrationProcess;
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
@@ -93,9 +93,9 @@ public class ConfirmApplyActivity extends Activity {
             titleEmail.setMaxLines(3);
         }
 
-        double d_android_version = ConfigrationProcess.getAndroidOsVersion();
-        if (d_android_version < 4.3){
-            View hrStore = (View) findViewById(R.id.hrStore);
+        int sdk_int_version = Build.VERSION.SDK_INT;
+        if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
+            View hrStore = findViewById(R.id.hrStore);
             LinearLayout titleStore = (LinearLayout) findViewById(R.id.titleStore);
             LinearLayout valueStore = (LinearLayout) findViewById(R.id.valueStore);
             hrStore.setVisibility(View.GONE);

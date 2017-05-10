@@ -3,7 +3,7 @@ package jp.co.soliton.keymanager.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.security.KeyChain;
 import android.support.annotation.Nullable;
@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
@@ -59,7 +58,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
         txtPort = (EditText) root.findViewById(R.id.txtPort);
         zoneInputPortTitle = (TextView) root.findViewById(R.id.zoneInputPortTitle);
         txtGuideDownloadCaCertificate = (TextView) root.findViewById(R.id.tv_guide_download_ca_certificate);
-	    if (pagerInputActivity.d_android_version < 4.3) {
+	    if (pagerInputActivity.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2) {
 		    txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
 	    }else {
 		    txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
@@ -175,7 +174,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     public void finishInstallCertificate(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
-	        if (pagerInputActivity.d_android_version >= 4.3){
+	        if (pagerInputActivity.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2){
 		        progressDialog.show();
 		        String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
 		        m_InformCtrl.SetURL(url);

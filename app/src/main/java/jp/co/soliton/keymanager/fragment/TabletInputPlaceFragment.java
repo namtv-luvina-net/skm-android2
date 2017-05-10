@@ -1,21 +1,17 @@
 package jp.co.soliton.keymanager.fragment;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 
-import static jp.co.soliton.keymanager.R.id.zoneInputPlace;
 import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.TARGET_VPN;
 import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.TARGET_WiFi;
 
@@ -45,7 +41,7 @@ public class TabletInputPlaceFragment extends TabletInputFragment {
 		btnTargetWiFi = (RelativeLayout) view.findViewById(R.id.btnTargetWifi);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.target_place));
-		if (tabletBaseInputFragment.d_android_version < 4.3){
+		if (tabletBaseInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
 			tabletBaseInputFragment.getInputApplyInfo().setPlace(TARGET_VPN);
 			tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
 			zoneInputPlace.setVisibility(View.GONE);

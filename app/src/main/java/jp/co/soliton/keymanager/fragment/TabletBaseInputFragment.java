@@ -2,11 +2,11 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,7 +56,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private InputApplyInfo inputApplyInfo;
 	private ElementApplyManager elementMgr;
 	private int m_nErroType;
-	public double d_android_version;
+	public int sdk_int_version;
 	protected DialogApplyProgressBar progressDialog;
 	protected ControlPagesInput controlPagesInput;
 	private String hostName;
@@ -80,8 +80,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
-
-		d_android_version = ConfigrationProcess.getAndroidOsVersion();
+		sdk_int_version = Build.VERSION.SDK_INT;
 		btnSkip = (Button) view.findViewById(R.id.btnSkip);
 		btnBack = (Button) view.findViewById(R.id.btnBack);
 		btnNext = (Button) view.findViewById(R.id.btnNext);
@@ -219,7 +218,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	 */
 	public void gotoPage(int pageIndex) {
 		goneSkip();
-		if (d_android_version < 4.3 && pageIndex == 2){
+		if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && pageIndex == 2){
 			pageIndex++;
 		}
 		if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
@@ -239,7 +238,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 			@Override
 			public void onClick(View v) {
 				int current;
-				if (d_android_version < 4.3 && viewPager.getCurrentItem() == 3){
+				if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && viewPager.getCurrentItem() == 3){
 					viewPager.setCurrentItem(2, true);
 				}
 				if (viewPager.getCurrentItem() == 2) {
