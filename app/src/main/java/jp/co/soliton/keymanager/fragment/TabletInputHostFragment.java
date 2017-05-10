@@ -53,7 +53,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.title_input_host_and_port_secure));
+		titleInput.setText(getString(R.string.input_host_name_and_port_number));
 		return view;
 	}
 

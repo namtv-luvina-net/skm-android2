@@ -344,7 +344,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/background_color_white"
-                            android:text="@string/reason"
+                            android:text="@string/reason_for_apply"
                             android:gravity="left|center"
                             android:textSize="@dimen/text_size_title"
                             android:textColor="@color/text_color_inactive"

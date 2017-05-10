@@ -35,7 +35,7 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 		View view = inflater.inflate(R.layout.fragment_input_reason_tablet, container, false);
 		txtReason = (EditText) view.findViewById(R.id.txtReason);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_reason_for_apply));
+		titleInput.setText(getString(R.string.reason_for_apply));
 		return view;
 	}
 

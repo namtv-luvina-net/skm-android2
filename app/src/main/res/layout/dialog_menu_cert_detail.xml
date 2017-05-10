@@ -43,7 +43,7 @@
         android:textAllCaps="false"
         android:textSize="20dp"
         android:textColor="@color/text_color_active"
-        android:text="@string/label_notification_settings"
+        android:text="@string/notif_setting"
         android:layout_gravity="center"
         android:gravity="center"/>
     <TextView

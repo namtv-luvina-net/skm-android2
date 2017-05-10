@@ -74,7 +74,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		txtEmail = (TextView) view.findViewById(R.id.txtEmail);
 		txtReason = (TextView) view.findViewById(R.id.txtReason);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_confirm_content));
+		titleInput.setText(getString(R.string.confirm_content));
 		return view;
 	}
 

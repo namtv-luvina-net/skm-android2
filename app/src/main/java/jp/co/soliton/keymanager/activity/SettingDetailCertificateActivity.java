@@ -111,7 +111,7 @@ public class SettingDetailCertificateActivity extends Activity {
 
     public void onMenuSettingClick(View v) {
         final CharSequence[] items = {getResources().getString(R.string.label_dialog_delete_cert),
-                                    getResources().getString(R.string.label_notification_settings),
+                                    getResources().getString(R.string.notif_setting),
                                     getResources().getString(R.string.label_dialog_Cancle)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
