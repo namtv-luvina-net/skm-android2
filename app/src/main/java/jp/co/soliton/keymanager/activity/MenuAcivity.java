@@ -42,8 +42,8 @@ public class MenuAcivity extends FragmentActivity {
 	    setOrientation();
 	    setContentView(R.layout.activity_menu);
 	    logCtrl = LogCtrl.getInstance(this);
-	    tabletContentFragmentManager = new TabletContentFragmentManager(this, getSupportFragmentManager());
 	    if (savedInstanceState == null) {
+		    tabletContentFragmentManager = new TabletContentFragmentManager(getSupportFragmentManager());
 		    createView();
 	    } else {
 		    int currentStatus = savedInstanceState.getInt("currentStatus");
@@ -61,6 +61,7 @@ public class MenuAcivity extends FragmentActivity {
 		super.onRestoreInstanceState(savedInstanceState);
 		int currentStatus = savedInstanceState.getInt("currentStatus");
 		int currentPage = savedInstanceState.getInt("currentPage");
+		tabletContentFragmentManager = (TabletContentFragmentManager) savedInstanceState.getSerializable("tabletContentFragmentManager");
 		tabletContentFragmentManager.gotoLastState(currentStatus);
 		Log.d("MenuAcivity:datnd", "onRestoreInstanceState: ");
 	}
@@ -68,9 +69,9 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		Log.d("MenuAcivity:datnd", "onSaveInstanceState: ");
-		tabletContentFragmentManager.removeAllFragment();
 		super.onSaveInstanceState(savedInstanceState);
 		int currentStatus = tabletContentFragmentManager.currentStatus;
+		savedInstanceState.putSerializable("tabletContentFragmentManager", tabletContentFragmentManager);
 		savedInstanceState.putInt("currentStatus", currentStatus);
 		savedInstanceState.putInt("currentPage", tabletContentFragmentManager.getCurrentPageInputApply());
 	}

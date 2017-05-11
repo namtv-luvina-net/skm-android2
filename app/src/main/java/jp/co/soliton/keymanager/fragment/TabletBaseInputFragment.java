@@ -28,13 +28,15 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.TabletContentFragmentManager;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
+import java.io.Serializable;
+
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by nguyenducdat on 5/4/2017.
  */
 
-public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
+public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner, Serializable{
 	public final static int ERR_FORBIDDEN    = 20;
 	public final static int ERR_UNAUTHORIZED = 21;
 	public final static int SUCCESSFUL       = 22;
@@ -268,7 +270,8 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 					current = viewPager.getCurrentItem() - 1;
 				}
 				if (current < 0) {
-					tabletContentFragmentManager.gotoMenuWithDeleteInputApplyInfo();
+					InputApplyInfo.deletePref(getActivity());
+					tabletContentFragmentManager.gotoMenu();
 				} else {
 					viewPager.setCurrentItem(current, true);
 				}

@@ -30,15 +30,10 @@ public class TabletContentFragmentManager implements Serializable{
 	public int currentStatus;
 
 	FragmentManager fragmentManager;
-	TabletBaseInputFragment tabletBaseInputFragment;
-//	LeftSideInputTabletFragment leftSideInputTabletFragment;
-	MenuAcivity menuAcivity;
-//	ContentMenuTabletFragment contentMenuTabletFragment;
 	Fragment fragmentLeft, fragmentContent;
 
-	public TabletContentFragmentManager(MenuAcivity menuAcivity, FragmentManager fragmentManager) {
+	public TabletContentFragmentManager(FragmentManager fragmentManager) {
 		Log.d("TabletContentFragmentManager:datnd", "TabletContentFragmentManager: tao moi ========================================= ");
-		this.menuAcivity = menuAcivity;
 		this.fragmentManager = fragmentManager;
 	}
 
@@ -61,11 +56,6 @@ public class TabletContentFragmentManager implements Serializable{
 		}
 	}
 
-	public void gotoMenuWithDeleteInputApplyInfo() {
-		InputApplyInfo.deletePref(menuAcivity);
-		gotoMenu();
-	}
-
 	public void gotoMenu() {
 		Log.d("TabletContentFragmentManager:datnd", "gotoMenu: ");
 		currentStatus = RESET_STATUS;
@@ -82,7 +72,7 @@ public class TabletContentFragmentManager implements Serializable{
 	}
 
 	public void pressBackInputApply() {
-		tabletBaseInputFragment.clickBackButton();
+		((TabletBaseInputFragment)fragmentContent).clickBackButton();
 	}
 
 	public void startActivityStartApply() {
@@ -131,7 +121,7 @@ public class TabletContentFragmentManager implements Serializable{
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance());
 		fragmentTransaction.commit();
-//		leftSideInputTabletFragment.hideContent();
+		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
 	}
 	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
 		currentStatus = COMPLETE_STATUS;
@@ -161,6 +151,6 @@ public class TabletContentFragmentManager implements Serializable{
 	 * @param resultCode
 	 */
 	public void finishInstallCertificate(int resultCode) {
-		tabletBaseInputFragment.finishInstallCertificate(resultCode);
+		((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
 	}
 }
