@@ -16,13 +16,34 @@ import jp.co.soliton.keymanager.R;
 
 public class FooterInputTabletFragment extends Fragment {
 
+	public interface InterfaceForFooter {
+		void clickNext();
+		void clickBack();
+		void clickSkip();
+	}
+
+	public interface InterfaceForContent {
+		void updateButtonFooterStatus(int position);
+		void clickBackButton();
+		void setStatusBackNext(int position);
+		void goneSkipButton();
+		void visibleSkipButton();
+		void disableNextButton();
+		void enableNextButton();
+	}
+
 	private TextView btnSkip;
 	private Button btnNext;
 	private Button btnBack;
+	InterfaceForFooter interfaceForFooter;
 
 	public static Fragment newInstance() {
 		FooterInputTabletFragment f = new FooterInputTabletFragment();
 		return f;
+	}
+
+	public void setInterfaceForFooter(InterfaceForFooter interfaceForFooter) {
+		this.interfaceForFooter = interfaceForFooter;
 	}
 
 	@Nullable
@@ -38,6 +59,24 @@ public class FooterInputTabletFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		btnNext.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				interfaceForFooter.clickNext();
+			}
+		});
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				interfaceForFooter.clickBack();
+			}
+		});
+		btnSkip.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				interfaceForFooter.clickSkip();
+			}
+		});
 	}
 
 	public void goneSkip() {
@@ -80,4 +119,12 @@ public class FooterInputTabletFragment extends Fragment {
 	public void visibleNext() {
 		btnNext.setVisibility(View.VISIBLE);
 	}
+
+	public void updateButtonFooterStatus(int position){}
+	public void clickBackButton(){}
+	public void setStatusBackNext(int position){}
+	public void goneSkipButton(){}
+	public void visibleSkipButton(){}
+	public void disableNextButton(){}
+	public void enableNextButton(){}
 }

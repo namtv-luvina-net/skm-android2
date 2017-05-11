@@ -30,6 +30,10 @@
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:id="@+id/fragment_content_menu_tablet"/>
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:id="@+id/fragment_content_footer_tablet"/>
 		</RelativeLayout>
 	</LinearLayout>
 </RelativeLayout>

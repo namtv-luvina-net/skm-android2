@@ -4,23 +4,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.*;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import jp.co.soliton.keymanager.InputApplyInfo;
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.manager.TabletContentFragmentManager;
+import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.fragment.*;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION;
-import static jp.co.soliton.keymanager.manager.TabletContentFragmentManager.COMPLETE_STATUS;
-import static jp.co.soliton.keymanager.manager.TabletContentFragmentManager.INPUT_APPLY_STATUS;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -33,7 +25,7 @@ public class MenuAcivity extends FragmentActivity {
 	private boolean isTablet;
 	private LogCtrl logCtrl;
 	private boolean isFocusMenuTablet;
-	TabletContentFragmentManager tabletContentFragmentManager;
+//	TabletContentFragmentManager tabletContentFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +34,16 @@ public class MenuAcivity extends FragmentActivity {
 	    setOrientation();
 	    setContentView(R.layout.activity_menu);
 	    logCtrl = LogCtrl.getInstance(this);
+	    fragmentManager = getSupportFragmentManager();
 	    if (savedInstanceState == null) {
-		    tabletContentFragmentManager = new TabletContentFragmentManager(getSupportFragmentManager());
+//		    tabletContentFragmentManager = new TabletContentFragmentManager(getSupportFragmentManager());
 		    createView();
 	    } else {
 		    int currentStatus = savedInstanceState.getInt("currentStatus");
 		    int currentPage = savedInstanceState.getInt("currentPage");
 		    Log.d("MenuAcivity:datnd", "onCreate: " + currentStatus +" - " + currentPage);
-		    tabletContentFragmentManager.gotoLastState(currentStatus);
+//		    gotoLastState(currentStatus);
+//		    tabletContentFragmentManager.gotoLastState(currentStatus);
 //		    if (currentStatus == INPUT_APPLY_STATUS && currentPage >= 0){
 //			    tabletContentFragmentManager.gotoPageInputApply(currentPage);
 //		    }
@@ -61,8 +55,8 @@ public class MenuAcivity extends FragmentActivity {
 		super.onRestoreInstanceState(savedInstanceState);
 		int currentStatus = savedInstanceState.getInt("currentStatus");
 		int currentPage = savedInstanceState.getInt("currentPage");
-		tabletContentFragmentManager = (TabletContentFragmentManager) savedInstanceState.getSerializable("tabletContentFragmentManager");
-		tabletContentFragmentManager.gotoLastState(currentStatus);
+//		tabletContentFragmentManager = (TabletContentFragmentManager) savedInstanceState.getSerializable("tabletContentFragmentManager");
+//		tabletContentFragmentManager.gotoLastState(currentStatus);
 		Log.d("MenuAcivity:datnd", "onRestoreInstanceState: ");
 	}
 
@@ -70,10 +64,10 @@ public class MenuAcivity extends FragmentActivity {
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		Log.d("MenuAcivity:datnd", "onSaveInstanceState: ");
 		super.onSaveInstanceState(savedInstanceState);
-		int currentStatus = tabletContentFragmentManager.currentStatus;
-		savedInstanceState.putSerializable("tabletContentFragmentManager", tabletContentFragmentManager);
+//		int currentStatus = tabletContentFragmentManager.currentStatus;
+//		savedInstanceState.putSerializable("tabletContentFragmentManager", tabletContentFragmentManager);
 		savedInstanceState.putInt("currentStatus", currentStatus);
-		savedInstanceState.putInt("currentPage", tabletContentFragmentManager.getCurrentPageInputApply());
+		savedInstanceState.putInt("currentPage", getCurrentPageInputApply());
 	}
 //
 //	@Override
@@ -92,7 +86,7 @@ public class MenuAcivity extends FragmentActivity {
 		Log.d("MenuAcivity:datnd", "createView: ");
 		if (isTablet) {
 			isFocusMenuTablet = true;
-			tabletContentFragmentManager.gotoMenu();
+			gotoMenu();
 		}
 	}
 
@@ -108,16 +102,16 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		if (!isFocusMenuTablet && isTablet) {
-			if (tabletContentFragmentManager.currentStatus == INPUT_APPLY_STATUS) {
-				tabletContentFragmentManager.pressBackInputApply();
-			} else if (tabletContentFragmentManager.currentStatus == COMPLETE_STATUS) {
+			if (currentStatus == INPUT_APPLY_STATUS) {
+				pressBackInputApply();
+			} else if (currentStatus == COMPLETE_STATUS) {
 				InputApplyInfo.deletePref(this);
 				Intent intent = new Intent(MenuAcivity.this, MenuAcivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 				finish();
 			}else {
-				tabletContentFragmentManager.gotoMenu();
+				gotoMenu();
 			}
 		} else {
 			super.onBackPressed();
@@ -126,7 +120,7 @@ public class MenuAcivity extends FragmentActivity {
 
 	public void goToMenu() {
 		isFocusMenuTablet = true;
-		tabletContentFragmentManager.gotoMenu();
+		gotoMenu();
 	}
 
 	public boolean isFocusMenuTablet() {
@@ -162,7 +156,194 @@ public class MenuAcivity extends FragmentActivity {
 		LogCtrl.getInstance(this).loggerInfo("ViewPagerInputActivity:onActivityResult  requestCode = " + requestCode + ". " +
 				"resultCode = " + requestCode);
 		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {
-			tabletContentFragmentManager.finishInstallCertificate(resultCode);
+			finishInstallCertificate(resultCode);
 		}
 	}
+
+
+	//======================================================================================================================
+	public static final int NOT_VALID = -1;
+	public static final int RESET_STATUS = 0;
+	public static final int APID_STATUS = 1;
+	public static final int INPUT_APPLY_STATUS = 2;
+	public static final int COMPLETE_STATUS = 3;
+	public int currentStatus;
+	FragmentManager fragmentManager;
+	Fragment fragmentLeft, fragmentContent;
+
+	public void gotoLastState(int currentStatus) {
+		switch (currentStatus) {
+			case RESET_STATUS:
+				gotoMenu();
+				break;
+			case APID_STATUS:
+				startActivityAPID();
+				break;
+			case INPUT_APPLY_STATUS:
+				startActivityStartApply();
+				break;
+			case COMPLETE_STATUS:
+				goApplyCompleted();
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void gotoMenu() {
+		Log.d("TabletContentFragmentManager:datnd", "gotoMenu: ");
+		currentStatus = RESET_STATUS;
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.exit, R.anim.enter);
+		fragmentContent = ContentMenuTabletFragment.newInstance();
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+		fragmentTransaction.commit();
+
+		fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentLeft = new LeftSideMenuTabletFragment();
+		fragmentTransaction.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
+		fragmentTransaction.commit();
+	}
+
+	public void pressBackInputApply() {
+		((TabletBaseInputFragment)fragmentContent).clickBackButton();
+	}
+
+	public void startActivityStartApply() {
+		Log.d("TabletContentFragmentManager:datnd", "startActivityStartApply: ");
+		currentStatus = INPUT_APPLY_STATUS;
+		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+		fragmentLeft = LeftSideInputTabletFragment.newInstance();
+		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
+		fragmentTransaction1.commit();
+
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentContent = TabletBaseInputFragment.newInstance();
+		FooterInputTabletFragment footerInputTabletFragment = (FooterInputTabletFragment) FooterInputTabletFragment.newInstance();
+
+
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+		fragmentTransaction.replace(R.id.fragment_content_footer_tablet, footerInputTabletFragment);
+		fragmentTransaction.commit();
+	}
+
+
+	private FooterInputTabletFragment.InterfaceForFooter createIntefaceForFooter(final TabletBaseInputFragment tabletBaseInputFragment){
+		return new FooterInputTabletFragment.InterfaceForFooter() {
+			@Override
+			public void clickNext() {
+				tabletBaseInputFragment.clickNext();
+			}
+
+			@Override
+			public void clickBack() {
+				tabletBaseInputFragment.clickBack();
+			}
+
+			@Override
+			public void clickSkip() {
+				tabletBaseInputFragment.clickSkip();
+			}
+		};
+	}
+
+	private FooterInputTabletFragment.InterfaceForContent createIntefaceForContent(final FooterInputTabletFragment
+			                                                                               footerInputTabletFragment) {
+		return new FooterInputTabletFragment.InterfaceForContent(){
+
+			@Override
+			public void updateButtonFooterStatus(int position) {
+				footerInputTabletFragment.updateButtonFooterStatus(position);
+			}
+
+			@Override
+			public void clickBackButton() {
+				footerInputTabletFragment.clickBackButton();
+			}
+
+			@Override
+			public void setStatusBackNext(int position) {
+				footerInputTabletFragment.setStatusBackNext(position);
+			}
+
+			@Override
+			public void goneSkipButton() {
+				footerInputTabletFragment.goneSkipButton();
+			}
+
+			@Override
+			public void visibleSkipButton() {
+				footerInputTabletFragment.visibleSkipButton();
+			}
+
+			@Override
+			public void disableNextButton() {
+				footerInputTabletFragment.disableNextButton();
+			}
+
+			@Override
+			public void enableNextButton() {
+				footerInputTabletFragment.enableNextButton();
+			}
+		};
+	}
+
+	public void gotoPageInputApply(int page) {
+		((TabletBaseInputFragment)fragmentContent).gotoPage(page);
+	}
+
+	public int getCurrentPageInputApply() {
+		if (currentStatus == INPUT_APPLY_STATUS) {
+			return ((TabletBaseInputFragment)fragmentContent).getCurrentPage();
+		}
+		return NOT_VALID;
+	}
+
+	public void startActivityAPID() {
+		currentStatus = APID_STATUS;
+		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+		fragmentLeft = new LeftSideAPIDTabletFragment();
+		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
+		fragmentTransaction1.commit();
+
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentContent= new ContentAPIDTabletFragment();
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+		fragmentTransaction.commit();
+	}
+
+	public void goApplyCompleted(){
+		currentStatus = COMPLETE_STATUS;
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance());
+		fragmentTransaction.commit();
+		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
+	}
+	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
+		currentStatus = COMPLETE_STATUS;
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance(m_InformCtrl, element));
+		fragmentTransaction.commit();
+		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
+	}
+
+	public void updateLeftSideInput(int possition) {
+		if (fragmentLeft == null) {
+			return;
+		}
+		((LeftSideInputTabletFragment)fragmentLeft).highlightItem(possition);
+	}
+
+	/**
+	 * Finish install certificate
+	 * @param resultCode
+	 */
+	public void finishInstallCertificate(int resultCode) {
+		((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
+	}
+
 }

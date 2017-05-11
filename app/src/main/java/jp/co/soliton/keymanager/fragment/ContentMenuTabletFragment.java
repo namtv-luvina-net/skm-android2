@@ -14,11 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.*;
+import jp.co.soliton.keymanager.activity.DetailConfirmActivity;
+import jp.co.soliton.keymanager.activity.ListCertificateActivity;
+import jp.co.soliton.keymanager.activity.ListConfirmActivity;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.APIDManager;
-import jp.co.soliton.keymanager.manager.TabletContentFragmentManager;
 
 import java.util.List;
 
@@ -38,12 +40,12 @@ public class ContentMenuTabletFragment extends Fragment {
 	TextView titleVPN;
 	private APIDManager apidManager;
 	Activity activity;
-	TabletContentFragmentManager tabletContentFragmentManager;
+//	TabletContentFragmentManager tabletContentFragmentManager;
 
-	public static Fragment newInstance(TabletContentFragmentManager tabletContentFragmentManager) {
+	public static Fragment newInstance() {
 		Log.d("ContentMenuTabletFragment:datnd", "newInstance: ");
 		ContentMenuTabletFragment f = new ContentMenuTabletFragment();
-		f.tabletContentFragmentManager = tabletContentFragmentManager;
+//		f.tabletContentFragmentManager = tabletContentFragmentManager;
 		return f;
 	}
 
@@ -113,7 +115,7 @@ public class ContentMenuTabletFragment extends Fragment {
 					} else {
 						((MenuAcivity)activity).setFocusMenuTablet(false);
 						InputApplyInfo.deletePref(getActivity());
-						tabletContentFragmentManager.startActivityStartApply();
+						((MenuAcivity)getActivity()).startActivityStartApply();
 					}
 				}
 			});
@@ -122,7 +124,7 @@ public class ContentMenuTabletFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					((MenuAcivity)activity).setFocusMenuTablet(false);
-					tabletContentFragmentManager.startActivityAPID();
+					((MenuAcivity)getActivity()).startActivityAPID();
 				}
 			});
 	}

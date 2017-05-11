@@ -30,7 +30,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	TextView titleInput;
 	EditText editTextHost;
 	EditText editTextSecurePort;
-	TabletBaseInputFragment tabletBaseInputFragment;
+//	TabletBaseInputFragment tabletBaseInputFragment;
 
 	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
 		Log.d("TabletInputHostFragment:datnd", "newInstance: ");
@@ -38,6 +38,12 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		Log.d("TabletInputHostFragment:datnd", "newInstance: ");
 		f.tabletBaseInputFragment = tabletBaseInputFragment;
 		return f;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable("tabletBaseInputFragment", tabletBaseInputFragment);
 	}
 
 	@Override
@@ -60,6 +66,9 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		Log.d("TabletInputHostFragment:datnd", "onCreateView: ");
 		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) savedInstanceState.getSerializable("tabletBaseInputFragment");
+		}
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);

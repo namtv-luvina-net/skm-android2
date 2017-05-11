@@ -61,7 +61,7 @@ public class TabletContentFragmentManager implements Serializable{
 		currentStatus = RESET_STATUS;
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.exit, R.anim.enter);
-		fragmentContent = ContentMenuTabletFragment.newInstance(this);
+		fragmentContent = ContentMenuTabletFragment.newInstance();
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 		fragmentTransaction.commit();
 
@@ -84,7 +84,7 @@ public class TabletContentFragmentManager implements Serializable{
 		fragmentTransaction1.commit();
 
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentContent = TabletBaseInputFragment.newInstance(this);
+		fragmentContent = TabletBaseInputFragment.newInstance();
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 		fragmentTransaction.commit();
