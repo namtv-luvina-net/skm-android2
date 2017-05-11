@@ -85,7 +85,6 @@
 				android:hint="443"
 				android:text="443"
 				android:textSize="@dimen/text_size_input_tablet"
-				android:gravity="bottom"
 				android:layout_height="match_parent"/>
 	</LinearLayout>
 </RelativeLayout>
