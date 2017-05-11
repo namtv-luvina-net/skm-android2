@@ -67,7 +67,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (tabletBaseInputFragment.progressDialog == null) {
+		if (tabletBaseInputFragment!= null && tabletBaseInputFragment.progressDialog == null) {
 			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
 		}
 	}

@@ -3,6 +3,7 @@ package jp.co.soliton.keymanager.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class LeftSideInputTabletFragment extends Fragment {
 
 
 	public static Fragment newInstance() {
+		Log.d("LeftSideInputTabletFragment:datnd", "newInstance: ");
 		LeftSideInputTabletFragment f = new LeftSideInputTabletFragment();
 		return f;
 	}

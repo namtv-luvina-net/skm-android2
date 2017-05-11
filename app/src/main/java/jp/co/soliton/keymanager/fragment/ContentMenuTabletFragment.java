@@ -18,7 +18,7 @@ import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.APIDManager;
-import jp.co.soliton.keymanager.manager.TabletInputFragmentManager;
+import jp.co.soliton.keymanager.manager.TabletContentFragmentManager;
 
 import java.util.List;
 
@@ -27,12 +27,6 @@ import java.util.List;
  */
 
 public class ContentMenuTabletFragment extends Fragment {
-	public static final int RESET_STATUS = 0;
-	public static final int APID_STATUS = 1;
-	public static final int INPUT_APPLY_STATUS = 2;
-	public static final int COMPLETE_STATUS = 3;
-	public int currentStatus;
-
 
 	RelativeLayout rlMenuStart;
 	RelativeLayout rlMenuAPID;
@@ -43,8 +37,15 @@ public class ContentMenuTabletFragment extends Fragment {
 	TextView titleWifi;
 	TextView titleVPN;
 	private APIDManager apidManager;
-	TabletInputFragmentManager tabletInputFragmentManager;
 	Activity activity;
+	TabletContentFragmentManager tabletContentFragmentManager;
+
+	public static Fragment newInstance(TabletContentFragmentManager tabletContentFragmentManager) {
+		Log.d("ContentMenuTabletFragment:datnd", "newInstance: ");
+		ContentMenuTabletFragment f = new ContentMenuTabletFragment();
+		f.tabletContentFragmentManager = tabletContentFragmentManager;
+		return f;
+	}
 
 	@Override
 	public void onAttach(Context context) {
@@ -56,15 +57,6 @@ public class ContentMenuTabletFragment extends Fragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		elementMgr = new ElementApplyManager(activity);
-		tabletInputFragmentManager = new TabletInputFragmentManager(this, getFragmentManager());
-	}
-
-	/**
-	 * Finish install certificate
-	 * @param resultCode
-	 */
-	public void finishInstallCertificate(int resultCode) {
-		tabletInputFragmentManager.finishInstallCertificate(resultCode);
 	}
 
 	@Nullable
@@ -79,7 +71,6 @@ public class ContentMenuTabletFragment extends Fragment {
 		titleWifi = (TextView) view.findViewById(R.id.title_wifi);
 		titleVPN = (TextView) view.findViewById(R.id.title_vpn);
 		apidManager = new APIDManager(activity);
-		currentStatus = RESET_STATUS;
 		return view;
 	}
 
@@ -122,8 +113,7 @@ public class ContentMenuTabletFragment extends Fragment {
 					} else {
 						((MenuAcivity)activity).setFocusMenuTablet(false);
 						InputApplyInfo.deletePref(getActivity());
-						tabletInputFragmentManager.startActivityStartApply();
-						currentStatus = INPUT_APPLY_STATUS;
+						tabletContentFragmentManager.startActivityStartApply();
 					}
 				}
 			});
@@ -132,20 +122,9 @@ public class ContentMenuTabletFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					((MenuAcivity)activity).setFocusMenuTablet(false);
-					tabletInputFragmentManager.startActivityAPID();
-					currentStatus = APID_STATUS;
+					tabletContentFragmentManager.startActivityAPID();
 				}
 			});
-	}
-
-	public void pressBackInputApply() {
-		tabletInputFragmentManager.pressBackInputApply();
-	}
-
-	public void goToMenu() {
-		currentStatus = RESET_STATUS;
-		InputApplyInfo.deletePref(activity);
-		((MenuAcivity)activity).goToMenu();
 	}
 
 	private void updateMenuConfirm() {

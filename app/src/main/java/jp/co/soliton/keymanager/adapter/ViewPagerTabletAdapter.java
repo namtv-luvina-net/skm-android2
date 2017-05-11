@@ -19,7 +19,8 @@ public class ViewPagerTabletAdapter extends FragmentPagerAdapter {
 
     public ViewPagerTabletAdapter(Context context, FragmentManager fm, TabletBaseInputFragment tabletBaseInputFragment) {
         super(fm);
-        this.context = context;
+	    Log.d("ViewPagerTabletAdapter:datnd", "ViewPagerTabletAdapter: .");
+	    this.context = context;
 	    listFragment = new Fragment[TOTAL_PAGES];
 	    listFragment[0] = TabletInputHostFragment.newInstance(context, tabletBaseInputFragment);
         listFragment[1] = TabletInputPortFragment.newInstance(context, tabletBaseInputFragment);
