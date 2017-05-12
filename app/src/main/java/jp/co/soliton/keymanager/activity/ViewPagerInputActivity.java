@@ -150,6 +150,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
         adapter = new ViewPagerAdapter(getApplicationContext(),getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);
+	    mViewPager.setOffscreenPageLimit(3);
         mViewPager.setCurrentItem(0);
         initButtonCircle();
 	    sdk_int_version = Build.VERSION.SDK_INT;

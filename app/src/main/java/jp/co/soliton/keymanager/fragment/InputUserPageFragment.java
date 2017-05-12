@@ -113,25 +113,15 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 setStatusControl();
             }
         });
-        txtUserId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                }
-            }
-        });
-        txtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                } else {
-                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(txtPassword, InputMethodManager.SHOW_IMPLICIT);
-                }
-            }
-        });
+	    txtUserId.setOnKeyListener(new View.OnKeyListener() {
+		    @Override
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+			    if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+				    txtPassword.requestFocus();
+			    }
+			    return false;
+		    }
+	    });
         txtPassword.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

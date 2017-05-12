@@ -109,25 +109,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				setStatusControl();
 			}
 		});
-		txtUserId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					hideKeyboard(v, getContext());
-				}
-			}
-		});
-		txtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					hideKeyboard(v, getContext());
-				} else {
-					InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.showSoftInput(txtPassword, InputMethodManager.SHOW_IMPLICIT);
-				}
-			}
-		});
 		txtPassword.setOnKeyListener(new View.OnKeyListener() {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {

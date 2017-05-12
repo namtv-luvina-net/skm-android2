@@ -10,9 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
@@ -88,25 +86,15 @@ public class InputHostPageFragment extends InputBasePageFragment {
                 setStatusControl();
             }
         });
-        txtHostname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                }
-            }
-        });
-        txtSecurePort.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    hideKeyboard(v, getContext());
-                } else {
-                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(txtSecurePort, InputMethodManager.SHOW_IMPLICIT);
-                }
-            }
-        });
+	    txtHostname.setOnKeyListener(new View.OnKeyListener() {
+		    @Override
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+			    if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+				    txtSecurePort.requestFocus();
+			    }
+			    return false;
+		    }
+	    });
         txtSecurePort.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
