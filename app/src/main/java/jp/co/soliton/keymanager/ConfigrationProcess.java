@@ -110,9 +110,9 @@ public class ConfigrationProcess {
 			if(days.length() < 1) return;
 			
 			// OSバージョン確認
-			double d_android_version = getAndroidOsVersion();
-			Log.i("RunConfigrationChild Version= ", Double.toString(d_android_version));
-			if(d_android_version < 3.0) return;
+			int sdk_int_version = Build.VERSION.SDK_INT;
+			Log.i("RunConfigrationChild Version= ", Integer.toString(sdk_int_version));
+			if(sdk_int_version < Build.VERSION_CODES.HONEYCOMB) return;
     		
     		long i_maxpin = Long.parseLong(days);
     		
@@ -162,9 +162,9 @@ public class ConfigrationProcess {
 			if(history.length() < 1) return;
 			
 			// OSバージョン確認
-			double d_android_version = getAndroidOsVersion();
-			Log.i("RunConfigrationChild Version= ", Double.toString(d_android_version));
-			if(d_android_version < 3.0) return;
+			int sdk_int_version = Build.VERSION.SDK_INT;
+			Log.i("RunConfigrationChild Version= ", Integer.toString(sdk_int_version));
+			if(sdk_int_version < Build.VERSION_CODES.HONEYCOMB) return;
     		
 			int i_his = Integer.parseInt(history);
     		
@@ -250,21 +250,5 @@ public class ConfigrationProcess {
 	// 即時Lock
 	public void RunLock() {
 		m_DPM.lockNow();
-	}
-	
-	// OSバージョン確認
-	public static double getAndroidOsVersion() {
-		double ret_ver;
-		
-		String str_android_version = Build.VERSION.RELEASE;		// Androidバージョンを取得
-		//Log.i("getAndroidOsVersion Version= ", str_android_version);
-		
-		String str_buf = str_android_version.substring(0, 3);
-		//Log.i("getAndroidOsVersion Version2= ", str_buf);
-		
-		ret_ver = Double.parseDouble(str_buf);
-		//Log.i("getAndroidOsVersion Version3= ", Double.toString(ret_ver));
-		
-		return ret_ver;
 	}
 }

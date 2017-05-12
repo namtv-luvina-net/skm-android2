@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
-import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -46,15 +43,27 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private ElementApplyManager elementMgr;
 	private boolean isSubmitted;
 	TabletBaseInputFragment tabletBaseInputFragment;
+
 	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
 		f.tabletBaseInputFragment = tabletBaseInputFragment;
 		return f;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT,
+				tabletBaseInputFragment);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment
+					(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT);
+		}
 		View view = inflater.inflate(R.layout.fragment_input_user_tablet, container, false);
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
@@ -109,25 +118,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				setStatusControl();
 			}
 		});
-		txtUserId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					hideKeyboard(v, getContext());
-				}
-			}
-		});
-		txtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					hideKeyboard(v, getContext());
-				} else {
-					InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.showSoftInput(txtPassword, InputMethodManager.SHOW_IMPLICIT);
-				}
-			}
-		});
 		txtPassword.setOnKeyListener(new View.OnKeyListener() {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -143,7 +133,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getUserId())) {
 			txtPassword.requestFocus();
 			InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		}
 	}
 
@@ -208,7 +198,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		//make parameter|
 		String place = tabletBaseInputFragment.getInputApplyInfo().getPlace();
 		boolean ret = tabletBaseInputFragment.controlPagesInput.makeParameterLogon(userId, password, place,
-				tabletBaseInputFragment.getInformCtrl() );
+				tabletBaseInputFragment.getInformCtrl());
 		if (!ret) {
 			tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
 			return;
@@ -217,7 +207,8 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		// グレーアウト
 //		setButtonRunnable(false);
 		if (nullOrEmpty(tabletBaseInputFragment.getInformCtrl().GetURL())) {
-			String url = String.format("%s:%s", tabletBaseInputFragment.getInputApplyInfo().getHost(), tabletBaseInputFragment.getInputApplyInfo().getSecurePort());
+			String url = String.format("%s:%s", tabletBaseInputFragment.getInputApplyInfo().getHost(),
+					tabletBaseInputFragment.getInputApplyInfo().getSecurePort());
 			tabletBaseInputFragment.getInformCtrl().SetURL(url);
 		}
 		tabletBaseInputFragment.getInformCtrl().SetCookie(null);
@@ -278,13 +269,15 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				String str_err = getString(R.string.ERR);
 				tabletBaseInputFragment.showMessage(strRtn.substring(str_err.length()));
 			} else if (m_nErroType == ERR_LOGIN_FAIL) {
-				tabletBaseInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet.OnOkDismissMessageListener() {
+				tabletBaseInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet
+						.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
 						txtPassword.setText("");
 						txtPassword.requestFocus();
-						InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+						InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context
+								.INPUT_METHOD_SERVICE);
+						imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 					}
 				});
 			} else {
@@ -372,17 +365,18 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			}
 			//parse xml return from server
 			XmlDictionary xmldict = m_p_aided.GetDictionary();
-			if(xmldict != null) {
+			if (xmldict != null) {
 				List<XmlStringData> str_list;
 				str_list = xmldict.GetArrayString();
-				for(int i = 0; str_list.size() > i; i++){
+				for (int i = 0; str_list.size() > i; i++) {
 					// config情報に従って、処理を行う.
 					XmlStringData p_data = str_list.get(i);
 					// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
-					if(StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName()) ) {
+					if (StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName())) {
 						isEnroll = true;
 						String rtnserial = "";
-						if (InputBasePageFragment.TARGET_WiFi.equals(tabletBaseInputFragment.getInputApplyInfo().getPlace())) {
+						if (InputBasePageFragment.TARGET_WiFi.equals(tabletBaseInputFragment.getInputApplyInfo().getPlace()
+						)) {
 							rtnserial = XmlPullParserAided.GetUDID(getActivity());
 						} else {
 							rtnserial = XmlPullParserAided.GetVpnApid(getActivity());
@@ -390,7 +384,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						String sendmsg = m_p_aided.DeviceInfoText(rtnserial);
 						tabletBaseInputFragment.getInformCtrl().SetMessage(sendmsg);
 					}
-					if(StringList.m_str_issubmitted.equalsIgnoreCase(p_data.GetKeyName()) ) {
+					if (StringList.m_str_issubmitted.equalsIgnoreCase(p_data.GetKeyName())) {
 						if (6 == p_data.GetType()) {
 							isSubmitted = true;
 						}

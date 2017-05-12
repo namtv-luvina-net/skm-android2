@@ -2,11 +2,11 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import jp.co.soliton.keymanager.ConfigrationProcess;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
@@ -25,7 +25,6 @@ import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.manager.TabletInputFragmentManager;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -46,7 +45,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	public final static String TARGET_VPN  = "0";
 	public final static String TARGET_WiFi = "1";
 
-	TabletInputFragmentManager tabletInputFragmentManager;
 	InputApplyViewPager viewPager;
 	ViewPagerTabletAdapter adapter;
 	private Button btnSkip;
@@ -54,9 +52,8 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private Button btnBack;
 	private InformCtrl m_InformCtrl;
 	private InputApplyInfo inputApplyInfo;
-	private ElementApplyManager elementMgr;
 	private int m_nErroType;
-	public double d_android_version;
+	public int sdk_int_version;
 	protected DialogApplyProgressBar progressDialog;
 	protected ControlPagesInput controlPagesInput;
 	private String hostName;
@@ -64,9 +61,8 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private boolean isShowingKeyboard = false;
 	private Activity activity;
 
-	public static Fragment newInstance(TabletInputFragmentManager tabletInputFragmentManager) {
+	public static Fragment newInstance() {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
-		f.tabletInputFragmentManager = tabletInputFragmentManager;
 		return f;
 	}
 
@@ -76,22 +72,30 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		activity = (Activity) context;
 	}
 
-	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.adapter = new ViewPagerTabletAdapter(activity, getChildFragmentManager(), this);
+	}
 
-		d_android_version = ConfigrationProcess.getAndroidOsVersion();
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		btnSkip = (Button) view.findViewById(R.id.btnSkip);
 		btnBack = (Button) view.findViewById(R.id.btnBack);
 		btnNext = (Button) view.findViewById(R.id.btnNext);
 		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
-		adapter = new ViewPagerTabletAdapter(activity, getChildFragmentManager(), this);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
-		viewPager.setCurrentItem(0);
 		viewPager.setOffscreenPageLimit(3);
+		viewPager.setCurrentItem(0);
 		setTab();
+	}
+
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
+		sdk_int_version = Build.VERSION.SDK_INT;
 		view.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -131,7 +135,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		super.onActivityCreated(savedInstanceState);
 		inputApplyInfo = InputApplyInfo.getPref(activity);
 		m_InformCtrl = new InformCtrl();
-		elementMgr = new ElementApplyManager(activity);
 		controlPagesInput = new ControlPagesInput(activity);
 	}
 
@@ -140,11 +143,11 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void gotoCompleteApply() {
-		tabletInputFragmentManager.goApplyCompleted();
+		((MenuAcivity)getActivity()).goApplyCompleted();
 	}
 
 	public void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element) {
-		tabletInputFragmentManager.goApplyCompleted(m_InformCtrl, element);
+		((MenuAcivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
 	}
 
 	/**
@@ -195,7 +198,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void updateLeftSide() {
-		tabletInputFragmentManager.updateLeftSideInput(getCurrentPage());
+		((MenuAcivity)getActivity()).updateLeftSideInput(getCurrentPage());
 	}
 
 	private void updateButtonFooterStatus(int position) {
@@ -215,17 +218,24 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 
 	/**
 	 * Switch page to index page
-	 * @param pageIndex
+	 * @param positionPage
 	 */
-	public void gotoPage(int pageIndex) {
-		goneSkip();
-		if (d_android_version < 4.3 && pageIndex == 2){
-			pageIndex++;
-		}
-		if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
-			viewPager.setCurrentItem(pageIndex, true);
-			setStatusBackNext(pageIndex);
-		}
+	public void gotoPage(final int positionPage) {
+		viewPager.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				int pageIndex = positionPage;
+				goneSkip();
+				if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && pageIndex == 2){
+					pageIndex++;
+				}
+				if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
+					viewPager.setCurrentItem(pageIndex, true);
+					setStatusBackNext(pageIndex);
+				}
+			}
+		}, 100);
 	}
 
 	public void clickBackButton(){
@@ -234,12 +244,13 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	/**
 	 * Action next back page input
 	 */
+
 	private void setChangePage() {
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				int current;
-				if (d_android_version < 4.3 && viewPager.getCurrentItem() == 3){
+				if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && viewPager.getCurrentItem() == 3){
 					viewPager.setCurrentItem(2, true);
 				}
 				if (viewPager.getCurrentItem() == 2) {
@@ -249,8 +260,8 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 					current = viewPager.getCurrentItem() - 1;
 				}
 				if (current < 0) {
-					InputApplyInfo.deletePref(activity);
-					tabletInputFragmentManager.gotoMenu();
+					InputApplyInfo.deletePref(getActivity());
+					((MenuAcivity)getActivity()).gotoMenu();
 				} else {
 					viewPager.setCurrentItem(current, true);
 				}
@@ -264,11 +275,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 				if (current < adapter.getCount()) {
 					((TabletInputFragment)adapter.getItem(current)).nextAction();
 				}
-
-//				int current = getCurrentPage() +1;
-//				if (current < adapter.getCount()) {
-//					gotoPage(current);
-//				}
 			}
 		});
 

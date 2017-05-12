@@ -30,9 +30,19 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 		return f;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					TAG_TABLET_BASE_INPUT_FRAGMENT);
+		}
 		View view = inflater.inflate(R.layout.fragment_input_email_tablet, container, false);
 		txtEmail = (EditText) view.findViewById(R.id.txtEmail);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);

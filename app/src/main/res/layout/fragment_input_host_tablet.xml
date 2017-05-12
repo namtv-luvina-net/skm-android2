@@ -11,81 +11,81 @@
 	<include layout="@layout/fragment_title_input"/>
 
 	<LinearLayout
-			android:id="@+id/rl_host"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_item_input_host_tablet"
-			android:layout_marginTop="@dimen/margin_top_content_input_host_tablet"
-			android:focusable="true"
-			android:focusableInTouchMode="true" >
-
-		<TextView
-				android:id="@+id/txt_host"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="@dimen/margin_top_content_input_host_tablet">
+		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_weight="9"
-				android:textSize="@dimen/text_size_input_tablet"
-				android:textColor="@color/text_color"
-				android:text="@string/title_input_host_name"
-				android:maxLines="1"
-				android:singleLine="true"
-				android:paddingRight="@dimen/margin_item_menu"
-				android:gravity="right"
-				android:layout_height="wrap_content"/>
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
 
-		<EditText
-				android:id="@+id/edit_host"
+			<TextView
+					android:id="@+id/txtTitleHost"
+					android:layout_alignParentTop="true"
+					android:layout_width="match_parent"
+					android:textSize="@dimen/text_size_input_tablet"
+					android:textColor="@color/text_color"
+					android:text="@string/title_input_host_name"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:paddingRight="@dimen/margin_item_menu"
+					android:gravity="right"
+					android:layout_height="@dimen/height_item_input_host_tablet"/>
+
+			<TextView
+					android:id="@+id/txtTitlePort"
+					android:layout_below="@id/txtTitleHost"
+					android:layout_width="match_parent"
+					android:textSize="@dimen/text_size_input_tablet"
+					android:textColor="@color/text_color"
+					android:text="@string/title_https_port_number"
+					android:maxLines="1"
+					android:layout_marginTop="@dimen/margin_items_input_host_tablet"
+					android:singleLine="true"
+					android:gravity="right"
+					android:paddingRight="@dimen/margin_item_menu"
+					android:layout_height="@dimen/height_item_input_host_tablet"/>
+		</RelativeLayout>
+		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_weight="14"
-				android:maxLines="1"
-				android:singleLine="true"
-				android:paddingLeft="@dimen/margin_item_menu"
-				android:paddingRight="@dimen/margin_item_menu"
-				android:maxLength="256"
-				android:inputType="text|textVisiblePassword|textNoSuggestions"
-				android:background="@drawable/round_corner_white_edittext"
-				android:textColor="@color/text_color"
-				android:hint="@string/hint_host_name"
-				android:textSize="@dimen/text_size_input_tablet"
-				android:layout_height="match_parent"/>
-	</LinearLayout>
+				android:layout_height="wrap_content">
 
-	<LinearLayout
-			android:id="@+id/rl_secure_port"
-			android:layout_below="@+id/rl_host"
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_item_input_host_tablet"
-			android:layout_marginTop="@dimen/margin_items_input_host_tablet"
-			android:focusable="true"
-			android:focusableInTouchMode="true" >
+			<EditText
+					android:id="@+id/edit_host"
+					android:layout_width="match_parent"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:paddingLeft="@dimen/margin_item_menu"
+					android:paddingRight="@dimen/margin_item_menu"
+					android:maxLength="256"
+					android:inputType="text|textVisiblePassword|textNoSuggestions"
+					android:background="@drawable/round_corner_white_edittext"
+					android:textColor="@color/text_color"
+					android:hint="@string/hint_host_name"
+					android:imeOptions="actionNext"
+					android:textSize="@dimen/text_size_input_tablet"
+					android:layout_height="@dimen/height_item_input_host_tablet"/>
 
-		<TextView
-				android:id="@+id/txt_port"
-				android:layout_width="0dp"
-				android:layout_weight="9"
-				android:textSize="@dimen/text_size_input_tablet"
-				android:textColor="@color/text_color"
-				android:text="@string/title_https_port_number"
-				android:maxLines="1"
-				android:singleLine="true"
-				android:gravity="right"
-				android:paddingRight="@dimen/margin_item_menu"
-				android:layout_height="wrap_content"/>
-
-		<EditText
-				android:id="@+id/edit_port"
-				android:layout_width="0dp"
-				android:layout_weight="14"
-				android:maxLines="1"
-				android:singleLine="true"
-				android:paddingLeft="@dimen/text_size_content_item_apid"
-				android:paddingRight="@dimen/margin_item_menu"
-				android:maxLength="5"
-				android:inputType="number"
-				android:background="@drawable/round_corner_white_edittext"
-				android:textColor="@color/text_color"
-				android:hint="443"
-				android:text="443"
-				android:textSize="@dimen/text_size_input_tablet"
-				android:gravity="bottom"
-				android:layout_height="match_parent"/>
+			<EditText
+					android:id="@+id/edit_port"
+					android:layout_below="@id/edit_host"
+					android:layout_width="match_parent"
+					android:maxLines="1"
+					android:singleLine="true"
+					android:paddingLeft="@dimen/text_size_content_item_apid"
+					android:paddingRight="@dimen/margin_item_menu"
+					android:layout_marginTop="@dimen/margin_items_input_host_tablet"
+					android:maxLength="5"
+					android:inputType="number"
+					android:background="@drawable/round_corner_white_edittext"
+					android:textColor="@color/text_color"
+					android:hint="443"
+					android:text="443"
+					android:textSize="@dimen/text_size_input_tablet"
+					android:layout_height="@dimen/height_item_input_host_tablet"/>
+		</RelativeLayout>
 	</LinearLayout>
 </RelativeLayout>

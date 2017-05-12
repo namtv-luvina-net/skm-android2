@@ -6,12 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.view.*;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
@@ -41,19 +36,29 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (tabletBaseInputFragment.progressDialog == null) {
+		if (tabletBaseInputFragment != null && tabletBaseInputFragment.progressDialog == null) {
 			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
 		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					TAG_TABLET_BASE_INPUT_FRAGMENT);
+		}
 		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.title_input_host_and_port_secure));
+		titleInput.setText(getString(R.string.input_host_name_and_port_number));
 		return view;
 	}
 
@@ -62,6 +67,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		super.onResume();
 		addTextChangedListenerForTextView();
 		setStatusControl();
+		initValueEditText();
 	}
 
 	private void addTextChangedListenerForTextView() {
@@ -94,28 +100,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 				setStatusControl();
 			}
 		});
-		editTextHost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					hideKeyboard(v, getContext());
-				}else {
-					InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.showSoftInput(editTextSecurePort, InputMethodManager.SHOW_IMPLICIT);
-				}
-			}
-		});
-		editTextSecurePort.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (!hasFocus) {
-					hideKeyboard(v, getContext());
-				} else {
-					InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.showSoftInput(editTextSecurePort, InputMethodManager.SHOW_IMPLICIT);
-				}
-			}
-		});
+
 		editTextHost.setOnKeyListener(new View.OnKeyListener() {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -144,6 +129,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		super.setMenuVisibility(visible);
 		if (visible) {
 			setStatusControl();
+			initValueEditText();
 		}
 	}
 
@@ -152,6 +138,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		super.setUserVisibleHint(isVisibleToUser);
 		if (isVisibleToUser) {
 			setStatusControl();
+			initValueEditText();
 		}
 	}
 
@@ -166,6 +153,20 @@ public class TabletInputHostFragment extends TabletInputFragment {
 			tabletBaseInputFragment.disableNext();
 		} else {
 			tabletBaseInputFragment.enableNext();
+		}
+	}
+
+	private void initValueEditText() {
+		if (editTextHost == null || editTextSecurePort == null) {
+			return;
+		}
+		String host = tabletBaseInputFragment.getInputApplyInfo().getHost();
+		if (!nullOrEmpty(host)) {
+			editTextHost.setText(host);
+		}
+		String securePort = tabletBaseInputFragment.getInputApplyInfo().getSecurePort();
+		if (!nullOrEmpty(securePort)) {
+			editTextSecurePort.setText(securePort);
 		}
 	}
 

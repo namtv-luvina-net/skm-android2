@@ -2,15 +2,13 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.security.KeyChain;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +19,9 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
-import jp.co.soliton.keymanager.xmlparser.XmlStringData;
-
-import javax.security.cert.X509Certificate;
-import java.util.List;
 
 import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
 
@@ -54,16 +46,26 @@ public class TabletInputPortFragment extends TabletInputFragment {
 		return f;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					TAG_TABLET_BASE_INPUT_FRAGMENT);
+		}
 		View view = inflater.inflate(R.layout.fragment_input_port_tablet, container, false);
 		rootViewInputPort = (RelativeLayout) view.findViewById(R.id.rootViewInputPort);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.title_input_port_download_ca));
+		titleInput.setText(getString(R.string.download_ca_certificate));
 		edtPort = (EditText) view.findViewById(R.id.edit_port);
 		txtGuideDownloadCaCertificate = (TextView) view.findViewById(R.id.txt_des_download_ca);
-		if (tabletBaseInputFragment.d_android_version < 4.3) {
+		if (tabletBaseInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2) {
 			txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
 		} else {
 			txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
@@ -75,7 +77,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (tabletBaseInputFragment.progressDialog == null) {
+		if (tabletBaseInputFragment!= null && tabletBaseInputFragment.progressDialog == null) {
 			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
 		}
 	}
@@ -231,7 +233,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	 */
 	public void finishInstallCertificate(int resultCode) {
 		if (resultCode == Activity.RESULT_OK) {
-			if (tabletBaseInputFragment.d_android_version >= 4.3) {
+			if (tabletBaseInputFragment.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
 				tabletBaseInputFragment.progressDialog.show();
 				String host = tabletBaseInputFragment.getHostName();
 				String port = tabletBaseInputFragment.getPortName();

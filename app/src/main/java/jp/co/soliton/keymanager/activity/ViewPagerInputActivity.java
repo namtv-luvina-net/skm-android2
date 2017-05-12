@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -41,7 +42,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
     private InformCtrl m_InformCtrl;
     private InputApplyInfo inputApplyInfo;
     private ElementApplyManager elementMgr;
-    public double d_android_version;
+    public int sdk_int_version;
 	boolean isShowingKeyboard = false;
 
 	private String hostName;
@@ -149,9 +150,10 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
         adapter = new ViewPagerAdapter(getApplicationContext(),getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);
+	    mViewPager.setOffscreenPageLimit(3);
         mViewPager.setCurrentItem(0);
         initButtonCircle();
-        d_android_version = ConfigrationProcess.getAndroidOsVersion();
+	    sdk_int_version = Build.VERSION.SDK_INT;
 	    DetectsSoftKeyboard.addListenner(findViewById(R.id.activityRoot), this);
     }
 
@@ -180,7 +182,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
             @Override
             public void onClick(View v) {
                 int current;
-                if (d_android_version < 4.3 && mViewPager.getCurrentItem() == 3){
+                if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && mViewPager.getCurrentItem() == 3){
                     mViewPager.setCurrentItem(2, true);
                 }
                 if (mViewPager.getCurrentItem() == 2) {
@@ -277,7 +279,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
      * @param pageIndex
      */
     public void gotoPage(int pageIndex) {
-        if (d_android_version < 4.3 && pageIndex == 2){
+        if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && pageIndex == 2){
             pageIndex++;
         }
         if (pageIndex >= 0 && pageIndex < adapter.getCount()) {
