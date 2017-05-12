@@ -14,6 +14,8 @@ import android.widget.EditText;
 
 public abstract class TabletInputFragment extends Fragment {
 
+	public static final String TAG_TABLET_BASE_INPUT_FRAGMENT = "tabletBaseInputFragment";
+
 	/**
 	 * Check null or empty string value
 	 * @param value

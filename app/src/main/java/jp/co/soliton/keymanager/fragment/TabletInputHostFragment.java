@@ -36,14 +36,24 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (tabletBaseInputFragment.progressDialog == null) {
+		if (tabletBaseInputFragment != null && tabletBaseInputFragment.progressDialog == null) {
 			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
 		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					TAG_TABLET_BASE_INPUT_FRAGMENT);
+		}
 		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
@@ -57,6 +67,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		super.onResume();
 		addTextChangedListenerForTextView();
 		setStatusControl();
+		initValueEditText();
 	}
 
 	private void addTextChangedListenerForTextView() {
@@ -118,6 +129,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		super.setMenuVisibility(visible);
 		if (visible) {
 			setStatusControl();
+			initValueEditText();
 		}
 	}
 
@@ -126,6 +138,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		super.setUserVisibleHint(isVisibleToUser);
 		if (isVisibleToUser) {
 			setStatusControl();
+			initValueEditText();
 		}
 	}
 
@@ -140,6 +153,20 @@ public class TabletInputHostFragment extends TabletInputFragment {
 			tabletBaseInputFragment.disableNext();
 		} else {
 			tabletBaseInputFragment.enableNext();
+		}
+	}
+
+	private void initValueEditText() {
+		if (editTextHost == null || editTextSecurePort == null) {
+			return;
+		}
+		String host = tabletBaseInputFragment.getInputApplyInfo().getHost();
+		if (!nullOrEmpty(host)) {
+			editTextHost.setText(host);
+		}
+		String securePort = tabletBaseInputFragment.getInputApplyInfo().getSecurePort();
+		if (!nullOrEmpty(securePort)) {
+			editTextSecurePort.setText(securePort);
 		}
 	}
 
