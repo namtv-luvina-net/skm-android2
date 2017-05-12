@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,10 +25,7 @@ import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.manager.TabletContentFragmentManager;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
-
-import java.io.Serializable;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -37,7 +33,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Created by nguyenducdat on 5/4/2017.
  */
 
-public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner, Serializable{
+public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
 	public final static int ERR_FORBIDDEN    = 20;
 	public final static int ERR_UNAUTHORIZED = 21;
 	public final static int SUCCESSFUL       = 22;
@@ -51,9 +47,9 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 
 	InputApplyViewPager viewPager;
 	ViewPagerTabletAdapter adapter;
-//	private Button btnSkip;
-//	private Button btnNext;
-//	private Button btnBack;
+	private Button btnSkip;
+	private Button btnNext;
+	private Button btnBack;
 	private InformCtrl m_InformCtrl;
 	private InputApplyInfo inputApplyInfo;
 	private ElementApplyManager elementMgr;
@@ -65,47 +61,42 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private String portName;
 	private boolean isShowingKeyboard = false;
 	private Activity activity;
-	FooterInputTabletFragment.InterfaceForContent interfaceForContent;
 
 	public static Fragment newInstance() {
-		Log.d("TabletBaseInputFragment:datnd", "newInstance: ");
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
 		return f;
-	}
-
-	public void setInterfaceForContent(FooterInputTabletFragment.InterfaceForContent interfaceForContent) {
-		this.interfaceForContent = interfaceForContent;
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		Log.d("TabletBaseInputFragment:datnd", "onDestroy: ");
 	}
 
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		Log.d("TabletBaseInputFragment:datnd", "onAttach: " + context);
 		activity = (Activity) context;
 	}
 
-	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-		Log.d("TabletBaseInputFragment:datnd", "onCreateView: ");
-		View view = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
-		sdk_int_version = Build.VERSION.SDK_INT;
-//		btnSkip = (Button) view.findViewById(R.id.btnSkip);
-//		btnBack = (Button) view.findViewById(R.id.btnBack);
-//		btnNext = (Button) view.findViewById(R.id.btnNext);
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.adapter = new ViewPagerTabletAdapter(activity, getChildFragmentManager(), this);
+	}
+
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		btnSkip = (Button) view.findViewById(R.id.btnSkip);
+		btnBack = (Button) view.findViewById(R.id.btnBack);
+		btnNext = (Button) view.findViewById(R.id.btnNext);
 		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
-		adapter = new ViewPagerTabletAdapter(activity, getChildFragmentManager(), this);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
 		viewPager.setOffscreenPageLimit(3);
 		viewPager.setCurrentItem(0);
 		setTab();
+	}
+
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
+		sdk_int_version = Build.VERSION.SDK_INT;
 		view.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -115,8 +106,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		DetectsSoftKeyboard.addListenner(view, this);
 		return view;
 	}
-
-
 
 	public boolean dispatchTouchEvent(View view, MotionEvent ev) {
 		View v = activity.getCurrentFocus();
@@ -145,7 +134,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Log.d("TabletBaseInputFragment:datnd", "onActivityCreated: ");
 		inputApplyInfo = InputApplyInfo.getPref(activity);
 		m_InformCtrl = new InformCtrl();
 		elementMgr = new ElementApplyManager(activity);
@@ -226,7 +214,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	@Override
 	public void onResume() {
 		super.onResume();
-//		setChangePage();
+		setChangePage();
 		setStatusBackNext(getCurrentPage());
 	}
 
@@ -259,75 +247,46 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	 * Action next back page input
 	 */
 
-	public void clickNext() {
-		int current = viewPager.getCurrentItem();
-		if (current < adapter.getCount()) {
-			((TabletInputFragment)adapter.getItem(current)).nextAction();
-		}
-	}
-	public void clickBack() {
-		int current;
-		if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && viewPager.getCurrentItem() == 3){
-			viewPager.setCurrentItem(2, true);
-		}
-		if (viewPager.getCurrentItem() == 2) {
-			hideInputPort(true);
-			current = viewPager.getCurrentItem() - 2;
-		} else {
-			current = viewPager.getCurrentItem() - 1;
-		}
-		if (current < 0) {
-			InputApplyInfo.deletePref(getActivity());
-			((MenuAcivity)getActivity()).gotoMenu();
-		} else {
-			viewPager.setCurrentItem(current, true);
-		}
-		setStatusBackNext(current);
-	}
-	public void clickSkip() {
-		((TabletInputFragment)adapter.getItem(viewPager.getCurrentItem())).clickSkipButton();
-	}
+	private void setChangePage() {
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int current;
+				if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && viewPager.getCurrentItem() == 3){
+					viewPager.setCurrentItem(2, true);
+				}
+				if (viewPager.getCurrentItem() == 2) {
+					hideInputPort(true);
+					current = viewPager.getCurrentItem() - 2;
+				} else {
+					current = viewPager.getCurrentItem() - 1;
+				}
+				if (current < 0) {
+					InputApplyInfo.deletePref(getActivity());
+					((MenuAcivity)getActivity()).gotoMenu();
+				} else {
+					viewPager.setCurrentItem(current, true);
+				}
+				setStatusBackNext(current);
+			}
+		});
+		btnNext.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int current = viewPager.getCurrentItem();
+				if (current < adapter.getCount()) {
+					((TabletInputFragment)adapter.getItem(current)).nextAction();
+				}
+			}
+		});
 
-//	private void setChangePage() {
-//		btnBack.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				int current;
-//				if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && viewPager.getCurrentItem() == 3){
-//					viewPager.setCurrentItem(2, true);
-//				}
-//				if (viewPager.getCurrentItem() == 2) {
-//					hideInputPort(true);
-//					current = viewPager.getCurrentItem() - 2;
-//				} else {
-//					current = viewPager.getCurrentItem() - 1;
-//				}
-//				if (current < 0) {
-//					InputApplyInfo.deletePref(getActivity());
-//					((MenuAcivity)getActivity()).gotoMenu();
-//				} else {
-//					viewPager.setCurrentItem(current, true);
-//				}
-//				setStatusBackNext(current);
-//			}
-//		});
-//		btnNext.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				int current = viewPager.getCurrentItem();
-//				if (current < adapter.getCount()) {
-//					((TabletInputFragment)adapter.getItem(current)).nextAction();
-//				}
-//			}
-//		});
-//
-//		btnSkip.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				((TabletInputFragment)adapter.getItem(viewPager.getCurrentItem())).clickSkipButton();
-//			}
-//		});
-//	}
+		btnSkip.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((TabletInputFragment)adapter.getItem(viewPager.getCurrentItem())).clickSkipButton();
+			}
+		});
+	}
 
 	/**
 	 * Show message

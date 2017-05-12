@@ -30,45 +30,36 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	TextView titleInput;
 	EditText editTextHost;
 	EditText editTextSecurePort;
-//	TabletBaseInputFragment tabletBaseInputFragment;
+	TabletBaseInputFragment tabletBaseInputFragment;
 
 	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
-		Log.d("TabletInputHostFragment:datnd", "newInstance: ");
 		TabletInputHostFragment f = new TabletInputHostFragment();
-		Log.d("TabletInputHostFragment:datnd", "newInstance: ");
 		f.tabletBaseInputFragment = tabletBaseInputFragment;
 		return f;
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putSerializable("tabletBaseInputFragment", tabletBaseInputFragment);
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		Log.d("TabletInputHostFragment:datnd", "onDestroy: ");
-	}
-
-	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		Log.d("TabletInputHostFragment:datnd", "onAttach: ");
 		if (tabletBaseInputFragment != null && tabletBaseInputFragment.progressDialog == null) {
 			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
 		}
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, "tabletBaseInputFragment", tabletBaseInputFragment);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		Log.d("TabletInputHostFragment:datnd", "onCreateView: ");
-		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) savedInstanceState.getSerializable("tabletBaseInputFragment");
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					"tabletBaseInputFragment");
 		}
+		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
@@ -79,7 +70,6 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("TabletInputHostFragment:datnd", "onResume: ");
 		addTextChangedListenerForTextView();
 		setStatusControl();
 		initValueEditText();
@@ -200,7 +190,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		if (!nullOrEmpty(host)) {
 			editTextHost.setText(host);
 		}
-		String securePort = tabletBaseInputFragment.getInputApplyInfo().getHost();
+		String securePort = tabletBaseInputFragment.getInputApplyInfo().getSecurePort();
 		if (!nullOrEmpty(securePort)) {
 			editTextSecurePort.setText(securePort);
 		}

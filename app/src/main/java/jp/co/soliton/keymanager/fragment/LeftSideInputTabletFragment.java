@@ -23,23 +23,14 @@ public class LeftSideInputTabletFragment extends Fragment {
 
 	RelativeLayout rootViewContent;
 	TextView[] listTextTitle;
-//	TextView txtHostAndPortSecure;
-//	TextView txtPort;
-//	TextView txtPlace;
-//	TextView txtUserId;
-//	TextView txtEmail;
-//	TextView txtReason;
-//	TextView txtConfirm;
-
+	TextView tvBack;
+	int currentPositionHighlight = 0;
 
 	public static Fragment newInstance() {
-		Log.d("LeftSideInputTabletFragment:datnd", "newInstance: ");
 		LeftSideInputTabletFragment f = new LeftSideInputTabletFragment();
 		return f;
 	}
 
-
-	TextView tvBack;
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,10 +49,15 @@ public class LeftSideInputTabletFragment extends Fragment {
 	}
 
 	public void highlightItem(int possition) {
-		if (possition == 0) {
-			tvBack.setVisibility(View.VISIBLE);
-		}else {
-			tvBack.setVisibility(View.INVISIBLE);
+		if (currentPositionHighlight != possition) {
+			currentPositionHighlight = possition;
+		}
+		if (tvBack != null) {
+			if (possition == 0) {
+				tvBack.setVisibility(View.VISIBLE);
+			} else {
+				tvBack.setVisibility(View.INVISIBLE);
+			}
 		}
 		if (listTextTitle == null) {
 			return;
@@ -92,5 +88,6 @@ public class LeftSideInputTabletFragment extends Fragment {
 				((MenuAcivity)getActivity()).goToMenu();
 			}
 		});
+		highlightItem(currentPositionHighlight);
 	}
 }

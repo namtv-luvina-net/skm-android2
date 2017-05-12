@@ -40,12 +40,9 @@ public class ContentMenuTabletFragment extends Fragment {
 	TextView titleVPN;
 	private APIDManager apidManager;
 	Activity activity;
-//	TabletContentFragmentManager tabletContentFragmentManager;
 
 	public static Fragment newInstance() {
-		Log.d("ContentMenuTabletFragment:datnd", "newInstance: ");
 		ContentMenuTabletFragment f = new ContentMenuTabletFragment();
-//		f.tabletContentFragmentManager = tabletContentFragmentManager;
 		return f;
 	}
 

@@ -29,9 +29,19 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 		return f;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, "tabletBaseInputFragment", tabletBaseInputFragment);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					"tabletBaseInputFragment");
+		}
 		View view = inflater.inflate(R.layout.fragment_input_reason_tablet, container, false);
 		txtReason = (EditText) view.findViewById(R.id.txtReason);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);

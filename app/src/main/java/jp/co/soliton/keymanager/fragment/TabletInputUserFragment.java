@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
-import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -52,9 +49,19 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		return f;
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, "tabletBaseInputFragment", tabletBaseInputFragment);
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+					"tabletBaseInputFragment");
+		}
 		View view = inflater.inflate(R.layout.fragment_input_user_tablet, container, false);
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
