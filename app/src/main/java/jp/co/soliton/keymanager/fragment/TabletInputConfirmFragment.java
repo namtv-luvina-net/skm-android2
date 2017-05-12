@@ -66,7 +66,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, "tabletBaseInputFragment", tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
 	}
 
 	@Nullable
@@ -74,7 +74,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
 			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
-					"tabletBaseInputFragment");
+					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_confirm_tablet, container, false);
 		txtHostName = (TextView) view.findViewById(R.id.txtHostName);

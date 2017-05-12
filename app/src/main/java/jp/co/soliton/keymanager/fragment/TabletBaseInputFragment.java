@@ -52,7 +52,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private Button btnBack;
 	private InformCtrl m_InformCtrl;
 	private InputApplyInfo inputApplyInfo;
-	private ElementApplyManager elementMgr;
 	private int m_nErroType;
 	public int sdk_int_version;
 	protected DialogApplyProgressBar progressDialog;
@@ -136,7 +135,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		super.onActivityCreated(savedInstanceState);
 		inputApplyInfo = InputApplyInfo.getPref(activity);
 		m_InformCtrl = new InformCtrl();
-		elementMgr = new ElementApplyManager(activity);
 		controlPagesInput = new ControlPagesInput(activity);
 	}
 
