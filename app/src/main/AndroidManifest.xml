@@ -78,13 +78,13 @@
         <activity
             android:name=".activity.ListConfirmActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".activity.DetailConfirmActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity

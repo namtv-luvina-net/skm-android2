@@ -2,107 +2,62 @@ package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.TextView;
 
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+import jp.co.soliton.keymanager.fragment.ContentDetailConfirmFragment;
+import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
 
 /**
  * Created by lexuanvinh on 02/27/2017.
  */
 
-public class DetailConfirmActivity extends Activity {
+public class DetailConfirmActivity extends FragmentActivity {
 
     private ElementApplyManager elementMgr;
-    private TextView tvHostName;
-    private TextView tvUserId;
-    private TextView tvDate;
-    private TextView tvStatus;
-    private TextView title;
-    private TextView tvDeleteApply;
-    private TextView tvConfirmApply;
     private String id;
+	private boolean isTablet;
+	Fragment fragmentLeft, fragmentContent;
+	FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_confirm);
-        title = (TextView) findViewById(R.id.tvTitleHeader);
-        id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
-        elementMgr = new ElementApplyManager(getApplicationContext());
-        tvHostName = (TextView)findViewById(R.id.tvHostName);
-        tvUserId = (TextView)findViewById(R.id.tvUserId);
-        tvDate = (TextView)findViewById(R.id.tvDate);
-        tvStatus = (TextView)findViewById(R.id.tvStatus);
-        tvDeleteApply = (TextView)findViewById(R.id.tvDeleteApply);
-        tvConfirmApply = (TextView)findViewById(R.id.tvConfirmApply);
+	    fragmentManager = getSupportFragmentManager();
+	    setOrientation();
+	    setContentView(R.layout.activity_detail_confirm);
+	    id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
+	    elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
-    private void setupDisplay() {
-        title.setText(getString(R.string.approval_confirmation));
-        ElementApply detail = elementMgr.getElementApply(id);
-        if (detail.getHost() != null) {
-            tvHostName.setText(detail.getHost());
-        }
-        if (detail.getUserId() != null) {
-            tvUserId.setText(detail.getUserId());
-        }
-        if (detail.getUpdateDate() != null) {
-            String updateDate = detail.getUpdateDate().split(" ")[0];
-            tvDate.setText(updateDate.replace("-", "/"));
-        }
-        if (detail.getStatus() == ElementApply.STATUS_APPLY_CANCEL) {
-            tvStatus.setText(getText(R.string.stt_cancel));
-        } else if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
-            tvStatus.setText(getText(R.string.stt_waiting_approval));
-        } else if (detail.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
-            tvStatus.setText(getText(R.string.stt_rejected));
-        }
 
-        if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
-            tvConfirmApply.setText(getString(R.string.confirm_apply_status));
-            tvConfirmApply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickConfirmApply(v);
-                }
-            });
-            tvDeleteApply.setText(getString(R.string.withdrawal_apply));
-            tvDeleteApply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickWithdrawApply(v);
-                }
-            });
-        } else {
-            tvConfirmApply.setText(getString(R.string.re_apply));
-            tvConfirmApply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickReApply(v);
-                }
-            });
+	private void setOrientation() {
+		isTablet = getResources().getBoolean(R.bool.isTablet);
+		if (!isTablet) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else {
+			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+			fragmentLeft = new LeftSideAPIDTabletFragment();
+			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
+			fragmentTransaction1.commit();
 
-            tvDeleteApply.setText(getString(R.string.delete_apply));
-            tvDeleteApply.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickDeleteApply(v);
-                }
-            });
-        }
-    }
-
-    public void btnBackClick(View v) {
-        finish();
-    }
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+			fragmentContent= new ContentDetailConfirmFragment();
+			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+			fragmentTransaction.commit();
+		}
+	}
 
     public void clickConfirmApply(View v) {
         Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
@@ -141,7 +96,36 @@ public class DetailConfirmActivity extends Activity {
         startActivity(intent);
     }
 
-    /**
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public void onBackPressed() {
+		btnBackClick(null);
+	}
+
+	public void btnBackClick(View v) {
+		if (isTablet) {
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
+			fragmentTransaction.remove(fragmentContent);
+			fragmentTransaction.commit();
+			final Activity activity = this;
+			final Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					activity.finish();
+					activity.overridePendingTransition(0, 0);
+				}
+			}, getResources().getInteger(android.R.integer.config_shortAnimTime));
+		} else {
+			finish();
+		}
+	}
+
+	/**
      * Update List Certificate, Certificate delete screen DetailCertActivity
      */
     @Override
@@ -151,6 +135,5 @@ public class DetailConfirmActivity extends Activity {
         if (totalApply <= 0) {
             finish();
         }
-        setupDisplay();
     }
 }

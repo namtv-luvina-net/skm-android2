@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +84,6 @@ public class ContentMenuTabletFragment extends Fragment {
 		contentWifi.setText(strUDID);
 	}
 
-
 	private void updateViewTitle() {
 		titleWifi.measure(0, 0);
 		titleVPN.measure(0, 0);
@@ -135,7 +133,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	        rlMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (totalApply == 1) {
+	                if (totalApply == 1) {
                         List<ElementApply> listElementApply = elementMgr.getAllElementApply();
                         Intent intent = new Intent(activity, DetailConfirmActivity.class);
                         intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
@@ -143,6 +141,7 @@ public class ContentMenuTabletFragment extends Fragment {
                     } else {
                         Intent intent = new Intent(activity, ListConfirmActivity.class);
                         startActivity(intent);
+	                    activity.overridePendingTransition(0, 0);
                     }
                 }
             });

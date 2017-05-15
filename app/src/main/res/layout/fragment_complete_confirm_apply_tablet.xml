@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/margin_content_input_tablet"
+                android:paddingRight="@dimen/margin_content_input_tablet">
+		<ImageView
+				android:id="@+id/icon"
+				android:layout_width="130dp"
+				android:layout_height="170dp"
+				android:background="@drawable/ic_approval_confirmation"
+				android:layout_centerHorizontal="true"
+		        android:layout_marginTop="260dp"
+				/>
+		<TextView
+				android:id="@+id/titleSuccess"
+				android:text="@string/approval_completed"
+				android:layout_centerHorizontal="true"
+				android:textSize="@dimen/text_size_title"
+				android:textColor="@color/color_title_input"
+				android:layout_marginTop="175dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+		<TextView
+					android:id="@+id/contentSuccess"
+					android:text="@string/beginning_to_use_procedures"
+					android:layout_gravity="center_horizontal"
+					android:textColor="@color/text_color_active"
+					android:textSize="@dimen/text_size_title"
+					android:layout_centerHorizontal="true"
+					android:layout_below="@+id/icon"
+					android:layout_marginTop="95dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+</RelativeLayout>

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.*;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.*;
@@ -42,7 +41,7 @@ public class MenuAcivity extends FragmentActivity {
 	    fragmentManager = getSupportFragmentManager();
 	    if (savedInstanceState == null) {
 		    createView();
-	    } else {
+	    } else if (isTablet) {
 		    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
 		    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
 		    currentStatus = savedInstanceState.getInt("currentStatus");
@@ -52,9 +51,11 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		savedInstanceState.putInt("currentStatus", currentStatus);
-		getSupportFragmentManager().putFragment(savedInstanceState, "fragmentContent", fragmentContent);
-		getSupportFragmentManager().putFragment(savedInstanceState, "fragmentLeft", fragmentLeft);
+		if (isTablet) {
+			savedInstanceState.putInt("currentStatus", currentStatus);
+			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentContent", fragmentContent);
+			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentLeft", fragmentLeft);
+		}
 	}
 
 	private void createView() {
