@@ -13,10 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.DetailConfirmActivity;
-import jp.co.soliton.keymanager.activity.ListCertificateActivity;
-import jp.co.soliton.keymanager.activity.ListConfirmActivity;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.APIDManager;
@@ -107,10 +104,12 @@ public class ContentMenuTabletFragment extends Fragment {
 					if (elementMgr.hasCertificate()) {
 						Intent intent = new Intent(activity, ListCertificateActivity.class);
 						startActivity(intent);
+						activity.overridePendingTransition(0, 0);
 					} else {
-						((MenuAcivity)activity).setFocusMenuTablet(false);
 						InputApplyInfo.deletePref(getActivity());
-						((MenuAcivity)getActivity()).startActivityStartApply();
+						Intent intent = new Intent(activity, ViewPagerInputTabletActivity.class);
+						startActivity(intent);
+						activity.overridePendingTransition(0, 0);
 					}
 				}
 			});

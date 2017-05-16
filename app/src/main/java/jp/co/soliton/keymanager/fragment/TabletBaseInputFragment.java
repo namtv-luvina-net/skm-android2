@@ -17,14 +17,13 @@ import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -143,11 +142,11 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void gotoCompleteApply() {
-		((MenuAcivity)getActivity()).goApplyCompleted();
+		((ViewPagerInputTabletActivity)getActivity()).goApplyCompleted();
 	}
 
 	public void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element) {
-		((MenuAcivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
+		((ViewPagerInputTabletActivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
 	}
 
 	/**
@@ -198,7 +197,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void updateLeftSide() {
-		((MenuAcivity)getActivity()).updateLeftSideInput(getCurrentPage());
+		((ViewPagerInputTabletActivity)getActivity()).updateLeftSideInput(getCurrentPage());
 	}
 
 	private void updateButtonFooterStatus(int position) {
@@ -261,7 +260,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 				}
 				if (current < 0) {
 					InputApplyInfo.deletePref(getActivity());
-					((MenuAcivity)getActivity()).gotoMenu();
+					((ViewPagerInputTabletActivity)getActivity()).btnBackClick(v);
 				} else {
 					viewPager.setCurrentItem(current, true);
 				}

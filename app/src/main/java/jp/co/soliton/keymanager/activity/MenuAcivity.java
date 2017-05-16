@@ -22,7 +22,6 @@ import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INS
 public class MenuAcivity extends FragmentActivity {
 	public static final int RESET_STATUS = 0;
 	public static final int APID_STATUS = 1;
-	public static final int INPUT_APPLY_STATUS = 2;
 	public static final int COMPLETE_STATUS = 3;
 
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
@@ -75,9 +74,7 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	public void onBackPressed() {
 		if (!isFocusMenuTablet && isTablet) {
-			if (currentStatus == INPUT_APPLY_STATUS) {
-				pressBackInputApply();
-			} else if (currentStatus == COMPLETE_STATUS) {
+			if (currentStatus == COMPLETE_STATUS) {
 				InputApplyInfo.deletePref(this);
 				Intent intent = new Intent(MenuAcivity.this, MenuAcivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -94,10 +91,6 @@ public class MenuAcivity extends FragmentActivity {
 	public void goToMenu() {
 		isFocusMenuTablet = true;
 		gotoMenu();
-	}
-
-	public boolean isFocusMenuTablet() {
-		return isFocusMenuTablet;
 	}
 
 	public void setFocusMenuTablet(boolean focusMenuTablet) {
@@ -148,24 +141,6 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentTransaction.commit();
 	}
 
-	public void pressBackInputApply() {
-		((TabletBaseInputFragment)fragmentContent).clickBackButton();
-	}
-
-	public void startActivityStartApply() {
-		currentStatus = INPUT_APPLY_STATUS;
-		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-		fragmentLeft = LeftSideInputTabletFragment.newInstance();
-		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
-		fragmentTransaction1.commit();
-
-		fragmentContent = TabletBaseInputFragment.newInstance();
-		FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
-		fragmentTransaction2.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		fragmentTransaction2.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-		fragmentTransaction2.commit();
-	}
-
 	public void startActivityAPID() {
 		currentStatus = APID_STATUS;
 		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
@@ -178,30 +153,6 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentContent= new ContentAPIDTabletFragment();
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 		fragmentTransaction.commit();
-	}
-
-	public void goApplyCompleted(){
-		currentStatus = COMPLETE_STATUS;
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance());
-		fragmentTransaction.commit();
-		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
-	}
-	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
-		currentStatus = COMPLETE_STATUS;
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance(m_InformCtrl, element));
-		fragmentTransaction.commit();
-		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
-	}
-
-	public void updateLeftSideInput(int possition) {
-		if (fragmentLeft == null) {
-			return;
-		}
-		((LeftSideInputTabletFragment)fragmentLeft).highlightItem(possition);
 	}
 
 	/**
