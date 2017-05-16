@@ -130,11 +130,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				return false;
 			}
 		});
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getUserId())) {
-			txtPassword.requestFocus();
-			InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-		}
 	}
 
 	@Override

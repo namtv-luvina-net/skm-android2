@@ -27,6 +27,7 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 	private boolean isTablet;
 	Fragment fragmentLeft, fragmentContent;
 	FragmentManager fragmentManager;
+	String idConfirmApply;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,12 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 	    fragmentManager = getSupportFragmentManager();
 	    setOrientation();
         setContentView(R.layout.activity_list_confirm);
+		idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
     }
+
+	public String getIdConfirmApply() {
+		return idConfirmApply;
+	}
 
 	private void setOrientation() {
 		isTablet = getResources().getBoolean(R.bool.isTablet);
@@ -54,7 +60,7 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		btnBackClick(null);
+		((TabletBaseInputFragment)fragmentContent).clickBackButton();
 	}
 
 	public void btnBackClick(View v) {

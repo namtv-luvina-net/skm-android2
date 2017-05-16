@@ -137,6 +137,7 @@ public class ContentMenuTabletFragment extends Fragment {
                         Intent intent = new Intent(activity, DetailConfirmActivity.class);
                         intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
                         startActivity(intent);
+		                activity.overridePendingTransition(0, 0);
                     } else {
                         Intent intent = new Intent(activity, ListConfirmActivity.class);
                         startActivity(intent);

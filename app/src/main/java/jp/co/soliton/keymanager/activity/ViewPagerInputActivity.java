@@ -41,7 +41,6 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
     private Button nextButton;
     private InformCtrl m_InformCtrl;
     private InputApplyInfo inputApplyInfo;
-    private ElementApplyManager elementMgr;
     public int sdk_int_version;
 	boolean isShowingKeyboard = false;
 
@@ -57,10 +56,10 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
-        elementMgr = new ElementApplyManager(this);
         String idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
+	        ElementApplyManager elementMgr = new ElementApplyManager(this);
             ElementApply detail = elementMgr.getElementApply(idConfirmApply);
             getInputApplyInfo().setHost(detail.getHost());
             getInputApplyInfo().setPort(detail.getPort());

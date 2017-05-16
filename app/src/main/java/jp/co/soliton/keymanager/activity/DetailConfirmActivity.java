@@ -60,14 +60,25 @@ public class DetailConfirmActivity extends FragmentActivity {
 	}
 
     public void clickConfirmApply(View v) {
-        Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+	    Intent intent;
+	    if (!isTablet) {
+		    intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+	    } else {
+		    intent = new Intent(DetailConfirmActivity.this, InputPasswordTabletActivity.class);
+	    }
         intent.putExtra("ELEMENT_APPLY_ID", id);
         startActivity(intent);
+	    overridePendingTransition(0, 0);
     }
 
     public void clickReApply(View v) {
         InputApplyInfo.deletePref(DetailConfirmActivity.this);
-        Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputActivity.class);
+	    Intent intent;
+	    if (isTablet) {
+		    intent = new Intent(DetailConfirmActivity.this, ViewPagerInputTabletActivity.class);
+	    } else {
+			intent = new Intent(DetailConfirmActivity.this, ViewPagerInputActivity.class);
+	    }
         intent.putExtra("ELEMENT_APPLY_ID", id);
         startActivity(intent);
     }
@@ -90,10 +101,16 @@ public class DetailConfirmActivity extends FragmentActivity {
     }
 
     public void clickWithdrawApply(View v) {
-        Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+	    Intent intent;
+	    if (!isTablet) {
+		    intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
+	    } else {
+		    intent = new Intent(DetailConfirmActivity.this, InputPasswordTabletActivity.class);
+	    }
         intent.putExtra("ELEMENT_APPLY_ID", id);
         intent.putExtra("CANCEL_APPLY", "1");
         startActivity(intent);
+	    overridePendingTransition(0, 0);
     }
 
 	public String getId() {

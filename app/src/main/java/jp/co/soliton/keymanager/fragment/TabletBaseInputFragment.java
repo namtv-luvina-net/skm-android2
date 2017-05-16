@@ -17,6 +17,7 @@ import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
@@ -24,6 +25,7 @@ import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -85,7 +87,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
-		viewPager.setOffscreenPageLimit(3);
+		viewPager.setOffscreenPageLimit(5);
 		viewPager.setCurrentItem(0);
 		setTab();
 	}
@@ -135,6 +137,26 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		inputApplyInfo = InputApplyInfo.getPref(activity);
 		m_InformCtrl = new InformCtrl();
 		controlPagesInput = new ControlPagesInput(activity);
+		checkHasIdApply();
+	}
+
+	private void checkHasIdApply() {
+		String idConfirmApply = ((ViewPagerInputTabletActivity)getActivity()).getIdConfirmApply();
+		if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
+			ElementApplyManager elementMgr = new ElementApplyManager(getActivity());
+			ElementApply detail = elementMgr.getElementApply(idConfirmApply);
+			getInputApplyInfo().setHost(detail.getHost());
+			getInputApplyInfo().setPort(detail.getPort());
+			getInputApplyInfo().setSecurePort(detail.getPortSSL());
+			if (detail.getTarger().startsWith("WIFI")) {
+				getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_WiFi);
+			} else {
+				getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
+			}
+			getInputApplyInfo().setUserId(detail.getUserId());
+			getInputApplyInfo().savePref(getActivity());
+			gotoPage(3);
+		}
 	}
 
 	public void finishInstallCertificate(int resultCode) {
