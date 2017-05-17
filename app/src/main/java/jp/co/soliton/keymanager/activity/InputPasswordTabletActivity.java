@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ContentInputPasswordTabletFragment;
-import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
+import jp.co.soliton.keymanager.fragment.LeftSideInputPasswordTabletFragment;
 
 public class InputPasswordTabletActivity extends FragmentActivity {
 
 	private boolean isTablet;
+	private ElementApplyManager elementMgr;
 	private String id;
 	private String cancelApply;
 	Fragment fragmentLeft, fragmentContent;
@@ -28,8 +31,9 @@ public class InputPasswordTabletActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
-	    setOrientation();
+	    elementMgr = new ElementApplyManager(this);
 	    setContentView(R.layout.activity_detail_confirm);
+	    setOrientation();
 	    id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
 	    cancelApply = getIntent().getStringExtra("CANCEL_APPLY");
     }
@@ -50,7 +54,7 @@ public class InputPasswordTabletActivity extends FragmentActivity {
 		isTablet = getResources().getBoolean(R.bool.isTablet);
 		if (isTablet) {
 			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-			fragmentLeft = new LeftSideAPIDTabletFragment();
+			fragmentLeft = new LeftSideInputPasswordTabletFragment();
 			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
 			fragmentTransaction1.commit();
 
@@ -59,6 +63,43 @@ public class InputPasswordTabletActivity extends FragmentActivity {
 			fragmentContent= new ContentInputPasswordTabletFragment();
 			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 			fragmentTransaction.commit();
+		}
+	}
+
+	public void setTvValueHost(String str) {
+		((LeftSideInputPasswordTabletFragment)fragmentLeft).setTvValueHost(str);
+	}
+	public void setTvValueUserId(String str) {
+		((LeftSideInputPasswordTabletFragment)fragmentLeft).setTvValueUserId(str);
+	}
+	public void setTvValueApplyDate(String str) {
+		((LeftSideInputPasswordTabletFragment)fragmentLeft).setTvValueApplyDate(str);
+	}
+	public void setTvValueStatus(String str) {
+		((LeftSideInputPasswordTabletFragment)fragmentLeft).setTvValueStatus(str);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		ElementApply detail = elementMgr.getElementApply(id);
+		if (detail.getHost() != null) {
+			setTvValueHost(detail.getHost());
+		}
+		if (detail.getUserId() != null) {
+			setTvValueUserId(detail.getUserId());
+		}
+		if (detail.getUpdateDate() != null) {
+			String updateDate = detail.getUpdateDate().split(" ")[0];
+			setTvValueApplyDate(updateDate.replace("-", "/"));
+		}
+		if (detail.getStatus() == ElementApply.STATUS_APPLY_CANCEL) {
+			setTvValueStatus(getString(R.string.stt_cancel));
+		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
+			setTvValueStatus(getString(R.string.stt_waiting_approval));
+		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
+			setTvValueStatus(getString(R.string.stt_rejected));
 		}
 	}
 

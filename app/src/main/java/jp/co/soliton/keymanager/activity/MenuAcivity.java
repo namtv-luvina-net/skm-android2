@@ -35,8 +35,8 @@ public class MenuAcivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	    setOrientation();
 	    setContentView(R.layout.activity_menu);
+	    setOrientation();
 	    fragmentManager = getSupportFragmentManager();
 	    if (savedInstanceState == null) {
 		    createView();

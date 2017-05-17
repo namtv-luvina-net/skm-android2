@@ -8,13 +8,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.ContentCompleteConfirmApplyFragment;
-import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
 
 /**
  * Created by luongdolong on 2/7/2017.
@@ -36,9 +36,9 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
-	    setOrientation();
         setContentView(R.layout.activity_complete_confirm_apply);
-        Intent it = getIntent();
+	    setOrientation();
+	    Intent it = getIntent();
         status = it.getIntExtra("STATUS_APPLY", -1);
         m_InformCtrl = (InformCtrl)it.getSerializableExtra(StringList.m_str_InformCtrl);
         element = (ElementApply)it.getSerializableExtra("ELEMENT_APPLY");
@@ -53,10 +53,12 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
-			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-			fragmentLeft = new LeftSideAPIDTabletFragment();
-			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
-			fragmentTransaction1.commit();
+			FrameLayout frameLayoutLeft = (FrameLayout) findViewById(R.id.fragment_left_side_menu_tablet);
+			if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				frameLayoutLeft.setBackgroundDrawable( getResources().getDrawable(R.drawable.left_panel_background) );
+			} else {
+				frameLayoutLeft.setBackground( getResources().getDrawable(R.drawable.left_panel_background));
+			}
 
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);

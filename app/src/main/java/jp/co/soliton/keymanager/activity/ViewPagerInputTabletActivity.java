@@ -35,9 +35,9 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
-	    setOrientation();
         setContentView(R.layout.activity_list_confirm);
-		idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
+	    setOrientation();
+	    idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
     }
 
 	public String getIdConfirmApply() {

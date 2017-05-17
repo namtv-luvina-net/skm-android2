@@ -193,4 +193,10 @@
 	<string name="validity_period">Validity Period</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Withdrawn application</string>
+	<string name="title_leftside_list_confirm_tablet">Approval Confirmation</string>
+	<string name="des_leftside_list_confirm_tablet">Let\'s select the application waiting for approval and complete the procedure</string>
+	<string name="des_leftside_detail_confirm_tablet_cofirms_status">Let\'s confirms the approval status and complete the
+		procedure</string>
+	<string name="des_leftside_detail_confirm_tablet_rejected">Your application has been rejected by the administrator</string>
+	<string name="des_leftside_detail_confirm_tablet_withdrawn">Your application has been withdrawn</string>
 </resources>

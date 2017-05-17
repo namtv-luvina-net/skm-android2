@@ -10,13 +10,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ContentDetailConfirmFragment;
-import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
+import jp.co.soliton.keymanager.fragment.LeftSideDetailConfirmTabletFragment;
 
 /**
  * Created by lexuanvinh on 02/27/2017.
@@ -34,8 +33,8 @@ public class DetailConfirmActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
-	    setOrientation();
 	    setContentView(R.layout.activity_detail_confirm);
+	    setOrientation();
 	    id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
 	    elementMgr = new ElementApplyManager(getApplicationContext());
     }
@@ -47,7 +46,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
 			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-			fragmentLeft = new LeftSideAPIDTabletFragment();
+			fragmentLeft = new LeftSideDetailConfirmTabletFragment();
 			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
 			fragmentTransaction1.commit();
 
@@ -57,6 +56,10 @@ public class DetailConfirmActivity extends FragmentActivity {
 			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 			fragmentTransaction.commit();
 		}
+	}
+
+	public void updateDesLeftSide(String newDes) {
+		((LeftSideDetailConfirmTabletFragment)fragmentLeft).setTextDes(newDes);
 	}
 
     public void clickConfirmApply(View v) {

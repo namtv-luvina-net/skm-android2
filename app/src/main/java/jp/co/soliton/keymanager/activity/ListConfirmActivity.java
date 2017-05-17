@@ -14,7 +14,7 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ContentListConfirmTabletFragment;
-import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
+import jp.co.soliton.keymanager.fragment.LeftSideListConfirmTabletFragment;
 
 import java.util.List;
 
@@ -34,9 +34,9 @@ public class ListConfirmActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
-	    setOrientation();
         setContentView(R.layout.activity_list_confirm);
-        elementMgr = new ElementApplyManager(getApplicationContext());
+	    setOrientation();
+	    elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
 	private void setOrientation() {
@@ -45,7 +45,7 @@ public class ListConfirmActivity extends FragmentActivity {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
 			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-			fragmentLeft = new LeftSideAPIDTabletFragment();
+			fragmentLeft = new LeftSideListConfirmTabletFragment();
 			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
 			fragmentTransaction1.commit();
 

@@ -74,10 +74,13 @@ public class ContentDetailConfirmFragment extends Fragment {
 		}
 		if (detail.getStatus() == ElementApply.STATUS_APPLY_CANCEL) {
 			tvStatus.setText(getText(R.string.stt_cancel));
+			((DetailConfirmActivity)getActivity()).updateDesLeftSide(getString(R.string.des_leftside_detail_confirm_tablet_withdrawn));
 		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
 			tvStatus.setText(getText(R.string.stt_waiting_approval));
+			((DetailConfirmActivity)getActivity()).updateDesLeftSide(getString(R.string.des_leftside_detail_confirm_tablet_cofirms_status));
 		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
 			tvStatus.setText(getText(R.string.stt_rejected));
+			((DetailConfirmActivity)getActivity()).updateDesLeftSide(getString(R.string.des_leftside_detail_confirm_tablet_rejected));
 		}
 
 		if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
