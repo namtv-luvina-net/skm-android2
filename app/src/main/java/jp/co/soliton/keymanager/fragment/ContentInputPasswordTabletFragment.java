@@ -42,6 +42,7 @@ import java.util.List;
 public class ContentInputPasswordTabletFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
 
 	Activity activity;
+	private TextView titleInput;
 	private TextView txtUserId;
 	private EditText txtPassword;
 	private Button btnNext;
@@ -75,6 +76,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
+		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		titleInput.setText(getString(R.string.input_id_and_password));
 		txtUserId = (TextView) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		btnNext = (Button) view.findViewById(R.id.btnNext);
@@ -433,8 +436,9 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 				intent.putExtra("STATUS_APPLY", status);
 				intent.putExtra("ELEMENT_APPLY", element);
 				intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
-				getActivity().finish();
 				startActivity(intent);
+				getActivity().overridePendingTransition(0, 0);
+				getActivity().finish();
 			}
 		} else {
 			//show error message

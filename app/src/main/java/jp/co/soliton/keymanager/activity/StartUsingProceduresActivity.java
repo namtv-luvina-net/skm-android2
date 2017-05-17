@@ -5,6 +5,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.security.KeyChain;
@@ -84,11 +85,13 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
     private MDMControl mdmctrl;
     private ComponentName m_DeviceAdmin;
 	private LogCtrl logCtrl;
+	boolean isTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_using_procedures);
+	    setOrientation();
 	    logCtrl = LogCtrl.getInstance(this);
         Intent intent = getIntent();
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
@@ -96,6 +99,13 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
         scepRequester = getScepRequester();
         new GetDeviceCertTask().execute();
     }
+
+    private void setOrientation() {
+		isTablet = getResources().getBoolean(R.bool.isTablet);
+		if (!isTablet) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
+	}
 
     public Requester getScepRequester() {
         if (scepRequester == null) {
@@ -520,11 +530,13 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
                 intent.putExtra("ELEMENT_APPLY", element);
                 finish();
                 startActivity(intent);
+	            overridePendingTransition(0, 0);
             } else {
                 StringList.GO_TO_LIST_APPLY = "1";
                 Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+	            overridePendingTransition(0, 0);
             }
         } else if (requestCode == m_nMDM_RequestCode) {
             if (resultCode == RESULT_OK) {

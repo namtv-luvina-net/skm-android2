@@ -114,13 +114,13 @@
         <activity
             android:name=".activity.StartUsingProceduresActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".activity.CompleteUsingProceduresActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <receiver android:name=".EpsapAdminReceiver" android:permission="android.permission.BIND_DEVICE_ADMIN">

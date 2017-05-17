@@ -18,6 +18,8 @@ import jp.co.soliton.keymanager.fragment.LeftSideInputTabletFragment;
 import jp.co.soliton.keymanager.fragment.TabletBaseInputFragment;
 import jp.co.soliton.keymanager.fragment.TabletInputSuccessFragment;
 
+import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION;
+
 /**
  * Created by nguyenducdat on 05/16/2017.
  */
@@ -155,9 +157,11 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 		}, getResources().getInteger(android.R.integer.config_shortAnimTime));
 	}
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {
+			((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
+		}
+	}
 }

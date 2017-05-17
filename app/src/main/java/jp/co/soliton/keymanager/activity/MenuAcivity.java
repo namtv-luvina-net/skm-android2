@@ -117,15 +117,6 @@ public class MenuAcivity extends FragmentActivity {
         }
     }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		LogCtrl.getInstance(this).loggerInfo("ViewPagerInputActivity:onActivityResult  requestCode = " + requestCode + ". " +
-				"resultCode = " + requestCode);
-		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {
-			finishInstallCertificate(resultCode);
-		}
-	}
-
 	public void gotoMenu() {
 		isFocusMenuTablet = true;
 		currentStatus = RESET_STATUS;
@@ -153,13 +144,5 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentContent= new ContentAPIDTabletFragment();
 		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 		fragmentTransaction.commit();
-	}
-
-	/**
-	 * Finish install certificate
-	 * @param resultCode
-	 */
-	public void finishInstallCertificate(int resultCode) {
-		((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
 	}
 }
