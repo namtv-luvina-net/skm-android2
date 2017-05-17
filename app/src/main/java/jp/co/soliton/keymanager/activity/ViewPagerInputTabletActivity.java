@@ -24,10 +24,12 @@ import jp.co.soliton.keymanager.fragment.TabletInputSuccessFragment;
 
 public class ViewPagerInputTabletActivity extends FragmentActivity {
 
+	public static final int STATUS_SUCCESS = 1;
 	private boolean isTablet;
 	Fragment fragmentLeft, fragmentContent;
 	FragmentManager fragmentManager;
 	String idConfirmApply;
+	int status = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,11 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		((TabletBaseInputFragment)fragmentContent).clickBackButton();
+		if (status == STATUS_SUCCESS){
+			gotoMenu();
+		}else {
+			((TabletBaseInputFragment) fragmentContent).clickBackButton();
+		}
 	}
 
 	public void btnBackClick(View v) {
@@ -91,17 +97,22 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 	}
 
 	public void goApplyCompleted(){
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance());
-		fragmentTransaction.commit();
-		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
+		TabletInputSuccessFragment tabletInputSuccessFragment = (TabletInputSuccessFragment) TabletInputSuccessFragment
+				.newInstance();
+		gotoApplyCompleteFragment(tabletInputSuccessFragment);
 	}
 
 	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
+		TabletInputSuccessFragment tabletInputSuccessFragment = (TabletInputSuccessFragment) TabletInputSuccessFragment
+				.newInstance(m_InformCtrl, element);
+		gotoApplyCompleteFragment(tabletInputSuccessFragment);
+	}
+
+	private void gotoApplyCompleteFragment(TabletInputSuccessFragment tabletInputSuccessFragment){
+		status = STATUS_SUCCESS;
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, TabletInputSuccessFragment.newInstance(m_InformCtrl, element));
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, tabletInputSuccessFragment);
 		fragmentTransaction.commit();
 		((LeftSideInputTabletFragment)fragmentLeft).hideContent();
 	}
