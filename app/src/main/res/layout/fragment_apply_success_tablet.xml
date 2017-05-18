@@ -22,7 +22,7 @@
 				android:layout_marginTop="@dimen/height_img_succes_tablet"/>
 		<TextView
 					android:id="@+id/contentSuccess"
-					android:text="Content Thong Bao Thanh Cong"
+					android:text="@string/back_to_top"
 					android:layout_gravity="center_horizontal"
 					android:textColor="@color/text_color_active"
 					android:textSize="@dimen/text_size_title"

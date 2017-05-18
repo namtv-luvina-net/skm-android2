@@ -19,10 +19,10 @@
             android:textColor="@color/text_color_inactive"
             android:text="@string/error"
             android:gravity="center_horizontal"
-            android:id="@+id/txtTitle" />
+            android:id="@+id/txtDlgApplyTitle" />
         <TextView
             android:id="@+id/txtDlgApplyMsg"
-            android:layout_below="@+id/txtTitle"
+            android:layout_below="@+id/txtDlgApplyTitle"
             android:layout_marginTop="@dimen/margin_item_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,23 +31,40 @@
             android:text="This is message"
             android:gravity="center"/>
     </RelativeLayout>
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="#bbc3d1"/>
     <LinearLayout
         android:id="@+id/zoneDlgMsgFooter"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="26"
         android:layout_alignParentBottom="true">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#bbc3d1"/>
+        <Button
+            android:id="@+id/btnDlgApplyCancel"
+            android:layout_width="0dp"
+            android:layout_height="73dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:textSize="24sp"
+            android:textAllCaps="false"
+            android:textColor="@color/text_color_active"
+            android:text="@string/label_dialog_Cancle"
+            android:gravity="center"/>
+	    <TextView
+			    android:layout_width="1dp"
+			    android:layout_height="match_parent"
+			    android:background="#bbc3d1"/>
         <Button
             android:id="@+id/btnDlgApplyOK"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="73dp"
             android:background="@android:color/transparent"
             android:textSize="24sp"
+            android:textAllCaps="false"
             android:textColor="@color/text_color_active"
             android:text="OK"
             android:gravity="center"/>

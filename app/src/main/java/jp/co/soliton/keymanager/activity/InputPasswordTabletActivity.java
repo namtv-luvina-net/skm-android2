@@ -82,7 +82,6 @@ public class InputPasswordTabletActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 		ElementApply detail = elementMgr.getElementApply(id);
 		if (detail.getHost() != null) {
 			setTvValueHost(detail.getHost());

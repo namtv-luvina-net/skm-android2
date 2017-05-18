@@ -3,6 +3,7 @@ package jp.co.soliton.keymanager.activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
+import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.ContentCompleteConfirmApplyFragment;
 
@@ -90,15 +92,135 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 	    overridePendingTransition(0, 0);
     }
 
-    /**
-     * Show message
-     *
-     * @param message
-     */
-    public void showMessage(String message, String titleDialog, DialogApplyMessage.OnOkDismissMessageListener listener) {
-        DialogApplyMessage dlgMessage = new DialogApplyMessage(this, message);
-        dlgMessage.setOnOkDismissMessageListener(listener);
-        dlgMessage.setTitleDialog(titleDialog);
-        dlgMessage.show();
-    }
+
+	public void gotoMenu() {
+		if (isTablet) {
+			removeFragmentContentTablet();
+			final Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Intent intent = new Intent(CompleteConfirmApplyActivity.this, MenuAcivity.class);
+					StringList.GO_TO_LIST_APPLY = "1";
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+					overridePendingTransition(0, 0);
+				}
+			}, getResources().getInteger(android.R.integer.config_shortAnimTime));
+		} else {
+			Intent intent = new Intent(CompleteConfirmApplyActivity.this, MenuAcivity.class);
+			StringList.GO_TO_LIST_APPLY = "1";
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}
+	}
+
+	private void removeFragmentContentTablet() {
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
+		fragmentTransaction.remove(fragmentContent);
+		fragmentTransaction.commit();
+	}
+
+
+	public void showMessageWithdrawn() {
+		if (!isTablet) {
+			showMessagePhone(getString(R.string.message_cancel), getString(R.string.title_cancel), new DialogApplyMessage
+					.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					finish();
+				}
+			});
+		} else {
+			showMessageTablet(getString(R.string.message_cancel), getString(R.string.title_cancel), new DialogMessageTablet
+					.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					finishActivityTablet();
+				}
+			});
+		}
+	}
+
+	public void showMessageRejected() {
+		if (!isTablet) {
+			showMessagePhone(getString(R.string.message_reject), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					finish();
+				}
+			});
+		} else {
+			showMessageTablet(getString(R.string.message_reject), getString(R.string.approval_confirmation), new
+					DialogMessageTablet.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					finishActivityTablet();
+				}
+			});
+		}
+	}
+
+	private void finishActivityTablet() {
+		removeFragmentContentTablet();
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				finish();
+				overridePendingTransition(0, 0);
+			}
+		}, getResources().getInteger(android.R.integer.config_shortAnimTime));
+	}
+
+	public void showMessagePending() {
+		if (!isTablet) {
+			showMessagePhone(getString(R.string.message_pending), getString(R.string
+					.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					Intent intent = new Intent(CompleteConfirmApplyActivity.this, MenuAcivity.class);
+					StringList.GO_TO_LIST_APPLY = "1";
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+				}
+			});
+		} else {
+			showMessageTablet(getString(R.string.message_pending), getString(R.string
+					.approval_confirmation), new DialogMessageTablet.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					removeFragmentContentTablet();
+					final Handler handler = new Handler();
+					handler.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							Intent intent = new Intent(CompleteConfirmApplyActivity.this, MenuAcivity.class);
+							StringList.GO_TO_LIST_APPLY = "1";
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							startActivity(intent);
+							overridePendingTransition(0, 0);
+						}
+					}, getResources().getInteger(android.R.integer.config_shortAnimTime));
+				}
+			});
+		}
+	}
+
+	private void showMessagePhone(String message, String titleDialog, DialogApplyMessage.OnOkDismissMessageListener
+			listener) {
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(CompleteConfirmApplyActivity.this, message);
+		dlgMessage.setOnOkDismissMessageListener(listener);
+		dlgMessage.setTitleDialog(titleDialog);
+		dlgMessage.show();
+	}
+
+	private void showMessageTablet(String message, String titleDialog, DialogMessageTablet.OnOkDismissMessageListener
+			listener) {
+		DialogMessageTablet dlgMessage = new DialogMessageTablet(CompleteConfirmApplyActivity.this, message);
+		dlgMessage.setOnOkDismissMessageListener(listener);
+		dlgMessage.setTitleDialog(titleDialog);
+		dlgMessage.show();
+	}
 }
