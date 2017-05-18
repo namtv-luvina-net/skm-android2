@@ -12,6 +12,7 @@
 		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
+				android:background="@drawable/left_panel_background"
 				android:layout_weight="165">
 			<FrameLayout
 					android:layout_width="match_parent"

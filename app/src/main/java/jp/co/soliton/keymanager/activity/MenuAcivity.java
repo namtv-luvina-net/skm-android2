@@ -7,11 +7,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.*;
 import android.support.v4.content.ContextCompat;
-import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.fragment.*;
-
-import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION;
+import jp.co.soliton.keymanager.InputApplyInfo;
+import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.fragment.ContentAPIDTabletFragment;
+import jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment;
+import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
+import jp.co.soliton.keymanager.fragment.LeftSideMenuTabletFragment;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -68,6 +70,8 @@ public class MenuAcivity extends FragmentActivity {
 		isTablet = getResources().getBoolean(R.bool.isTablet);
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 		}
 	}
 

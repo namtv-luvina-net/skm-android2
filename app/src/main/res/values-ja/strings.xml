@@ -86,6 +86,7 @@
 	<string name="back">戻る</string>
 	<string name="next">次へ</string>
 	<string name="input_id_and_password">ID・パスワードを入力</string>
+	<string name="input_user_id_and_password">ユーザーID・パスワードを入力</string>
 	<string name="set_notification_destination_email_address">通知先メールアドレスを設定</string>
 	<string name="skip">スキップ</string>
 	<string name="reason_for_apply">申請理由</string>
@@ -144,6 +145,7 @@
 	<string name="guide_32">"アイコンから見ることができます。"</string>
 	<string name="input_email">通知先メールアドレス</string>
 	<string name="input_host_name_and_port_number">ホスト名・\nHTTPSポート番号</string>
+	<string name="host_name_and_port_number">ホスト名・HTTPSポート番号</string>
 	<string name="input_password">パスワードを入力</string>
 	<string name="input_select_store">証明書の格納先</string>
 	<string name="input_user_id_password">ユーザーID・パスワード</string>

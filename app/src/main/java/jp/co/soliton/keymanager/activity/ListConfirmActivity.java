@@ -11,11 +11,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ContentListConfirmTabletFragment;
 import jp.co.soliton.keymanager.fragment.LeftSideListConfirmTabletFragment;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +48,7 @@ public class ListConfirmActivity extends FragmentActivity {
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
 			fragmentLeft = new LeftSideListConfirmTabletFragment();
 			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
@@ -89,6 +94,7 @@ public class ListConfirmActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         listElementApply = elementMgr.getAllElementApply();
+	    sortListElementApply();
         if(listElementApply.size() == 1) {
             Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
             intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
@@ -99,6 +105,17 @@ public class ListConfirmActivity extends FragmentActivity {
             finish();
         }
     }
+
+	private void sortListElementApply() {
+		Collections.sort(listElementApply, new Comparator<ElementApply>() {
+			@Override
+			public int compare(ElementApply o1, ElementApply o2) {
+				Date date1 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o1.getUpdateDate().replace("/", "-"));
+				Date date2 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o2.getUpdateDate().replace("/", "-"));
+				return date1.before(date2) ? 1 : -1;
+			}
+		});
+	}
 
 	public List<ElementApply> getListElementApply() {
 		return listElementApply;

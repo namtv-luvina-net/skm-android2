@@ -75,7 +75,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_id_and_password));
+		titleInput.setText(getString(R.string.input_password));
 		txtUserId = (TextView) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		btnNext = (Button) view.findViewById(R.id.btnNext);

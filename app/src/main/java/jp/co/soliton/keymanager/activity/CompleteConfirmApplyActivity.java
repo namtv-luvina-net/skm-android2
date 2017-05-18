@@ -55,6 +55,7 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			FrameLayout frameLayoutLeft = (FrameLayout) findViewById(R.id.fragment_left_side_menu_tablet);
 			if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 				frameLayoutLeft.setBackgroundDrawable( getResources().getDrawable(R.drawable.left_panel_background) );

@@ -41,26 +41,23 @@ public class DetailConfirmActivity extends FragmentActivity {
 	    elementMgr = new ElementApplyManager(getApplicationContext());
     }
 
-
 	private void setOrientation() {
 		isTablet = getResources().getBoolean(R.bool.isTablet);
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
 			fragmentLeft = new LeftSideDetailConfirmTabletFragment();
 			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
 			fragmentTransaction1.commit();
-			createFragmentContent();
-		}
-	}
 
-	private void createFragmentContent() {
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		fragmentContent= new ContentDetailConfirmFragment();
-		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-		fragmentTransaction.commit();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+			fragmentContent= new ContentDetailConfirmFragment();
+			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+			fragmentTransaction.commit();
+		}
 	}
 
 	public void updateDesLeftSide(String newDes) {
@@ -74,10 +71,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 		    intent.putExtra("ELEMENT_APPLY_ID", id);
 		    startActivity(intent);
 	    } else {
-		    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		    fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		    fragmentTransaction.remove(fragmentContent);
-		    fragmentTransaction.commit();
+		    removeFragmentContentTabletToLeft();
 		    final Handler handler = new Handler();
 		    handler.postDelayed(new Runnable() {
 			    @Override
@@ -86,38 +80,19 @@ public class DetailConfirmActivity extends FragmentActivity {
 				    intent.putExtra("ELEMENT_APPLY_ID", id);
 				    startActivity(intent);
 				    overridePendingTransition(0, 0);
-				    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				    fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
-				    fragmentContent= new ContentDetailConfirmFragment();
-				    fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-				    fragmentTransaction.commit();
 			    }
-		    }, getResources().getInteger(android.R.integer.config_shortAnimTime));
+		    }, getResources().getInteger(android.R.integer.config_mediumAnimTime));
+		    recreateFragmentContentWithDelay();
 	    }
     }
 
     public void clickReApply(View v) {
         InputApplyInfo.deletePref(DetailConfirmActivity.this);
 	    if (isTablet) {
-		    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		    fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		    fragmentTransaction.remove(fragmentContent);
-		    fragmentTransaction.commit();
-		    final Handler handler = new Handler();
-		    handler.postDelayed(new Runnable() {
-			    @Override
-			    public void run() {
-				    Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputTabletActivity.class);
-				    intent.putExtra("ELEMENT_APPLY_ID", id);
-				    startActivity(intent);
-				    overridePendingTransition(0, 0);
-				    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				    fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
-				    fragmentContent= new ContentDetailConfirmFragment();
-				    fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-				    fragmentTransaction.commit();
-			    }
-		    }, getResources().getInteger(android.R.integer.config_shortAnimTime));
+		    Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputTabletActivity.class);
+		    intent.putExtra("ELEMENT_APPLY_ID", id);
+		    startActivity(intent);
+		    overridePendingTransition(0, 0);
 	    } else {
 			Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputActivity.class);
 		    intent.putExtra("ELEMENT_APPLY_ID", id);
@@ -164,7 +139,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 	    elementMgr.deleteElementApply(id);
 	    final Activity activity = this;
 	    if (isTablet) {
-		    removeFragmentContentTablet();
+		    removeFragmentContentTabletToRight();
 		    final Handler handler = new Handler();
 		    handler.postDelayed(new Runnable() {
 			    @Override
@@ -174,7 +149,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 				    startActivity(intent);
 				    activity.overridePendingTransition(0, 0);
 			    }
-		    }, getResources().getInteger(android.R.integer.config_shortAnimTime));
+		    }, getResources().getInteger(android.R.integer.config_mediumAnimTime));
 	    } else {
 		    Intent intent = new Intent(activity, MenuAcivity.class);
 		    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -184,10 +159,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 
     public void clickWithdrawApply(View v) {
 	    if (isTablet) {
-		    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		    fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-		    fragmentTransaction.remove(fragmentContent);
-		    fragmentTransaction.commit();
+		    removeFragmentContentTabletToLeft();
 		    final Handler handler = new Handler();
 		    handler.postDelayed(new Runnable() {
 			    @Override
@@ -197,13 +169,9 @@ public class DetailConfirmActivity extends FragmentActivity {
 				    intent.putExtra("CANCEL_APPLY", "1");
 				    startActivity(intent);
 				    overridePendingTransition(0, 0);
-				    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-				    fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
-				    fragmentContent= new ContentDetailConfirmFragment();
-				    fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-				    fragmentTransaction.commit();
 			    }
 		    }, getResources().getInteger(android.R.integer.config_shortAnimTime));
+		    recreateFragmentContentWithDelay();
 	    } else {
 		    Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
 		    intent.putExtra("ELEMENT_APPLY_ID", id);
@@ -223,7 +191,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 
 	public void btnBackClick(View v) {
 		if (isTablet) {
-			removeFragmentContentTablet();
+			removeFragmentContentTabletToRight();
 			final Activity activity = this;
 			final Handler handler = new Handler();
 			handler.postDelayed(new Runnable() {
@@ -238,11 +206,43 @@ public class DetailConfirmActivity extends FragmentActivity {
 		}
 	}
 
-	private void removeFragmentContentTablet(){
+	private void recreateFragmentContentWithDelay(){
+		final Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+				fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
+				fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+				fragmentTransaction.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
+				fragmentTransaction.commit();
+			}
+		}, getResources().getInteger(android.R.integer.config_longAnimTime));
+	}
+
+	private void removeFragmentContentTabletToLeft(){
+		if (isTablet) {
+			removeFragmentLeft();
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+			fragmentTransaction.remove(fragmentContent);
+			fragmentTransaction.commit();
+		}
+	}
+
+	private void removeFragmentContentTabletToRight(){
 		if (isTablet) {
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
 			fragmentTransaction.remove(fragmentContent);
+			fragmentTransaction.commit();
+		}
+	}
+
+	private void removeFragmentLeft(){
+		if (isTablet) {
+			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			fragmentTransaction.remove(fragmentLeft);
 			fragmentTransaction.commit();
 		}
 	}

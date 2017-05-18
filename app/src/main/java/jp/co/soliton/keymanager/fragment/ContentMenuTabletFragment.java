@@ -101,16 +101,10 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuStart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (elementMgr.hasCertificate()) {
-						Intent intent = new Intent(activity, ListCertificateActivity.class);
-						startActivity(intent);
-						activity.overridePendingTransition(0, 0);
-					} else {
 						InputApplyInfo.deletePref(getActivity());
 						Intent intent = new Intent(activity, ViewPagerInputTabletActivity.class);
 						startActivity(intent);
 						activity.overridePendingTransition(0, 0);
-					}
 				}
 			});
 

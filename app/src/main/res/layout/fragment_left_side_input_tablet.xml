@@ -20,6 +20,7 @@
 				android:gravity="center_vertical"
 				android:clickable="true"
 				android:text="@string/back"
+				android:visibility="gone"
 				android:textSize="@dimen/tv_content_left_side"
 				android:textColor="@drawable/text_selector"/>
 

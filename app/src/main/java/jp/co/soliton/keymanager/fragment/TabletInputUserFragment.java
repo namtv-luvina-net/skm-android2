@@ -68,7 +68,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_id_and_password));
+		titleInput.setText(getString(R.string.input_user_id_and_password));
 		return view;
 	}
 
@@ -146,6 +146,12 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (isVisibleToUser) {
 			initValueControl();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		initValueControl();
 	}
 
 	/**

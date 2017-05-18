@@ -104,6 +104,8 @@ public class StartUsingProceduresActivity extends Activity implements KeyChainAl
 		isTablet = getResources().getBoolean(R.bool.isTablet);
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}else{
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 		}
 	}
 

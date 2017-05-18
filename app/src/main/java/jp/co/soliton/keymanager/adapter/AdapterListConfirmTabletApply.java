@@ -39,8 +39,12 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
      */
     public AdapterListConfirmTabletApply(Context context, List<ElementApply> listElementApply) {
         super(context, 0);
-        this.listElementApply = listElementApply;
+	    setListElementApply(listElementApply);
     }
+
+	public void setListElementApply(List<ElementApply> listElementApply) {
+		this.listElementApply = listElementApply;
+	}
 
     /**
      * This method get size listElementApply
@@ -107,8 +111,6 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
 	    String updateDate = elementApply.getUpdateDate().split(" ")[0];
 	    updateDate = getContext().getString(R.string.title_apply_date) + " " + updateDate;
 	    viewHolder.tvUpdateDate.setText(updateDate.replace("-", "/"));
-
         return convertView;
-
     }
 }

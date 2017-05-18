@@ -87,7 +87,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
-		viewPager.setOffscreenPageLimit(5);
 		viewPager.setCurrentItem(0);
 		setTab();
 	}
@@ -155,7 +154,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 			}
 			getInputApplyInfo().setUserId(detail.getUserId());
 			getInputApplyInfo().savePref(getActivity());
-			gotoPage(3);
+			viewPager.setCurrentItem(3);
 		}
 	}
 
