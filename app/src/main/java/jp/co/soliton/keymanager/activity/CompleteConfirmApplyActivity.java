@@ -192,18 +192,11 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 					.approval_confirmation), new DialogMessageTablet.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
-					removeFragmentContentTablet();
-					final Handler handler = new Handler();
-					handler.postDelayed(new Runnable() {
-						@Override
-						public void run() {
 							Intent intent = new Intent(CompleteConfirmApplyActivity.this, MenuAcivity.class);
 							StringList.GO_TO_LIST_APPLY = "1";
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 							startActivity(intent);
 							overridePendingTransition(0, 0);
-						}
-					}, getResources().getInteger(android.R.integer.config_shortAnimTime));
 				}
 			});
 		}

@@ -34,30 +34,51 @@ public class DetailConfirmActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+	    isTablet = getResources().getBoolean(R.bool.isTablet);
 	    fragmentManager = getSupportFragmentManager();
 	    setContentView(R.layout.activity_detail_confirm);
 	    setOrientation();
 	    id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
 	    elementMgr = new ElementApplyManager(getApplicationContext());
+	    if (isTablet) {
+		    if (savedInstanceState == null) {
+			    createView();
+		    } else {
+			    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
+			    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
+		    }
+	    }
     }
 
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		if (isTablet) {
+			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentContent", fragmentContent);
+			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentLeft", fragmentLeft);
+		}
+	}
+
 	private void setOrientation() {
-		isTablet = getResources().getBoolean(R.bool.isTablet);
 		if (!isTablet) {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		} else {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-			fragmentLeft = new LeftSideDetailConfirmTabletFragment();
-			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
-			fragmentTransaction1.commit();
-
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-			fragmentContent= new ContentDetailConfirmFragment();
-			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-			fragmentTransaction.commit();
 		}
+	}
+
+	private void createView(){
+		FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+		fragmentLeft = new LeftSideDetailConfirmTabletFragment();
+		fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
+		fragmentTransaction1.commit();
+
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+		fragmentContent = new ContentDetailConfirmFragment();
+		fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+		fragmentTransaction.commit();
 	}
 
 	public void updateDesLeftSide(String newDes) {
