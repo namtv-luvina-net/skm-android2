@@ -12,7 +12,7 @@
 		<TextView
 				android:id="@+id/tvBack"
 				android:layout_width="wrap_content"
-				android:layout_height="35dp"
+				android:layout_height="@dimen/height_btn_back_left_side_tablet"
 				android:layout_marginTop="@dimen/margin_icon_setting"
 				android:layout_marginRight="@dimen/margin_icon_setting"
 				android:layout_alignParentLeft="true"
@@ -30,7 +30,7 @@
 				android:layout_height="match_parent"
 				android:layout_marginLeft="@dimen/margin_left_side"
 				android:layout_marginRight="@dimen/margin_left_side"
-				android:layout_marginTop="50dp">
+				android:layout_marginTop="@dimen/margin_top_content_left_side_input_tablet">
 			<TextView
 					android:id="@+id/tv_host_name_and_port_number"
 					android:layout_above="@+id/tv_download_ca_certificate"

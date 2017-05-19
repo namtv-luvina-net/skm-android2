@@ -2,128 +2,134 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_marginLeft="77dp"
-	          android:layout_marginRight="77dp"
+              android:layout_marginLeft="@dimen/margin_left_detail_confirm_apply_tablet"
+	          android:layout_marginRight="@dimen/margin_left_detail_confirm_apply_tablet"
               android:orientation="vertical">
 
 	<TextView
 			android:id="@+id/tvConfirmApply"
 			android:layout_width="match_parent"
-			android:layout_height="55dp"
+			android:layout_height="@dimen/height_btn_confirm_apply_tablet"
 			android:text="@string/confirm_apply_status"
 			android:gravity="center"
 			android:layout_centerInParent="true"
 			android:background="@drawable/background_btn_ctrl_apid"
 			android:clickable="true"
-			android:textSize="@dimen/text_size_value"
+			android:textSize="@dimen/tv_title_left_side"
 			android:textColor="@drawable/text_selector"/>
 
 	<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="100dp"
+			android:layout_height="match_parent"
 			android:layout_above="@id/tvConfirmApply"
-			android:layout_marginBottom="125dp"
-	        android:orientation="horizontal"
-			>
-		<ImageView
-				android:id="@+id/thumbnail"
-				android:layout_width="80dp"
-				android:layout_marginLeft="63dp"
-				android:layout_height="match_parent"
-				android:background="@drawable/ic_approval_confirmation"
-				/>
-		<LinearLayout
+			android:gravity="center">
+
+		<RelativeLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:orientation="horizontal">
-			<LinearLayout
-					android:id="@+id/ll_title"
-					android:layout_width="0dp"
-					android:layout_weight="1"
+				android:layout_height="@dimen/height_content_detail_confirm_apply_tablet"
+				android:orientation="horizontal"
+				>
+			<ImageView
+					android:id="@+id/thumbnail"
+					android:layout_width="@dimen/width_img_detail_confirm_apply_tablet"
+					android:layout_marginLeft="@dimen/margin_left_img_detail_confirm_apply_tablet"
 					android:layout_height="match_parent"
-					android:orientation="vertical">
-				<TextView
-						android:id="@+id/txt_title_host"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
-						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical|right"
-						android:text="@string/title_host_name"
-						android:textColor="@color/text_color"/>
-				<TextView
-						android:id="@+id/txt_title_id"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
-						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical|right"
-						android:text="@string/title_user_id"
-						android:textColor="@color/text_color"/>
-				<TextView
-						android:id="@+id/txt_title_date"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
-						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical|right"
-						android:text="@string/title_apply_date"
-						android:textColor="@color/text_color"/>
-				<TextView
-						android:id="@+id/txt_title_status"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
-						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical|right"
-						android:text="@string/title_status"
-						android:textColor="@color/text_color"/>
-			</LinearLayout>
+					android:background="@drawable/ic_approval_confirmation"
+					/>
 			<LinearLayout
-					android:id="@+id/ll_value"
-					android:layout_width="0dp"
-					android:layout_weight="1"
+					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:paddingLeft="@dimen/margin_item_menu"
-					android:orientation="vertical">
-				<TextView
-						android:id="@+id/tvHostName"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
+					android:orientation="horizontal">
+				<LinearLayout
+						android:id="@+id/ll_title"
+						android:layout_width="0dp"
 						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical"
-						android:text="10.0.1.68"
-						android:textColor="@color/text_color"/>
-				<TextView
-						android:id="@+id/tvUserId"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
+						android:layout_height="match_parent"
+						android:orientation="vertical">
+					<TextView
+							android:id="@+id/txt_title_host"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical|right"
+							android:text="@string/title_host_name"
+							android:textColor="@color/text_color"/>
+					<TextView
+							android:id="@+id/txt_title_id"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical|right"
+							android:text="@string/title_user_id"
+							android:textColor="@color/text_color"/>
+					<TextView
+							android:id="@+id/txt_title_date"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical|right"
+							android:text="@string/title_apply_date"
+							android:textColor="@color/text_color"/>
+					<TextView
+							android:id="@+id/txt_title_status"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical|right"
+							android:text="@string/title_status"
+							android:textColor="@color/text_color"/>
+				</LinearLayout>
+				<LinearLayout
+						android:id="@+id/ll_value"
+						android:layout_width="0dp"
 						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical"
-						android:text="anhvt"
-						android:textColor="@color/text_color"/>
-				<TextView
-						android:id="@+id/tvDate"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
-						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical"
-						android:text="2017/01/20"
-						android:textColor="@color/text_color"/>
-				<TextView
-						android:id="@+id/tvStatus"
-						android:layout_width="match_parent"
-						android:layout_height="0dp"
-						android:layout_weight="1"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:gravity="center_vertical"
-						android:text="@string/stt_waiting_approval"
-						android:textColor="@color/text_color"/>
+						android:layout_height="match_parent"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:orientation="vertical">
+					<TextView
+							android:id="@+id/tvHostName"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical"
+							android:text="10.0.1.68"
+							android:textColor="@color/text_color"/>
+					<TextView
+							android:id="@+id/tvUserId"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical"
+							android:text="anhvt"
+							android:textColor="@color/text_color"/>
+					<TextView
+							android:id="@+id/tvDate"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical"
+							android:text="2017/01/20"
+							android:textColor="@color/text_color"/>
+					<TextView
+							android:id="@+id/tvStatus"
+							android:layout_width="match_parent"
+							android:layout_height="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:gravity="center_vertical"
+							android:text="@string/stt_waiting_approval"
+							android:textColor="@color/text_color"/>
+				</LinearLayout>
 			</LinearLayout>
-		</LinearLayout>
+		</RelativeLayout>
+
 	</RelativeLayout>
 
 	<TextView
@@ -133,8 +139,8 @@
 			android:gravity="center"
 			android:text="@string/withdrawal_apply"
 			android:clickable="true"
-			android:textSize="@dimen/text_size_value"
+			android:textSize="@dimen/tv_title_left_side"
 			android:textColor="@color/text_delete_apply"
 			android:layout_alignParentBottom="true"
-			android:layout_marginBottom="50dp"/>
+			android:layout_marginBottom="@dimen/margin_bottom_title_complete_using_procedures_tablet"/>
 </RelativeLayout>

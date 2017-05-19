@@ -7,11 +7,11 @@
                 android:paddingRight="@dimen/margin_content_input_tablet">
 		<ImageView
 				android:id="@+id/icon"
-				android:layout_width="130dp"
-				android:layout_height="170dp"
+				android:layout_width="@dimen/width_img_complete_confirm_apply_tablet"
+				android:layout_height="@dimen/height_img_complete_confirm_apply_tablet"
 				android:background="@drawable/ic_approval_confirmation"
 				android:layout_centerHorizontal="true"
-		        android:layout_marginTop="260dp"
+		        android:layout_marginTop="@dimen/margin_top_img_complete_confirm_apply_tablet"
 				/>
 		<TextView
 				android:id="@+id/titleSuccess"
@@ -19,7 +19,7 @@
 				android:layout_centerHorizontal="true"
 				android:textSize="@dimen/text_size_title"
 				android:textColor="@color/color_title_input"
-				android:layout_marginTop="175dp"
+				android:layout_marginTop="@dimen/margin_top_title_complete_confirm_apply_tablet"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 		<Button
@@ -33,7 +33,7 @@
 					android:textAllCaps="false"
 					android:layout_centerHorizontal="true"
 					android:layout_below="@+id/icon"
-					android:layout_marginTop="95dp"
+					android:layout_marginTop="@dimen/margin_top_button_complete_confirm_apply_tablet"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"/>
 </RelativeLayout>

@@ -28,13 +28,13 @@
 					android:layout_centerHorizontal="true"
 					android:textSize="@dimen/text_size_title"
 					android:textColor="@color/text_color_inactive"
-					android:layout_marginTop="180dp" />
+					android:layout_marginTop="@dimen/margin_top_title_start_using_procedures_tablet" />
 
 			<ProgressBar
 					android:id="@+id/pb"
 					android:layout_centerInParent="true"
-					android:layout_width="80dp"
-					android:layout_height="80dp"
+					android:layout_width="@dimen/size_progress_bar_start_using_procedures"
+					android:layout_height="@dimen/size_progress_bar_start_using_procedures"
 					android:layout_gravity="center"
 					android:indeterminate="true"
 					android:indeterminateOnly="true"
