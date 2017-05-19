@@ -55,7 +55,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private InputApplyInfo inputApplyInfo;
 	private int m_nErroType;
 	public int sdk_int_version;
-	protected DialogApplyProgressBar progressDialog;
+	private DialogApplyProgressBar progressDialog;
 	protected ControlPagesInput controlPagesInput;
 	private String hostName;
 	private String portName;
@@ -65,6 +65,13 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	public static Fragment newInstance() {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
 		return f;
+	}
+
+	public DialogApplyProgressBar getProgressDialog() {
+		if (progressDialog == null) {
+			progressDialog = new DialogApplyProgressBar(getActivity());
+		}
+		return progressDialog;
 	}
 
 	@Override

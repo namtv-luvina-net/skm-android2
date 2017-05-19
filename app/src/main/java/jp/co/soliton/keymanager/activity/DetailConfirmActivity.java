@@ -71,18 +71,10 @@ public class DetailConfirmActivity extends FragmentActivity {
 		    intent.putExtra("ELEMENT_APPLY_ID", id);
 		    startActivity(intent);
 	    } else {
-		    removeFragmentContentTabletToLeft();
-		    final Handler handler = new Handler();
-		    handler.postDelayed(new Runnable() {
-			    @Override
-			    public void run() {
-				    Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordTabletActivity.class);
-				    intent.putExtra("ELEMENT_APPLY_ID", id);
-				    startActivity(intent);
-				    overridePendingTransition(0, 0);
-			    }
-		    }, getResources().getInteger(android.R.integer.config_mediumAnimTime));
-		    recreateFragmentContentWithDelay();
+		    intent = new Intent(DetailConfirmActivity.this, InputPasswordTabletActivity.class);
+		    intent.putExtra("ELEMENT_APPLY_ID", id);
+		    startActivity(intent);
+		    overridePendingTransition(0, 0);
 	    }
     }
 
@@ -159,19 +151,11 @@ public class DetailConfirmActivity extends FragmentActivity {
 
     public void clickWithdrawApply(View v) {
 	    if (isTablet) {
-		    removeFragmentContentTabletToLeft();
-		    final Handler handler = new Handler();
-		    handler.postDelayed(new Runnable() {
-			    @Override
-			    public void run() {
-				    Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordTabletActivity.class);
-				    intent.putExtra("ELEMENT_APPLY_ID", id);
-				    intent.putExtra("CANCEL_APPLY", "1");
-				    startActivity(intent);
-				    overridePendingTransition(0, 0);
-			    }
-		    }, getResources().getInteger(android.R.integer.config_shortAnimTime));
-		    recreateFragmentContentWithDelay();
+		    Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordTabletActivity.class);
+		    intent.putExtra("ELEMENT_APPLY_ID", id);
+		    intent.putExtra("CANCEL_APPLY", "1");
+		    startActivity(intent);
+		    overridePendingTransition(0, 0);
 	    } else {
 		    Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
 		    intent.putExtra("ELEMENT_APPLY_ID", id);
