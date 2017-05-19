@@ -1,8 +1,6 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
-import jp.co.soliton.keymanager.activity.ConfirmApplyActivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
-import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.customview.DialogMenuCertDetail;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -93,9 +86,6 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		super.onActivityCreated(savedInstanceState);
 		inputApplyInfo = InputApplyInfo.getPref(getActivity());
 		m_InformCtrl = tabletBaseInputFragment.getInformCtrl();
-		if (tabletBaseInputFragment.progressDialog == null) {
-			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
-		}
 		if (elementMgr == null) {
 			elementMgr = new ElementApplyManager(getActivity());
 		}
@@ -150,7 +140,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 * Execute action apply
 	 */
 	private void processingApply() {
-		tabletBaseInputFragment.progressDialog.show();
+		tabletBaseInputFragment.getProgressDialog().show();
 		tabletBaseInputFragment.setErroType(SUCCESSFUL);
 		errorCount = 0;
 		reTry = false;
@@ -205,7 +195,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.progressDialog.dismiss();
+		tabletBaseInputFragment.getProgressDialog().dismiss();
 		//request with result error
 		int m_nErroType = tabletBaseInputFragment.getErroType();
 		if (!result) {

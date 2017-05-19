@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+		android:orientation="vertical">
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_item_confirm_apply_tablet"
+			android:orientation="vertical"
+			android:paddingLeft="@dimen/padding_left_content_item_confirm_apply_tablet">
+		<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_weight="1"
+				android:layout_marginTop="@dimen/margin_top_content_item_confirm_apply_tablet"
+				android:layout_marginBottom="@dimen/margin_bottom_content_item_confirm_apply_tablet"
+				android:orientation="horizontal">
+
+			<ImageView
+					android:id="@+id/thumbnail"
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:layout_weight="90"
+					android:layout_gravity="center"
+					android:paddingLeft="@dimen/pading_left_img_item_confirm_apply_tablet"
+					android:paddingRight="@dimen/pading_right_img_item_confirm_apply_tablet"
+					android:scaleType="fitCenter"
+					android:src="@drawable/ic_approval_confirmation"/>
+
+			<RelativeLayout
+					android:layout_width="0dp"
+					android:layout_height="match_parent"
+					android:gravity="center_vertical"
+					android:orientation="vertical"
+					android:layout_weight="520"
+					>
+				<TextView
+						android:id="@+id/titleHost"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/title_host_name"
+						android:textColor="@color/text_color"
+						android:textSize="@dimen/text_size_content_item_apid"/>
+				<TextView
+						android:id="@+id/tvHostValue"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_below="@id/titleHost"
+						android:textSize="@dimen/text_size_content_item_apid"
+						android:ellipsize="end"
+						android:singleLine="true"
+						android:textColor="@color/text_color"
+						android:text="10.0.1.68" />
+				<TextView
+						android:id="@+id/titleID"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_above="@id/tvIdValue"
+						android:textSize="@dimen/text_size_content_item_apid"
+						android:textColor="@color/text_color"
+						android:text="@string/title_user_id" />
+				<TextView
+						android:id="@+id/tvIdValue"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/text_size_content_item_apid"
+						android:ellipsize="end"
+						android:singleLine="true"
+						android:layout_alignParentBottom="true"
+						android:textColor="@color/text_color"
+						android:text="anhvt" />
+
+				<TextView
+						android:id="@+id/tvUpdateDate"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:text="Date: 20/01/2017"
+						android:textColor="@color/text_color"
+						android:textSize="@dimen/text_size_content_item_apid"/>
+				<TextView
+						android:id="@+id/tvStatus"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:text="@string/stt_waiting_approval"
+						android:textColor="@color/text_color_active"
+						android:textSize="@dimen/text_size_content_item_apid"/>
+
+			</RelativeLayout>
+
+			<ImageView
+					android:layout_height="@dimen/height_img_arrow_item_confirm_apply_tablet"
+					android:layout_width="@dimen/width_img_arrow_item_confirm_apply_tablet"
+					android:layout_gravity="center"
+					android:layout_weight="57"
+					android:src="@drawable/ic_arrow"
+					/>
+		</LinearLayout>
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="2dp"
+				android:background="#c9caca"/>
+	</LinearLayout>
+
+</LinearLayout>

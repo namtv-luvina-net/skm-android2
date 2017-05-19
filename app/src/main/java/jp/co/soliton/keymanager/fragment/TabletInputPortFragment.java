@@ -21,7 +21,6 @@ import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
-import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
 import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
 
@@ -72,14 +71,6 @@ public class TabletInputPortFragment extends TabletInputFragment {
 		}
 		initValueControl();
 		return view;
-	}
-
-	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
-		if (tabletBaseInputFragment!= null && tabletBaseInputFragment.progressDialog == null) {
-			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
-		}
 	}
 
 	@Override
@@ -177,7 +168,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 			logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
 			tabletBaseInputFragment.getInputApplyInfo().setPort(edtPort.getText().toString().trim());
 			tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-			tabletBaseInputFragment.progressDialog.show();
+			tabletBaseInputFragment.getProgressDialog().show();
 			if (tabletBaseInputFragment.getInformCtrl() == null) {
 				tabletBaseInputFragment.setInformCtrl(new InformCtrl());
 			}
@@ -198,7 +189,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	}
 
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.progressDialog.dismiss();
+		tabletBaseInputFragment.getProgressDialog().dismiss();
 		if (result) {
 			//Download certificate
 			String strDownloadCert = tabletBaseInputFragment.controlPagesInput.downloadCert(tabletBaseInputFragment
@@ -234,7 +225,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	public void finishInstallCertificate(int resultCode) {
 		if (resultCode == Activity.RESULT_OK) {
 			if (tabletBaseInputFragment.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-				tabletBaseInputFragment.progressDialog.show();
+				tabletBaseInputFragment.getProgressDialog().show();
 				String host = tabletBaseInputFragment.getHostName();
 				String port = tabletBaseInputFragment.getPortName();
 				String url = String.format("%s:%s", host, port);
@@ -243,7 +234,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 						.getErroType(), new ConnectApplyTask.EndConnection() {
 					@Override
 					public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-						tabletBaseInputFragment.progressDialog.dismiss();
+						tabletBaseInputFragment.getProgressDialog().dismiss();
 						tabletBaseInputFragment.setInformCtrl(informCtrl);
 						tabletBaseInputFragment.setErroType(errorType);
 						checkCertificateInstalled(result);

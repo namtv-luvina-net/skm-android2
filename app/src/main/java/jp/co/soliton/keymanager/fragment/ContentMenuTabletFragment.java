@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.DetailConfirmActivity;
-import jp.co.soliton.keymanager.activity.ListCertificateActivity;
-import jp.co.soliton.keymanager.activity.ListConfirmActivity;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.APIDManager;
@@ -33,7 +29,6 @@ public class ContentMenuTabletFragment extends Fragment {
 	RelativeLayout rlMenuStart;
 	RelativeLayout rlMenuAPID;
 	RelativeLayout rlMenuConfirmApply;
-	ElementApplyManager elementMgr;
 	TextView contentVPN;
 	TextView contentWifi;
 	TextView titleWifi;
@@ -50,12 +45,6 @@ public class ContentMenuTabletFragment extends Fragment {
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		this.activity = (Activity) context;
-	}
-
-	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		elementMgr = new ElementApplyManager(activity);
 	}
 
 	@Nullable
@@ -85,7 +74,6 @@ public class ContentMenuTabletFragment extends Fragment {
 		contentWifi.setText(strUDID);
 	}
 
-
 	private void updateViewTitle() {
 		titleWifi.measure(0, 0);
 		titleVPN.measure(0, 0);
@@ -106,14 +94,10 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuStart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (elementMgr.hasCertificate()) {
-						Intent intent = new Intent(activity, ListCertificateActivity.class);
-						startActivity(intent);
-					} else {
-						((MenuAcivity)activity).setFocusMenuTablet(false);
 						InputApplyInfo.deletePref(getActivity());
-						((MenuAcivity)getActivity()).startActivityStartApply();
-					}
+						Intent intent = new Intent(activity, ViewPagerInputTabletActivity.class);
+						startActivity(intent);
+						activity.overridePendingTransition(0, 0);
 				}
 			});
 
@@ -127,7 +111,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	}
 
 	private void updateMenuConfirm() {
-        final int totalApply = elementMgr.getCountElementApply();
+        final int totalApply = ((MenuAcivity)activity).getElementMgr().getCountElementApply();
         if (totalApply <= 0) {
             rlMenuConfirmApply.setVisibility(View.GONE);
         } else {
@@ -135,15 +119,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	        rlMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (totalApply == 1) {
-                        List<ElementApply> listElementApply = elementMgr.getAllElementApply();
-                        Intent intent = new Intent(activity, DetailConfirmActivity.class);
-                        intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(activity, ListConfirmActivity.class);
-                        startActivity(intent);
-                    }
+	                ((MenuAcivity)activity).gotoConfirmActivity();
                 }
             });
         }

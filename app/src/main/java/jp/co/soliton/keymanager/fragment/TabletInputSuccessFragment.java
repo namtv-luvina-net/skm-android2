@@ -1,26 +1,16 @@
 package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.activity.StartUsingProceduresActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 /**
@@ -41,6 +31,7 @@ public class TabletInputSuccessFragment extends TabletInputFragment {
 		f.element = element;
 		return f;
 	}
+
 	public static Fragment newInstance() {
 		TabletInputSuccessFragment f = new TabletInputSuccessFragment();
 		return f;
@@ -66,19 +57,10 @@ public class TabletInputSuccessFragment extends TabletInputFragment {
 		contentSuccess.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Activity activity = getActivity();
 				if (isBackToTopAuto) {
-					Intent intent = new Intent(getActivity(), StartUsingProceduresActivity.class);
-					intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
-					intent.putExtra("ELEMENT_APPLY", element);
-					startActivity(intent);
-					activity.finish();
+					((ViewPagerInputTabletActivity)getActivity()).startUsingProceduresActivity(m_InformCtrl, element);
 				} else {
-					InputApplyInfo.deletePref(getActivity());
-					Intent intent = new Intent(activity, MenuAcivity.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(intent);
-					activity.finish();
+					((ViewPagerInputTabletActivity)getActivity()).gotoMenu();
 				}
 			}
 		});

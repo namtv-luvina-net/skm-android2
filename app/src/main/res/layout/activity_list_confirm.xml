@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:orientation="vertical">
-     <include layout="@layout/layout_header"/>
-
-     <ListView
-          android:id="@+id/listConfirm"
-          android:layout_height="match_parent"
-          android:layout_width="match_parent"
-          android:divider="@color/background_color_white"
-          android:dividerHeight="1dp"
-          android:background="@drawable/background"/>
-
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+	<fragment
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:name="jp.co.soliton.keymanager.fragment.ContentListConfirmPhoneFragment"
+			android:id="@+id/fragment_content_phone"/>
+</RelativeLayout>

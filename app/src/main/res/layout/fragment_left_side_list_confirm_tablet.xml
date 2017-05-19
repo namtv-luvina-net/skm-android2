@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/left_panel_background">
+	<RelativeLayout
+			android:id="@+id/header_left_side"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/high_header_left_side_tablet">
+		<TextView
+				android:id="@+id/tvBack"
+				android:layout_width="wrap_content"
+				android:layout_height="@dimen/height_btn_back_left_side_tablet"
+				android:layout_marginTop="@dimen/margin_icon_setting"
+				android:layout_marginRight="@dimen/margin_icon_setting"
+				android:layout_alignParentLeft="true"
+				android:drawableLeft="@drawable/ic_back_white"
+				android:gravity="center_vertical"
+				android:clickable="true"
+				android:text="@string/back"
+				android:textSize="@dimen/tv_content_left_side"
+				android:textColor="@drawable/text_selector"/>
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/title_leftside_list_confirm_tablet"
+				android:textColor="@color/color_title_menu"
+				android:textSize="@dimen/tv_title_left_side"
+				android:layout_centerHorizontal="true"
+				android:layout_alignParentBottom="true"
+				android:layout_marginBottom="@dimen/margin_left_side"/>
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@color/color_title_menu"
+				android:layout_marginLeft="@dimen/margin_left_side"
+				android:layout_marginRight="@dimen/margin_left_side"
+				android:layout_alignParentBottom="true"/>
+	</RelativeLayout>
+
+	<RelativeLayout
+			android:id="@+id/content_left_size"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_marginLeft="@dimen/margin_left_side"
+			android:layout_marginRight="@dimen/margin_left_side"
+			>
+		<TextView
+				android:id="@+id/tv_description"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/des_leftside_list_confirm_tablet"
+				android:textSize="@dimen/tv_content_left_side"
+				android:textColor="@color/color_desc_menu_70"
+				android:gravity="center_horizontal"
+				android:lineSpacingMultiplier="1.5"
+				/>
+
+	</RelativeLayout>
+</RelativeLayout>
