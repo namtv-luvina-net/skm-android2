@@ -3,6 +3,7 @@ package jp.co.soliton.keymanager.customview;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
@@ -30,6 +31,7 @@ public class DialogConfirmTablet extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_confirm_tablet);
         btnOK = (TextView) findViewById(R.id.btnDlgApplyOK);
+	    btnOK.setTypeface(Typeface.DEFAULT_BOLD);
         btnCancel = (TextView) findViewById(R.id.btnDlgApplyCancel);
         txtDlgApplyMsg = (TextView) findViewById(R.id.txtDlgApplyMsg);
         txtDlgApplyTitle = (TextView) findViewById(R.id.txtDlgApplyTitle);

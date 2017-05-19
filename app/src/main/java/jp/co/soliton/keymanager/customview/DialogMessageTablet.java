@@ -69,17 +69,4 @@ public class DialogMessageTablet extends Dialog {
     public void setTitleDialog(String title) {
         txtTitle.setText(title);
     }
-
-    @Override
-    public void onWindowFocusChanged (boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        adjustControl();
-    }
-
-    private void adjustControl() {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        final float scale = displaymetrics.density;
-        zoneDlgApplyMsg.getLayoutParams().height = (int)((140 + 1) * scale + txtDlgApplyMsg.getMeasuredHeight());
-    }
 }

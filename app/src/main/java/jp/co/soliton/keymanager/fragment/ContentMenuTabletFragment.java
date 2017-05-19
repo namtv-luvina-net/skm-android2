@@ -29,7 +29,6 @@ public class ContentMenuTabletFragment extends Fragment {
 	RelativeLayout rlMenuStart;
 	RelativeLayout rlMenuAPID;
 	RelativeLayout rlMenuConfirmApply;
-	ElementApplyManager elementMgr;
 	TextView contentVPN;
 	TextView contentWifi;
 	TextView titleWifi;
@@ -46,12 +45,6 @@ public class ContentMenuTabletFragment extends Fragment {
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		this.activity = (Activity) context;
-	}
-
-	@Override
-	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		elementMgr = new ElementApplyManager(activity);
 	}
 
 	@Nullable
@@ -118,7 +111,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	}
 
 	private void updateMenuConfirm() {
-        final int totalApply = elementMgr.getCountElementApply();
+        final int totalApply = ((MenuAcivity)activity).getElementMgr().getCountElementApply();
         if (totalApply <= 0) {
             rlMenuConfirmApply.setVisibility(View.GONE);
         } else {
@@ -126,17 +119,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	        rlMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-	                if (totalApply == 1) {
-                        List<ElementApply> listElementApply = elementMgr.getAllElementApply();
-                        Intent intent = new Intent(activity, DetailConfirmActivity.class);
-                        intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
-                        startActivity(intent);
-		                activity.overridePendingTransition(0, 0);
-                    } else {
-                        Intent intent = new Intent(activity, ListConfirmActivity.class);
-                        startActivity(intent);
-	                    activity.overridePendingTransition(0, 0);
-                    }
+	                ((MenuAcivity)activity).gotoConfirmActivity();
                 }
             });
         }

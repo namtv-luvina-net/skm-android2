@@ -104,7 +104,7 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
             viewHolder.tvStatus.setText(getContext().getText(R.string.stt_cancel));
         } else if (elementApply.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
             String stt = getContext().getText(R.string.stt_waiting_approval).toString();
-            viewHolder.tvStatus.setText(stt.replace(" ", "\n"));
+            viewHolder.tvStatus.setText(stt);
         } else if (elementApply.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
             viewHolder.tvStatus.setText(getContext().getText(R.string.stt_rejected));
         }

@@ -39,11 +39,11 @@ public class ElementApplyManager {
         }
         values.put("target", elementApply.getTarger());
         values.put("status", elementApply.getStatus());
-        values.put("challenge", elementApply.isChallenge() ? 1 : 0);
-        int id = getIdElementApply(elementApply.getHost(), elementApply.getUserId());
-        if (id > 0) {
-            values.put("updated_at", getDateWithFomat("yyyy/MM/dd HH:mm:ss"));
-            db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
+	    values.put("challenge", elementApply.isChallenge() ? 1 : 0);
+	    values.put("updated_at", getDateWithFomat("yyyy/MM/dd HH:mm:ss"));
+	    int id = getIdElementApply(elementApply.getHost(), elementApply.getUserId());
+	    if (id > 0) {
+		    db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
         } else {
             db.insert(TABLE_ELEMENT_APPLY, null, values);// Inserting Row
         }

@@ -10,10 +10,14 @@ import android.support.v4.content.ContextCompat;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ContentAPIDTabletFragment;
 import jp.co.soliton.keymanager.fragment.ContentMenuTabletFragment;
 import jp.co.soliton.keymanager.fragment.LeftSideAPIDTabletFragment;
 import jp.co.soliton.keymanager.fragment.LeftSideMenuTabletFragment;
+
+import java.util.List;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -29,6 +33,7 @@ public class MenuAcivity extends FragmentActivity {
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 	private boolean isTablet;
 	private boolean isFocusMenuTablet;
+	ElementApplyManager elementMgr;
 
 	public int currentStatus;
 	FragmentManager fragmentManager;
@@ -37,6 +42,7 @@ public class MenuAcivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+	    elementMgr = new ElementApplyManager(this);
 	    setContentView(R.layout.activity_menu);
 	    setOrientation();
 	    fragmentManager = getSupportFragmentManager();
@@ -47,7 +53,12 @@ public class MenuAcivity extends FragmentActivity {
 		    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
 		    currentStatus = savedInstanceState.getInt("currentStatus");
 	    }
+	    checkGoToConfirmIfNeed();
     }
+
+	public ElementApplyManager getElementMgr() {
+		return elementMgr;
+	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -104,14 +115,32 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
     protected void onResume() {
         super.onResume();
-        if (StringList.GO_TO_LIST_APPLY.equals("1")) {
-            StringList.GO_TO_LIST_APPLY = "0";
-            Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
-            startActivity(intent);
-        }
-        if(android.os.Build.VERSION.SDK_INT >= 23) {
+		checkGoToConfirmIfNeed();
+		if(android.os.Build.VERSION.SDK_INT >= 23) {
             NewPermissionSet();
         }
+    }
+
+	private void checkGoToConfirmIfNeed() {
+		if (StringList.GO_TO_LIST_APPLY.equals("1")) {
+		    StringList.GO_TO_LIST_APPLY = "0";
+		    gotoConfirmActivity();
+		}
+	}
+
+	public void gotoConfirmActivity() {
+	    int totalApply = elementMgr.getCountElementApply();
+	    if (totalApply == 1) {
+		    List<ElementApply> listElementApply = elementMgr.getAllElementApply();
+		    Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
+		    intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
+		    startActivity(intent);
+		    overridePendingTransition(0, 0);
+	    } else {
+		    Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
+		    startActivity(intent);
+		    overridePendingTransition(0, 0);
+	    }
     }
 
     private void NewPermissionSet() {
