@@ -3,17 +3,14 @@ package jp.co.soliton.keymanager.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -85,7 +82,7 @@ public class LeftSideInputTabletFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				InputApplyInfo.deletePref(getActivity());
-				((MenuAcivity)getActivity()).goToMenu();
+				((ViewPagerInputTabletActivity)getActivity()).btnBackClick(v);
 			}
 		});
 		highlightItem(currentPositionHighlight);

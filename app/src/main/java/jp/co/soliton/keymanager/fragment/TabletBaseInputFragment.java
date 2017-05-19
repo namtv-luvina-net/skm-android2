@@ -17,7 +17,8 @@ import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
@@ -54,7 +55,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private InputApplyInfo inputApplyInfo;
 	private int m_nErroType;
 	public int sdk_int_version;
-	protected DialogApplyProgressBar progressDialog;
+	private DialogApplyProgressBar progressDialog;
 	protected ControlPagesInput controlPagesInput;
 	private String hostName;
 	private String portName;
@@ -64,6 +65,13 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	public static Fragment newInstance() {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
 		return f;
+	}
+
+	public DialogApplyProgressBar getProgressDialog() {
+		if (progressDialog == null) {
+			progressDialog = new DialogApplyProgressBar(getActivity());
+		}
+		return progressDialog;
 	}
 
 	@Override
@@ -86,7 +94,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
-		viewPager.setOffscreenPageLimit(3);
 		viewPager.setCurrentItem(0);
 		setTab();
 	}
@@ -136,6 +143,26 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 		inputApplyInfo = InputApplyInfo.getPref(activity);
 		m_InformCtrl = new InformCtrl();
 		controlPagesInput = new ControlPagesInput(activity);
+		checkHasIdApply();
+	}
+
+	private void checkHasIdApply() {
+		String idConfirmApply = ((ViewPagerInputTabletActivity)getActivity()).getIdConfirmApply();
+		if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
+			ElementApplyManager elementMgr = new ElementApplyManager(getActivity());
+			ElementApply detail = elementMgr.getElementApply(idConfirmApply);
+			getInputApplyInfo().setHost(detail.getHost());
+			getInputApplyInfo().setPort(detail.getPort());
+			getInputApplyInfo().setSecurePort(detail.getPortSSL());
+			if (detail.getTarger().startsWith("WIFI")) {
+				getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_WiFi);
+			} else {
+				getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
+			}
+			getInputApplyInfo().setUserId(detail.getUserId());
+			getInputApplyInfo().savePref(getActivity());
+			viewPager.setCurrentItem(3);
+		}
 	}
 
 	public void finishInstallCertificate(int resultCode) {
@@ -143,11 +170,11 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void gotoCompleteApply() {
-		((MenuAcivity)getActivity()).goApplyCompleted();
+		((ViewPagerInputTabletActivity)getActivity()).goApplyCompleted();
 	}
 
 	public void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element) {
-		((MenuAcivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
+		((ViewPagerInputTabletActivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
 	}
 
 	/**
@@ -198,7 +225,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void updateLeftSide() {
-		((MenuAcivity)getActivity()).updateLeftSideInput(getCurrentPage());
+		((ViewPagerInputTabletActivity)getActivity()).updateLeftSideInput(getCurrentPage());
 	}
 
 	private void updateButtonFooterStatus(int position) {
@@ -261,7 +288,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 				}
 				if (current < 0) {
 					InputApplyInfo.deletePref(getActivity());
-					((MenuAcivity)getActivity()).gotoMenu();
+					((ViewPagerInputTabletActivity)getActivity()).btnBackClick(v);
 				} else {
 					viewPager.setCurrentItem(current, true);
 				}

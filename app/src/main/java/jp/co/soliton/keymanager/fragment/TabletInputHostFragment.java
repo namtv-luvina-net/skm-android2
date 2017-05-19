@@ -6,13 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
-import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
 import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
 
@@ -34,14 +36,6 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	}
 
 	@Override
-	public void onAttach(Context context) {
-		super.onAttach(context);
-		if (tabletBaseInputFragment != null && tabletBaseInputFragment.progressDialog == null) {
-			tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
-		}
-	}
-
-	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
@@ -58,7 +52,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		editTextHost = (EditText) view.findViewById(R.id.edit_host);
 		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_host_name_and_port_number));
+		titleInput.setText(getString(R.string.host_name_and_port_number));
 		return view;
 	}
 
@@ -177,7 +171,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		tabletBaseInputFragment.getInputApplyInfo().setHost(host);
 		tabletBaseInputFragment.getInputApplyInfo().setSecurePort(port);
 		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-		tabletBaseInputFragment.progressDialog.show();
+		tabletBaseInputFragment.getProgressDialog().show();
 		if (tabletBaseInputFragment.getInformCtrl() == null) {
 			tabletBaseInputFragment.setInformCtrl(new InformCtrl());
 		}
@@ -202,7 +196,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.progressDialog.dismiss();
+		tabletBaseInputFragment.getProgressDialog().dismiss();
 		int m_nErroType = tabletBaseInputFragment.getErroType();
 		if (result) {
 			if (m_nErroType == NOT_INSTALL_CA) {

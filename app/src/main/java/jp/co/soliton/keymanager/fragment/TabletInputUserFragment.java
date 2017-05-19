@@ -17,8 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
-import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -68,20 +66,15 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_id_and_password));
+		titleInput.setText(getString(R.string.input_user_id_and_password));
 		return view;
 	}
 
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-		if (context instanceof ViewPagerInputActivity) {
-			if (tabletBaseInputFragment.progressDialog == null) {
-				tabletBaseInputFragment.progressDialog = new DialogApplyProgressBar(getActivity());
-			}
-			if (elementMgr == null) {
-				elementMgr = new ElementApplyManager(getActivity());
-			}
+		if (elementMgr == null) {
+			elementMgr = new ElementApplyManager(getActivity());
 		}
 	}
 
@@ -130,11 +123,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				return false;
 			}
 		});
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getUserId())) {
-			txtPassword.requestFocus();
-			InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-		}
 	}
 
 	@Override
@@ -151,6 +139,12 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (isVisibleToUser) {
 			initValueControl();
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		initValueControl();
 	}
 
 	/**
@@ -203,7 +197,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
 			return;
 		}
-		tabletBaseInputFragment.progressDialog.show();
+		tabletBaseInputFragment.getProgressDialog().show();
 		// グレーアウト
 //		setButtonRunnable(false);
 		if (nullOrEmpty(tabletBaseInputFragment.getInformCtrl().GetURL())) {
@@ -224,7 +218,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.progressDialog.dismiss();
+		tabletBaseInputFragment.getProgressDialog().dismiss();
 		if (result) {
 			//check action next
 			InputApplyInfo inputApplyInfo = tabletBaseInputFragment.getInputApplyInfo();

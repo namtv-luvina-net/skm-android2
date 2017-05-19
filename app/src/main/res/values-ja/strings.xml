@@ -86,6 +86,7 @@
 	<string name="back">戻る</string>
 	<string name="next">次へ</string>
 	<string name="input_id_and_password">ID・パスワードを入力</string>
+	<string name="input_user_id_and_password">ユーザーID・パスワードを入力</string>
 	<string name="set_notification_destination_email_address">通知先メールアドレスを設定</string>
 	<string name="skip">スキップ</string>
 	<string name="reason_for_apply">申請理由</string>
@@ -144,6 +145,7 @@
 	<string name="guide_32">"アイコンから見ることができます。"</string>
 	<string name="input_email">通知先メールアドレス</string>
 	<string name="input_host_name_and_port_number">ホスト名・\nHTTPSポート番号</string>
+	<string name="host_name_and_port_number">ホスト名・HTTPSポート番号</string>
 	<string name="input_password">パスワードを入力</string>
 	<string name="input_select_store">証明書の格納先</string>
 	<string name="input_user_id_password">ユーザーID・パスワード</string>
@@ -163,7 +165,7 @@
 	<string name="re_apply">再申請する</string>
 	<string name="send_apid">メールで送信</string>
 	<string name="send_diagnostics">診断情報の送信</string>
-	<string name="start_to_use_procedures">利用開始手続きを\nしています...</string>
+	<string name="start_to_use_procedures">利用開始手続きをしています...</string>
 	<string name="stt_cancel">取り下げ済み</string>
 	<string name="stt_rejected">却下</string>
 	<string name="stt_waiting_approval">承認待ち</string>
@@ -191,4 +193,9 @@
 	<string name="validity_period">有効期間</string>
 	<string name="version">バージョン</string>
 	<string name="withdrawal_apply">申請を取り下げる</string>
+	<string name="title_leftside_list_confirm_tablet">承認確認</string>
+	<string name="des_leftside_list_confirm_tablet">承認待ちの申請書を選択し\n手続きを完了させましょう</string>
+	<string name="des_leftside_detail_confirm_tablet_cofirms_status">承認状況の確認を行い、\n手続きを完了させましょう</string>
+	<string name="des_leftside_detail_confirm_tablet_rejected">あなたの申請は管理者によって\n却下されました</string>
+	<string name="des_leftside_detail_confirm_tablet_withdrawn">あなたの申請は取り下げ済みです</string>
 </resources>

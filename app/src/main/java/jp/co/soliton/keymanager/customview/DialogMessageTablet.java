@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 
@@ -24,7 +23,7 @@ public class DialogMessageTablet extends Dialog {
     private Button btnOK;
     private TextView txtDlgApplyMsg;
     private TextView txtTitle;
-    private RelativeLayout zoneDlgApplyMsg;
+    private LinearLayout zoneDlgApplyMsg;
     private Context context;
 
     private OnOkDismissMessageListener listener;
@@ -46,7 +45,7 @@ public class DialogMessageTablet extends Dialog {
         txtDlgApplyMsg = (TextView) findViewById(R.id.txtDlgApplyMsg);
         txtDlgApplyMsg.setText(message);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
-        zoneDlgApplyMsg = (RelativeLayout)findViewById(R.id.zoneDlgApplyMsg);
+        zoneDlgApplyMsg = (LinearLayout)findViewById(R.id.zoneDlgApplyMsg);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,19 +68,5 @@ public class DialogMessageTablet extends Dialog {
 
     public void setTitleDialog(String title) {
         txtTitle.setText(title);
-        txtTitle.setTypeface(null, Typeface.BOLD);
-    }
-
-    @Override
-    public void onWindowFocusChanged (boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        adjustControl();
-    }
-
-    private void adjustControl() {
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        final float scale = displaymetrics.density;
-        zoneDlgApplyMsg.getLayoutParams().height = (int)((140 + 1) * scale + txtDlgApplyMsg.getMeasuredHeight());
     }
 }
