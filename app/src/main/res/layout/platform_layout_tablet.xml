@@ -12,15 +12,12 @@
 		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
-				android:background="@drawable/left_panel_background"
-				android:layout_weight="165">
+				android:layout_weight="165"
+				android:background="@drawable/left_panel_background">
 			<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:id="@+id/fragment_left_side_menu_tablet"
-					android:layout_alignParentTop="true"
-					android:layout_alignParentLeft="true"
-					android:layout_alignParentStart="true"/>
+					android:id="@+id/fragment_leftside_tablet"/>
 		</RelativeLayout>
 
 		<RelativeLayout
@@ -33,7 +30,7 @@
 			<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:id="@+id/fragment_content_menu_tablet"/>
+					android:id="@+id/fragment_content_tablet"/>
 		</RelativeLayout>
 	</LinearLayout>
 </RelativeLayout>

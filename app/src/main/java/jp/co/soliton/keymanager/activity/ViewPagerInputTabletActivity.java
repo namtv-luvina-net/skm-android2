@@ -56,7 +56,7 @@ public class ViewPagerInputTabletActivity extends FragmentActivity {
 
 			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-			fragmentContent= TabletBaseInputFragment.newInstance();
+			fragmentContent= TabletBaseInputFragment.newInstance(null, true);
 			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
 			fragmentTransaction.commit();
 		}

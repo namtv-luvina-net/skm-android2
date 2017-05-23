@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ListConfirmActivity;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -36,7 +37,7 @@ public class LeftSideListConfirmTabletFragment extends Fragment {
 		tvBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((ListConfirmActivity)getActivity()).btnBackClick(null);
+				((MenuAcivity)getActivity()).gotoMenuTablet();
 			}
 		});
 	}

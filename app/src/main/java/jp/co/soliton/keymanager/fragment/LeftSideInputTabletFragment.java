@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 
 /**
@@ -82,7 +83,7 @@ public class LeftSideInputTabletFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				InputApplyInfo.deletePref(getActivity());
-				((ViewPagerInputTabletActivity)getActivity()).btnBackClick(v);
+				((MenuAcivity)getActivity()).gotoMenuTablet();
 			}
 		});
 		highlightItem(currentPositionHighlight);

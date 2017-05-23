@@ -70,15 +70,7 @@ public class ContentMenuPhoneFragment extends Fragment {
 			btnMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (totalApply == 1) {
-						List<ElementApply> listElementApply = elementMgr.getAllElementApply();
-						Intent intent = new Intent(getActivity(), DetailConfirmActivity.class);
-						intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
-						startActivity(intent);
-					} else {
-						Intent intent = new Intent(getActivity(), ListConfirmActivity.class);
-						startActivity(intent);
-					}
+					((MenuAcivity)getActivity()).gotoConfirmActivity();
 				}
 			});
 		}

@@ -18,7 +18,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
@@ -61,9 +61,13 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	private String portName;
 	private boolean isShowingKeyboard = false;
 	private Activity activity;
+	String idConfirmApply;
+	private boolean isStartApply;
 
-	public static Fragment newInstance() {
+	public static Fragment newInstance(String idConfirmApply, boolean isStartApply) {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
+		f.idConfirmApply = idConfirmApply;
+		f.isStartApply = isStartApply;
 		return f;
 	}
 
@@ -121,7 +125,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 			v.getLocationOnScreen(scrcoords);
 			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
 			float y = ev.getRawY() + v.getTop() - scrcoords[1];
-
 			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
 				hideKeyboard(activity);
 				v.clearFocus();
@@ -147,7 +150,6 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	private void checkHasIdApply() {
-		String idConfirmApply = ((ViewPagerInputTabletActivity)getActivity()).getIdConfirmApply();
 		if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
 			ElementApplyManager elementMgr = new ElementApplyManager(getActivity());
 			ElementApply detail = elementMgr.getElementApply(idConfirmApply);
@@ -170,11 +172,11 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void gotoCompleteApply() {
-		((ViewPagerInputTabletActivity)getActivity()).goApplyCompleted();
+		((MenuAcivity)getActivity()).goApplyCompleted();
 	}
 
 	public void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element) {
-		((ViewPagerInputTabletActivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
+		((MenuAcivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
 	}
 
 	/**
@@ -225,7 +227,7 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 	}
 
 	public void updateLeftSide() {
-		((ViewPagerInputTabletActivity)getActivity()).updateLeftSideInput(getCurrentPage());
+		((MenuAcivity)getActivity()).updateLeftSideInput(getCurrentPage());
 	}
 
 	private void updateButtonFooterStatus(int position) {
@@ -288,7 +290,11 @@ public class TabletBaseInputFragment extends Fragment implements DetectsSoftKeyb
 				}
 				if (current < 0) {
 					InputApplyInfo.deletePref(getActivity());
-					((ViewPagerInputTabletActivity)getActivity()).btnBackClick(v);
+					if (isStartApply) {
+						((MenuAcivity) getActivity()).gotoMenuTablet();
+					} else {
+						((MenuAcivity) getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					}
 				} else {
 					viewPager.setCurrentItem(current, true);
 				}

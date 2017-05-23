@@ -39,7 +39,7 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.activity_complete_confirm_apply);
-	    setOrientation();
+//	    setOrientation();
 	    Intent it = getIntent();
         status = it.getIntExtra("STATUS_APPLY", -1);
         m_InformCtrl = (InformCtrl)it.getSerializableExtra(StringList.m_str_InformCtrl);
@@ -50,26 +50,26 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 		return status;
 	}
 
-	private void setOrientation() {
-		isTablet = getResources().getBoolean(R.bool.isTablet);
-		if (!isTablet) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-			FrameLayout frameLayoutLeft = (FrameLayout) findViewById(R.id.fragment_left_side_menu_tablet);
-			if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-				frameLayoutLeft.setBackgroundDrawable( getResources().getDrawable(R.drawable.left_panel_background) );
-			} else {
-				frameLayoutLeft.setBackground( getResources().getDrawable(R.drawable.left_panel_background));
-			}
-
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-			fragmentContent= new ContentCompleteConfirmApplyFragment();
-			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-			fragmentTransaction.commit();
-		}
-	}
+//	private void setOrientation() {
+//		isTablet = getResources().getBoolean(R.bool.isTablet);
+//		if (!isTablet) {
+//			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//		} else {
+//			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+//			FrameLayout frameLayoutLeft = (FrameLayout) findViewById(R.id.fragment_left_side_menu_tablet);
+//			if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//				frameLayoutLeft.setBackgroundDrawable( getResources().getDrawable(R.drawable.left_panel_background) );
+//			} else {
+//				frameLayoutLeft.setBackground( getResources().getDrawable(R.drawable.left_panel_background));
+//			}
+//
+//			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+//			fragmentContent= new ContentCompleteConfirmApplyFragment();
+//			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
+//			fragmentTransaction.commit();
+//		}
+//	}
 
 	@Override
     public void onResume() {

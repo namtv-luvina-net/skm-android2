@@ -23,17 +23,16 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 		<Button
-					android:id="@+id/btnStartUsing"
-					android:text="@string/beginning_to_use_procedures"
-					android:layout_gravity="center_horizontal"
-					android:textColor="@color/text_color_active"
-					android:background="@android:color/transparent"
-					android:textSize="@dimen/text_size_title"
-					android:onClick="clickStart"
-					android:textAllCaps="false"
-					android:layout_centerHorizontal="true"
-					android:layout_below="@+id/icon"
-					android:layout_marginTop="@dimen/margin_top_button_complete_confirm_apply_tablet"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"/>
+				android:id="@+id/btnStartUsing"
+				android:text="@string/beginning_to_use_procedures"
+				android:layout_gravity="center_horizontal"
+				android:textColor="@color/text_color_active"
+				android:background="@android:color/transparent"
+				android:textSize="@dimen/text_size_title"
+				android:textAllCaps="false"
+				android:layout_marginTop="95dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/icon"
+				android:layout_centerHorizontal="true"/>
 </RelativeLayout>

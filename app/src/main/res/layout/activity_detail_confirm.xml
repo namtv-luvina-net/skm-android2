@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-	<fragment
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:name="jp.co.soliton.keymanager.fragment.ContentDetailConfirmFragment"
-			android:id="@+id/fragment_content_phone"/>
+	<!--<fragment-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="match_parent"-->
+			<!--android:name="jp.co.soliton.keymanager.fragment.ContentDetailConfirmFragment"-->
+			<!--android:id="@+id/fragment_content_phone"/>-->
+	<include layout="@layout/fragment_detail_confirm_phone" />
 </RelativeLayout>
