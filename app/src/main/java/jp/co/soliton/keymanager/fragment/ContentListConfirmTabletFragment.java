@@ -2,18 +2,13 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.activity.DetailConfirmActivity;
-import jp.co.soliton.keymanager.activity.ListConfirmActivity;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.AdapterListConfirmTabletApply;
 import jp.co.soliton.keymanager.dbalias.ElementApply;

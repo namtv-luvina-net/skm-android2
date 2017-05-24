@@ -2,7 +2,6 @@ package jp.co.soliton.keymanager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 /**
  * Created by luongdolong on 2/7/2017.

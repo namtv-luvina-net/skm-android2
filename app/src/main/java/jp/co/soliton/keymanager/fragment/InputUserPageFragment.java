@@ -13,19 +13,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
-
-import jp.co.soliton.keymanager.HttpConnectionCtrl;
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
@@ -36,6 +26,9 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * Created by luongdolong on 2/3/2017.
