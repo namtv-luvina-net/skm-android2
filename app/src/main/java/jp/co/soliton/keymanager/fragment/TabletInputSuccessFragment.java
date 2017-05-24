@@ -1,6 +1,5 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 /**

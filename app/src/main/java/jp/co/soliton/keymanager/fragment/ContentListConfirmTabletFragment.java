@@ -11,6 +11,7 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.DetailConfirmActivity;
 import jp.co.soliton.keymanager.activity.ListConfirmActivity;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
@@ -58,12 +59,8 @@ public class ContentListConfirmTabletFragment extends ListFragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				Intent intent = new Intent(getActivity(), DetailConfirmActivity.class);
-//				intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(position).getId()));
-//				startActivity(intent);
-//				getActivity().overridePendingTransition(0, 0);
-				((MenuAcivity)getActivity()).setIdDetail(String.valueOf(listElementApply.get(position).getId()));
-				((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
+			StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(position).getId());
+			((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
 			}
 		});
 	}

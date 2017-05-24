@@ -9,8 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.adapter.AdapterListConfirmApply;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -29,38 +34,22 @@ import java.util.List;
 public class ListConfirmActivity extends FragmentActivity {
 
     private ElementApplyManager elementMgr;
-    private List<ElementApply> listElementApply;
-	private boolean isTablet;
-	Fragment fragmentLeft, fragmentContent;
-	FragmentManager fragmentManager;
+	private ListView list;
+	private AdapterListConfirmApply adapterListConfirmApply;
+	private List<ElementApply> listElementApply;
+	private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-	    fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.activity_list_confirm);
-	    setOrientation();
+	    title = (TextView) findViewById(R.id.tvTitleHeader);
+	    title.setText(getString(R.string.list_application));
+	    list = (ListView) findViewById(R.id.listConfirm);
+	    adapterListConfirmApply = new AdapterListConfirmApply(this, listElementApply);
+	    list.setAdapter(adapterListConfirmApply);
 	    elementMgr = new ElementApplyManager(getApplicationContext());
     }
-
-	private void setOrientation() {
-		isTablet = getResources().getBoolean(R.bool.isTablet);
-		if (!isTablet) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-			FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
-			fragmentLeft = new LeftSideListConfirmTabletFragment();
-			fragmentTransaction1.replace(R.id.fragment_left_side_menu_tablet, fragmentLeft);
-			fragmentTransaction1.commit();
-
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-			fragmentContent= new ContentListConfirmTabletFragment();
-			fragmentTransaction.replace(R.id.fragment_content_menu_tablet, fragmentContent);
-			fragmentTransaction.commit();
-		}
-	}
 
 	@Override
 	public void onBackPressed() {
@@ -68,23 +57,7 @@ public class ListConfirmActivity extends FragmentActivity {
 	}
 
 	public void btnBackClick(View v) {
-		if (isTablet) {
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-			fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
-			fragmentTransaction.remove(fragmentContent);
-			fragmentTransaction.commit();
-			final Activity activity = this;
-			final Handler handler = new Handler();
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					activity.finish();
-					activity.overridePendingTransition(0, 0);
-				}
-			}, getResources().getInteger(android.R.integer.config_shortAnimTime));
-		} else {
-			finish();
-		}
+		finish();
     }
 
     /**
@@ -100,10 +73,19 @@ public class ListConfirmActivity extends FragmentActivity {
             intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
             finish();
             startActivity(intent);
-	        overridePendingTransition(0, 0);
         } else if(listElementApply.size() == 0) {
             finish();
         }
+		adapterListConfirmApply.setListElementApply(listElementApply);
+	    adapterListConfirmApply.notifyDataSetChanged();
+	    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		    @Override
+		    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		    Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
+		    intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(position).getId()));
+		    startActivity(intent);
+	    }
+    });
     }
 
 	private void sortListElementApply() {
@@ -115,9 +97,5 @@ public class ListConfirmActivity extends FragmentActivity {
 				return date1.before(date2) ? 1 : -1;
 			}
 		});
-	}
-
-	public List<ElementApply> getListElementApply() {
-		return listElementApply;
 	}
 }

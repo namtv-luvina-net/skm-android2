@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class ViewPagerInputActivity extends FragmentActivity implements DetectsSoftKeyboard.DetectsListenner{
     public static int REQUEST_CODE_APPLY_COMPLETE        = 4953;
-    public static int REQUEST_CODE_INSTALL_CERTIFICATION = 4954;
+    public static int REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT = 4954;
 
     private InputApplyViewPager mViewPager;
     private ViewPagerAdapter adapter;
@@ -134,7 +134,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
 			    "resultCode = " + requestCode);
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
-        } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION) {
+        } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT) {
             ((InputPortPageFragment)adapter.getItem(mViewPager.getCurrentItem())).finishInstallCertificate(resultCode);
         }
     }

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputTabletActivity;
 
 /**
  * Created by nguyenducdat on 4/25/2017.

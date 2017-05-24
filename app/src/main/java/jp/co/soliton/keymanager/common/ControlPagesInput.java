@@ -1,7 +1,6 @@
 package jp.co.soliton.keymanager.common;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.security.KeyChain;
 import android.util.Log;
@@ -9,7 +8,6 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
@@ -24,8 +22,7 @@ import java.util.List;
  */
 
 public class ControlPagesInput {
-	public static int REQUEST_CODE_APPLY_COMPLETE        = 4953;
-	public static int REQUEST_CODE_INSTALL_CERTIFICATION = 4954;
+	public static int REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT = 4955;
 
 	public final static int ERR_FORBIDDEN = 20;
 	public final static int ERR_UNAUTHORIZED = 21;
@@ -70,7 +67,7 @@ public class ControlPagesInput {
 			X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
 			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
 			intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
-			activity.startActivityForResult(intent, REQUEST_CODE_INSTALL_CERTIFICATION);
+			activity.startActivityForResult(intent, REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT);
 		} catch (Exception e) {
 			logCtrl.loggerError("InputPortPageFragment:downloadCert2: " + activity.getString(R.string
 					.error_install_certificate));

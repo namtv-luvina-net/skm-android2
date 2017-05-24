@@ -59,12 +59,6 @@
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
-        <activity android:name=".activity.ViewPagerInputTabletActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
         <activity android:name=".activity.ConfirmApplyActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
@@ -84,13 +78,13 @@
         <activity
             android:name=".activity.ListConfirmActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".activity.DetailConfirmActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
@@ -100,27 +94,21 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.InputPasswordTabletActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
-        <activity
             android:name=".activity.CompleteConfirmApplyActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".activity.StartUsingProceduresActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
             android:name=".activity.CompleteUsingProceduresActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <receiver android:name=".EpsapAdminReceiver" android:permission="android.permission.BIND_DEVICE_ADMIN">

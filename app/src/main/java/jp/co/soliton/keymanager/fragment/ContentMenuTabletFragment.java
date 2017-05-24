@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.manager.APIDManager;
@@ -106,7 +107,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	}
 
 	private void updateMenuConfirm() {
-		final List<ElementApply> listElementApply = ((MenuAcivity)activity).getElementMgr().getAllElementApply();
+		final List<ElementApply> listElementApply = ((MenuAcivity)activity).getListElementApply();
         if (listElementApply.isEmpty()) {
             rlMenuConfirmApply.setVisibility(View.GONE);
         } else {
@@ -115,7 +116,7 @@ public class ContentMenuTabletFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 	                if (listElementApply.size() == 1) {
-		                ((MenuAcivity)activity).setIdDetail(String.valueOf(listElementApply.get(0).getId()));
+		                StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
 		                ((MenuAcivity)activity).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
 	                } else {
 		                ((MenuAcivity)activity).startListConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);

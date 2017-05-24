@@ -124,7 +124,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/back_to_top"
-				android:onClick="backToTop"
+				android:id="@+id/backToTop"
 				android:layout_centerHorizontal="true"
 				android:textSize="@dimen/text_size_title"
 				android:textColor="@color/text_color_active"

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.CompleteUsingProceduresActivity;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 /**
@@ -17,37 +18,40 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 public class ContentCompleteUsingProceduresFragment extends Fragment {
 
-	boolean isTablet;
     private TextView txtCN;
     private TextView txtSN;
     private TextView txtEpDate;
+    private TextView backToTop;
+	ElementApply elementApply;
+
+	public static Fragment newInstance(ElementApply elementApply) {
+		ContentCompleteUsingProceduresFragment f = new ContentCompleteUsingProceduresFragment();
+		f.elementApply = elementApply;
+		return f;
+	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		isTablet = getResources().getBoolean(R.bool.isTablet);
-		View  view;
-		if (isTablet) {
-			view = inflater.inflate(R.layout.fragment_complete_using_procedures_tablet, container, false);
-		} else {
-			view = inflater.inflate(R.layout.fragment_complete_using_procedures_phone, container, false);
-		}
+		View view = inflater.inflate(R.layout.fragment_complete_using_procedures_tablet, container, false);
         txtCN = (TextView) view.findViewById(R.id.txtCN);
         txtSN = (TextView) view.findViewById(R.id.txtSN);
         txtEpDate = (TextView) view.findViewById(R.id.txtEpDate);
+		backToTop = (TextView) view.findViewById(R.id.backToTop);
 		return view;
 	}
 
     @Override
     public void onResume() {
         super.onResume();
-	    ElementApply elementApply = ((CompleteUsingProceduresActivity)getActivity()).getElementApply();
         txtCN.setText(elementApply.getcNValue());
         txtSN.setText(elementApply.getsNValue());
         txtEpDate.setText(elementApply.getExpirationDate().split(" ")[0]);
+	    backToTop.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+			    ((MenuAcivity)getActivity()).gotoMenuTablet();
+		    }
+	    });
     }
-
-	public void backToTop(View v) {
-		((CompleteUsingProceduresActivity)getActivity()).backToTop(v);
-	}
 }

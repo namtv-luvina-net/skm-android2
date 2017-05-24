@@ -14,6 +14,7 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
+import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
@@ -69,6 +70,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private ComponentName m_DeviceAdmin;
 	private LogCtrl logCtrl;
 	private static StartUsingProceduresControl instance;
+	boolean isTablet;
 
 	public static StartUsingProceduresControl newInstance(Activity activity, InformCtrl m_InformCtrl, ElementApply element){
 		instance = new StartUsingProceduresControl(activity, m_InformCtrl, element);
@@ -85,12 +87,12 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 	private StartUsingProceduresControl(Activity activity, InformCtrl m_InformCtrl, ElementApply element) {
 		this.activity = activity;
+		isTablet = activity.getResources().getBoolean(R.bool.isTablet);
 		this.m_InformCtrl = m_InformCtrl;
 		this.element = element;
 		logCtrl = LogCtrl.getInstance(activity);
 		scepRequester = getScepRequester();
 	}
-
 	public ElementApply getElement() {
 		return element;
 	}
@@ -233,17 +235,36 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	 * @param message
 	 */
 	protected void showMessage(String message) {
-		DialogApplyMessage dlgMessage = new DialogApplyMessage(activity, message);
-		dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
-			@Override
-			public void onOkDismissMessage() {
-				StringList.GO_TO_LIST_APPLY = "1";
-				Intent intent = new Intent(activity, MenuAcivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				activity.startActivity(intent);
-			}
-		});
-		dlgMessage.show();
+		if (!isTablet) {
+			DialogApplyMessage dlgMessage = new DialogApplyMessage(activity, message);
+			dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					StringList.GO_TO_LIST_APPLY = "1";
+					Intent intent = new Intent(activity, MenuAcivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					activity.startActivity(intent);
+				}
+			});
+			dlgMessage.show();
+		} else {
+			DialogMessageTablet dlgMessage = new DialogMessageTablet(activity, message);
+			dlgMessage.setOnOkDismissMessageListener(new DialogMessageTablet.OnOkDismissMessageListener() {
+				@Override
+				public void onOkDismissMessage() {
+					if (activity instanceof MenuAcivity) {
+						((MenuAcivity)activity).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					} else {
+						StringList.GO_TO_LIST_APPLY = "1";
+						Intent intent = new Intent(activity, MenuAcivity.class);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						activity.startActivity(intent);
+						activity.overridePendingTransition(0, 0);
+					}
+				}
+			});
+			dlgMessage.show();
+		}
 	}
 
 
@@ -711,7 +732,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			javax.security.cert.X509Certificate x509 = javax.security.cert.X509Certificate.getInstance(cacert.getBytes());
 			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
 			intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
-			activity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
+			activity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT);
 		} catch (Exception e) {
 			logCtrl.loggerInfo("StartUsingProceduresActivity:installCACert : " + activity.getString(R.string
 					.error_install_certificate));

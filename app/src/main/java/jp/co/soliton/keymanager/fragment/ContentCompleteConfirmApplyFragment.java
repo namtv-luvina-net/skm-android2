@@ -19,35 +19,25 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 public class ContentCompleteConfirmApplyFragment extends Fragment {
 
-	private boolean isTablet;
 	private Button btnStartUsing;
 	private View layoutComplete;
 	int status;
 	ElementApply element;
 	InformCtrl m_InformCtrl;
-//	String idDetail;
 
-	public static Fragment newInstance(int status, ElementApply element, InformCtrl m_InformCtrl, String idDetail) {
+	public static Fragment newInstance(int status, ElementApply element, InformCtrl m_InformCtrl) {
 		ContentCompleteConfirmApplyFragment f = new ContentCompleteConfirmApplyFragment();
 		f.status = status;
 		f.element = element;
 		f.m_InformCtrl = m_InformCtrl;
-//		f.idDetail = idDetail;
 		return f;
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		isTablet = getResources().getBoolean(R.bool.isTablet);
-		View  view;
-		if (isTablet) {
-			view = inflater.inflate(R.layout.fragment_complete_confirm_apply_tablet, container, false);
-			layoutComplete = view.findViewById(R.id.layoutComplete);
-		} else {
-			view = inflater.inflate(R.layout.fragment_complete_confirm_apply_phone, container, false);
-			layoutComplete = view.findViewById(R.id.layoutComplete);
-		}
+		View  view = inflater.inflate(R.layout.fragment_complete_confirm_apply_tablet, container, false);
+		layoutComplete = view.findViewById(R.id.layoutComplete);
 		btnStartUsing = (Button) view.findViewById(R.id.btnStartUsing);
 		return view;
 	}
@@ -55,7 +45,6 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-//		int status  = ((CompleteConfirmApplyActivity)getActivity()).getStatus();
 		if (status == ElementApply.STATUS_APPLY_APPROVED) {
 			//
 		} else if (status == ElementApply.STATUS_APPLY_PENDING) {
@@ -108,10 +97,4 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 			}
 		});
 	}
-
-	public void clickStart(View v) {
-//		((CompleteConfirmApplyActivity)getActivity()).clickStart(v);
-
-	}
-
 }
