@@ -12,20 +12,25 @@
 		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
-				android:background="@drawable/left_panel_background"
-				android:layout_weight="165">
+				android:layout_weight="165"
+				android:background="@drawable/left_panel_background">
+			<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:id="@+id/fragment_leftside_tablet"/>
 		</RelativeLayout>
 
-		<LinearLayout
+		<RelativeLayout
 				android:layout_width="0dp"
 				android:layout_height="match_parent"
 				android:layout_weight="347"
-				android:orientation="vertical"
+				android:layout_gravity="center"
+				android:gravity="center"
 				android:background="@color/background_color_gray">
 			<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:id="@+id/fragment_content_menu_tablet"/>
-		</LinearLayout>
+					android:id="@+id/fragment_content_tablet"/>
+		</RelativeLayout>
 	</LinearLayout>
 </RelativeLayout>

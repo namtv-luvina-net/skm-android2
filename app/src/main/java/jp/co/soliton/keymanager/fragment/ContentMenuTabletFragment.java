@@ -2,7 +2,6 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,11 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.*;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.APIDManager;
 
 import java.util.List;
@@ -94,10 +92,8 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuStart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-						InputApplyInfo.deletePref(getActivity());
-						Intent intent = new Intent(activity, ViewPagerInputTabletActivity.class);
-						startActivity(intent);
-						activity.overridePendingTransition(0, 0);
+					((MenuAcivity)activity).setFocusMenuTablet(false);
+					((MenuAcivity)activity).startApplyActivityFragment();
 				}
 			});
 
@@ -111,15 +107,20 @@ public class ContentMenuTabletFragment extends Fragment {
 	}
 
 	private void updateMenuConfirm() {
-        final int totalApply = ((MenuAcivity)activity).getElementMgr().getCountElementApply();
-        if (totalApply <= 0) {
+		final List<ElementApply> listElementApply = ((MenuAcivity)activity).getListElementApply();
+        if (listElementApply.isEmpty()) {
             rlMenuConfirmApply.setVisibility(View.GONE);
         } else {
 	        rlMenuConfirmApply.setVisibility(View.VISIBLE);
 	        rlMenuConfirmApply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-	                ((MenuAcivity)activity).gotoConfirmActivity();
+	                if (listElementApply.size() == 1) {
+		                StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
+		                ((MenuAcivity)activity).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
+	                } else {
+		                ((MenuAcivity)activity).startListConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
+	                }
                 }
             });
         }

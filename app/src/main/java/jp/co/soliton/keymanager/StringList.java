@@ -354,4 +354,5 @@ public class StringList {
 	public static String KEY_NOTIF_ENABLE_FLAG = "KEY_NOTIF_ENABLE_FLAG";
 	public static String KEY_NOTIF_ENABLE_BEFORE_FLAG = "KEY_NOTIF_ENABLE_BEFORE_FLAG";
 	public static String KEY_NOTIF_ENABLE_BEFORE = "KEY_NOTIF_ENABLE_BEFORE";
+	public static String ID_DETAIL_CURRENT = "";
 }

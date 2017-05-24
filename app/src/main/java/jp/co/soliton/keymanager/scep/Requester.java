@@ -1,16 +1,6 @@
 package jp.co.soliton.keymanager.scep;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.PrivateKey;
-import java.security.cert.CertStore;
-import java.security.cert.X509Certificate;
-
-import org.bouncycastle.jce.PKCS10CertificationRequest;
-
 import android.util.Log;
-
-//import jp.co.soliton.android.scep.RequesterException;
 import jp.co.soliton.keymanager.scep.pkimessage.CertRep;
 import jp.co.soliton.keymanager.scep.request.CertificateEnrollmentRequest;
 import jp.co.soliton.keymanager.scep.request.GetCACertificateRequest;
@@ -18,6 +8,13 @@ import jp.co.soliton.keymanager.scep.response.CertRepReponseHandler;
 import jp.co.soliton.keymanager.scep.response.GetCACertificateResponseHandler;
 import jp.co.soliton.keymanager.scep.transaction.Transaction;
 import jp.co.soliton.keymanager.scep.transaction.TransactionException;
+import org.bouncycastle.jce.PKCS10CertificationRequest;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.PrivateKey;
+import java.security.cert.CertStore;
+import java.security.cert.X509Certificate;
 
 public class Requester {
 	public Requester() {

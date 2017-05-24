@@ -36,7 +36,7 @@ public class LeftSideAPIDTabletFragment extends Fragment {
 		tvBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).goToMenu();
+				((MenuAcivity)getActivity()).gotoMenuTablet();
 			}
 		});
 	}

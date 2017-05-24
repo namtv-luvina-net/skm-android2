@@ -1,7 +1,6 @@
 package jp.co.soliton.keymanager.common;
 
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 

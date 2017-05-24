@@ -21,7 +21,6 @@
 	<dimen name="height_title_input_tablet">100.00dp</dimen>
 	<dimen name="height_title_item_menu">60.00dp</dimen>
 	<dimen name="high_header_left_side_tablet">85.00dp</dimen>
-	<dimen name="margin_bottom_content_detail_confirm_apply_tablet">125.00dp</dimen>
 	<dimen name="margin_bottom_content_item_confirm_apply_tablet">20.00dp</dimen>
 	<dimen name="margin_bottom_img_vpn_input_store_tablet">20.00dp</dimen>
 	<dimen name="margin_bottom_img_wifi_input_store_tablet">30.00dp</dimen>
@@ -42,7 +41,6 @@
 	<dimen name="margin_left_side">20.00dp</dimen>
 	<dimen name="margin_left_side_menu">1.00dp</dimen>
 	<dimen name="margin_right_user_input_tablet">110.00dp</dimen>
-	<dimen name="margin_top_button_complete_confirm_apply_tablet">95.00dp</dimen>
 	<dimen name="margin_top_content_apply_success_tablet">160.00dp</dimen>
 	<dimen name="margin_top_content_input_host_tablet">200.00dp</dimen>
 	<dimen name="margin_top_content_input_reason_tablet">120.00dp</dimen>

@@ -262,7 +262,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
             X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
             intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
             intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
-            pagerInputActivity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION);
+            pagerInputActivity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT);
         } catch (Exception e) {
 	        logCtrl.loggerError("InputPortPageFragment:downloadCert2: " + getString(R.string.error_install_certificate));
             showMessage(getString(R.string.error_install_certificate));

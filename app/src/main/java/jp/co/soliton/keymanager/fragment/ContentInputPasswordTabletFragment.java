@@ -2,7 +2,6 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,10 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
-import jp.co.soliton.keymanager.activity.InputPasswordTabletActivity;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
-import jp.co.soliton.keymanager.customview.*;
+import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
+import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
+import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -53,9 +53,11 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	LogCtrl logCtrl;
 	private int status;
 	boolean isShowingKeyboard;
+	boolean isCancelApply;
 
-	public static Fragment newInstance() {
+	public static Fragment newInstance(boolean isCancelApply) {
 		ContentInputPasswordTabletFragment f = new ContentInputPasswordTabletFragment();
+		f.isCancelApply = isCancelApply;
 		return f;
 	}
 
@@ -94,6 +96,25 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	public void onResume() {
 		super.onResume();
 		setupControl();
+		sendDataToLeftSide();
+	}
+
+	private void sendDataToLeftSide() {
+		String[] listData = new String[4];
+		listData[0] = element.getHost();
+		listData[1] = element.getUserId();
+		String updateDate = element.getUpdateDate().split(" ")[0];
+		listData[2] = updateDate.replace("-", "/");
+		String status = "";
+		if (element.getStatus() == ElementApply.STATUS_APPLY_CANCEL) {
+			status = getActivity().getString(R.string.stt_cancel);
+		} else if (element.getStatus() == ElementApply.STATUS_APPLY_PENDING) {
+			status = getActivity().getString(R.string.stt_waiting_approval);
+		} else if (element.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
+			status = getActivity().getString(R.string.stt_rejected);
+		}
+		listData[3] = status;
+
 	}
 
 	public void updateUserId(String userId) {
@@ -101,7 +122,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	}
 
 	private void setupControl() {
-		String id = ((InputPasswordTabletActivity)getActivity()).getId();
+		String id = StringList.ID_DETAIL_CURRENT;
 		if (!ValidateParams.nullOrEmpty(id)) {
 			element = elementMgr.getElementApply(id);
 			updateUserId(element.getUserId());
@@ -142,7 +163,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				clickBack(v);
+				((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
 			}
 		});
 	}
@@ -187,10 +208,6 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		m_InformCtrl.SetCookie(null);
 		//open thread logon to server
 		new LogonApplyTask().execute();
-	}
-
-	private void clickBack(View v){
-		((InputPasswordTabletActivity)getActivity()).btnBackClick(v);
 	}
 
 	/**
@@ -347,7 +364,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(getActivity());
 			boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
-			((InputPasswordTabletActivity)getActivity()).setCancelApply("");
+//			((InputPasswordTabletActivity)getActivity()).setCancelApply("");
+			isCancelApply = false;
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("DropApplyTask Network error");
 				m_nErroType = InputBasePageFragment.ERR_NETWORK;
@@ -395,8 +413,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	private void endConnection(boolean result) {
 		progressDialog.dismiss();
 		if (result) {
-			String cancelApply = ((InputPasswordTabletActivity)getActivity()).getCancelApply();
-			if (!ValidateParams.nullOrEmpty(cancelApply) && cancelApply.equals("1") && status != ElementApply.STATUS_APPLY_REJECT) {
+//			String cancelApply = ((InputPasswordTabletActivity)getActivity()).getCancelApply();
+			if (isCancelApply && status != ElementApply.STATUS_APPLY_REJECT) {
 				final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
 				dialog.setTextDisplay(getString(R.string.dialog_withdraw_title), getString(R.string.dialog_withdraw_msg)
 						, getString(R.string.label_dialog_Cancle), getString(R.string.dialog_btn_withdraw));
@@ -422,21 +440,15 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 					@Override
 					public void onClick(View v) {
 						dialog.dismiss();
-						((InputPasswordTabletActivity)getActivity()).btnBackClick(v);
+						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
 					}
 				});
 				dialog.show();
 			} else {
 				if (status != ElementApply.STATUS_APPLY_APPROVED) {
-					elementMgr.updateStatus(status, ((InputPasswordTabletActivity)getActivity()).getId());
+					elementMgr.updateStatus(status, StringList.ID_DETAIL_CURRENT);
 				}
-				Intent intent = new Intent(getActivity(), CompleteConfirmApplyActivity.class);
-				intent.putExtra("STATUS_APPLY", status);
-				intent.putExtra("ELEMENT_APPLY", element);
-				intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
-				startActivity(intent);
-				getActivity().overridePendingTransition(0, 0);
-				getActivity().finish();
+				((MenuAcivity)getActivity()).gotoCompleteConfirmApplyFragment(status, element, m_InformCtrl);
 			}
 		} else {
 			//show error message

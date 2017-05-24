@@ -42,7 +42,11 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
         this.listElementApply = listElementApply;
     }
 
-    /**
+	public void setListElementApply(List<ElementApply> listElementApply) {
+		this.listElementApply = listElementApply;
+	}
+
+	/**
      * This method get size listElementApply
      *
      * @return

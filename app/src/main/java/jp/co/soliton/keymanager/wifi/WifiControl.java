@@ -1,11 +1,25 @@
 package jp.co.soliton.keymanager.wifi;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiConfiguration.*;
+import android.net.wifi.WifiEnterpriseConfig;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.util.Log;
+import android.util.Xml;
+import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
+import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
+import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.KeyStore;
@@ -17,35 +31,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-
-import android.os.Build;
-import org.xmlpull.v1.XmlSerializer;
-
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiConfiguration.AuthAlgorithm;
-import android.net.wifi.WifiConfiguration.GroupCipher;
-import android.net.wifi.WifiConfiguration.KeyMgmt;
-import android.net.wifi.WifiConfiguration.PairwiseCipher;
-import android.net.wifi.WifiConfiguration.Protocol;
-import android.net.wifi.WifiEnterpriseConfig;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.util.Log;
-import android.util.Xml;
-import jp.co.soliton.keymanager.ConfigrationProcess;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
-import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
-import jp.co.soliton.keymanager.xmlparser.XmlStringData;
-
-//Wifi
-//import android.net.wifi.ScanResult;
-//import android.net.wifi.SupplicantState;
 
 public class WifiControl {
 

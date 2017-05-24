@@ -2,7 +2,6 @@ package jp.co.soliton.keymanager.asynctask;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
