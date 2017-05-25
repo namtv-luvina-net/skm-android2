@@ -2,10 +2,8 @@ package jp.co.soliton.keymanager.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.security.KeyChain;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -26,11 +24,6 @@ import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
-import jp.co.soliton.keymanager.xmlparser.XmlStringData;
-
-import javax.security.cert.X509Certificate;
-import java.util.List;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -239,37 +232,6 @@ public class InputPortPageFragment extends InputBasePageFragment {
     }
 
     /**
-     * Download and install certificate
-     */
-    private void downloadCert() {
-        //Extract certificate from .mobileconfig file
-        String cacert = m_InformCtrl.GetRtn();
-        cacert = cacert.substring(cacert.indexOf("<?xml"));
-        cacert = cacert.substring(0, cacert.indexOf("</plist>") + 8);
-        XmlPullParserAided m_p_aided = new XmlPullParserAided(pagerInputActivity, cacert, 2);	// 最上位dictの階層は2になる
-        boolean ret = m_p_aided.TakeApartProfileList();
-        if (!ret) {
-	        logCtrl.loggerError("InputPortPageFragment:downloadCert1: " + getString(R.string.error_install_certificate));
-            showMessage(getString(R.string.error_install_certificate));
-            return;
-        }
-        List<XmlStringData> listPayloadContent = m_p_aided.GetDictionary().GetArrayString();
-        cacert = listPayloadContent.get(listPayloadContent.size() - 1).GetData();
-        cacert = String.format("%s\n%s\n%s", "-----BEGIN CERTIFICATE-----", cacert, "-----END CERTIFICATE-----");
-        //Install certificate
-        Intent intent = KeyChain.createInstallIntent();
-        try {
-            X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
-            intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
-            intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
-            pagerInputActivity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT);
-        } catch (Exception e) {
-	        logCtrl.loggerError("InputPortPageFragment:downloadCert2: " + getString(R.string.error_install_certificate));
-            showMessage(getString(R.string.error_install_certificate));
-        }
-    }
-
-    /**
      * Init value for control
      */
     private void initValueControl() {
@@ -295,46 +257,4 @@ public class InputPortPageFragment extends InputBasePageFragment {
             pagerInputActivity.setActiveBackNext(true, true);
         }
     }
-
-    /**
-     * Task download certificate
-     */
-//    private class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
-//        @Override
-//        protected Boolean doInBackground(Void... params) {
-//	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
-//            HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
-//            //send request to server
-//            boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrl);
-//            //parse result return
-//            if (ret == false) {
-//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Network error");
-//                m_nErroType = ERR_NETWORK;
-//                return false;
-//            }
-//            // ログイン結果
-//            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Forbidden.");
-//                m_nErroType = ERR_FORBIDDEN;
-//                return false;
-//            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask Unauthorized.");
-//                m_nErroType = ERR_UNAUTHORIZED;
-//                return false;
-//            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-//	            logCtrlAsyncTask.loggerError("DownloadCertificateTask ERR:");
-//                m_nErroType = ERR_COLON;
-//                return false;
-//            }
-//            m_nErroType = SUCCESSFUL;
-//
-//            return ret;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean result) {
-//            super.onPostExecute(result);
-//            endConnection(result);
-//        }
-//    }
 }

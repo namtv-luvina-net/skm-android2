@@ -25,6 +25,8 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 import java.util.ArrayList;
 
+import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT;
+
 /**
  * Created by luongdolong on 2/3/2017.
  * Activity for input screen apply
@@ -134,8 +136,8 @@ public class ViewPagerInputActivity extends FragmentActivity implements DetectsS
 			    "resultCode = " + requestCode);
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
-        } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT) {
-            ((InputPortPageFragment)adapter.getItem(mViewPager.getCurrentItem())).finishInstallCertificate(resultCode);
+        } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT) {
+		    ((InputPortPageFragment)adapter.getItem(mViewPager.getCurrentItem())).finishInstallCertificate(resultCode);
         }
     }
 

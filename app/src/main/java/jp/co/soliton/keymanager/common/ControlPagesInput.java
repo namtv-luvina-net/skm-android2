@@ -48,7 +48,6 @@ public class ControlPagesInput {
 	 */
 	public String downloadCert(String cacert) {
 		//Extract certificate from .mobileconfig file
-//		String cacert = m_InformCtrl.GetRtn();
 		cacert = cacert.substring(cacert.indexOf("<?xml"));
 		cacert = cacert.substring(0, cacert.indexOf("</plist>") + 8);
 		XmlPullParserAided m_p_aided = new XmlPullParserAided(activity, cacert, 2);	// 最上位dictの階層は2になる
