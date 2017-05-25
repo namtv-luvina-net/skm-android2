@@ -42,7 +42,7 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 	}
 
 	private void updateLeftsideInputPasswordTablet() {
-		if (listData.length != 4) return;
+		if (listData == null || listData.length != 4) return;
 		setTvValueHost(listData[0]);
 		setTvValueUserId(listData[1]);
 		setTvValueApplyDate(listData[2]);

@@ -92,7 +92,7 @@
 							android:singleLine="true"
 							android:textColor="@color/text_color"/>
 					<TextView
-							android:id="@+id/tvUserId"
+							android:id="@+id/titleUserId"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:gravity="center_vertical"

@@ -36,14 +36,15 @@ public class MenuAcivity extends FragmentActivity {
 
 	public static final int RESET_STATUS = 0;
 	public static final int APID_STATUS = 1;
-	public static final int START_APPLY_STATUS = 2;
-	public static final int COMPLETE_STATUS = 3;
-	public static final int LIST_CONFIRM_APPLY_STATUS = 4;
-	public static final int DETAIL_CONFIRM_APPLY_STATUS = 5;
-	public static final int APPLY_SUCCESS_STATUS = 6;
-	public static final int CONFIRM_APPLY_STATUS = 7;
-	public static final int WITHDRAW_APPLY_STATUS = 8;
-	public static final int REAPPLY_STATUS = 9;
+	public static final int LIST_APPLY_UPDATE_STATUS = 2;
+	public static final int START_APPLY_STATUS = 3;
+	public static final int COMPLETE_STATUS = 4;
+	public static final int LIST_CONFIRM_APPLY_STATUS = 5;
+	public static final int DETAIL_CONFIRM_APPLY_STATUS = 6;
+	public static final int APPLY_SUCCESS_STATUS = 7;
+	public static final int CONFIRM_APPLY_STATUS = 8;
+	public static final int WITHDRAW_APPLY_STATUS = 9;
+	public static final int REAPPLY_STATUS = 10;
 
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 	private boolean isTablet;
@@ -54,6 +55,7 @@ public class MenuAcivity extends FragmentActivity {
 	FragmentManager fragmentManager;
 	Fragment fragmentLeft, fragmentContent;
 	private List<ElementApply> listElementApply = new ArrayList<>();
+	private List<ElementApply> listCertificate = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,9 +153,18 @@ public class MenuAcivity extends FragmentActivity {
 	    listElementApply = elementMgr.getAllElementApply();
     }
 
+    private void updateListCertificate() {
+	    listCertificate = elementMgr.getAllCertificate();
+    }
+
 	public List<ElementApply> getListElementApply() {
 		updateListElementApply();
 		return listElementApply;
+	}
+
+	public List<ElementApply> getListCertificate() {
+		updateListCertificate();
+		return listCertificate;
 	}
 
 	private void checkGoToConfirmIfNeed() {
@@ -245,6 +256,15 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	//====================================================================================================================
+
+	public void startListApplyUpdateFragment(int typeScroll) {
+		isFocusMenuTablet = false;
+		currentStatus = LIST_APPLY_UPDATE_STATUS;
+		hideFragmentLeft();
+
+		fragmentContent= ContentListApplyUpdateTabletFragment.newInstance(listCertificate);
+		changeFragmentContent(typeScroll);
+	}
 
 	public void startListConfirmApplyFragment(int typeScroll) {
 		isFocusMenuTablet = false;

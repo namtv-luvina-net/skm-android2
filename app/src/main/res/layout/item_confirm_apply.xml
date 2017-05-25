@@ -28,7 +28,7 @@
         android:layout_weight="5"
         >
         <TextView
-            android:id="@+id/titleHost"
+            android:id="@+id/titleDateInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/thumbnail"
@@ -37,10 +37,10 @@
             android:textColor="@color/text_color"
             android:textSize="14dp"/>
         <TextView
-            android:id="@+id/tvHostValue"
+            android:id="@+id/titleUserId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleHost"
+            android:layout_below="@id/titleDateInfo"
             android:textSize="14dp"
             android:ellipsize="end"
             android:singleLine="true"
@@ -51,7 +51,7 @@
             android:id="@+id/titleID"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvHostValue"
+            android:layout_below="@id/titleUserId"
             android:layout_marginTop="10dp"
             android:textSize="14dp"
             android:textColor="@color/text_color"

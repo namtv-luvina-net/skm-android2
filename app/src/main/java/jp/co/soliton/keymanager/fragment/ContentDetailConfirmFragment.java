@@ -39,7 +39,7 @@ public class ContentDetailConfirmFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_detail_confirm_apply_tablet, container, false);
 		elementMgr = new ElementApplyManager(getActivity());
 		tvHostName = (TextView) view.findViewById(R.id.tvHostName);
-		tvUserId = (TextView) view.findViewById(R.id.tvUserId);
+		tvUserId = (TextView) view.findViewById(R.id.titleUserId);
 		tvDate = (TextView) view.findViewById(R.id.tvDate);
 		tvStatus = (TextView) view.findViewById(R.id.tvStatus);
 		tvDeleteApply = (TextView) view.findViewById(R.id.tvDeleteApply);

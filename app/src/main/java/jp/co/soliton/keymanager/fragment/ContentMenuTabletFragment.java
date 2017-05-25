@@ -92,8 +92,11 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuStart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((MenuAcivity)activity).setFocusMenuTablet(false);
-					((MenuAcivity)activity).startApplyActivityFragment();
+					if (((MenuAcivity)getActivity()).getListCertificate().isEmpty()) {
+						((MenuAcivity) activity).startApplyActivityFragment();
+					} else {
+						((MenuAcivity) activity).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_LEFT);
+					}
 				}
 			});
 

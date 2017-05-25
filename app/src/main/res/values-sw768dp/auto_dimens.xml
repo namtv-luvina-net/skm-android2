@@ -44,7 +44,7 @@
 	<dimen name="margin_top_content_apply_success_tablet">160.00dp</dimen>
 	<dimen name="margin_top_content_input_host_tablet">200.00dp</dimen>
 	<dimen name="margin_top_content_input_reason_tablet">120.00dp</dimen>
-	<dimen name="margin_top_content_item_confirm_apply_tablet">30.00dp</dimen>
+	<dimen name="margin_top_content_item_confirm_apply_tablet">20.00dp</dimen>
 	<dimen name="margin_top_content_left_side_input_password_tablet">25.00dp</dimen>
 	<dimen name="margin_top_content_left_side_input_tablet">50.00dp</dimen>
 	<dimen name="margin_top_img_complete_confirm_apply_tablet">260.00dp</dimen>

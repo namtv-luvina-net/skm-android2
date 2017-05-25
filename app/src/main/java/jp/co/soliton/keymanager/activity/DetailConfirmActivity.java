@@ -38,7 +38,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 	    elementMgr = new ElementApplyManager(getApplicationContext());
 	    title = (TextView) findViewById(R.id.tvTitleHeader);
 		tvHostName = (TextView) findViewById(R.id.tvHostName);
-		tvUserId = (TextView) findViewById(R.id.tvUserId);
+		tvUserId = (TextView) findViewById(R.id.titleUserId);
 		tvDate = (TextView) findViewById(R.id.tvDate);
 		tvStatus = (TextView) findViewById(R.id.tvStatus);
 		tvDeleteApply = (TextView) findViewById(R.id.tvDeleteApply);
