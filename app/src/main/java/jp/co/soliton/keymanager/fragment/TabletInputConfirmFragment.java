@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.*;
-import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.SUCCESSFUL;
+import static jp.co.soliton.keymanager.fragment.TabletAbtractInputFragment.SUCCESSFUL;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -49,24 +49,26 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	private ElementApplyManager elementMgr;
 	private String update_apply;
 
-	TabletBaseInputFragment tabletBaseInputFragment;
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	TabletAbtractInputFragment tabletAbtractInputFragment;
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment, String
+			idConfirmApply) {
 		TabletInputConfirmFragment f = new TabletInputConfirmFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
+		f.update_apply = idConfirmApply;
 		return f;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+			tabletAbtractInputFragment = (TabletAbtractInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_confirm_tablet, container, false);
@@ -85,7 +87,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		inputApplyInfo = InputApplyInfo.getPref(getActivity());
-		m_InformCtrl = tabletBaseInputFragment.getInformCtrl();
+		m_InformCtrl = tabletAbtractInputFragment.getInformCtrl();
 		if (elementMgr == null) {
 			elementMgr = new ElementApplyManager(getActivity());
 		}
@@ -128,7 +130,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		txtUserId.setText(inputApplyInfo.getUserId());
 		txtEmail.setText(inputApplyInfo.getEmail());
 		txtReason.setText(inputApplyInfo.getReason());
-		tabletBaseInputFragment.enableNext();
+		tabletAbtractInputFragment.enableNext();
 	}
 
 	@Override
@@ -140,8 +142,8 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 * Execute action apply
 	 */
 	private void processingApply() {
-		tabletBaseInputFragment.getProgressDialog().show();
-		tabletBaseInputFragment.setErroType(SUCCESSFUL);
+		tabletAbtractInputFragment.getProgressDialog().show();
+		tabletAbtractInputFragment.setErroType(SUCCESSFUL);
 		errorCount = 0;
 		reTry = false;
 		//open thread processing apply
@@ -195,9 +197,9 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.getProgressDialog().dismiss();
+		tabletAbtractInputFragment.getProgressDialog().dismiss();
 		//request with result error
-		int m_nErroType = tabletBaseInputFragment.getErroType();
+		int m_nErroType = tabletAbtractInputFragment.getErroType();
 		if (!result) {
 			if (reTry) {
 				new ProcessApplyTask().execute();
@@ -205,27 +207,27 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			}
 			//show message error
 			if (m_nErroType == ERR_ESPAP_NOT_CONNECT) {
-				tabletBaseInputFragment.showMessage(getString(R.string.connect_not_epsap));
+				tabletAbtractInputFragment.showMessage(getString(R.string.connect_not_epsap));
 			}
 			if (m_nErroType == ERR_NETWORK) {
-				tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+				tabletAbtractInputFragment.showMessage(getString(R.string.connect_failed));
 			}
 			if (m_nErroType == ERR_ESP_AP_STOP) {
-				tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+				tabletAbtractInputFragment.showMessage(getString(R.string.connect_failed));
 			}
 			if (m_nErroType == ERR_SESSION_TIMEOUT) {
-				tabletBaseInputFragment.showMessage(getString(R.string.session_timeout));
+				tabletAbtractInputFragment.showMessage(getString(R.string.session_timeout));
 			}
 			if (m_nErroType == ERR_FORBIDDEN) {
-				tabletBaseInputFragment.showMessage(getString(R.string.devicecheck_error));
+				tabletAbtractInputFragment.showMessage(getString(R.string.devicecheck_error));
 			}
 			if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = getString(R.string.Unauthorized);
-				tabletBaseInputFragment.showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
+				tabletAbtractInputFragment.showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
 			}
 			if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
-				tabletBaseInputFragment.showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
+				tabletAbtractInputFragment.showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
 			}
 		} else {
 			if (m_nErroType == RET_ESP_AP_OK) {
@@ -244,7 +246,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 */
 	private void parseResult() {
 		if (mapKey.containsKey(StringList.m_str_isConnected) && !mapKey.get(StringList.m_str_isConnected)) {
-			tabletBaseInputFragment.showMessage(getString(R.string.login_failed));
+			tabletAbtractInputFragment.showMessage(getString(R.string.login_failed));
 			return;
 		}
 		if (mapKey.containsKey(StringList.m_str_scepprofile) && !mapKey.get(StringList.m_str_scepprofile)) {
@@ -277,7 +279,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	private void applyFinish() {
 		this.inputApplyInfo.setPassword(null);
 		this.inputApplyInfo.savePref(getActivity());
-		tabletBaseInputFragment.gotoCompleteApply();
+		tabletAbtractInputFragment.gotoCompleteApply();
 	}
 
 	
@@ -323,7 +325,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			//Parse result
 			if (!ret) {
 				if (errorCount > 10) {
-					tabletBaseInputFragment.setErroType(ERR_ESPAP_NOT_CONNECT);
+					tabletAbtractInputFragment.setErroType(ERR_ESPAP_NOT_CONNECT);
 					reTry = false;
 				} else {
 					reTry = true;
@@ -334,41 +336,41 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			reTry = false;
 			//Check status of certificate
 			if (nullOrEmpty(m_InformCtrl.GetRtn())) {
-				tabletBaseInputFragment.setErroType(ERR_NETWORK);
+				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("OK")) {
-				tabletBaseInputFragment.setErroType(RET_ESP_AP_OK);
+				tabletAbtractInputFragment.setErroType(RET_ESP_AP_OK);
 				return true;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("NG")) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground NG");
-				tabletBaseInputFragment.setErroType(ERR_LOGIN_FAIL);
+				tabletAbtractInputFragment.setErroType(ERR_LOGIN_FAIL);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("EPS-ap Service is stopped.")) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground EPS-ap Service is stopped.");
-				tabletBaseInputFragment.setErroType(ERR_ESP_AP_STOP);
+				tabletAbtractInputFragment.setErroType(ERR_ESP_AP_STOP);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith("No session")) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground No session.");
-				tabletBaseInputFragment.setErroType(ERR_SESSION_TIMEOUT);
+				tabletAbtractInputFragment.setErroType(ERR_SESSION_TIMEOUT);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Forbidden.");
-				tabletBaseInputFragment.setErroType(ERR_FORBIDDEN);
+				tabletAbtractInputFragment.setErroType(ERR_FORBIDDEN);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Unauthorized.");
-				tabletBaseInputFragment.setErroType(ERR_UNAUTHORIZED);
+				tabletAbtractInputFragment.setErroType(ERR_UNAUTHORIZED);
 				return false;
 			}
 			if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR).toString())) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground ERR:");
-				tabletBaseInputFragment.setErroType(ERR_COLON);
+				tabletAbtractInputFragment.setErroType(ERR_COLON);
 				return false;
 			}
 			// 取得XMLのパーサー
@@ -377,7 +379,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground TakeApartDevice false");
 				reTry = false;
-				tabletBaseInputFragment.setErroType(ERR_NETWORK);
+				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
 			parseXML();

@@ -37,14 +37,15 @@ public class MenuAcivity extends FragmentActivity {
 	public static final int RESET_STATUS = 0;
 	public static final int APID_STATUS = 1;
 	public static final int LIST_APPLY_UPDATE_STATUS = 2;
-	public static final int START_APPLY_STATUS = 3;
-	public static final int COMPLETE_STATUS = 4;
-	public static final int LIST_CONFIRM_APPLY_STATUS = 5;
-	public static final int DETAIL_CONFIRM_APPLY_STATUS = 6;
-	public static final int APPLY_SUCCESS_STATUS = 7;
-	public static final int CONFIRM_APPLY_STATUS = 8;
-	public static final int WITHDRAW_APPLY_STATUS = 9;
-	public static final int REAPPLY_STATUS = 10;
+	public static final int START_UPDATE_STATUS = 3;
+	public static final int START_APPLY_STATUS = 4;
+	public static final int COMPLETE_STATUS = 5;
+	public static final int LIST_CONFIRM_APPLY_STATUS = 6;
+	public static final int DETAIL_CONFIRM_APPLY_STATUS = 7;
+	public static final int APPLY_SUCCESS_STATUS = 8;
+	public static final int CONFIRM_APPLY_STATUS = 9;
+	public static final int WITHDRAW_APPLY_STATUS = 10;
+	public static final int REAPPLY_STATUS = 11;
 
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 	private boolean isTablet;
@@ -112,6 +113,8 @@ public class MenuAcivity extends FragmentActivity {
 				gotoMenuTablet();
 			}else if (currentStatus == START_APPLY_STATUS) {
 				((TabletBaseInputFragment)fragmentContent).clickBackButton();
+			}else if (currentStatus == START_UPDATE_STATUS) {
+				((TabletBaseUpdateFragment)fragmentContent).clickBackButton();
 			}else if (currentStatus == REAPPLY_STATUS) {
 				((TabletBaseInputFragment)fragmentContent).clickBackButton();
 			}else if (currentStatus == DETAIL_CONFIRM_APPLY_STATUS) {
@@ -151,10 +154,12 @@ public class MenuAcivity extends FragmentActivity {
 
     private void updateListElementApply() {
 	    listElementApply = elementMgr.getAllElementApply();
+	    ElementApply.sortListConfirmApply(listElementApply);
     }
 
     private void updateListCertificate() {
 	    listCertificate = elementMgr.getAllCertificate();
+	    ElementApply.sortListApplyUpdate(listCertificate);
     }
 
 	public List<ElementApply> getListElementApply() {
@@ -228,7 +233,18 @@ public class MenuAcivity extends FragmentActivity {
 		currentStatus = START_APPLY_STATUS;
 		fragmentLeft = new LeftSideInputTabletFragment();
 		changeFragmentLeftTablet();
-		fragmentContent= TabletBaseInputFragment.newInstance(null, true);
+		fragmentContent= TabletBaseInputFragment.newInstanceStartApply();
+		changeFragmentContent(SCROLL_TO_LEFT);
+	}
+
+	public void startUpdateFragment(String idConfirmApply) {
+		InputApplyInfo.deletePref(this);
+		isFocusMenuTablet = false;
+		currentStatus = START_UPDATE_STATUS;
+		fragmentLeft = new LeftSideInputTabletFragment();
+		changeFragmentLeftTablet();
+		Log.d("MenuAcivity:datnd", "startUpdateFragment: idConfirmApply = " + idConfirmApply);
+		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
@@ -317,7 +333,7 @@ public class MenuAcivity extends FragmentActivity {
 		currentStatus = REAPPLY_STATUS;
 		fragmentLeft = new LeftSideInputTabletFragment();
 		changeFragmentLeftTablet();
-		fragmentContent= TabletBaseInputFragment.newInstance(StringList.ID_DETAIL_CURRENT, false);
+		fragmentContent= TabletBaseInputFragment.newInstanceReApply(StringList.ID_DETAIL_CURRENT);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
@@ -403,6 +419,7 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentTransaction.replace(R.id.fragment_content_tablet, fragmentContent);
 		fragmentTransaction.commit();
 	}
+
 	private void changeFragmentContentTabletNotScroll(){
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.fragment_content_tablet, fragmentContent);

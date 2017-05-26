@@ -143,7 +143,9 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
 	                logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate id: " + id);
 	                logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + userId);
                     InputApplyInfo.deletePref(getContext());
-                    //TODO goto ReApply
+	                Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
+	                intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
+	                getContext().startActivity(intent);
                 }
             });
 

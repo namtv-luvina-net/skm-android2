@@ -27,25 +27,25 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	TextView titleInput;
 	EditText editTextHost;
 	EditText editTextSecurePort;
-	TabletBaseInputFragment tabletBaseInputFragment;
+	TabletAbtractInputFragment tabletAbtractInputFragment;
 
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputHostFragment f = new TabletInputHostFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		return f;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+			tabletAbtractInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
@@ -140,13 +140,13 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	 * Set status control next/back
 	 */
 	private void setStatusControl() {
-		if (tabletBaseInputFragment == null || editTextHost == null || editTextSecurePort == null) {
+		if (tabletAbtractInputFragment == null || editTextHost == null || editTextSecurePort == null) {
 			return;
 		}
 		if (nullOrEmpty(editTextHost.getText().toString()) || nullOrEmpty(editTextSecurePort.getText().toString())) {
-			tabletBaseInputFragment.disableNext();
+			tabletAbtractInputFragment.disableNext();
 		} else {
-			tabletBaseInputFragment.enableNext();
+			tabletAbtractInputFragment.enableNext();
 		}
 	}
 
@@ -154,11 +154,11 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		if (editTextHost == null || editTextSecurePort == null) {
 			return;
 		}
-		String host = tabletBaseInputFragment.getInputApplyInfo().getHost();
+		String host = tabletAbtractInputFragment.getInputApplyInfo().getHost();
 		if (!nullOrEmpty(host)) {
 			editTextHost.setText(host);
 		}
-		String securePort = tabletBaseInputFragment.getInputApplyInfo().getSecurePort();
+		String securePort = tabletAbtractInputFragment.getInputApplyInfo().getSecurePort();
 		if (!nullOrEmpty(securePort)) {
 			editTextSecurePort.setText(securePort);
 		}
@@ -168,24 +168,24 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	public void nextAction() {
 		String host = editTextHost.getText().toString().trim();
 		String port = editTextSecurePort.getText().toString().trim();
-		tabletBaseInputFragment.getInputApplyInfo().setHost(host);
-		tabletBaseInputFragment.getInputApplyInfo().setSecurePort(port);
-		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-		tabletBaseInputFragment.getProgressDialog().show();
-		if (tabletBaseInputFragment.getInformCtrl() == null) {
-			tabletBaseInputFragment.setInformCtrl(new InformCtrl());
+		tabletAbtractInputFragment.getInputApplyInfo().setHost(host);
+		tabletAbtractInputFragment.getInputApplyInfo().setSecurePort(port);
+		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+		tabletAbtractInputFragment.getProgressDialog().show();
+		if (tabletAbtractInputFragment.getInformCtrl() == null) {
+			tabletAbtractInputFragment.setInformCtrl(new InformCtrl());
 		}
 
-		tabletBaseInputFragment.setHostName(host);
-		tabletBaseInputFragment.setPortName(port);
+		tabletAbtractInputFragment.setHostName(host);
+		tabletAbtractInputFragment.setPortName(port);
 		String url = String.format("%s:%s", host, port);
-		tabletBaseInputFragment.getInformCtrl().SetURL(url);
-		new ConnectApplyTask(getActivity(), tabletBaseInputFragment.getInformCtrl(), tabletBaseInputFragment.getErroType()
+		tabletAbtractInputFragment.getInformCtrl().SetURL(url);
+		new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment.getErroType()
 				, new ConnectApplyTask.EndConnection() {
 			@Override
 			public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-				tabletBaseInputFragment.setInformCtrl(informCtrl);
-				tabletBaseInputFragment.setErroType(errorType);
+				tabletAbtractInputFragment.setInformCtrl(informCtrl);
+				tabletAbtractInputFragment.setErroType(errorType);
 				endConnection(result);
 			}
 		}).execute();
@@ -196,29 +196,29 @@ public class TabletInputHostFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.getProgressDialog().dismiss();
-		int m_nErroType = tabletBaseInputFragment.getErroType();
+		tabletAbtractInputFragment.getProgressDialog().dismiss();
+		int m_nErroType = tabletAbtractInputFragment.getErroType();
 		if (result) {
 			if (m_nErroType == NOT_INSTALL_CA) {
-				tabletBaseInputFragment.hideInputPort(false);
-				tabletBaseInputFragment.gotoPage(1);
+				tabletAbtractInputFragment.hideInputPort(false);
+				tabletAbtractInputFragment.gotoPage(1);
 			} else {
-				tabletBaseInputFragment.hideInputPort(true);
-				tabletBaseInputFragment.gotoPage(2);
+				tabletAbtractInputFragment.hideInputPort(true);
+				tabletAbtractInputFragment.gotoPage(2);
 			}
 		} else {
 			if (m_nErroType == ERR_FORBIDDEN) {
 				String str_forbidden = getString(R.string.Forbidden);
-				tabletBaseInputFragment.showMessage(tabletBaseInputFragment.getInformCtrl().GetRtn().substring(str_forbidden.length
+				tabletAbtractInputFragment.showMessage(tabletAbtractInputFragment.getInformCtrl().GetRtn().substring(str_forbidden.length
 						()));
 			} else if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = getString(R.string.Unauthorized);
-				tabletBaseInputFragment.showMessage(tabletBaseInputFragment.getInformCtrl().GetRtn().substring(str_unauth.length()));
+				tabletAbtractInputFragment.showMessage(tabletAbtractInputFragment.getInformCtrl().GetRtn().substring(str_unauth.length()));
 			} else if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
-				tabletBaseInputFragment.showMessage(tabletBaseInputFragment.getInformCtrl().GetRtn().substring(str_err.length()));
+				tabletAbtractInputFragment.showMessage(tabletAbtractInputFragment.getInformCtrl().GetRtn().substring(str_err.length()));
 			} else {
-				tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+				tabletAbtractInputFragment.showMessage(getString(R.string.connect_failed));
 			}
 		}
 	}

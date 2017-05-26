@@ -1,6 +1,13 @@
 package jp.co.soliton.keymanager.dbalias;
 
+import android.util.Log;
+import jp.co.soliton.keymanager.common.DateUtils;
+
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by luongdolong on 2/22/2017.
@@ -428,4 +435,26 @@ public class ElementApply implements Serializable {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
+
+	public static void sortListConfirmApply(List<ElementApply> listElementApply) {
+		Collections.sort(listElementApply, new Comparator<ElementApply>() {
+			@Override
+			public int compare(ElementApply o1, ElementApply o2) {
+				Date date1 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o1.getUpdateDate().replace("/", "-"));
+				Date date2 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o2.getUpdateDate().replace("/", "-"));
+				return date1.before(date2) ? 1 : -1;
+			}
+		});
+	}
+
+	public static void sortListApplyUpdate(List<ElementApply> listElementApply) {
+		Collections.sort(listElementApply, new Comparator<ElementApply>() {
+			@Override
+			public int compare(ElementApply o1, ElementApply o2) {
+				Date date1 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o1.getExpirationDate().replace("/", "-"));
+				Date date2 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o2.getExpirationDate().replace("/", "-"));
+				return date1.before(date2) ? 1 : -1;
+			}
+		});
+	}
 }

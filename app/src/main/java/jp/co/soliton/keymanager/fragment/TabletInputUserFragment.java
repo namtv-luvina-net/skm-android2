@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,11 +41,11 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private boolean challenge;
 	private ElementApplyManager elementMgr;
 	private boolean isSubmitted;
-	TabletBaseInputFragment tabletBaseInputFragment;
+	TabletAbtractInputFragment tabletAbtractInputFragment;
 
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		return f;
 	}
 
@@ -52,14 +53,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT,
-				tabletBaseInputFragment);
+				tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment
+			tabletAbtractInputFragment = (TabletAbtractInputFragment) getActivity().getSupportFragmentManager().getFragment
 					(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_user_tablet, container, false);
@@ -151,14 +152,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	 * init value for controls
 	 */
 	private void initValueControl() {
-		if (tabletBaseInputFragment == null || txtUserId == null || txtPassword == null) {
+		if (tabletAbtractInputFragment == null || txtUserId == null || txtPassword == null) {
 			return;
 		}
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getUserId())) {
-			txtUserId.setText(tabletBaseInputFragment.getInputApplyInfo().getUserId());
+		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getUserId())) {
+			txtUserId.setText(tabletAbtractInputFragment.getInputApplyInfo().getUserId());
 		}
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getPassword())) {
-			txtPassword.setText(tabletBaseInputFragment.getInputApplyInfo().getPassword());
+		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getPassword())) {
+			txtPassword.setText(tabletAbtractInputFragment.getInputApplyInfo().getPassword());
 		}
 		setStatusControl();
 	}
@@ -167,13 +168,10 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	 * Set status for next back button
 	 */
 	private void setStatusControl() {
-		if (tabletBaseInputFragment.getCurrentPage() != 3) {
-			return;
-		}
 		if (nullOrEmpty(txtUserId.getText().toString()) || nullOrEmpty(txtPassword.getText().toString())) {
-			tabletBaseInputFragment.disableNext();
+			tabletAbtractInputFragment.disableNext();
 		} else {
-			tabletBaseInputFragment.enableNext();
+			tabletAbtractInputFragment.enableNext();
 		}
 	}
 
@@ -181,31 +179,31 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	@Override
 	public void nextAction() {
 		if (!ValidateParams.isValidUserID(txtUserId.getText().toString().trim())) {
-			tabletBaseInputFragment.showMessage(getString(R.string.user_id_is_invalid));
+			tabletAbtractInputFragment.showMessage(getString(R.string.user_id_is_invalid));
 			return;
 		}
 		String userId = txtUserId.getText().toString().trim();
 		String password = txtPassword.getText().toString();
-		tabletBaseInputFragment.getInputApplyInfo().setUserId(userId);
-		tabletBaseInputFragment.getInputApplyInfo().setPassword(password);
-		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
+		tabletAbtractInputFragment.getInputApplyInfo().setUserId(userId);
+		tabletAbtractInputFragment.getInputApplyInfo().setPassword(password);
+		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 		//make parameter|
-		String place = tabletBaseInputFragment.getInputApplyInfo().getPlace();
-		boolean ret = tabletBaseInputFragment.controlPagesInput.makeParameterLogon(userId, password, place,
-				tabletBaseInputFragment.getInformCtrl());
+		String place = tabletAbtractInputFragment.getInputApplyInfo().getPlace();
+		boolean ret = tabletAbtractInputFragment.controlPagesInput.makeParameterLogon(userId, password, place,
+				tabletAbtractInputFragment.getInformCtrl());
 		if (!ret) {
-			tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+			tabletAbtractInputFragment.showMessage(getString(R.string.connect_failed));
 			return;
 		}
-		tabletBaseInputFragment.getProgressDialog().show();
+		tabletAbtractInputFragment.getProgressDialog().show();
 		// グレーアウト
 //		setButtonRunnable(false);
-		if (nullOrEmpty(tabletBaseInputFragment.getInformCtrl().GetURL())) {
-			String url = String.format("%s:%s", tabletBaseInputFragment.getInputApplyInfo().getHost(),
-					tabletBaseInputFragment.getInputApplyInfo().getSecurePort());
-			tabletBaseInputFragment.getInformCtrl().SetURL(url);
+		if (nullOrEmpty(tabletAbtractInputFragment.getInformCtrl().GetURL())) {
+			String url = String.format("%s:%s", tabletAbtractInputFragment.getInputApplyInfo().getHost(),
+					tabletAbtractInputFragment.getInputApplyInfo().getSecurePort());
+			tabletAbtractInputFragment.getInformCtrl().SetURL(url);
 		}
-		tabletBaseInputFragment.getInformCtrl().SetCookie(null);
+		tabletAbtractInputFragment.getInformCtrl().SetCookie(null);
 		isEnroll = false;
 		challenge = false;
 		//open thread logon to server
@@ -218,12 +216,13 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.getProgressDialog().dismiss();
+		tabletAbtractInputFragment.getProgressDialog().dismiss();
 		if (result) {
 			//check action next
-			InputApplyInfo inputApplyInfo = tabletBaseInputFragment.getInputApplyInfo();
-			InformCtrl informCtrl = tabletBaseInputFragment.getInformCtrl();
+			InputApplyInfo inputApplyInfo = tabletAbtractInputFragment.getInputApplyInfo();
+			InformCtrl informCtrl = tabletAbtractInputFragment.getInformCtrl();
 			if (isEnroll) {
+				Log.d("TabletInputUserFragment:datnd", "endConnection: isEnroll");
 				//save element apply
 				saveElementApply();
 				inputApplyInfo.setPassword(null);
@@ -231,39 +230,44 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
 						inputApplyInfo.getUserId()));
 				ElementApply element = elementMgr.getElementApply(id);
-				tabletBaseInputFragment.gotoCompleteApply(informCtrl, element);
+				tabletAbtractInputFragment.gotoCompleteApply(informCtrl, element);
 			} else {
 				if (isSubmitted) {
+					Log.d("TabletInputUserFragment:datnd", "endConnection: isSubmitted");
 					saveElementApply();
-					Intent intent = new Intent(getActivity(), CompleteConfirmApplyActivity.class);
-					getActivity().finish();
-					intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
+//					Intent intent = new Intent(getActivity(), CompleteConfirmApplyActivity.class);
+//					getActivity().finish();
+//					intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
 					String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
 							.getUserId()));
 					ElementApply element = elementMgr.getElementApply(id);
-					intent.putExtra("ELEMENT_APPLY", element);
-					intent.putExtra(StringList.m_str_InformCtrl, informCtrl);
-					startActivity(intent);
+//					intent.putExtra("ELEMENT_APPLY", element);
+//					intent.putExtra(StringList.m_str_InformCtrl, informCtrl);
+//					startActivity(intent);
+					tabletAbtractInputFragment.gotoCompleteConfirmApplyFragment(ElementApply.STATUS_APPLY_PENDING,
+							element, informCtrl);
 				} else {
-					tabletBaseInputFragment.gotoPage(4);
+					Log.d("TabletInputUserFragment:datnd", "endConnection: next page thoi");
+//					tabletAbtractInputFragment.gotoPage(4);
+					tabletAbtractInputFragment.gotoNextPage();
 				}
 			}
 		} else {
 			//show error message
-			int m_nErroType = tabletBaseInputFragment.getErroType();
-			String strRtn = tabletBaseInputFragment.getInformCtrl().GetRtn();
+			int m_nErroType = tabletAbtractInputFragment.getErroType();
+			String strRtn = tabletAbtractInputFragment.getInformCtrl().GetRtn();
 			if (m_nErroType == ERR_FORBIDDEN) {
 				String str_forbidden = getString(R.string.Forbidden);
-				tabletBaseInputFragment.showMessage(strRtn.substring(str_forbidden.length()));
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_forbidden.length()));
 			} else if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = getString(R.string.Unauthorized);
-				tabletBaseInputFragment.showMessage(strRtn.substring(str_unauth
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_unauth
 						.length()));
 			} else if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
-				tabletBaseInputFragment.showMessage(strRtn.substring(str_err.length()));
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_err.length()));
 			} else if (m_nErroType == ERR_LOGIN_FAIL) {
-				tabletBaseInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet
+				tabletAbtractInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet
 						.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
@@ -275,7 +279,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					}
 				});
 			} else {
-				tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+				tabletAbtractInputFragment.showMessage(getString(R.string.connect_failed));
 			}
 		}
 	}
@@ -285,13 +289,13 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			elementMgr = new ElementApplyManager(getActivity());
 		}
 		String rtnserial;
-		if (InputBasePageFragment.TARGET_WiFi.equals(tabletBaseInputFragment.getInputApplyInfo().getPlace())) {
+		if (InputBasePageFragment.TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace())) {
 			rtnserial = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
 		} else {
 			rtnserial = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
 		}
 		ElementApply elementApply = new ElementApply();
-		InputApplyInfo inputApplyInfo = tabletBaseInputFragment.getInputApplyInfo();
+		InputApplyInfo inputApplyInfo = tabletAbtractInputFragment.getInputApplyInfo();
 		elementApply.setHost(inputApplyInfo.getHost());
 		elementApply.setPort(inputApplyInfo.getPort());
 		elementApply.setPortSSL(inputApplyInfo.getSecurePort());
@@ -316,34 +320,34 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			////////////////////////////////////////////////////////////////////////////
 			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(getActivity());
-			boolean ret = conn.RunHttpApplyLoginUrlConnection(tabletBaseInputFragment.getInformCtrl());
+			boolean ret = conn.RunHttpApplyLoginUrlConnection(tabletAbtractInputFragment.getInformCtrl());
 
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
-				tabletBaseInputFragment.setErroType(ERR_NETWORK);
+				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
 			// ログイン結果
-			String strRtn = tabletBaseInputFragment.getInformCtrl().GetRtn();
+			String strRtn = tabletAbtractInputFragment.getInformCtrl().GetRtn();
 			if (strRtn.startsWith(getText(R.string.Forbidden).toString())) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
-				tabletBaseInputFragment.setErroType(ERR_FORBIDDEN);
+				tabletAbtractInputFragment.setErroType(ERR_FORBIDDEN);
 				return false;
 			} else if (strRtn.startsWith(getText(R.string.Unauthorized).toString())) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
-				tabletBaseInputFragment.setErroType(ERR_UNAUTHORIZED);
+				tabletAbtractInputFragment.setErroType(ERR_UNAUTHORIZED);
 				return false;
 			} else if (strRtn.startsWith(getText(R.string.ERR).toString())) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
-				tabletBaseInputFragment.setErroType(ERR_COLON);
+				tabletAbtractInputFragment.setErroType(ERR_COLON);
 				return false;
 			} else if (strRtn.startsWith("NG")) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask NG");
-				tabletBaseInputFragment.setErroType(ERR_LOGIN_FAIL);
+				tabletAbtractInputFragment.setErroType(ERR_LOGIN_FAIL);
 				return false;
 			}
 			// 取得したCookieをログイン時のCookieとして保持する.
-			tabletBaseInputFragment.getInformCtrl().SetLoginCookie(tabletBaseInputFragment.getInformCtrl().GetCookie());
+			tabletAbtractInputFragment.getInformCtrl().SetLoginCookie(tabletAbtractInputFragment.getInformCtrl().GetCookie());
 			///////////////////////////////////////////////////
 			// 認証応答の解析(Enroll応答のときの対応を流用できるはず)
 			///////////////////////////////////////////////////
@@ -351,10 +355,10 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			XmlPullParserAided m_p_aided = new XmlPullParserAided(getActivity(), strRtn, 2);
 			// 最上位dictの階層は2になる
 
-			ret = m_p_aided.TakeApartUserAuthenticationResponse(tabletBaseInputFragment.getInformCtrl());
+			ret = m_p_aided.TakeApartUserAuthenticationResponse(tabletAbtractInputFragment.getInformCtrl());
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
-				tabletBaseInputFragment.setErroType(ERR_NETWORK);
+				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
 			//parse xml return from server
@@ -369,14 +373,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					if (StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName())) {
 						isEnroll = true;
 						String rtnserial = "";
-						if (InputBasePageFragment.TARGET_WiFi.equals(tabletBaseInputFragment.getInputApplyInfo().getPlace()
+						if (InputBasePageFragment.TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace()
 						)) {
 							rtnserial = XmlPullParserAided.GetUDID(getActivity());
 						} else {
 							rtnserial = XmlPullParserAided.GetVpnApid(getActivity());
 						}
 						String sendmsg = m_p_aided.DeviceInfoText(rtnserial);
-						tabletBaseInputFragment.getInformCtrl().SetMessage(sendmsg);
+						tabletAbtractInputFragment.getInformCtrl().SetMessage(sendmsg);
 					}
 					if (StringList.m_str_issubmitted.equalsIgnoreCase(p_data.GetKeyName())) {
 						if (6 == p_data.GetType()) {
@@ -388,7 +392,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					}
 					if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
 						if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
-							tabletBaseInputFragment.getInputApplyInfo().setEmail(p_data.GetData());
+							tabletAbtractInputFragment.getInputApplyInfo().setEmail(p_data.GetData());
 						}
 					}
 				}
@@ -396,7 +400,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン終了 =========>
 			////////////////////////////////////////////////////////////////////////////
-			tabletBaseInputFragment.setErroType(SUCCESSFUL);
+			tabletAbtractInputFragment.setErroType(SUCCESSFUL);
 			return ret;
 		}
 

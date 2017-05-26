@@ -22,24 +22,24 @@ import jp.co.soliton.keymanager.ValidateParams;
 public class TabletInputEmailFragment extends TabletInputFragment {
 	private EditText txtEmail;
 	private TextView titleInput;
-	TabletBaseInputFragment tabletBaseInputFragment;
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	TabletAbtractInputFragment tabletAbtractInputFragment;
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputEmailFragment f = new TabletInputEmailFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		return f;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+			tabletAbtractInputFragment = (TabletAbtractInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_email_tablet, container, false);
@@ -80,7 +80,7 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 					hideKeyboard(v, getContext());
 					updateStatusSkipButton();
 				} else {
-					tabletBaseInputFragment.goneSkip();
+					tabletAbtractInputFragment.goneSkip();
 				}
 			}
 		});
@@ -119,11 +119,11 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 	 * Init value for controls
 	 */
 	private void initValueControl() {
-		if (tabletBaseInputFragment == null) {
+		if (tabletAbtractInputFragment == null) {
 			return;
 		}
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getEmail())) {
-			txtEmail.setText(tabletBaseInputFragment.getInputApplyInfo().getEmail());
+		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getEmail())) {
+			txtEmail.setText(tabletAbtractInputFragment.getInputApplyInfo().getEmail());
 		}
 		setStatusControl();
 		updateStatusSkipButton();
@@ -133,40 +133,37 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 	 * Set status for next/back button
 	 */
 	private void setStatusControl() {
-		if (tabletBaseInputFragment.getCurrentPage() != 4) {
-			return;
-		}
 		if (nullOrEmpty(txtEmail.getText().toString())) {
-			tabletBaseInputFragment.disableNext();
+			tabletAbtractInputFragment.disableNext();
 		} else {
-			tabletBaseInputFragment.enableNext();
+			tabletAbtractInputFragment.enableNext();
 		}
 	}
 
 	private void updateStatusSkipButton() {
 		if (txtEmail.getText().toString().trim().length() == 0) {
-			tabletBaseInputFragment.visibleSkip();
+			tabletAbtractInputFragment.visibleSkip();
 		} else {
-			tabletBaseInputFragment.goneSkip();
+			tabletAbtractInputFragment.goneSkip();
 		}
 	}
 
 	@Override
 	public void nextAction() {
-		tabletBaseInputFragment.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
-		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
+		tabletAbtractInputFragment.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
+		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 		if (!ValidateParams.isValidEmail(txtEmail.getText().toString().trim())) {
-			tabletBaseInputFragment.showMessage(getString(R.string.apply_mail_error));
+			tabletAbtractInputFragment.showMessage(getString(R.string.apply_mail_error));
 			return;
 		}
-		tabletBaseInputFragment.gotoPage(5);
+		tabletAbtractInputFragment.gotoNextPage();
 	}
 
 	@Override
 	protected void clickSkipButton() {
 		super.clickSkipButton();
-		tabletBaseInputFragment.getInputApplyInfo().setEmail(null);
-		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-		tabletBaseInputFragment.gotoPage(5);
+		tabletAbtractInputFragment.getInputApplyInfo().setEmail(null);
+		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+		tabletAbtractInputFragment.gotoNextPage();
 	}
 }

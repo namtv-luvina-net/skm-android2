@@ -20,24 +20,24 @@ import jp.co.soliton.keymanager.R;
 public class TabletInputReasonFragment extends TabletInputFragment {
 	EditText txtReason;
 	TextView titleInput;
-	TabletBaseInputFragment tabletBaseInputFragment;
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	TabletAbtractInputFragment tabletAbtractInputFragment;
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputReasonFragment f = new TabletInputReasonFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		return f;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+			tabletAbtractInputFragment = (TabletAbtractInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_reason_tablet, container, false);
@@ -77,7 +77,7 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 					hideKeyboard(v, getContext());
 					updateStatusSkipButton();
 				} else {
-					tabletBaseInputFragment.goneSkip();
+					tabletAbtractInputFragment.goneSkip();
 				}
 			}
 		});
@@ -103,11 +103,11 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	 * Init value for controls
 	 */
 	private void initValueControl() {
-		if (tabletBaseInputFragment == null) {
+		if (tabletAbtractInputFragment == null) {
 			return;
 		}
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getReason())) {
-			txtReason.setText(tabletBaseInputFragment.getInputApplyInfo().getReason());
+		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getReason())) {
+			txtReason.setText(tabletAbtractInputFragment.getInputApplyInfo().getReason());
 		}
 		setStatusControl();
 		updateStatusSkipButton();
@@ -117,35 +117,32 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	 * Set status for next/back button
 	 */
 	private void setStatusControl() {
-		if (tabletBaseInputFragment.getCurrentPage() != 5) {
-			return;
-		}
 		if (nullOrEmpty(txtReason.getText().toString())) {
-			tabletBaseInputFragment.disableNext();
+			tabletAbtractInputFragment.disableNext();
 		} else {
-			tabletBaseInputFragment.enableNext();
+			tabletAbtractInputFragment.enableNext();
 		}
 	}
 
 	private void updateStatusSkipButton() {
 		if (txtReason.getText().toString().trim().length() == 0) {
-			tabletBaseInputFragment.visibleSkip();
+			tabletAbtractInputFragment.visibleSkip();
 		} else {
-			tabletBaseInputFragment.goneSkip();
+			tabletAbtractInputFragment.goneSkip();
 		}
 	}
 	@Override
 	public void nextAction() {
-		tabletBaseInputFragment.getInputApplyInfo().setReason(txtReason.getText().toString().trim());
-		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-		tabletBaseInputFragment.gotoPage(6);
+		tabletAbtractInputFragment.getInputApplyInfo().setReason(txtReason.getText().toString().trim());
+		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+		tabletAbtractInputFragment.gotoNextPage();
 	}
 
 	@Override
 	protected void clickSkipButton() {
 		super.clickSkipButton();
-		tabletBaseInputFragment.getInputApplyInfo().setReason(null);
-		tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-		tabletBaseInputFragment.gotoPage(6);
+		tabletAbtractInputFragment.getInputApplyInfo().setReason(null);
+		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+		tabletAbtractInputFragment.gotoNextPage();
 	}
 }

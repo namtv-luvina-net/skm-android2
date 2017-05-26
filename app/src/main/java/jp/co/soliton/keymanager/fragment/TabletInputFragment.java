@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 
 public abstract class TabletInputFragment extends Fragment {
 
-	public static final String TAG_TABLET_BASE_INPUT_FRAGMENT = "tabletBaseInputFragment";
+	public static final String TAG_TABLET_BASE_INPUT_FRAGMENT = "tabletAbtractInputFragment";
 
 	/**
 	 * Check null or empty string value

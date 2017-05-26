@@ -67,6 +67,4 @@ public class ContentListConfirmTabletFragment extends ListFragment {
 		adapterListConfirmTabletApply.setListElementApply(listElementApply);
 		adapterListConfirmTabletApply.notifyDataSetChanged();
 	}
-
-
 }

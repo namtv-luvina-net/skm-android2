@@ -9,13 +9,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterListConfirmApply;
-import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +54,7 @@ public class ListConfirmActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         listElementApply = elementMgr.getAllElementApply();
-	    sortListElementApply();
+	    ElementApply.sortListConfirmApply(listElementApply);
         if(listElementApply.size() == 1) {
             Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
             intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
@@ -78,15 +74,4 @@ public class ListConfirmActivity extends FragmentActivity {
 	    }
     });
     }
-
-	private void sortListElementApply() {
-		Collections.sort(listElementApply, new Comparator<ElementApply>() {
-			@Override
-			public int compare(ElementApply o1, ElementApply o2) {
-				Date date1 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o1.getUpdateDate().replace("/", "-"));
-				Date date2 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o2.getUpdateDate().replace("/", "-"));
-				return date1.before(date2) ? 1 : -1;
-			}
-		});
-	}
 }
