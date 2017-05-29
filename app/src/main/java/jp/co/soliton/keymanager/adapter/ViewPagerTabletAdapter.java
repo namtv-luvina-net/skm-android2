@@ -32,7 +32,7 @@ public class ViewPagerTabletAdapter extends FragmentStatePagerAdapter {
 
 	private void createViewPagerUpdate(Context context, FragmentManager fm, TabletAbtractInputFragment tabletBaseInputFragment) {
 		listFragment = new Fragment[TOTAL_PAGES_UPDATE];
-		listFragment[0] = TabletInputUserFragment.newInstance(context, tabletBaseInputFragment);
+		listFragment[0] = TabletInputUserFragment.newInstance(context, tabletBaseInputFragment, idConfirmApply);
 		listFragment[1] = TabletInputEmailFragment.newInstance(context, tabletBaseInputFragment);
 		listFragment[2] = TabletInputReasonFragment.newInstance(context, tabletBaseInputFragment);
 		listFragment[3] = TabletInputConfirmFragment.newInstance(context, tabletBaseInputFragment, idConfirmApply);

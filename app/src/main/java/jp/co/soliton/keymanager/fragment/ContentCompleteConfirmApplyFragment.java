@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+
+import java.util.List;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -53,7 +56,13 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 					DialogMessageTablet.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
-					((MenuAcivity)getActivity()).startListConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					final List<ElementApply> listElementApply = ((MenuAcivity)getActivity()).getListElementApply();
+					if (listElementApply.size() == 1) {
+						StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
+						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					} else {
+						((MenuAcivity)getActivity()).startListConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					}
 				}
 			});
 		} else if (status == ElementApply.STATUS_APPLY_REJECT) {

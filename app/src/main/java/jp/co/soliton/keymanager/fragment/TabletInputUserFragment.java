@@ -42,6 +42,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private ElementApplyManager elementMgr;
 	private boolean isSubmitted;
 	TabletAbtractInputFragment tabletAbtractInputFragment;
+	private String update_apply;
+
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment, String id) {
+		TabletInputUserFragment f = new TabletInputUserFragment();
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
+		f.update_apply = id;
+		return f;
+	}
 
 	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
@@ -222,33 +230,33 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			InputApplyInfo inputApplyInfo = tabletAbtractInputFragment.getInputApplyInfo();
 			InformCtrl informCtrl = tabletAbtractInputFragment.getInformCtrl();
 			if (isEnroll) {
-				Log.d("TabletInputUserFragment:datnd", "endConnection: isEnroll");
 				//save element apply
 				saveElementApply();
 				inputApplyInfo.setPassword(null);
 				inputApplyInfo.savePref(getActivity());
-				String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
-						inputApplyInfo.getUserId()));
-				ElementApply element = elementMgr.getElementApply(id);
+				ElementApply element;
+				if (ValidateParams.nullOrEmpty(update_apply)) {
+					String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
+							inputApplyInfo.getUserId()));
+					element = elementMgr.getElementApply(id);
+				} else {
+					element = elementMgr.getElementApply(update_apply);
+				}
 				tabletAbtractInputFragment.gotoCompleteApply(informCtrl, element);
 			} else {
 				if (isSubmitted) {
-					Log.d("TabletInputUserFragment:datnd", "endConnection: isSubmitted");
 					saveElementApply();
-//					Intent intent = new Intent(getActivity(), CompleteConfirmApplyActivity.class);
-//					getActivity().finish();
-//					intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
-					String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
-							.getUserId()));
-					ElementApply element = elementMgr.getElementApply(id);
-//					intent.putExtra("ELEMENT_APPLY", element);
-//					intent.putExtra(StringList.m_str_InformCtrl, informCtrl);
-//					startActivity(intent);
+					ElementApply element;
+					if (ValidateParams.nullOrEmpty(update_apply)) {
+						String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
+								inputApplyInfo.getUserId()));
+						element = elementMgr.getElementApply(id);
+					} else {
+						element = elementMgr.getElementApply(update_apply);
+					}
 					tabletAbtractInputFragment.gotoCompleteConfirmApplyFragment(ElementApply.STATUS_APPLY_PENDING,
 							element, informCtrl);
 				} else {
-					Log.d("TabletInputUserFragment:datnd", "endConnection: next page thoi");
-//					tabletAbtractInputFragment.gotoPage(4);
 					tabletAbtractInputFragment.gotoNextPage();
 				}
 			}
@@ -287,6 +295,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private void saveElementApply() {
 		if (elementMgr == null) {
 			elementMgr = new ElementApplyManager(getActivity());
+		}
+		if (!ValidateParams.nullOrEmpty(update_apply)) {
+			elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
 		}
 		String rtnserial;
 		if (InputBasePageFragment.TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace())) {

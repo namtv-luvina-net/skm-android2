@@ -170,6 +170,7 @@
 	<string name="stt_rejected">却下</string>
 	<string name="stt_waiting_approval">承認待ち</string>
 	<string name="text_start_reapply">利用を継続するには\n再申請が必要です。</string>
+	<string name="text_start_reapply_tablet">利用を継続するには再申請が必要です。</string>
 	<string name="title_apply_date">申請日 :</string>
 	<string name="title_cancel">申請の取り下げ</string>
 	<string name="title_cn">CN :</string>

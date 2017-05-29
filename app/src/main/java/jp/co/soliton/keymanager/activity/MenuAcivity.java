@@ -46,6 +46,7 @@ public class MenuAcivity extends FragmentActivity {
 	public static final int CONFIRM_APPLY_STATUS = 9;
 	public static final int WITHDRAW_APPLY_STATUS = 10;
 	public static final int REAPPLY_STATUS = 11;
+	public static final int NOTIF_UPDATE_STATUS = 12;
 
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 	private boolean isTablet;
@@ -66,14 +67,33 @@ public class MenuAcivity extends FragmentActivity {
 	    setContentView(R.layout.activity_menu);
 	    setOrientation();
 	    fragmentManager = getSupportFragmentManager();
-	    if (savedInstanceState == null) {
-		    createView();
-	    } else if (isTablet) {
-		    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
-		    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
-		    currentStatus = savedInstanceState.getInt("currentStatus");
+
+	    String id_update = getIdUpdate();
+	    if (!ValidateParams.nullOrEmpty(id_update)) {
+		    Log.d("MenuAcivity:datnd", "onCreate: id = " + id_update);
+			startNotifUpdateFragment(id_update, NOT_SCROLL);
+	    }else {
+		    Log.d("MenuAcivity:datnd", "onCreate: ");
+		    if (savedInstanceState == null) {
+			    createView();
+		    } else if (isTablet) {
+			    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
+			    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
+			    currentStatus = savedInstanceState.getInt("currentStatus");
+		    }
 	    }
 	    checkGoToConfirmIfNeed();
+    }
+
+    private String getIdUpdate() {
+	    try{
+		    if (isTablet) {
+			    return getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
+		    }
+	    }catch (Exception e) {
+		    e.printStackTrace();
+	    }
+	    return "";
     }
 
 	public ElementApplyManager getElementMgr() {
@@ -217,6 +237,15 @@ public class MenuAcivity extends FragmentActivity {
 		changeFragmentLeftTablet();
 	}
 
+	public void startNotifUpdateFragment(String id, int typeScroll) {
+		Log.d("MenuAcivity:datnd", "startNotifUpdateFragment: ");
+		isFocusMenuTablet = false;
+		currentStatus = NOTIF_UPDATE_STATUS;
+		hideFragmentLeft();
+		fragmentContent= ContentUpdateFromNotificationFragment.newInstance(id);
+		changeFragmentContent(typeScroll);
+	}
+
 	public void startActivityAPID() {
 		isFocusMenuTablet = false;
 		currentStatus = APID_STATUS;
@@ -238,18 +267,27 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	public void startUpdateFragment(String idConfirmApply) {
+		Log.d("MenuAcivity:datnd", "startUpdateFragment: id =  " + idConfirmApply);
 		InputApplyInfo.deletePref(this);
 		isFocusMenuTablet = false;
 		currentStatus = START_UPDATE_STATUS;
-		fragmentLeft = new LeftSideInputTabletFragment();
-		changeFragmentLeftTablet();
-		Log.d("MenuAcivity:datnd", "startUpdateFragment: idConfirmApply = " + idConfirmApply);
+		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment)) {
+			fragmentLeft = new LeftSideListCertAndReapplyTabletFragment();
+			changeFragmentLeftTablet();
+		}
 		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
+	public void updateLeftSideListCertAndReapply(int possition) {
+		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment)) {
+			return;
+		}
+		((LeftSideListCertAndReapplyTabletFragment)fragmentLeft).highlightItem(possition);
+	}
+
 	public void updateLeftSideInput(int possition) {
-		if (fragmentLeft == null) {
+		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideInputTabletFragment)) {
 			return;
 		}
 		((LeftSideInputTabletFragment)fragmentLeft).highlightItem(possition);
@@ -276,8 +314,10 @@ public class MenuAcivity extends FragmentActivity {
 	public void startListApplyUpdateFragment(int typeScroll) {
 		isFocusMenuTablet = false;
 		currentStatus = LIST_APPLY_UPDATE_STATUS;
-		hideFragmentLeft();
-
+		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment)) {
+			fragmentLeft = new LeftSideListCertAndReapplyTabletFragment();
+			changeFragmentLeftTablet();
+		}
 		fragmentContent= ContentListApplyUpdateTabletFragment.newInstance(listCertificate);
 		changeFragmentContent(typeScroll);
 	}

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.*;
+import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.manager.APIDManager;
 
@@ -103,8 +104,10 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuAPID.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((MenuAcivity)activity).setFocusMenuTablet(false);
-					((MenuAcivity)getActivity()).startActivityAPID();
+//					((MenuAcivity)activity).setFocusMenuTablet(false);
+//					((MenuAcivity)getActivity()).startActivityAPID();
+					AlarmReceiver alarm = new AlarmReceiver();
+					alarm.setupNotification(getActivity());
 				}
 			});
 	}

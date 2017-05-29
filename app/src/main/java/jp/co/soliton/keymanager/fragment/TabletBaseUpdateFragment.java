@@ -39,9 +39,6 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 		if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
 			ElementApplyManager elementMgr = new ElementApplyManager(getActivity());
 			ElementApply detail = elementMgr.getElementApply(idConfirmApply);
-			if (detail == null) {
-				Log.d("TabletBaseUpdateFragment:datnd", "getIdApply: " + idConfirmApply +" bi null");
-			}
 			getInputApplyInfo().setHost(detail.getHost());
 			getInputApplyInfo().setPort(detail.getPort());
 			getInputApplyInfo().setSecurePort(detail.getPortSSL());
@@ -68,11 +65,15 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 
 	@Override
 	public void updateLeftSide() {
+		((MenuAcivity)getActivity()).updateLeftSideListCertAndReapply(getCurrentPage() + 1);
 	}
 
 	@Override
 	protected void updateButtonFooterStatus(int position) {
 //		gotoCompleteApply
+		if (position != 1 && position != 2) {
+			btnSkip.setVisibility(View.GONE);
+		}
 	}
 
 	public void clickBackButton(){
@@ -86,16 +87,7 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 
 	@Override
 	public void clickButtonBack() {
-		int current;
-		if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2 && viewPager.getCurrentItem() == 3){
-			viewPager.setCurrentItem(2, true);
-		}
-		if (viewPager.getCurrentItem() == 2) {
-			hideInputPort(true);
-			current = viewPager.getCurrentItem() - 2;
-		} else {
-			current = viewPager.getCurrentItem() - 1;
-		}
+		int current = viewPager.getCurrentItem() - 1;
 		if (current < 0) {
 			InputApplyInfo.deletePref(getActivity());
 			((MenuAcivity) getActivity()).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_RIGHT);

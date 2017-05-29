@@ -18,9 +18,11 @@ import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import android.util.Log;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.AlarmReapplyActivity;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -30,6 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     final public static String ONE_TIME = "onetime";
     @Override
     public void onReceive(Context context, Intent intent) {
+	    boolean isTablet = context.getResources().getBoolean(R.bool.isTablet);
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "YOUR TAG");
         //Acquire the lock
@@ -39,8 +42,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
 
         String id = extras.getString(StringList.ELEMENT_APPLY_ID, "");
-
-        ElementApplyManager mgr = new ElementApplyManager(context);
+	    Log.d("AlarmReceiver:datnd", "onReceive: ban thong bao id = " + id);
+	    ElementApplyManager mgr = new ElementApplyManager(context);
         ElementApply element = mgr.getElementApply(id);
 	    Bitmap bmLarge = getLargeIcon(context);
         NotificationCompat.Builder mBuilder =
@@ -49,16 +52,24 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setSmallIcon(getNotificationIcon())
 		                .setColor(context.getResources().getColor(R.color.product_icon_notification))
                         .setContentTitle(context.getString(R.string.notif_title))
-                        .setContentText(element.getcNValue());
-        Intent resultIntent = new Intent(context, AlarmReapplyActivity.class);
-        resultIntent.putExtra(StringList.ELEMENT_APPLY_ID, id);
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(AlarmReapplyActivity.class);
+                        .setContentText(element.getcNValue() + element.getId());
+        Intent resultIntent;
+	    if (isTablet) {
+		    resultIntent = new Intent(context, MenuAcivity.class);
+	    }else {
+		    resultIntent = new Intent(context, AlarmReapplyActivity.class);
+	    }
+	    resultIntent.putExtra(StringList.ELEMENT_APPLY_ID, id);
+	    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+	    if (isTablet) {
+//		    stackBuilder.addParentStack(MenuAcivity.class);
+	    } else {
+		    stackBuilder.addParentStack(AlarmReapplyActivity.class);
+	    }
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(
-                        0,
+                        Integer.parseInt(id),
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
         mBuilder.setContentIntent(resultPendingIntent);
@@ -66,7 +77,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         final int _id = (int) System.currentTimeMillis();
-        mNotificationManager.notify(_id, mBuilder.build());
+	    Log.d("AlarmReceiver:datnd", "onReceive: _id = " + _id);
+	    mNotificationManager.notify(_id, mBuilder.build());
 
         //Release the lock
         wl.release();

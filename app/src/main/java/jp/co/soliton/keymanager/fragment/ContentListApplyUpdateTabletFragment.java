@@ -68,6 +68,7 @@ public class ContentListApplyUpdateTabletFragment extends Fragment implements Ad
 				((MenuAcivity)getActivity()).startApplyActivityFragment();
 			}
 		});
+		((MenuAcivity)getActivity()).updateLeftSideListCertAndReapply(0);
 	}
 
 

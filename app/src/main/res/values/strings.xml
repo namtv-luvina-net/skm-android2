@@ -172,6 +172,7 @@
 	<string name="stt_rejected">Rejected</string>
 	<string name="stt_waiting_approval">Waiting Approval</string>
 	<string name="text_start_reapply">Re-applying is necessary\nto continue using</string>
+	<string name="text_start_reapply_tablet">Re-applying is necessary to continue using</string>
 	<string name="title_apply_date">Apply date :</string>
 	<string name="title_cancel">Withdrawal of application</string>
 	<string name="title_cn">CN :</string>

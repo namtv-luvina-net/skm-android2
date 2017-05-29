@@ -104,8 +104,6 @@ public class AdapterListApplyUpdateTablet extends ArrayAdapter<ElementApply> {
         // Lookup view for data ElementApply
 	    try {
 		    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		    Log.d("AdapterListApplyUpdateTablet:datnd", "getView: = " + listCertificate.get(position).getUserId()
-				    + " - " + listCertificate.get(position).getExpirationDate());
 		    Date expirationDate = formatter.parse(listCertificate.get(position).getExpirationDate());
 		    Date date = new Date();
 
@@ -160,7 +158,6 @@ public class AdapterListApplyUpdateTablet extends ArrayAdapter<ElementApply> {
 				    LogCtrl logCtrl = LogCtrl.getInstance(getContext());
 				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate id: " + id);
 				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + userId);
-				    Log.d("AdapterListApplyUpdateTablet:datnd", "onClick: " + id + " - " + userId);
 				    listener.clickApplyButton(String.valueOf(id));
 			    }
 		    });
