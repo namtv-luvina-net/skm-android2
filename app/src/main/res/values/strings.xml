@@ -140,9 +140,9 @@
 	<string name="dialog_withdraw_title">Withdrawal of application</string>
 	<string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
 	<string name="guide_1">Let\'s start simple setup.</string>
-	<string name="guide_2">Select the item onthe right to start applying</string>
+	<string name="guide_2">Select the item onthe right to start applying.</string>
 	<string name="guide_31">Various information can be seen from the icon </string>
-	<string name="guide_32"> above</string>
+	<string name="guide_32"> above.</string>
 	<string name="hint_email_name" translatable="false">name@example.com</string>
 	<string name="hint_host_name" translatable="false">epsap.example.com</string>
 	<string name="input_email">Destination Email Address</string>

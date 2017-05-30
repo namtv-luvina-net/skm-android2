@@ -131,7 +131,7 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 	 */
 	@Override
 	public void setStatusBackNext(int current) {
-		if (current == 4) {
+		if (current == 3) {
 			btnNext.setText(R.string.apply);
 		} else {
 			btnNext.setText(R.string.next);

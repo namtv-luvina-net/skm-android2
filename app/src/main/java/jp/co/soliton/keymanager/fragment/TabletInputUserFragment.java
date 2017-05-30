@@ -163,6 +163,10 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (tabletAbtractInputFragment == null || txtUserId == null || txtPassword == null) {
 			return;
 		}
+		if (!ValidateParams.nullOrEmpty(update_apply)) {
+			txtUserId.setEnabled(false);
+			txtUserId.setBackgroundColor(android.R.color.transparent);
+		}
 		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getUserId())) {
 			txtUserId.setText(tabletAbtractInputFragment.getInputApplyInfo().getUserId());
 		}
