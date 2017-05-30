@@ -28,8 +28,8 @@
 				android:orientation="vertical"
 				android:layout_marginLeft="@dimen/margin_left_side"
 				android:layout_marginRight="@dimen/margin_left_side"
-				android:layout_marginTop="90dp"
-				android:layout_marginBottom="5dp">
+				android:layout_marginTop="@dimen/margin_top_content_left_side_input_tablet"
+				android:layout_marginBottom="@dimen/margin_bottom_content_left_side_input_tablet">
 			<TextView
 					android:id="@+id/tv_host_name_and_port_number"
 					android:layout_width="match_parent"

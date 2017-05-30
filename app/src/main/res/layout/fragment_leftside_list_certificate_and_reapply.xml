@@ -27,8 +27,8 @@
 			android:layout_height="match_parent"
 			android:layout_marginLeft="@dimen/margin_left_side"
 			android:layout_marginRight="@dimen/margin_left_side"
-			android:layout_marginTop="140dp"
-			android:layout_marginBottom="150dp"
+			android:layout_marginTop="@dimen/margin_top_content_left_side_list_cert_and_reapply_tablet"
+			android:layout_marginBottom="@dimen/margin_bottom_content_left_side_list_cert_and_reapply_tablet"
 			android:orientation="vertical">
 
 		<TextView

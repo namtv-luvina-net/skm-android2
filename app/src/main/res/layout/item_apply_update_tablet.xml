@@ -12,8 +12,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
 				android:layout_weight="1"
-				android:layout_marginTop="35dp"
-				android:layout_marginBottom="25dp"
+				android:layout_marginTop="@dimen/margin_top_item_apply_update_tablet"
+				android:layout_marginBottom="@dimen/margin_bottom_item_apply_update_tablet"
 				android:orientation="horizontal">
 
 			<ImageView
@@ -22,8 +22,8 @@
 					android:layout_height="match_parent"
 					android:layout_weight="46"
 					android:layout_gravity="center"
-					android:paddingLeft="17dp"
-					android:paddingRight="17dp"
+					android:paddingLeft="@dimen/margin_left_thumb_item_apply_update_tablet"
+					android:paddingRight="@dimen/margin_left_thumb_item_apply_update_tablet"
 					android:scaleType="centerCrop"
 					android:src="@drawable/ic_expired"/>
 
@@ -32,7 +32,7 @@
 					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:orientation="vertical"
-					android:layout_marginRight="45dp"
+					android:layout_marginRight="@dimen/margin_right_item_apply_update_tablet"
 					android:layout_marginLeft="@dimen/margin_item_menu"
 					android:layout_weight="221" >
 				<android.support.v4.widget.Space
@@ -73,8 +73,7 @@
 						android:paddingBottom="5dp"
 						android:text="@string/btn_update"
 						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:textColor="@color/text_color_active"
-						android:background="@drawable/background_border_active_button"/>
+						android:textColor="@color/text_color_active"/>
 			</RelativeLayout>
 		</LinearLayout>
 		<FrameLayout
