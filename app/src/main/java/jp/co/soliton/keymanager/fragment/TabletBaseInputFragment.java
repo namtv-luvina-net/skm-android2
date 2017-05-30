@@ -21,12 +21,16 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 	public final static int STATUS_START_APPLY = 1;
 	public final static int STATUS_RE_APPLY = 2;
+	public final static int START_FROM_MENU = 1;
+	public final static int START_FROM_LIST_CERTIFICATE = 2;
+	private int startFrom;
 
 	private int currentStatus;
 
-	public static Fragment newInstanceStartApply() {
+	public static Fragment newInstanceStartApply(int startFrom) {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
 		f.currentStatus = STATUS_START_APPLY;
+		f.startFrom = startFrom;
 		return f;
 	}
 
@@ -102,12 +106,12 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 
 	@Override
 	public void updateLeftSide() {
-		((MenuAcivity)getActivity()).updateLeftSideInput(getCurrentPage());
+		((MenuAcivity)getActivity()).updateLeftSideInput(getCurrentPage(), startFrom);
 	}
 
 	@Override
 	protected void updateButtonFooterStatus(int position) {
-		btnBack.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
+		btnBack.setVisibility((position == 0 && startFrom == START_FROM_MENU) ? View.INVISIBLE : View.VISIBLE);
 		btnNext.setVisibility(position == 2 ? View.INVISIBLE : View.VISIBLE);
 		if (position != 4 && position != 5) {
 			btnSkip.setVisibility(View.GONE);
@@ -138,7 +142,11 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 		if (current < 0) {
 			InputApplyInfo.deletePref(getActivity());
 			if (currentStatus == STATUS_START_APPLY) {
-				((MenuAcivity) getActivity()).gotoMenuTablet();
+				if (((MenuAcivity)getActivity()).getListCertificate().isEmpty()) {
+					((MenuAcivity) getActivity()).gotoMenuTablet();
+				} else {
+					((MenuAcivity) getActivity()).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_RIGHT);
+				}
 			} else if (currentStatus == STATUS_RE_APPLY) {
 				((MenuAcivity) getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
 			}

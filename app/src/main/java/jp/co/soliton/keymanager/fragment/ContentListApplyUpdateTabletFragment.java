@@ -30,7 +30,7 @@ public class ContentListApplyUpdateTabletFragment extends Fragment implements Ad
 
 	@Override
 	public void clickApplyButton(String id) {
-		((MenuAcivity)getActivity()).startUpdateFragment(id);
+		((MenuAcivity)getActivity()).startUpdateFragmentFromListCertificate(id);
 	}
 
 	public static Fragment newInstance(List<ElementApply> listCertificate) {
@@ -65,7 +65,7 @@ public class ContentListApplyUpdateTabletFragment extends Fragment implements Ad
 		tvNew.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).startApplyActivityFragment();
+				((MenuAcivity)getActivity()).startApplyActivityFragment(TabletBaseInputFragment.START_FROM_LIST_CERTIFICATE);
 			}
 		});
 		((MenuAcivity)getActivity()).updateLeftSideListCertAndReapply(0);

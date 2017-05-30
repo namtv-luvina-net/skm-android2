@@ -94,7 +94,7 @@ public class ContentMenuTabletFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					if (((MenuAcivity)getActivity()).getListCertificate().isEmpty()) {
-						((MenuAcivity) activity).startApplyActivityFragment();
+						((MenuAcivity) activity).startApplyActivityFragment(TabletBaseInputFragment.START_FROM_MENU);
 					} else {
 						((MenuAcivity) activity).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_LEFT);
 					}
@@ -104,10 +104,8 @@ public class ContentMenuTabletFragment extends Fragment {
 			rlMenuAPID.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-//					((MenuAcivity)activity).setFocusMenuTablet(false);
-//					((MenuAcivity)getActivity()).startActivityAPID();
-					AlarmReceiver alarm = new AlarmReceiver();
-					alarm.setupNotification(getActivity());
+					((MenuAcivity)activity).setFocusMenuTablet(false);
+					((MenuAcivity)getActivity()).startActivityAPID();
 				}
 			});
 	}

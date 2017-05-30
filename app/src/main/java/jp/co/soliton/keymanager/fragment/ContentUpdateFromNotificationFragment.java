@@ -22,7 +22,6 @@ public class ContentUpdateFromNotificationFragment extends Fragment {
 
 	public static Fragment newInstance(String id) {
 		ContentUpdateFromNotificationFragment f = new ContentUpdateFromNotificationFragment();
-		Log.d("ContentUpdateFromNotificationFragment:datnd", "newInstance: id = " + id);
 		f.id = id;
 		return f;
 	}
@@ -41,7 +40,7 @@ public class ContentUpdateFromNotificationFragment extends Fragment {
 	    btnStartUpdate.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-			    ((MenuAcivity)getActivity()).startUpdateFragment(id);
+			    ((MenuAcivity)getActivity()).startUpdateFragmentFromNotification(id);
 		    }
 	    });
     }

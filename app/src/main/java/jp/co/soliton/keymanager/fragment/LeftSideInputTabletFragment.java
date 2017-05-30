@@ -22,9 +22,11 @@ public class LeftSideInputTabletFragment extends Fragment {
 	TextView[] listTextTitle;
 	TextView tvBack;
 	int currentPositionHighlight = 0;
+	int startFrom = 0;
 
-	public static Fragment newInstance() {
+	public static Fragment newInstance(int startFrom) {
 		LeftSideInputTabletFragment f = new LeftSideInputTabletFragment();
+		f.startFrom = startFrom;
 		return f;
 	}
 
@@ -45,12 +47,15 @@ public class LeftSideInputTabletFragment extends Fragment {
 		return view;
 	}
 
-	public void highlightItem(int possition) {
+	public void highlightItem(int possition, int startFrom) {
 		if (currentPositionHighlight != possition) {
 			currentPositionHighlight = possition;
 		}
+		if (this.startFrom != startFrom) {
+			this.startFrom = startFrom;
+		}
 		if (tvBack != null) {
-			if (possition == 0) {
+			if (possition == 0 && startFrom == TabletBaseInputFragment.START_FROM_MENU) {
 				tvBack.setVisibility(View.VISIBLE);
 			} else {
 				tvBack.setVisibility(View.INVISIBLE);
@@ -85,6 +90,6 @@ public class LeftSideInputTabletFragment extends Fragment {
 				((MenuAcivity)getActivity()).gotoMenuTablet();
 			}
 		});
-		highlightItem(currentPositionHighlight);
+		highlightItem(currentPositionHighlight, startFrom);
 	}
 }

@@ -1,10 +1,8 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
@@ -17,9 +15,11 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 
-	public static Fragment newInstance(String idConfirmApply) {
+	private boolean isUpdateFromNotification;
+	public static Fragment newInstance(String idConfirmApply, boolean isUpdateFromNotification) {
 		TabletBaseUpdateFragment f = new TabletBaseUpdateFragment();
 		f.idConfirmApply = idConfirmApply;
+		f.isUpdateFromNotification = isUpdateFromNotification;
 		return f;
 	}
 
@@ -90,7 +90,11 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 		int current = viewPager.getCurrentItem() - 1;
 		if (current < 0) {
 			InputApplyInfo.deletePref(getActivity());
-			((MenuAcivity) getActivity()).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_RIGHT);
+			if (isUpdateFromNotification) {
+				((MenuAcivity) getActivity()).startNotifUpdateFragment(idConfirmApply, MenuAcivity.SCROLL_TO_RIGHT);
+			} else {
+				((MenuAcivity) getActivity()).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_RIGHT);
+			}
 		} else {
 			viewPager.setCurrentItem(current, true);
 		}
@@ -127,13 +131,11 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 	 */
 	@Override
 	public void setStatusBackNext(int current) {
-//		if (current == 1) {
-//			btnNext.setText(R.string.download);
-//		} else if (current == 6) {
-//			btnNext.setText(R.string.apply);
-//		} else {
-//			btnNext.setText(R.string.next);
-//		}
+		if (current == 4) {
+			btnNext.setText(R.string.apply);
+		} else {
+			btnNext.setText(R.string.next);
+		}
 	}
 
 	@Override

@@ -70,10 +70,8 @@ public class MenuAcivity extends FragmentActivity {
 
 	    String id_update = getIdUpdate();
 	    if (!ValidateParams.nullOrEmpty(id_update)) {
-		    Log.d("MenuAcivity:datnd", "onCreate: id = " + id_update);
 			startNotifUpdateFragment(id_update, NOT_SCROLL);
 	    }else {
-		    Log.d("MenuAcivity:datnd", "onCreate: ");
 		    if (savedInstanceState == null) {
 			    createView();
 		    } else if (isTablet) {
@@ -141,6 +139,8 @@ public class MenuAcivity extends FragmentActivity {
 				onBackPressedFromDetailCetificate();
 			}else if (currentStatus == CONFIRM_APPLY_STATUS || currentStatus == WITHDRAW_APPLY_STATUS) {
 				startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+			}else if (currentStatus == NOTIF_UPDATE_STATUS) {
+				super.onBackPressed();
 			} else {
 				gotoMenuTablet();
 			}
@@ -238,7 +238,6 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	public void startNotifUpdateFragment(String id, int typeScroll) {
-		Log.d("MenuAcivity:datnd", "startNotifUpdateFragment: ");
 		isFocusMenuTablet = false;
 		currentStatus = NOTIF_UPDATE_STATUS;
 		hideFragmentLeft();
@@ -256,26 +255,33 @@ public class MenuAcivity extends FragmentActivity {
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
-	public void startApplyActivityFragment() {
+	public void startApplyActivityFragment(int startFrom) {
 		InputApplyInfo.deletePref(this);
 		isFocusMenuTablet = false;
 		currentStatus = START_APPLY_STATUS;
-		fragmentLeft = new LeftSideInputTabletFragment();
+		fragmentLeft = LeftSideInputTabletFragment.newInstance(startFrom);
 		changeFragmentLeftTablet();
-		fragmentContent= TabletBaseInputFragment.newInstanceStartApply();
+		fragmentContent= TabletBaseInputFragment.newInstanceStartApply(startFrom);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
-	public void startUpdateFragment(String idConfirmApply) {
-		Log.d("MenuAcivity:datnd", "startUpdateFragment: id =  " + idConfirmApply);
+	public void startUpdateFragmentFromListCertificate(String idConfirmApply){
+		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply, false);
+		startUpdateFragment();
+	}
+	public void startUpdateFragmentFromNotification(String idConfirmApply){
+		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply, true);
+		startUpdateFragment();
+	}
+
+	private void startUpdateFragment() {
 		InputApplyInfo.deletePref(this);
 		isFocusMenuTablet = false;
 		currentStatus = START_UPDATE_STATUS;
-		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment)) {
+		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment) || !fragmentLeft.isVisible()) {
 			fragmentLeft = new LeftSideListCertAndReapplyTabletFragment();
 			changeFragmentLeftTablet();
 		}
-		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
@@ -286,11 +292,11 @@ public class MenuAcivity extends FragmentActivity {
 		((LeftSideListCertAndReapplyTabletFragment)fragmentLeft).highlightItem(possition);
 	}
 
-	public void updateLeftSideInput(int possition) {
+	public void updateLeftSideInput(int possition, int startFrom) {
 		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideInputTabletFragment)) {
 			return;
 		}
-		((LeftSideInputTabletFragment)fragmentLeft).highlightItem(possition);
+		((LeftSideInputTabletFragment)fragmentLeft).highlightItem(possition, startFrom);
 	}
 
 	public void goApplyCompleted(){
@@ -371,7 +377,7 @@ public class MenuAcivity extends FragmentActivity {
 		InputApplyInfo.deletePref(this);
 		isFocusMenuTablet = false;
 		currentStatus = REAPPLY_STATUS;
-		fragmentLeft = new LeftSideInputTabletFragment();
+		fragmentLeft = LeftSideInputTabletFragment.newInstance(TabletBaseInputFragment.START_FROM_MENU);
 		changeFragmentLeftTablet();
 		fragmentContent= TabletBaseInputFragment.newInstanceReApply(StringList.ID_DETAIL_CURRENT);
 		changeFragmentContent(SCROLL_TO_LEFT);
