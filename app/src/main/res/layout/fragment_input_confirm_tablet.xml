@@ -200,7 +200,7 @@
 							android:textColor="@color/text_color"
 							android:gravity="left|top"
 							android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
-							android:layout_height="match_parent"/>
+							android:layout_height="wrap_content"/>
 				</ScrollView>
 
 			</LinearLayout>

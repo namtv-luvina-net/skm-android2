@@ -256,13 +256,20 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 		return inputApplyInfo;
 	}
 
-	protected abstract void updateLeftSide();
-	protected abstract void updateButtonFooterStatus(int currentPage);
-	public abstract void gotoCompleteApply();
-	public abstract void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element);
+	public void gotoCompleteApply() {
+		((MenuAcivity)getActivity()).goApplyCompleted();
+	}
+
+	public void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element) {
+		((MenuAcivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
+	}
+
 	public void gotoCompleteConfirmApplyFragment(int status, ElementApply element, InformCtrl m_InformCtrl){
 		((MenuAcivity)getActivity()).gotoCompleteConfirmApplyFragment(status, element, m_InformCtrl);
 	}
+
+	protected abstract void updateLeftSide();
+	protected abstract void updateButtonFooterStatus(int currentPage);
 	public abstract void hideInputPort(boolean isHide);
 	public abstract void setStatusBackNext(int current);
 	public abstract void clickButtonSkip();

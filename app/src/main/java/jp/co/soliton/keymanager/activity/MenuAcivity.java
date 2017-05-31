@@ -315,8 +315,6 @@ public class MenuAcivity extends FragmentActivity {
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
-	//====================================================================================================================
-
 	public void startListApplyUpdateFragment(int typeScroll) {
 		isFocusMenuTablet = false;
 		currentStatus = LIST_APPLY_UPDATE_STATUS;
@@ -498,7 +496,12 @@ public class MenuAcivity extends FragmentActivity {
 				alarm.setupNotification(getApplicationContext());
 				completeUsingProceduresFragment(StartUsingProceduresControl.getInstance(this).getElement());
 			} else {
-				startListConfirmApplyFragment(SCROLL_TO_RIGHT);
+				if (getListElementApply().size() == 1) {
+					StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
+					startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+				} else {
+					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
+				}
 			}
 		} else if (requestCode == StartUsingProceduresControl.m_nMDM_RequestCode) {
 			if (resultCode == RESULT_OK) {

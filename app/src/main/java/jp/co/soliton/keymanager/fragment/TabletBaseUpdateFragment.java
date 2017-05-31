@@ -52,17 +52,6 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 		}
 	}
 
-
-	@Override
-	public void gotoCompleteApply() {
-		((MenuAcivity)getActivity()).goApplyCompleted();
-	}
-
-	@Override
-	public void gotoCompleteApply(InformCtrl m_InformCtrl, ElementApply element) {
-		((MenuAcivity)getActivity()).goApplyCompleted(m_InformCtrl, element);
-	}
-
 	@Override
 	public void updateLeftSide() {
 		((MenuAcivity)getActivity()).updateLeftSideListCertAndReapply(getCurrentPage() + 1);
