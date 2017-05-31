@@ -199,4 +199,7 @@
 	<string name="des_leftside_detail_confirm_tablet_cofirms_status">承認状況の確認を行い、\n手続きを完了させましょう</string>
 	<string name="des_leftside_detail_confirm_tablet_rejected">あなたの申請は管理者によって\n却下されました</string>
 	<string name="des_leftside_detail_confirm_tablet_withdrawn">あなたの申請は取り下げ済みです</string>
+	<string name="one_day_remaining">残り1日</string>
+	<string name="many_days_remaining">残り%s日</string>
+	<string name="expiration_date">有効期限：</string>
 </resources>

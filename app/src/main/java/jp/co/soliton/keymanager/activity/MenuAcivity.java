@@ -322,7 +322,7 @@ public class MenuAcivity extends FragmentActivity {
 			fragmentLeft = new LeftSideListCertAndReapplyTabletFragment();
 			changeFragmentLeftTablet();
 		}
-		fragmentContent= ContentListApplyUpdateTabletFragment.newInstance(listCertificate);
+		fragmentContent= ContentListCertificateTabletFragment.newInstance(listCertificate);
 		changeFragmentContent(typeScroll);
 	}
 

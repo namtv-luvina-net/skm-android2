@@ -1,7 +1,6 @@
 package jp.co.soliton.keymanager.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.customview.DialogMenuCertDetail;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.fragment.ContentListApplyUpdateTabletFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,9 +18,10 @@ import java.util.List;
  * Created by lexuanvinh on 02/27/2017.
  */
 
-public class AdapterListApplyUpdateTablet extends ArrayAdapter<ElementApply> {
+public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
     // Param in AdapterListConfirmApply
     private List<ElementApply> listCertificate;
+	private Context context;
 
 	public interface ItemListener{
 		void clickApplyButton(String id);
@@ -47,8 +44,9 @@ public class AdapterListApplyUpdateTablet extends ArrayAdapter<ElementApply> {
      * @param context
      * @param listCertificate
      */
-    public AdapterListApplyUpdateTablet(Context context, List<ElementApply> listCertificate, ItemListener listener) {
+    public AdapterListCertificateTablet(Context context, List<ElementApply> listCertificate, ItemListener listener) {
         super(context, 0);
+	    this.context = context;
 	    setListCertificate(listCertificate);
 	    this.listener = listener;
     }
@@ -115,33 +113,25 @@ public class AdapterListApplyUpdateTablet extends ArrayAdapter<ElementApply> {
 		    }
 
 		    if (differenceDates > 0 && differenceDates <= listCertificate.get(position).getNotiEnableBefore()) {
-			    if (ValidateParams.isJPLanguage()) {
-				    viewHolder.titleDateInfo.setText("残り" + differenceDates + "日");
+			    String status;
+			    if (differenceDates == 1) {
+				    status = context.getResources().getString(R.string.one_day_remaining);
 			    } else {
-				    if (differenceDates == 1) {
-					    viewHolder.titleDateInfo.setText(differenceDates + " day remaining");
-				    } else {
-					    viewHolder.titleDateInfo.setText(differenceDates + " days remaining");
-				    }
+				    status = String.format(context.getResources().getString(R.string.many_days_remaining), String.valueOf
+						    (differenceDates));
 			    }
+			    viewHolder.titleDateInfo.setText(status);
 			    viewHolder.btnApplyUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
 			    viewHolder.btnApplyUpdate.setBackgroundResource(R.drawable.border_button_active);
 			    viewHolder.icCertificate.setImageResource(R.drawable.certificate_image);
 		    } else if (differenceDates > listCertificate.get(position).getNotiEnableBefore()){
-			    if (ValidateParams.isJPLanguage()) {
-				    viewHolder.titleDateInfo.setText("有効期限：" + formatter.format(expirationDate).split(" ")[0]);
-			    } else {
-				    viewHolder.titleDateInfo.setText("Expiration: " + formatter.format(expirationDate).split(" ")[0]);
-			    }
+			    viewHolder.titleDateInfo.setText(context.getResources().getString(R.string.expiration_date) + formatter
+					    .format(expirationDate).split(" ")[0]);
 			    viewHolder.btnApplyUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_inactive));
 			    viewHolder.btnApplyUpdate.setBackgroundResource(R.drawable.border_button_inactive);
 			    viewHolder.icCertificate.setImageResource(R.drawable.certificate_image);
 		    } else {
-			    if (ValidateParams.isJPLanguage()) {
-				    viewHolder.titleDateInfo.setText("有効期限切れ");
-			    } else {
-				    viewHolder.titleDateInfo.setText("Expired");
-			    }
+			    viewHolder.titleDateInfo.setText(context.getResources().getString(R.string.label_expired));
 			    viewHolder.btnApplyUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
 			    viewHolder.btnApplyUpdate.setBackgroundResource(R.drawable.border_button_active);
 			    viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);

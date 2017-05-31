@@ -202,4 +202,7 @@
 		procedure</string>
 	<string name="des_leftside_detail_confirm_tablet_rejected">Your application has been rejected by the administrator</string>
 	<string name="des_leftside_detail_confirm_tablet_withdrawn">Your application has been withdrawn</string>
+	<string name="one_day_remaining">1 day remaining</string>
+	<string name="many_days_remaining">%s days remaining</string>
+	<string name="expiration_date">Expiration:\u0020</string>
 </resources>

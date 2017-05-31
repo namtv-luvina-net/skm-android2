@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.adapter.AdapterListApplyUpdateTablet;
+import jp.co.soliton.keymanager.adapter.AdapterListCertificateTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.util.List;
@@ -19,12 +19,12 @@ import java.util.List;
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentListApplyUpdateTabletFragment extends Fragment implements AdapterListApplyUpdateTablet.ItemListener {
+public class ContentListCertificateTabletFragment extends Fragment implements AdapterListCertificateTablet.ItemListener {
 
 	private List<ElementApply> listCertificate;
 	private ListView listView;
 	private TextView tvNew;
-	private AdapterListApplyUpdateTablet adapterListApplyUpdateTablet;
+	private AdapterListCertificateTablet adapterListCertificateTablet;
 
 	@Override
 	public void clickApplyButton(String id) {
@@ -32,7 +32,7 @@ public class ContentListApplyUpdateTabletFragment extends Fragment implements Ad
 	}
 
 	public static Fragment newInstance(List<ElementApply> listCertificate) {
-		ContentListApplyUpdateTabletFragment f = new ContentListApplyUpdateTabletFragment();
+		ContentListCertificateTabletFragment f = new ContentListCertificateTabletFragment();
 		f.listCertificate = listCertificate;
 		return f;
 	}
@@ -50,16 +50,16 @@ public class ContentListApplyUpdateTabletFragment extends Fragment implements Ad
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		listCertificate = ((MenuAcivity)getActivity()).getListCertificate();
-		adapterListApplyUpdateTablet = new AdapterListApplyUpdateTablet(getActivity(), listCertificate, this);
-		listView.setAdapter(adapterListApplyUpdateTablet);
+		adapterListCertificateTablet = new AdapterListCertificateTablet(getActivity(), listCertificate, this);
+		listView.setAdapter(adapterListCertificateTablet);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		listCertificate = ((MenuAcivity)getActivity()).getListCertificate();
-		adapterListApplyUpdateTablet.setListCertificate(listCertificate);
-		adapterListApplyUpdateTablet.notifyDataSetChanged();
+		adapterListCertificateTablet.setListCertificate(listCertificate);
+		adapterListCertificateTablet.notifyDataSetChanged();
 		tvNew.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
