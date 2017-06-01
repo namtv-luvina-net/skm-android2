@@ -21,6 +21,7 @@ import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -31,6 +32,8 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 
 import java.net.URLEncoder;
 import java.util.List;
+
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -99,7 +102,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    hideKeyboard(v, getContext());
+                    SoftKeyboardCtrl.hideKeyboard(v, getContext());
                 } else {
                     InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(txtPassword, InputMethodManager.SHOW_IMPLICIT);
@@ -135,7 +138,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         super.setMenuVisibility(visible);
         if (visible) {
             initValueControl();
-            hideKeyboard(pagerReapplyActivity);
+            SoftKeyboardCtrl.hideKeyboard(pagerReapplyActivity);
         }
     }
 
@@ -144,7 +147,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             initValueControl();
-            hideKeyboard(pagerReapplyActivity);
+            SoftKeyboardCtrl.hideKeyboard(pagerReapplyActivity);
         }
     }
 
@@ -174,13 +177,6 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
         challenge = false;
         //open thread logon to server
         new LogonApplyTask().execute();
-    }
-
-    private void hideKeyboard(Activity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
     }
 
     /**

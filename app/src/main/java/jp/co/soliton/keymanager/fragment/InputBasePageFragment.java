@@ -18,13 +18,6 @@ import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
  */
 
 public class InputBasePageFragment extends Fragment {
-    public final static int ERR_FORBIDDEN    = 20;
-    public final static int ERR_UNAUTHORIZED = 21;
-    public final static int SUCCESSFUL       = 22;
-    public final static int ERR_NETWORK      = 23;
-    public final static int ERR_COLON        = 24;
-    public final static int NOT_INSTALL_CA   = 25;
-    public final static int ERR_LOGIN_FAIL = 27;
 
     public final static String TARGET_VPN  = "0";
     public final static String TARGET_WiFi = "1";
@@ -45,17 +38,6 @@ public class InputBasePageFragment extends Fragment {
             return true;
         }
         return value.trim().isEmpty();
-    }
-
-    /**
-     * Hide keyboard in edit text controls
-     *
-     * @param view
-     * @param context
-     */
-    protected void hideKeyboard(View view, Context context) {
-        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**

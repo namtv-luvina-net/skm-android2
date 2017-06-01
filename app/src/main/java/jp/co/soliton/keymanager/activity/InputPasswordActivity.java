@@ -15,27 +15,22 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.List;
-
-import jp.co.soliton.keymanager.HttpConnectionCtrl;
-import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
-import jp.co.soliton.keymanager.fragment.InputUserPageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
+
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -211,16 +206,9 @@ public class InputPasswordActivity extends Activity {
             float y = ev.getRawY() + v.getTop() - scrcoords[1];
 
             if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom())
-                hideKeyboard(this);
+                SoftKeyboardCtrl.hideKeyboard(this);
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    private void hideKeyboard(Activity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
     }
 
     /**
@@ -237,25 +225,25 @@ public class InputPasswordActivity extends Activity {
 			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
                 logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
-                m_nErroType = InputBasePageFragment.ERR_NETWORK;
+                m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
 	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
-                m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+                m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
 	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
-                m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+                m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
 	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
-                m_nErroType = InputBasePageFragment.ERR_COLON;
+                m_nErroType = ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
 	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
-                m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
+                m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             // 取得したCookieをログイン時のCookieとして保持する.
@@ -269,7 +257,7 @@ public class InputPasswordActivity extends Activity {
             ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
             if (ret == false) {
 	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
-                m_nErroType = InputBasePageFragment.ERR_NETWORK;
+                m_nErroType = ERR_NETWORK;
                 return false;
             }
             status = ElementApply.STATUS_APPLY_PENDING;
@@ -301,7 +289,7 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン終了 =========>
             ////////////////////////////////////////////////////////////////////////////
-            m_nErroType = InputBasePageFragment.SUCCESSFUL;
+            m_nErroType = SUCCESSFUL;
             return ret;
         }
 
@@ -327,25 +315,25 @@ public class InputPasswordActivity extends Activity {
             cancelApply = "";
             if (ret == false) {
                 logCtrlAsyncTask.loggerError("DropApplyTask Network error");
-                m_nErroType = InputBasePageFragment.ERR_NETWORK;
+                m_nErroType = ERR_NETWORK;
                 return false;
             }
             // ログイン結果
             if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
                 logCtrlAsyncTask.loggerError("DropApplyTask Forbidden.");
-                m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+                m_nErroType = ERR_FORBIDDEN;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
 	            logCtrlAsyncTask.loggerError("DropApplyTask Unauthorized.");
-                m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+                m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
 	            logCtrlAsyncTask.loggerError("DropApplyTask ERR:");
-                m_nErroType = InputBasePageFragment.ERR_COLON;
+                m_nErroType = ERR_COLON;
                 return false;
             } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
 	            logCtrlAsyncTask.loggerError("DropApplyTask NG");
-                m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
+                m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
             // 取得したCookieをログイン時のCookieとして保持する.
@@ -353,7 +341,7 @@ public class InputPasswordActivity extends Activity {
             if (m_InformCtrl.GetRtn().startsWith("OK")) {
                 status = ElementApply.STATUS_APPLY_CANCEL;
             }
-            m_nErroType = InputBasePageFragment.SUCCESSFUL;
+            m_nErroType = SUCCESSFUL;
             return ret;
         }
 
@@ -416,16 +404,16 @@ public class InputPasswordActivity extends Activity {
             }
         } else {
             //show error message
-            if (m_nErroType == InputBasePageFragment.ERR_FORBIDDEN) {
+            if (m_nErroType == ERR_FORBIDDEN) {
                 String str_forbidden = getString(R.string.Forbidden);
                 showMessage(m_InformCtrl.GetRtn().substring(str_forbidden.length()));
-            } else if (m_nErroType == InputBasePageFragment.ERR_UNAUTHORIZED) {
+            } else if (m_nErroType == ERR_UNAUTHORIZED) {
                 String str_unauth = getString(R.string.Unauthorized);
                 showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
-            } else if (m_nErroType == InputBasePageFragment.ERR_COLON) {
+            } else if (m_nErroType == ERR_COLON) {
                 String str_err = getString(R.string.ERR);
                 showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
-            } else if (m_nErroType == InputBasePageFragment.ERR_LOGIN_FAIL) {
+            } else if (m_nErroType == ERR_LOGIN_FAIL) {
                 showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
                     @Override
                     public void onOkDismissMessage() {

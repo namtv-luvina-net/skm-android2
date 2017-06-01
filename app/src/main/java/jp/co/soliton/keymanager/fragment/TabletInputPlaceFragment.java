@@ -25,24 +25,24 @@ public class TabletInputPlaceFragment extends TabletInputFragment {
 	private RelativeLayout btnTargetVPN;
 	private RelativeLayout btnTargetWiFi;
 	private RelativeLayout zoneInputPlace;
-	TabletBaseInputFragment tabletBaseInputFragment;
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	TabletAbtractInputFragment tabletAbtractInputFragment;
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputPlaceFragment f = new TabletInputPlaceFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		return f;
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+			tabletAbtractInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_store_tablet, container, false);
@@ -52,9 +52,9 @@ public class TabletInputPlaceFragment extends TabletInputFragment {
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.target_place));
 
-		if (tabletBaseInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
-			tabletBaseInputFragment.getInputApplyInfo().setPlace(TARGET_VPN);
-			tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
+		if (tabletAbtractInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
+			tabletAbtractInputFragment.getInputApplyInfo().setPlace(TARGET_VPN);
+			tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 			zoneInputPlace.setVisibility(View.GONE);
 		}
 		return view;
@@ -67,15 +67,15 @@ public class TabletInputPlaceFragment extends TabletInputFragment {
 		btnTargetVPN.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				tabletBaseInputFragment.getInputApplyInfo().setPlace(TARGET_VPN);
-				tabletBaseInputFragment.gotoPage(3);
+				tabletAbtractInputFragment.getInputApplyInfo().setPlace(TARGET_VPN);
+				tabletAbtractInputFragment.gotoPage(3);
 			}
 		});
 		btnTargetWiFi.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				tabletBaseInputFragment.getInputApplyInfo().setPlace(TARGET_WiFi);
-				tabletBaseInputFragment.gotoPage(3);
+				tabletAbtractInputFragment.getInputApplyInfo().setPlace(TARGET_WiFi);
+				tabletAbtractInputFragment.gotoPage(3);
 			}
 		});
 	}

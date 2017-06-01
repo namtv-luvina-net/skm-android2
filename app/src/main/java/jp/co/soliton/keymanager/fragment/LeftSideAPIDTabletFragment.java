@@ -16,13 +16,15 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 public class LeftSideAPIDTabletFragment extends Fragment {
 
-	TextView tvBack;
+	private TextView tvBack;
+	private View viewFragment;
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_left_side_apid_tablet, container, false);
-		tvBack = (TextView) view.findViewById(R.id.tvBack);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_left_side_apid_tablet, container, false);
+		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		return viewFragment;
 	}
 
 	@Override
@@ -39,5 +41,11 @@ public class LeftSideAPIDTabletFragment extends Fragment {
 				((MenuAcivity)getActivity()).gotoMenuTablet();
 			}
 		});
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

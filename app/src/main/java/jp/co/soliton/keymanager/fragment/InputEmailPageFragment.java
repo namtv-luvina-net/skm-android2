@@ -16,6 +16,7 @@ import android.widget.EditText;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 
 /**
@@ -79,7 +80,7 @@ public class InputEmailPageFragment extends InputBasePageFragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
 	                txtEmail.setText(txtEmail.getText().toString().trim());
-                    hideKeyboard(v, getContext());
+                    SoftKeyboardCtrl.hideKeyboard(v, getContext());
 	                updateStatusSkipButton();
                 } else {
 	                btnSkipEmail.setVisibility(View.INVISIBLE);

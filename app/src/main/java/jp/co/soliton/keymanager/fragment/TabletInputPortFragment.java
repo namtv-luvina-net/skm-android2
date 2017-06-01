@@ -21,8 +21,9 @@ import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
-import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -36,11 +37,11 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	TextView titleInput;
 	private LogCtrl logCtrl;
 
-	TabletBaseInputFragment tabletBaseInputFragment;
+	TabletAbtractInputFragment tabletAbtractInputFragment;
 
-	public static Fragment newInstance(Context context, TabletBaseInputFragment tabletBaseInputFragment) {
+	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputPortFragment f = new TabletInputPortFragment();
-		f.tabletBaseInputFragment = tabletBaseInputFragment;
+		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		f.logCtrl = LogCtrl.getInstance(context);
 		return f;
 	}
@@ -48,14 +49,14 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
-		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletBaseInputFragment);
+		getActivity().getSupportFragmentManager().putFragment(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT, tabletAbtractInputFragment);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			tabletBaseInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
+			tabletAbtractInputFragment = (TabletBaseInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_port_tablet, container, false);
@@ -64,7 +65,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 		titleInput.setText(getString(R.string.download_ca_certificate));
 		edtPort = (EditText) view.findViewById(R.id.edit_port);
 		txtGuideDownloadCaCertificate = (TextView) view.findViewById(R.id.txt_des_download_ca);
-		if (tabletBaseInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+		if (tabletAbtractInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2) {
 			txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
 		} else {
 			txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
@@ -95,7 +96,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					hideKeyboard(v, getContext());
+					SoftKeyboardCtrl.hideKeyboard(v, getContext());
 				}
 			}
 		});
@@ -133,11 +134,11 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	 * Init value for control
 	 */
 	private void initValueControl() {
-		if (tabletBaseInputFragment == null || edtPort == null) {
+		if (tabletAbtractInputFragment == null || edtPort == null) {
 			return;
 		}
-		if (!nullOrEmpty(tabletBaseInputFragment.getInputApplyInfo().getPort())) {
-			edtPort.setText(tabletBaseInputFragment.getInputApplyInfo().getPort());
+		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getPort())) {
+			edtPort.setText(tabletAbtractInputFragment.getInputApplyInfo().getPort());
 		}
 		setStatusControl();
 	}
@@ -146,13 +147,13 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	 * Set status control next/back
 	 */
 	private void setStatusControl() {
-		if (tabletBaseInputFragment.getCurrentPage() != 1) {
+		if (tabletAbtractInputFragment.getCurrentPage() != 1) {
 			return;
 		}
 		if (nullOrEmpty(edtPort.getText().toString())) {
-			tabletBaseInputFragment.disableNext();
+			tabletAbtractInputFragment.disableNext();
 		} else {
-			tabletBaseInputFragment.enableNext();
+			tabletAbtractInputFragment.enableNext();
 		}
 	}
 
@@ -166,53 +167,53 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	@Override
 	public void nextAction() {
 			logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
-			tabletBaseInputFragment.getInputApplyInfo().setPort(edtPort.getText().toString().trim());
-			tabletBaseInputFragment.getInputApplyInfo().savePref(getActivity());
-			tabletBaseInputFragment.getProgressDialog().show();
-			if (tabletBaseInputFragment.getInformCtrl() == null) {
-				tabletBaseInputFragment.setInformCtrl(new InformCtrl());
+			tabletAbtractInputFragment.getInputApplyInfo().setPort(edtPort.getText().toString().trim());
+			tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+			tabletAbtractInputFragment.getProgressDialog().show();
+			if (tabletAbtractInputFragment.getInformCtrl() == null) {
+				tabletAbtractInputFragment.setInformCtrl(new InformCtrl());
 			}
-			String url = String.format("%s:%s", tabletBaseInputFragment.getInputApplyInfo().getHost(), edtPort.getText()
+			String url = String.format("%s:%s", tabletAbtractInputFragment.getInputApplyInfo().getHost(), edtPort.getText()
 					.toString().trim());
 
-			tabletBaseInputFragment.getInformCtrl().SetURL(url);
-			new DownloadCertificateTask(getActivity(), tabletBaseInputFragment.getInformCtrl(), tabletBaseInputFragment
+			tabletAbtractInputFragment.getInformCtrl().SetURL(url);
+			new DownloadCertificateTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment
 					.getErroType(), new
 					DownloadCertificateTask.EndConnection() {
 						@Override
 						public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-							tabletBaseInputFragment.setInformCtrl(informCtrl);
-							tabletBaseInputFragment.setErroType(errorType);
+							tabletAbtractInputFragment.setInformCtrl(informCtrl);
+							tabletAbtractInputFragment.setErroType(errorType);
 							endConnection(result);
 						}
 					}).execute();
 	}
 
 	private void endConnection(boolean result) {
-		tabletBaseInputFragment.getProgressDialog().dismiss();
+		tabletAbtractInputFragment.getProgressDialog().dismiss();
 		if (result) {
 			//Download certificate
-			String strDownloadCert = tabletBaseInputFragment.controlPagesInput.downloadCert(tabletBaseInputFragment
+			String strDownloadCert = tabletAbtractInputFragment.controlPagesInput.downloadCert(tabletAbtractInputFragment
 					.getInformCtrl().GetRtn());
 			if (strDownloadCert.length() > 0) {
-				tabletBaseInputFragment.showMessage(strDownloadCert);
+				tabletAbtractInputFragment.showMessage(strDownloadCert);
 			}
 		} else {
 			//Show error message
-			int m_nErroType = tabletBaseInputFragment.getErroType();
-			String strRtn = tabletBaseInputFragment.getInformCtrl().GetRtn();
+			int m_nErroType = tabletAbtractInputFragment.getErroType();
+			String strRtn = tabletAbtractInputFragment.getInformCtrl().GetRtn();
 			if (m_nErroType == ERR_FORBIDDEN) {
 				String str_forbidden = getString(R.string.Forbidden);
-				tabletBaseInputFragment.showMessage(strRtn.substring(str_forbidden.length
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_forbidden.length
 						()));
 			} else if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = getString(R.string.Unauthorized);
-				tabletBaseInputFragment.showMessage(strRtn.substring(str_unauth.length()));
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_unauth.length()));
 			} else if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
-				tabletBaseInputFragment.showMessage(strRtn.substring(str_err.length()));
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_err.length()));
 			} else {
-				tabletBaseInputFragment.showMessage(getString(R.string.connect_failed));
+				tabletAbtractInputFragment.showMessage(getString(R.string.connect_failed));
 			}
 		}
 	}
@@ -224,33 +225,33 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	 */
 	public void finishInstallCertificate(int resultCode) {
 		if (resultCode == Activity.RESULT_OK) {
-			if (tabletBaseInputFragment.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-				tabletBaseInputFragment.getProgressDialog().show();
-				String host = tabletBaseInputFragment.getHostName();
-				String port = tabletBaseInputFragment.getPortName();
+			if (tabletAbtractInputFragment.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+				tabletAbtractInputFragment.getProgressDialog().show();
+				String host = tabletAbtractInputFragment.getHostName();
+				String port = tabletAbtractInputFragment.getPortName();
 				String url = String.format("%s:%s", host, port);
-				tabletBaseInputFragment.getInformCtrl().SetURL(url);
-				new ConnectApplyTask(getActivity(), tabletBaseInputFragment.getInformCtrl(), tabletBaseInputFragment
+				tabletAbtractInputFragment.getInformCtrl().SetURL(url);
+				new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment
 						.getErroType(), new ConnectApplyTask.EndConnection() {
 					@Override
 					public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-						tabletBaseInputFragment.getProgressDialog().dismiss();
-						tabletBaseInputFragment.setInformCtrl(informCtrl);
-						tabletBaseInputFragment.setErroType(errorType);
+						tabletAbtractInputFragment.getProgressDialog().dismiss();
+						tabletAbtractInputFragment.setInformCtrl(informCtrl);
+						tabletAbtractInputFragment.setErroType(errorType);
 						checkCertificateInstalled(result);
 					}
 				}).execute();
 			} else {
-				tabletBaseInputFragment.gotoPage(2);
+				tabletAbtractInputFragment.gotoPage(2);
 			}
 		}
 	}
 
 	private void checkCertificateInstalled(boolean result) {
 		if (result) {
-			if (tabletBaseInputFragment.getErroType() == SUCCESSFUL) {
-				tabletBaseInputFragment.hideInputPort(true);
-				tabletBaseInputFragment.gotoPage(2);
+			if (tabletAbtractInputFragment.getErroType() == SUCCESSFUL) {
+				tabletAbtractInputFragment.hideInputPort(true);
+				tabletAbtractInputFragment.gotoPage(2);
 			}
 		}
 	}

@@ -28,8 +28,7 @@
 						android:textColor="@color/text_color"
 						android:maxLines="1"
 						android:singleLine="true"
-						android:gravity="right"
-						android:textAllCaps="true"
+						android:gravity="right|center_vertical"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:layout_height="@dimen/height_item_input_host_tablet"/>
 				<TextView
@@ -42,8 +41,7 @@
 						android:textColor="@color/text_color"
 						android:maxLines="1"
 						android:singleLine="true"
-						android:gravity="right"
-						android:textAllCaps="true"
+						android:gravity="right|center_vertical"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:layout_height="@dimen/height_item_input_host_tablet"/>
 			</RelativeLayout>
@@ -61,6 +59,7 @@
 						android:paddingRight="@dimen/margin_item_menu"
 						android:maxLength="64"
 						android:imeOptions="actionNext"
+						android:gravity="center_vertical"
 						android:inputType="text|textVisiblePassword|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
 						android:textSize="@dimen/text_size_input_tablet"
@@ -75,6 +74,7 @@
 						android:singleLine="true"
 						android:paddingLeft="@dimen/text_size_content_item_apid"
 						android:paddingRight="@dimen/margin_right_user_input_tablet"
+						android:gravity="center_vertical"
 						android:inputType="textPassword"
 						android:background="@drawable/round_corner_white_edittext"
 						android:textColor="@color/text_color"

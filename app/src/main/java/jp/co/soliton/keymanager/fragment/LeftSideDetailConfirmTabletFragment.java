@@ -17,16 +17,20 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 public class LeftSideDetailConfirmTabletFragment extends Fragment {
 
-	TextView tvBack;
-	TextView tvDes;
+	private TextView tvTitle;
+	private TextView tvBack;
+	private TextView tvDes;
+	private View viewFragment;
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_left_side_list_confirm_tablet, container, false);
-		tvBack = (TextView) view.findViewById(R.id.tvBack);
-		tvDes = (TextView) view.findViewById(R.id.tv_description);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_left_side_list_confirm_tablet, container, false);
+		tvTitle = (TextView) viewFragment.findViewById(R.id.tvTitle);
+		tvTitle.setText(getString(R.string.approval_confirmation));
+		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		tvDes = (TextView) viewFragment.findViewById(R.id.tv_description);
+		return viewFragment;
 	}
 
 	public void setTextDes(String str) {
@@ -47,5 +51,11 @@ public class LeftSideDetailConfirmTabletFragment extends Fragment {
 				((MenuAcivity)getActivity()).onBackPressedFromDetailCetificate();
 			}
 		});
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

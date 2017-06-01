@@ -140,9 +140,9 @@
 	<string name="dialog_withdraw_title">Withdrawal of application</string>
 	<string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
 	<string name="guide_1">Let\'s start simple setup.</string>
-	<string name="guide_2">Select the item onthe right to start applying</string>
+	<string name="guide_2">Select the item onthe right to start applying.</string>
 	<string name="guide_31">Various information can be seen from the icon </string>
-	<string name="guide_32"> above</string>
+	<string name="guide_32"> above.</string>
 	<string name="hint_email_name" translatable="false">name@example.com</string>
 	<string name="hint_host_name" translatable="false">epsap.example.com</string>
 	<string name="input_email">Destination Email Address</string>
@@ -172,6 +172,7 @@
 	<string name="stt_rejected">Rejected</string>
 	<string name="stt_waiting_approval">Waiting Approval</string>
 	<string name="text_start_reapply">Re-applying is necessary\nto continue using</string>
+	<string name="text_start_reapply_tablet">Re-applying is necessary to continue using</string>
 	<string name="title_apply_date">Apply date :</string>
 	<string name="title_cancel">Withdrawal of application</string>
 	<string name="title_cn">CN :</string>
@@ -201,4 +202,7 @@
 		procedure</string>
 	<string name="des_leftside_detail_confirm_tablet_rejected">Your application has been rejected by the administrator</string>
 	<string name="des_leftside_detail_confirm_tablet_withdrawn">Your application has been withdrawn</string>
+	<string name="one_day_remaining">1 day remaining</string>
+	<string name="many_days_remaining">%s days remaining</string>
+	<string name="expiration_date">Expiration:\u0020</string>
 </resources>

@@ -17,6 +17,8 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
+
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
@@ -55,7 +57,7 @@ public class ContentListConfirmTabletFragment extends ListFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(position).getId());
-			((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
+			((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_LEFT);
 			}
 		});
 	}
@@ -67,6 +69,4 @@ public class ContentListConfirmTabletFragment extends ListFragment {
 		adapterListConfirmTabletApply.setListElementApply(listElementApply);
 		adapterListConfirmTabletApply.notifyDataSetChanged();
 	}
-
-
 }

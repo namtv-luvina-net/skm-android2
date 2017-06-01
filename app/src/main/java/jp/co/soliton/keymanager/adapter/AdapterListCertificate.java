@@ -105,31 +105,24 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             }
 
             if (differenceDates > 0 && differenceDates <= listElementApply.get(position).getNotiEnableBefore()) {
-                if (ValidateParams.isJPLanguage()) {
-                    viewHolder.txtStatus.setText("残り" + differenceDates + "日");
+	            String status;
+	            if (differenceDates == 1) {
+		            status = context.getResources().getString(R.string.one_day_remaining);
                 } else {
-                    if (differenceDates == 1) {
-                        viewHolder.txtStatus.setText(differenceDates + " day remaining");
-                    } else {
-                        viewHolder.txtStatus.setText(differenceDates + " days remaining");
-                    }
+		            status = String.format(context.getResources().getString(R.string.many_days_remaining), String.valueOf
+				            (differenceDates));
                 }
+                viewHolder.txtStatus.setText(status);
                 viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
             } else if (differenceDates > listElementApply.get(position).getNotiEnableBefore()){
-                if (ValidateParams.isJPLanguage()) {
-                    viewHolder.txtStatus.setText("有効期限：" + formatter.format(expirationDate).split(" ")[0]);
-                } else {
-                    viewHolder.txtStatus.setText("Expiration: " + formatter.format(expirationDate).split(" ")[0]);
-                }
-                viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_inactive));
+                viewHolder.txtStatus.setText(context.getResources().getString(R.string.expiration_date) + formatter
+		                .format(expirationDate).split(" ")[0]);
+
+	            viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_inactive));
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_inactive);
             } else {
-                if (ValidateParams.isJPLanguage()) {
-                    viewHolder.txtStatus.setText("有効期限切れ");
-                } else {
-                    viewHolder.txtStatus.setText("Expired");
-                }
+	            viewHolder.txtStatus.setText(context.getResources().getString(R.string.label_expired));
                 viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
                 viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
@@ -143,9 +136,9 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
 	                logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate id: " + id);
 	                logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + userId);
                     InputApplyInfo.deletePref(getContext());
-                    Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
-                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
-                    getContext().startActivity(intent);
+	                Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
+	                intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
+	                getContext().startActivity(intent);
                 }
             });
 

@@ -18,11 +18,12 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 public class ContentCompleteUsingProceduresFragment extends Fragment {
 
+	private View viewFragment;
     private TextView txtCN;
     private TextView txtSN;
     private TextView txtEpDate;
     private TextView backToTop;
-	ElementApply elementApply;
+	private ElementApply elementApply;
 
 	public static Fragment newInstance(ElementApply elementApply) {
 		ContentCompleteUsingProceduresFragment f = new ContentCompleteUsingProceduresFragment();
@@ -33,12 +34,12 @@ public class ContentCompleteUsingProceduresFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_complete_using_procedures_tablet, container, false);
-        txtCN = (TextView) view.findViewById(R.id.txtCN);
-        txtSN = (TextView) view.findViewById(R.id.txtSN);
-        txtEpDate = (TextView) view.findViewById(R.id.txtEpDate);
-		backToTop = (TextView) view.findViewById(R.id.backToTop);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_complete_using_procedures_tablet, container, false);
+        txtCN = (TextView) viewFragment.findViewById(R.id.txtCN);
+        txtSN = (TextView) viewFragment.findViewById(R.id.txtSN);
+        txtEpDate = (TextView) viewFragment.findViewById(R.id.txtEpDate);
+		backToTop = (TextView) viewFragment.findViewById(R.id.backToTop);
+		return viewFragment;
 	}
 
     @Override
@@ -54,4 +55,10 @@ public class ContentCompleteUsingProceduresFragment extends Fragment {
 		    }
 	    });
     }
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

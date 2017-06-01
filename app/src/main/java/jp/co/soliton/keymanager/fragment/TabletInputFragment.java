@@ -11,8 +11,9 @@ import android.view.inputmethod.InputMethodManager;
 
 public abstract class TabletInputFragment extends Fragment {
 
-	public static final String TAG_TABLET_BASE_INPUT_FRAGMENT = "tabletBaseInputFragment";
+	public static final String TAG_TABLET_BASE_INPUT_FRAGMENT = "tabletAbtractInputFragment";
 
+	protected View viewFragment;
 	/**
 	 * Check null or empty string value
 	 * @param value
@@ -25,19 +26,17 @@ public abstract class TabletInputFragment extends Fragment {
 		return value.trim().isEmpty();
 	}
 
-	/**
-	 * Hide keyboard in edit text controls
-	 * @param view
-	 * @param context
-	 */
-	protected void hideKeyboard(View view, Context context) {
-		InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-	}
+	public void onPageSelected(){}
 
 	/**
 	 * Next action when click next button in every page
 	 */
 	public abstract void nextAction();
 	protected void clickSkipButton(){}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

@@ -3,11 +3,8 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/rootViewContent"
                 android:background="@drawable/left_panel_background" >
-	<RelativeLayout
-			android:id="@+id/rootViewContent"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
 
 		<TextView
 				android:id="@+id/tvBack"
@@ -21,20 +18,20 @@
 				android:clickable="true"
 				android:text="@string/back"
 				android:visibility="gone"
-				android:textSize="@dimen/tv_content_left_side"
+				android:textSize="@dimen/tv_back_left_side"
 				android:textColor="@drawable/text_selector"/>
 
-		<RelativeLayout
+		<LinearLayout
 				android:id="@+id/rl_left_side_guide_input"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:orientation="vertical"
 				android:layout_marginLeft="@dimen/margin_left_side"
 				android:layout_marginRight="@dimen/margin_left_side"
-				android:layout_marginTop="@dimen/margin_top_content_left_side_input_tablet">
+				android:layout_marginTop="@dimen/margin_top_content_left_side_input_tablet"
+				android:layout_marginBottom="@dimen/margin_bottom_content_left_side_input_tablet">
 			<TextView
 					android:id="@+id/tv_host_name_and_port_number"
-					android:layout_above="@+id/tv_download_ca_certificate"
-					android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/input_host_name_and_port_number"
@@ -43,10 +40,12 @@
 					android:gravity="center_horizontal"
 					android:lineSpacingMultiplier="1.5"
 					/>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
 			<TextView
 					android:id="@+id/tv_download_ca_certificate"
-					android:layout_above="@+id/tv_select_store"
-					android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/download_ca_certificate"
@@ -55,10 +54,12 @@
 					android:gravity="center_horizontal"
 					android:lineSpacingMultiplier="1.5"
 					/>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
 			<TextView
 					android:id="@+id/tv_select_store"
-					android:layout_above="@+id/tv_input_id_and_password"
-					android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/input_select_store"
@@ -67,21 +68,27 @@
 					android:gravity="center_horizontal"
 					android:lineSpacingMultiplier="1.5"
 					/>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
 			<TextView
 					android:id="@+id/tv_input_id_and_password"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/input_user_id_password"
 					android:layout_centerInParent="true"
-					android:gravity="center"
+					android:gravity="center_horizontal"
 					android:textSize="@dimen/tv_content_left_side"
 					android:textColor="@color/color_desc_menu_70"
 					android:lineSpacingMultiplier="1.5"
 					/>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
 			<TextView
 					android:id="@+id/tv_input_email"
-					android:layout_below="@id/tv_input_id_and_password"
-					android:layout_marginTop="@dimen/margin_guide_input_left_side"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/input_email"
@@ -90,10 +97,12 @@
 					android:gravity="center_horizontal"
 					android:lineSpacingMultiplier="1.5"
 					/>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
 			<TextView
 					android:id="@+id/tv_input_reason"
-					android:layout_below="@id/tv_input_email"
-					android:layout_marginTop="@dimen/margin_guide_input_left_side"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/reason_for_apply"
@@ -102,10 +111,12 @@
 					android:gravity="center_horizontal"
 					android:lineSpacingMultiplier="1.5"
 					/>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
 			<TextView
 					android:id="@+id/tv_confirm_input"
-					android:layout_below="@id/tv_input_reason"
-					android:layout_marginTop="@dimen/margin_guide_input_left_side"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="@string/confirm_content"
@@ -114,6 +125,9 @@
 					android:gravity="center_horizontal"
 					android:lineSpacingMultiplier="1.5"
 					/>
-		</RelativeLayout>
-	</RelativeLayout>
+			<android.support.v4.widget.Space
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"/>
+		</LinearLayout>
 </RelativeLayout>

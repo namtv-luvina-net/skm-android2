@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-		android:orientation="vertical">
+	android:orientation="vertical">
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_item_confirm_apply_tablet"
@@ -24,7 +24,7 @@
 					android:layout_gravity="center"
 					android:paddingLeft="@dimen/pading_left_img_item_confirm_apply_tablet"
 					android:paddingRight="@dimen/pading_right_img_item_confirm_apply_tablet"
-					android:scaleType="fitCenter"
+					android:scaleType="centerCrop"
 					android:src="@drawable/ic_approval_confirmation"/>
 
 			<RelativeLayout
@@ -35,18 +35,18 @@
 					android:layout_weight="520"
 					>
 				<TextView
-						android:id="@+id/titleHost"
+						android:id="@+id/titleDateInfo"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="@string/title_host_name"
 						android:textColor="@color/text_color"
-						android:textSize="@dimen/text_size_content_item_apid"/>
+						android:textSize="@dimen/text_size_btn_content_tablet"/>
 				<TextView
-						android:id="@+id/tvHostValue"
+						android:id="@+id/titleUserId"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
-						android:layout_below="@id/titleHost"
-						android:textSize="@dimen/text_size_content_item_apid"
+						android:layout_below="@id/titleDateInfo"
+						android:textSize="@dimen/text_size_btn_content_tablet"
 						android:ellipsize="end"
 						android:singleLine="true"
 						android:textColor="@color/text_color"
@@ -56,14 +56,14 @@
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
 						android:layout_above="@id/tvIdValue"
-						android:textSize="@dimen/text_size_content_item_apid"
+						android:textSize="@dimen/text_size_btn_content_tablet"
 						android:textColor="@color/text_color"
 						android:text="@string/title_user_id" />
 				<TextView
 						android:id="@+id/tvIdValue"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
-						android:textSize="@dimen/text_size_content_item_apid"
+						android:textSize="@dimen/text_size_btn_content_tablet"
 						android:ellipsize="end"
 						android:singleLine="true"
 						android:layout_alignParentBottom="true"
@@ -77,7 +77,7 @@
 						android:layout_alignParentRight="true"
 						android:text="Date: 20/01/2017"
 						android:textColor="@color/text_color"
-						android:textSize="@dimen/text_size_content_item_apid"/>
+						android:textSize="@dimen/text_size_btn_content_tablet"/>
 				<TextView
 						android:id="@+id/tvStatus"
 						android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
 						android:layout_centerVertical="true"
 						android:text="@string/stt_waiting_approval"
 						android:textColor="@color/text_color_active"
-						android:textSize="@dimen/text_size_content_item_apid"/>
+						android:textSize="@dimen/text_size_btn_content_tablet"/>
 
 			</RelativeLayout>
 

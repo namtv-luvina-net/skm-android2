@@ -1,13 +1,11 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
@@ -15,6 +13,7 @@ import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -97,13 +96,6 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 	    swNotifBeforeFlag.setOnCheckedChangeListener(this);
     }
 
-	private void hideKeyboard(Activity activity) {
-		if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-			InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-		}
-	}
-
     public void btnBackClick(View v) {
         finish();
     }
@@ -170,7 +162,7 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 	        public void onClick(View v) {
 		        View currentFocus = getCurrentFocus();
 		        if (currentFocus instanceof EditText) {
-			        hideKeyboard(NotificationSettingActivity.this);
+			        SoftKeyboardCtrl.hideKeyboard(NotificationSettingActivity.this);
 			        currentFocus.clearFocus();
 		        }
 	        }
@@ -203,7 +195,7 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 			    if (hasFocus) {
 				    numDateNotifBefore = tvNotifBefore.getText().toString();
 			    } else {
-				    hideKeyboard(NotificationSettingActivity.this);
+				    SoftKeyboardCtrl.hideKeyboard(NotificationSettingActivity.this);
 				    if (!numDateNotifBefore.equalsIgnoreCase(tvNotifBefore.getText().toString())) {
 					    btnSaveNotifClick();
 				    }

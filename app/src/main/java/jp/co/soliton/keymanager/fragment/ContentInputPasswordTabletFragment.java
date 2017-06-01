@@ -9,17 +9,14 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
@@ -33,13 +30,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentInputPasswordTabletFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
+public class ContentInputPasswordTabletFragment extends Fragment implements SoftKeyboardCtrl.DetectsListenner{
 
-	Activity activity;
+	private View viewFragment;
+	private Activity activity;
 	private TextView titleInput;
 	private TextView txtUserId;
 	private EditText txtPassword;
@@ -50,10 +51,10 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	private InformCtrl m_InformCtrl;
 	private ElementApplyManager elementMgr;
 	private ElementApply element;
-	LogCtrl logCtrl;
+	private LogCtrl logCtrl;
 	private int status;
-	boolean isShowingKeyboard;
-	boolean isCancelApply;
+	private boolean isShowingKeyboard;
+	private boolean isCancelApply;
 
 	public static Fragment newInstance(boolean isCancelApply) {
 		ContentInputPasswordTabletFragment f = new ContentInputPasswordTabletFragment();
@@ -75,15 +76,37 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		viewFragment = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
+		titleInput = (TextView) viewFragment.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.input_password));
-		txtUserId = (TextView) view.findViewById(R.id.txtUserId);
-		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
-		btnNext = (Button) view.findViewById(R.id.btnNext);
-		btnBack = (Button) view.findViewById(R.id.btnBack);
-		DetectsSoftKeyboard.addListenner(view, this);
-		return view;
+		txtUserId = (TextView) viewFragment.findViewById(R.id.txtUserId);
+		txtPassword = (EditText) viewFragment.findViewById(R.id.txtPassword);
+		btnNext = (Button) viewFragment.findViewById(R.id.btnNext);
+		btnBack = (Button) viewFragment.findViewById(R.id.btnBack);
+		SoftKeyboardCtrl.addListenner(viewFragment, this);
+		viewFragment.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return dispatchTouchEvent(v, event);
+			}
+		});
+		return viewFragment;
+	}
+
+	public boolean dispatchTouchEvent(View view, MotionEvent ev) {
+		View v = activity.getCurrentFocus();
+		if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+				v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+			int scrcoords[] = new int[2];
+			v.getLocationOnScreen(scrcoords);
+			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+			float y = ev.getRawY() + v.getTop() - scrcoords[1];
+			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
+				SoftKeyboardCtrl.hideKeyboard(activity);
+				v.clearFocus();
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -163,7 +186,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+				((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 			}
 		});
 	}
@@ -277,25 +300,25 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 			// ログイン結果
-			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+			if (m_InformCtrl.GetRtn().startsWith(getString(R.string.Forbidden))) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
-				m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+				m_nErroType = ERR_FORBIDDEN;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+			} else if (m_InformCtrl.GetRtn().startsWith(getString(R.string.Unauthorized))) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
-				m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
+			} else if (m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR))) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
-				m_nErroType = InputBasePageFragment.ERR_COLON;
+				m_nErroType = ERR_COLON;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith("NG")) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask NG");
-				m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
+				m_nErroType = ERR_LOGIN_FAIL;
 				return false;
 			}
 			// 取得したCookieをログイン時のCookieとして保持する.
@@ -309,7 +332,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 			status = ElementApply.STATUS_APPLY_PENDING;
@@ -341,7 +364,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン終了 =========>
 			////////////////////////////////////////////////////////////////////////////
-			m_nErroType = InputBasePageFragment.SUCCESSFUL;
+			m_nErroType = SUCCESSFUL;
 			return ret;
 		}
 
@@ -368,25 +391,25 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			isCancelApply = false;
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("DropApplyTask Network error");
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 			// ログイン結果
 			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
 				logCtrlAsyncTask.loggerError("DropApplyTask Forbidden.");
-				m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+				m_nErroType = ERR_FORBIDDEN;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
 				logCtrlAsyncTask.loggerError("DropApplyTask Unauthorized.");
-				m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
 				logCtrlAsyncTask.loggerError("DropApplyTask ERR:");
-				m_nErroType = InputBasePageFragment.ERR_COLON;
+				m_nErroType = ERR_COLON;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith("NG")) {
 				logCtrlAsyncTask.loggerError("DropApplyTask NG");
-				m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
+				m_nErroType = ERR_LOGIN_FAIL;
 				return false;
 			}
 			// 取得したCookieをログイン時のCookieとして保持する.
@@ -394,7 +417,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			if (m_InformCtrl.GetRtn().startsWith("OK")) {
 				status = ElementApply.STATUS_APPLY_CANCEL;
 			}
-			m_nErroType = InputBasePageFragment.SUCCESSFUL;
+			m_nErroType = SUCCESSFUL;
 			return ret;
 		}
 
@@ -440,7 +463,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 					@Override
 					public void onClick(View v) {
 						dialog.dismiss();
-						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 					}
 				});
 				dialog.show();
@@ -452,16 +475,16 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 			}
 		} else {
 			//show error message
-			if (m_nErroType == InputBasePageFragment.ERR_FORBIDDEN) {
+			if (m_nErroType == ERR_FORBIDDEN) {
 				String str_forbidden = getString(R.string.Forbidden);
 				showMessage(m_InformCtrl.GetRtn().substring(str_forbidden.length()));
-			} else if (m_nErroType == InputBasePageFragment.ERR_UNAUTHORIZED) {
+			} else if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = getString(R.string.Unauthorized);
 				showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
-			} else if (m_nErroType == InputBasePageFragment.ERR_COLON) {
+			} else if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
 				showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
-			} else if (m_nErroType == InputBasePageFragment.ERR_LOGIN_FAIL) {
+			} else if (m_nErroType == ERR_LOGIN_FAIL) {
 				showMessage(getString(R.string.login_failed), new DialogMessageTablet.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
@@ -512,5 +535,11 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		} else {
 			isShowingKeyboard = true;
 		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

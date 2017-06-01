@@ -170,6 +170,7 @@
 	<string name="stt_rejected">却下</string>
 	<string name="stt_waiting_approval">承認待ち</string>
 	<string name="text_start_reapply">利用を継続するには\n再申請が必要です。</string>
+	<string name="text_start_reapply_tablet">利用を継続するには再申請が必要です。</string>
 	<string name="title_apply_date">申請日 :</string>
 	<string name="title_cancel">申請の取り下げ</string>
 	<string name="title_cn">CN :</string>
@@ -198,4 +199,7 @@
 	<string name="des_leftside_detail_confirm_tablet_cofirms_status">承認状況の確認を行い、\n手続きを完了させましょう</string>
 	<string name="des_leftside_detail_confirm_tablet_rejected">あなたの申請は管理者によって\n却下されました</string>
 	<string name="des_leftside_detail_confirm_tablet_withdrawn">あなたの申請は取り下げ済みです</string>
+	<string name="one_day_remaining">残り1日</string>
+	<string name="many_days_remaining">残り%s日</string>
+	<string name="expiration_date">有効期限：</string>
 </resources>

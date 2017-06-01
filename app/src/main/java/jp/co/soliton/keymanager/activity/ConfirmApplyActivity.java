@@ -33,23 +33,14 @@ import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+
 /**
  * Created by luongdolong on 2/7/2017.
  * Acivity for screen confirm apply
  */
 
 public class ConfirmApplyActivity extends Activity {
-
-    private final static int ERR_FORBIDDEN = 20;
-    private final static int ERR_UNAUTHORIZED = 21;
-    private final static int SUCCESSFUL = 22;
-    private final static int ERR_NETWORK = 23;
-    private final static int ERR_COLON = 24;
-    private final static int ERR_ESPAP_NOT_CONNECT = 25;
-    private final static int RET_ESP_AP_OK = 26;
-    private final static int ERR_LOGIN_FAIL = 27;
-    private final static int ERR_ESP_AP_STOP = 28;
-    private final static int ERR_SESSION_TIMEOUT = 29;
 
     private Button btnBackInput;
     private Button btnApply;

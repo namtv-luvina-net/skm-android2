@@ -1,7 +1,6 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,27 +10,25 @@ import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-
-import java.util.ArrayList;
-
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.adapter.ViewPagerReaaplyAdapter;
-import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.ReapplyBasePageFragment;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
+
+import java.util.ArrayList;
 
 /**
  * Created by luongdolong on 2/3/2017.
  * Activity for input screen apply
  */
 
-public class ViewPagerReapplyActivity extends FragmentActivity implements DetectsSoftKeyboard.DetectsListenner {
+public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKeyboardCtrl.DetectsListenner {
     public static int REQUEST_CODE_APPLY_COMPLETE = 4953;
 
     private InputApplyViewPager mViewPager;
@@ -109,19 +106,12 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements Detect
             float y = ev.getRawY() + v.getTop() - scrcoords[1];
 
             if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
-	            hideKeyboard(this);
+	            SoftKeyboardCtrl.hideKeyboard(this);
 	            v.clearFocus();
 	            ((ReapplyBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
             }
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    private void hideKeyboard(Activity activity) {
-        if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-        }
     }
 
     @Override
@@ -146,7 +136,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements Detect
         mViewPager.setPagingEnabled(false);
         mViewPager.setCurrentItem(0);
         initButtonCircle();
-	    DetectsSoftKeyboard.addListenner(findViewById(R.id.activityRoot), this);
+	    SoftKeyboardCtrl.addListenner(findViewById(R.id.activityRoot), this);
     }
 
     /**

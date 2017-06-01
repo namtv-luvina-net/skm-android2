@@ -1,14 +1,19 @@
 package jp.co.soliton.keymanager.common;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by nguyenducdat on 4/19/2017.
  */
 
-public class DetectsSoftKeyboard {
+public class SoftKeyboardCtrl {
 	public interface DetectsListenner  {
 		void onSoftKeyboardShown (boolean isShowing);
 	}
@@ -30,5 +35,22 @@ public class DetectsSoftKeyboard {
 				}
 			}
 		});
+	}
+
+	public static void hideKeyboard(Activity activity) {
+		if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
+			InputMethodManager imm = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+		}
+	}
+
+	/**
+	 * Hide keyboard in edit text controls
+	 * @param view
+	 * @param context
+	 */
+	public static void hideKeyboard(View view, Context context) {
+		InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 }

@@ -30,6 +30,8 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 import java.net.URLEncoder;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+
 /**
  * Created by luongdolong on 2/3/2017.
  *
@@ -421,6 +423,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
                         if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
                             pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
+                        } else {
+	                        pagerInputActivity.getInputApplyInfo().setEmail("");
                         }
                     }
                 }

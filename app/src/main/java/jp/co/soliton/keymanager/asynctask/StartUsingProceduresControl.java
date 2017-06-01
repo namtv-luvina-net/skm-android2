@@ -41,6 +41,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+
 /**
  * Created by nguyenducdat on 4/28/2017.
  */
@@ -70,7 +73,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private ComponentName m_DeviceAdmin;
 	private LogCtrl logCtrl;
 	private static StartUsingProceduresControl instance;
-	boolean isTablet;
+	private boolean isTablet;
 
 	public static StartUsingProceduresControl newInstance(Activity activity, InformCtrl m_InformCtrl, ElementApply element){
 		instance = new StartUsingProceduresControl(activity, m_InformCtrl, element);
@@ -132,25 +135,25 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			boolean ret = conn.RunHttpDeviceCertUrlConnection(m_InformCtrl);
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("GetDeviceCertTask Network error");
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 			// ログイン結果
 			if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Forbidden).toString())) {
 				logCtrlAsyncTask.loggerError("GetDeviceCertTask Forbidden.");
-				m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+				m_nErroType = ERR_FORBIDDEN;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Unauthorized).toString())) {
 				logCtrlAsyncTask.loggerError("GetDeviceCertTask Unauthorized.");
-				m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.ERR).toString())) {
 				logCtrlAsyncTask.loggerError("GetDeviceCertTask ERR:");
-				m_nErroType = InputBasePageFragment.ERR_COLON;
+				m_nErroType = ERR_COLON;
 				return false;
 			} else if (m_InformCtrl.GetRtn().startsWith("NG")) {
 				logCtrlAsyncTask.loggerError("GetDeviceCertTask NG:");
-				m_nErroType = InputBasePageFragment.ERR_LOGIN_FAIL;
+				m_nErroType = ERR_LOGIN_FAIL;
 				return false;
 			}
 			// 取得したCookieをログイン時のCookieとして保持する.
@@ -164,7 +167,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			ret = m_p_aided.TakeApartScepInfoResponse(m_InformCtrl);
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 
@@ -175,13 +178,13 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("CertLoginAcrivity::onClick TakeApartProfile false");
 				//	m_ErrorMessage.setText(R.string.EnrollErrorMessage);
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン終了 =========>
 			////////////////////////////////////////////////////////////////////////////
-			m_nErroType = InputBasePageFragment.SUCCESSFUL;
+			m_nErroType = SUCCESSFUL;
 			return ret;
 		}
 
@@ -212,16 +215,16 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 		} else {
 			//show error message
-			if (m_nErroType == InputBasePageFragment.ERR_FORBIDDEN) {
+			if (m_nErroType == ERR_FORBIDDEN) {
 				String str_forbidden = activity.getString(R.string.Forbidden);
 				showMessage(m_InformCtrl.GetRtn().substring(str_forbidden.length()));
-			} else if (m_nErroType == InputBasePageFragment.ERR_UNAUTHORIZED) {
+			} else if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = activity.getString(R.string.Unauthorized);
 				showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
-			} else if (m_nErroType == InputBasePageFragment.ERR_COLON) {
+			} else if (m_nErroType == ERR_COLON) {
 				String str_err = activity.getString(R.string.ERR);
 				showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
-			} else if (m_nErroType == InputBasePageFragment.ERR_LOGIN_FAIL) {
+			} else if (m_nErroType == ERR_LOGIN_FAIL) {
 				showMessage(activity.getString(R.string.login_failed));
 			} else {
 				showMessage(activity.getString(R.string.connect_failed));
@@ -253,7 +256,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				@Override
 				public void onOkDismissMessage() {
 					if (activity instanceof MenuAcivity) {
-						((MenuAcivity)activity).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+						((MenuAcivity)activity).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 					} else {
 						StringList.GO_TO_LIST_APPLY = "1";
 						Intent intent = new Intent(activity, MenuAcivity.class);
@@ -664,24 +667,24 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			//parse result return
 			if (ret == false) {
 				logCtrlAsyncTask.loggerError("DownloadCACertificateTask Network error");
-				m_nErroType = InputBasePageFragment.ERR_NETWORK;
+				m_nErroType = ERR_NETWORK;
 				return false;
 			}
 			// ログイン結果
 			if (m_InformCtrlCA.GetRtn().startsWith(activity.getText(R.string.Forbidden).toString())) {
 				logCtrlAsyncTask.loggerError("DownloadCACertificateTask Forbidden.");
-				m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
+				m_nErroType = ERR_FORBIDDEN;
 				return false;
 			} else if (m_InformCtrlCA.GetRtn().startsWith(activity.getText(R.string.Unauthorized).toString())) {
 				logCtrlAsyncTask.loggerError("DownloadCACertificateTask Unauthorized.");
-				m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
+				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
 			} else if (m_InformCtrlCA.GetRtn().startsWith(activity.getText(R.string.ERR).toString())) {
 				logCtrlAsyncTask.loggerError("DownloadCACertificateTask ERR:");
-				m_nErroType = InputBasePageFragment.ERR_COLON;
+				m_nErroType = ERR_COLON;
 				return false;
 			}
-			m_nErroType = InputBasePageFragment.SUCCESSFUL;
+			m_nErroType = SUCCESSFUL;
 
 			return ret;
 		}

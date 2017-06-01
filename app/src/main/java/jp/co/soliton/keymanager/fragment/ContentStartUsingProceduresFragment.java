@@ -14,6 +14,8 @@ import jp.co.soliton.keymanager.R;
 
 public class ContentStartUsingProceduresFragment extends Fragment {
 
+	private View viewFragment;
+
 	public static Fragment newInstance() {
 		ContentStartUsingProceduresFragment f = new ContentStartUsingProceduresFragment();
 		return f;
@@ -22,7 +24,13 @@ public class ContentStartUsingProceduresFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View  view = inflater.inflate(R.layout.fragment_content_start_using_procedures, container, false);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_content_start_using_procedures, container, false);
+		return viewFragment;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }
