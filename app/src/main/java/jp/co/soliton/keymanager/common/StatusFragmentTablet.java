@@ -16,6 +16,8 @@ public class StatusFragmentTablet {
 	public static final int APPLY_SUCCESS_STATUS = 8;
 	public static final int CONFIRM_APPLY_STATUS = 9;
 	public static final int WITHDRAW_APPLY_STATUS = 10;
-	public static final int REAPPLY_STATUS = 11;
-	public static final int NOTIF_UPDATE_STATUS = 12;
+	public static final int COMPLETE_CONFIRM_STATUS = 11;
+	public static final int START_USING_PROCEDURES_STATUS = 12;
+	public static final int REAPPLY_STATUS = 13;
+	public static final int NOTIF_UPDATE_STATUS = 14;
 }

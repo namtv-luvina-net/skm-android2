@@ -121,6 +121,13 @@ public class MenuAcivity extends FragmentActivity {
 				onBackPressedFromDetailCetificate();
 			}else if (currentStatus == CONFIRM_APPLY_STATUS || currentStatus == WITHDRAW_APPLY_STATUS) {
 				startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+			}else if (currentStatus == START_USING_PROCEDURES_STATUS) {
+				if (getListElementApply().size() == 1) {
+					StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
+					startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+				} else {
+					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
+				}
 			}else if (currentStatus == NOTIF_UPDATE_STATUS) {
 				super.onBackPressed();
 			} else {
@@ -338,7 +345,7 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	public void clickConfirmApply(String[] listData) {
-		currentStatus = WITHDRAW_APPLY_STATUS;
+		currentStatus = CONFIRM_APPLY_STATUS;
 		fragmentLeft = LeftSideInputPasswordTabletFragment.newInstance(listData);
 		changeFragmentLeftTablet();
 		fragmentContent= ContentInputPasswordTabletFragment.newInstance(false);
@@ -381,6 +388,7 @@ public class MenuAcivity extends FragmentActivity {
 
 	public void gotoCompleteConfirmApplyFragment(int status, ElementApply element, InformCtrl m_InformCtrl) {
 		hideFragmentLeft();
+		currentStatus  = COMPLETE_CONFIRM_STATUS;
 		fragmentContent= ContentCompleteConfirmApplyFragment.newInstance(status, element, m_InformCtrl);
 		if (status == ElementApply.STATUS_APPLY_PENDING || status == ElementApply.STATUS_APPLY_REJECT  || status
 				== ElementApply.STATUS_APPLY_CANCEL ) {
@@ -393,6 +401,7 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	public void startUsingProceduresFragment(InformCtrl m_InformCtrl, ElementApply element) {
+		currentStatus = START_USING_PROCEDURES_STATUS;
 		StringList.ID_DETAIL_CURRENT = String.valueOf(element.getId());
 		hideFragmentLeft();
 		fragmentContent = ContentStartUsingProceduresFragment.newInstance();
