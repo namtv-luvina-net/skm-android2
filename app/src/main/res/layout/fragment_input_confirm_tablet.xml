@@ -28,8 +28,8 @@
 					>
 				<TextView
 						android:layout_width="0dp"
-						android:layout_weight="2"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:layout_weight="4"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="@string/title_store"
 						android:textColor="@color/text_color"
 						android:gravity="right|center_vertical"
@@ -38,9 +38,9 @@
 				<TextView
 						android:id="@+id/txtStore"
 						android:layout_width="0dp"
-						android:layout_weight="3"
+						android:layout_weight="5"
 						android:paddingLeft="@dimen/margin_item_menu"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="VPN hay Wi-Fi"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"
@@ -56,8 +56,8 @@
 					>
 				<TextView
 						android:layout_width="0dp"
-						android:layout_weight="2"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:layout_weight="4"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="@string/title_user_id"
 						android:textColor="@color/text_color"
 						android:gravity="right|center_vertical"
@@ -65,9 +65,9 @@
 				<TextView
 						android:id="@+id/txtUserId"
 						android:layout_width="0dp"
-						android:layout_weight="3"
+						android:layout_weight="5"
 						android:paddingLeft="@dimen/margin_item_menu"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="anhvt"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"
@@ -88,8 +88,8 @@
 						>
 					<TextView
 							android:layout_width="0dp"
-							android:layout_weight="2"
-							android:textSize="@dimen/text_size_input_tablet"
+							android:layout_weight="4"
+							android:textSize="@dimen/tv_button_input_tablet"
 							android:text="@string/title_host_name"
 							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
@@ -97,9 +97,9 @@
 					<TextView
 							android:id="@+id/txtHostName"
 							android:layout_width="0dp"
-							android:layout_weight="3"
+							android:layout_weight="5"
 							android:paddingLeft="@dimen/margin_item_menu"
-							android:textSize="@dimen/text_size_input_tablet"
+							android:textSize="@dimen/tv_button_input_tablet"
 							android:text="10.0.1.68"
 							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
@@ -113,8 +113,8 @@
 						android:orientation="horizontal" >
 					<TextView
 							android:layout_width="0dp"
-							android:layout_weight="2"
-							android:textSize="@dimen/text_size_input_tablet"
+							android:layout_weight="4"
+							android:textSize="@dimen/tv_button_input_tablet"
 							android:text="@string/title_port_number"
 							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
@@ -122,9 +122,9 @@
 					<TextView
 							android:id="@+id/txtPortName"
 							android:layout_width="0dp"
-							android:layout_weight="3"
+							android:layout_weight="5"
 							android:paddingLeft="@dimen/margin_item_menu"
-							android:textSize="@dimen/text_size_input_tablet"
+							android:textSize="@dimen/tv_button_input_tablet"
 							android:text="433"
 							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
@@ -154,8 +154,8 @@
 					>
 				<TextView
 						android:layout_width="0dp"
-						android:layout_weight="2"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:layout_weight="4"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="@string/title_destination_email_address"
 						android:textColor="@color/text_color"
 						android:gravity="right|center_vertical"
@@ -163,9 +163,9 @@
 				<TextView
 						android:id="@+id/txtEmail"
 						android:layout_width="0dp"
-						android:layout_weight="3"
+						android:layout_weight="5"
 						android:paddingLeft="@dimen/margin_item_menu"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"
 						android:layout_height="match_parent"/>
@@ -180,8 +180,8 @@
 					>
 				<TextView
 						android:layout_width="0dp"
-						android:layout_weight="2"
-						android:textSize="@dimen/text_size_input_tablet"
+						android:layout_weight="4"
+						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="@string/title_reason_for_apply"
 						android:textColor="@color/text_color"
 						android:gravity="right|top"
@@ -189,14 +189,14 @@
 
 				<ScrollView
 						android:layout_width="0dp"
-						android:layout_weight="3"
+						android:layout_weight="5"
 						android:scrollbars="vertical"
 						android:layout_height="match_parent">
 					<TextView
 							android:id="@+id/txtReason"
 							android:layout_width="match_parent"
 							android:paddingLeft="@dimen/margin_item_menu"
-							android:textSize="@dimen/text_size_input_tablet"
+							android:textSize="@dimen/tv_button_input_tablet"
 							android:textColor="@color/text_color"
 							android:gravity="left|top"
 							android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"

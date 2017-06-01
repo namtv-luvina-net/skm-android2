@@ -70,7 +70,7 @@
 	<dimen name="text_size_title_item_apid">11.00dp</dimen>
 	<dimen name="title_item_menu">23.00dp</dimen>
 	<dimen name="tv_back_left_side">18.00dp</dimen>
-	<dimen name="tv_content_left_side">20.00dp</dimen>
+	<dimen name="tv_content_left_side">18.00dp</dimen>
 	<dimen name="width_dialog_tablet">350.00dp</dimen>
 	<dimen name="width_img_arrow_item_confirm_apply_tablet">10.00dp</dimen>
 	<dimen name="width_img_complete_confirm_apply_tablet">130.00dp</dimen>

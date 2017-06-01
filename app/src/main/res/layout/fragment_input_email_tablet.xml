@@ -26,7 +26,6 @@
 						android:layout_centerVertical="true"
 						android:singleLine="true"
 						android:gravity="right|center_vertical"
-						android:textAllCaps="true"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:layout_height="wrap_content"/>
 				<EditText

@@ -4,7 +4,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
@@ -25,8 +28,13 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 	public final static int START_FROM_MENU = 1;
 	public final static int START_FROM_LIST_CERTIFICATE = 2;
 	private int startFrom;
-
 	private int currentStatus;
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("currentStatus", currentStatus);
+	}
 
 	public static Fragment newInstanceStartApply(int startFrom) {
 		TabletBaseInputFragment f = new TabletBaseInputFragment();
@@ -46,6 +54,16 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.adapter = new ViewPagerTabletAdapter(activity, getChildFragmentManager(), this);
+	}
+
+	@Nullable
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			currentStatus = savedInstanceState.getInt("currentStatus");
+		}
+		return super.onCreateView(inflater, container, savedInstanceState);
+
 	}
 
 	@Override
