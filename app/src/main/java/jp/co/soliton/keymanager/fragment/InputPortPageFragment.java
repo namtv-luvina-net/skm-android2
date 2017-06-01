@@ -25,6 +25,8 @@ import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+
 /**
  * Created by luongdolong on 2/3/2017.
  *

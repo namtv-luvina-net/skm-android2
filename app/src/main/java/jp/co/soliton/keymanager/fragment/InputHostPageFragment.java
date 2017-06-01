@@ -17,6 +17,8 @@ import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+
 /**
  * Created by luongdolong on 2/3/2017.
  * Page input host and secure port

@@ -24,7 +24,7 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 
 import java.util.List;
 
-import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.

@@ -30,6 +30,8 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 import java.net.URLEncoder;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+
 /**
  * Created by luongdolong on 2/3/2017.
  *

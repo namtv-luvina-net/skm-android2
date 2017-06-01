@@ -23,8 +23,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
-import static jp.co.soliton.keymanager.common.ControlPagesInput.*;
-import static jp.co.soliton.keymanager.fragment.TabletAbtractInputFragment.SUCCESSFUL;
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.

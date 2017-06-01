@@ -24,19 +24,8 @@ import java.util.List;
 public class ControlPagesInput {
 	public static int REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT = 4955;
 
-	public final static int ERR_FORBIDDEN = 20;
-	public final static int ERR_UNAUTHORIZED = 21;
-	public final static int SUCCESSFUL = 22;
-	public final static int ERR_NETWORK = 23;
-	public final static int ERR_COLON = 24;
-	public final static int ERR_ESPAP_NOT_CONNECT = 25;
-	public final static int RET_ESP_AP_OK = 26;
-	public final static int ERR_LOGIN_FAIL = 27;
-	public final static int ERR_ESP_AP_STOP = 28;
-	public final static int ERR_SESSION_TIMEOUT = 29;
-
-	Activity activity;
-	LogCtrl logCtrl;
+	private Activity activity;
+	private LogCtrl logCtrl;
 
 	public ControlPagesInput(Activity activity) {
 		this.activity = activity;

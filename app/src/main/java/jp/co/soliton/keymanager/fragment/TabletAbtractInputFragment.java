@@ -34,14 +34,6 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public abstract class TabletAbtractInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
 
-	public final static int ERR_FORBIDDEN = 20;
-	public final static int ERR_UNAUTHORIZED = 21;
-	public final static int SUCCESSFUL = 22;
-	public final static int ERR_NETWORK = 23;
-	public final static int ERR_COLON = 24;
-	public final static int NOT_INSTALL_CA = 25;
-	public final static int ERR_LOGIN_FAIL = 27;
-
 	public final static String TARGET_VPN = "0";
 	public final static String TARGET_WiFi = "1";
 

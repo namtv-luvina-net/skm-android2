@@ -16,7 +16,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 
-import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.*;
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.

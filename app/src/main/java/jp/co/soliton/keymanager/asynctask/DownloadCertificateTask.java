@@ -7,7 +7,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 
-import static jp.co.soliton.keymanager.fragment.InputBasePageFragment.*;
+import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
 /**
  * Created by nguyenducdat on 4/28/2017.
@@ -19,10 +19,10 @@ public class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
 		void endConnect(Boolean result, InformCtrl m_InformCtrl, int m_nErroType);
 	}
 
-	Activity activity;
-	InformCtrl m_InformCtrl;
-	int m_nErroType;
-	EndConnection endConnection;
+	private Activity activity;
+	private InformCtrl m_InformCtrl;
+	private int m_nErroType;
+	private EndConnection endConnection;
 	public DownloadCertificateTask(Activity activity, InformCtrl m_InformCtrl, int m_nErroType, EndConnection endConnection) {
 		this.activity = activity;
 		this.m_InformCtrl = m_InformCtrl;
