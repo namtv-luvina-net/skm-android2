@@ -16,6 +16,8 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.util.List;
 
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
@@ -24,9 +26,10 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 
 	private Button btnStartUsing;
 	private View layoutComplete;
-	int status;
-	ElementApply element;
-	InformCtrl m_InformCtrl;
+	private int status;
+	private ElementApply element;
+	private InformCtrl m_InformCtrl;
+	private View viewFragment;
 
 	public static Fragment newInstance(int status, ElementApply element, InformCtrl m_InformCtrl) {
 		ContentCompleteConfirmApplyFragment f = new ContentCompleteConfirmApplyFragment();
@@ -39,10 +42,10 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View  view = inflater.inflate(R.layout.fragment_complete_confirm_apply_tablet, container, false);
-		layoutComplete = view.findViewById(R.id.layoutComplete);
-		btnStartUsing = (Button) view.findViewById(R.id.btnStartUsing);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_complete_confirm_apply_tablet, container, false);
+		layoutComplete = viewFragment.findViewById(R.id.layoutComplete);
+		btnStartUsing = (Button) viewFragment.findViewById(R.id.btnStartUsing);
+		return viewFragment;
 	}
 
 	@Override
@@ -59,9 +62,9 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 					final List<ElementApply> listElementApply = ((MenuAcivity)getActivity()).getListElementApply();
 					if (listElementApply.size() == 1) {
 						StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
-						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 					} else {
-						((MenuAcivity)getActivity()).startListConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+						((MenuAcivity)getActivity()).startListConfirmApplyFragment(SCROLL_TO_RIGHT);
 					}
 				}
 			});
@@ -71,7 +74,7 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 					DialogMessageTablet.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
-					((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 				}
 			});
 		} else if (status == ElementApply.STATUS_APPLY_CANCEL) {
@@ -80,7 +83,7 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 					DialogMessageTablet.OnOkDismissMessageListener() {
 						@Override
 						public void onOkDismissMessage() {
-							((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+							((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 						}
 					});
 		} else {
@@ -105,5 +108,11 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 				((MenuAcivity)getActivity()).startUsingProceduresFragment(m_InformCtrl, element);
 			}
 		});
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

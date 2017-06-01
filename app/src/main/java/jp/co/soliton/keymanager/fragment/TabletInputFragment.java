@@ -13,6 +13,7 @@ public abstract class TabletInputFragment extends Fragment {
 
 	public static final String TAG_TABLET_BASE_INPUT_FRAGMENT = "tabletAbtractInputFragment";
 
+	protected View viewFragment;
 	/**
 	 * Check null or empty string value
 	 * @param value
@@ -35,9 +36,17 @@ public abstract class TabletInputFragment extends Fragment {
 		inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 
+	public void onPageSelected(){}
+
 	/**
 	 * Next action when click next button in every page
 	 */
 	public abstract void nextAction();
 	protected void clickSkipButton(){}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

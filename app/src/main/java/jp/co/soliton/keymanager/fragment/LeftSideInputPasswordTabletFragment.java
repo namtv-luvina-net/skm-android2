@@ -15,12 +15,12 @@ import jp.co.soliton.keymanager.R;
 
 public class LeftSideInputPasswordTabletFragment extends Fragment {
 
-	TextView tvValueHost;
-	TextView tvValueUserId;
-	TextView tvValueApplyDate;
-	TextView tvValueStatus;
-
-	String[] listData;
+	private TextView tvValueHost;
+	private TextView tvValueUserId;
+	private TextView tvValueApplyDate;
+	private TextView tvValueStatus;
+	private String[] listData;
+	private View viewFragment;
 
 	public static Fragment newInstance(String[] listData) {
 		LeftSideInputPasswordTabletFragment f = new LeftSideInputPasswordTabletFragment();
@@ -32,13 +32,13 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_left_side_input_password_tablet, container, false);
-		tvValueHost = (TextView) view.findViewById(R.id.tv_value_host);
-		tvValueUserId = (TextView) view.findViewById(R.id.tv_value_user_id);
-		tvValueApplyDate = (TextView) view.findViewById(R.id.tv_value_apply_date);
-		tvValueStatus = (TextView) view.findViewById(R.id.tv_value_status);
+		viewFragment = inflater.inflate(R.layout.fragment_left_side_input_password_tablet, container, false);
+		tvValueHost = (TextView) viewFragment.findViewById(R.id.tv_value_host);
+		tvValueUserId = (TextView) viewFragment.findViewById(R.id.tv_value_user_id);
+		tvValueApplyDate = (TextView) viewFragment.findViewById(R.id.tv_value_apply_date);
+		tvValueStatus = (TextView) viewFragment.findViewById(R.id.tv_value_status);
 		updateLeftsideInputPasswordTablet();
-		return view;
+		return viewFragment;
 	}
 
 	private void updateLeftsideInputPasswordTablet() {
@@ -67,4 +67,9 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

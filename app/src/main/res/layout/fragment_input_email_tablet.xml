@@ -25,7 +25,7 @@
 						android:maxLines="1"
 						android:layout_centerVertical="true"
 						android:singleLine="true"
-						android:gravity="right"
+						android:gravity="right|center_vertical"
 						android:textAllCaps="true"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:layout_height="wrap_content"/>
@@ -37,6 +37,7 @@
 						android:paddingLeft="@dimen/margin_item_menu"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:maxLength="256"
+						android:gravity="left|center_vertical"
 						android:inputType="text|textVisiblePassword|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
 						android:hint="@string/hint_email_name"

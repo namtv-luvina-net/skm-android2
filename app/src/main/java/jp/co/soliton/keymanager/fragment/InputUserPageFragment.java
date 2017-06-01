@@ -421,6 +421,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
                         if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
                             pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
+                        } else {
+	                        pagerInputActivity.getInputApplyInfo().setEmail("");
                         }
                     }
                 }

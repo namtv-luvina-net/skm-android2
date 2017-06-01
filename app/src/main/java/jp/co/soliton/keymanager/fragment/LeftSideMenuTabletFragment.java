@@ -29,9 +29,10 @@ import jp.co.soliton.keymanager.activity.SettingActivity;
 
 public class LeftSideMenuTabletFragment extends Fragment {
 
-	Button btnSetting;
-	TextView textViewGuide3;
-	Activity activity;
+	private Button btnSetting;
+	private TextView textViewGuide3;
+	private Activity activity;
+	private View viewFragment;
 
 	@Override
 	public void onAttach(Context context) {
@@ -42,10 +43,10 @@ public class LeftSideMenuTabletFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_left_side_menu_tablet, container, false);
-		textViewGuide3 = (TextView) view.findViewById(R.id.tv_guide_3);
-		btnSetting = (Button) view.findViewById(R.id.btnSetting);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_left_side_menu_tablet, container, false);
+		textViewGuide3 = (TextView) viewFragment.findViewById(R.id.tv_guide_3);
+		btnSetting = (Button) viewFragment.findViewById(R.id.btnSetting);
+		return viewFragment;
 	}
 
 	@Override
@@ -92,5 +93,11 @@ public class LeftSideMenuTabletFragment extends Fragment {
 		Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
 				height, filter);
 		return newBitmap;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

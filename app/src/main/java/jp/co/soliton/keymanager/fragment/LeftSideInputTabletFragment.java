@@ -18,11 +18,11 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 public class LeftSideInputTabletFragment extends Fragment {
 
-	RelativeLayout rootViewContent;
-	TextView[] listTextTitle;
-	TextView tvBack;
-	int currentPositionHighlight = 0;
-	int startFrom = 0;
+	private View viewFragment;
+	private TextView[] listTextTitle;
+	private TextView tvBack;
+	private int currentPositionHighlight = 0;
+	private int startFrom = 0;
 
 	public static Fragment newInstance(int startFrom) {
 		LeftSideInputTabletFragment f = new LeftSideInputTabletFragment();
@@ -33,18 +33,17 @@ public class LeftSideInputTabletFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_left_side_input_tablet, container, false);
-		tvBack = (TextView) view.findViewById(R.id.tvBack);
-		rootViewContent = (RelativeLayout) view.findViewById(R.id.rootViewContent);
+		viewFragment = inflater.inflate(R.layout.fragment_left_side_input_tablet, container, false);
+		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
 		listTextTitle = new TextView[7];
-		listTextTitle[0] = (TextView) view.findViewById(R.id.tv_host_name_and_port_number);
-		listTextTitle[1] = (TextView) view.findViewById(R.id.tv_download_ca_certificate);
-		listTextTitle[2] = (TextView) view.findViewById(R.id.tv_select_store);
-		listTextTitle[3] = (TextView) view.findViewById(R.id.tv_input_id_and_password);
-		listTextTitle[4] = (TextView) view.findViewById(R.id.tv_input_email);
-		listTextTitle[5] = (TextView) view.findViewById(R.id.tv_input_reason);
-		listTextTitle[6] = (TextView) view.findViewById(R.id.tv_confirm_input);
-		return view;
+		listTextTitle[0] = (TextView) viewFragment.findViewById(R.id.tv_host_name_and_port_number);
+		listTextTitle[1] = (TextView) viewFragment.findViewById(R.id.tv_download_ca_certificate);
+		listTextTitle[2] = (TextView) viewFragment.findViewById(R.id.tv_select_store);
+		listTextTitle[3] = (TextView) viewFragment.findViewById(R.id.tv_input_id_and_password);
+		listTextTitle[4] = (TextView) viewFragment.findViewById(R.id.tv_input_email);
+		listTextTitle[5] = (TextView) viewFragment.findViewById(R.id.tv_input_reason);
+		listTextTitle[6] = (TextView) viewFragment.findViewById(R.id.tv_confirm_input);
+		return viewFragment;
 	}
 
 	public void highlightItem(int possition, int startFrom) {
@@ -73,13 +72,6 @@ public class LeftSideInputTabletFragment extends Fragment {
 		}
 	}
 
-	public void hideContent() {
-		rootViewContent.setVisibility(View.GONE);
-	}
-	public void showContent() {
-		rootViewContent.setVisibility(View.VISIBLE);
-	}
-
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -91,5 +83,11 @@ public class LeftSideInputTabletFragment extends Fragment {
 			}
 		});
 		highlightItem(currentPositionHighlight, startFrom);
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

@@ -34,7 +34,6 @@
 		<TextView
 				android:id="@+id/tvListCertificate"
 				android:layout_above="@+id/tv_select_store"
-				android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/title_list_certificate"
@@ -50,7 +49,6 @@
 		<TextView
 				android:id="@+id/tvInputPassword"
 				android:layout_above="@+id/tv_input_id_and_password"
-				android:layout_marginBottom="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/certlogin_password_title"
@@ -81,7 +79,6 @@
 		<TextView
 				android:id="@+id/tvInputReason"
 				android:layout_below="@id/tv_input_id_and_password"
-				android:layout_marginTop="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/reason_for_apply"
@@ -97,7 +94,6 @@
 		<TextView
 				android:id="@+id/tvConfirmApply"
 				android:layout_below="@id/tv_input_email"
-				android:layout_marginTop="@dimen/margin_guide_input_left_side"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/confirm_content"

@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT;
+import static jp.co.soliton.keymanager.common.StatusFragmentTablet.*;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.NOT_SCROLL;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -30,32 +34,15 @@ import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INS
  */
 
 public class MenuAcivity extends FragmentActivity {
-	public static final int SCROLL_TO_RIGHT = 0;
-	public static final int SCROLL_TO_LEFT = 1;
-	public static final int NOT_SCROLL = 2;
-
-	public static final int RESET_STATUS = 0;
-	public static final int APID_STATUS = 1;
-	public static final int LIST_APPLY_UPDATE_STATUS = 2;
-	public static final int START_UPDATE_STATUS = 3;
-	public static final int START_APPLY_STATUS = 4;
-	public static final int COMPLETE_STATUS = 5;
-	public static final int LIST_CONFIRM_APPLY_STATUS = 6;
-	public static final int DETAIL_CONFIRM_APPLY_STATUS = 7;
-	public static final int APPLY_SUCCESS_STATUS = 8;
-	public static final int CONFIRM_APPLY_STATUS = 9;
-	public static final int WITHDRAW_APPLY_STATUS = 10;
-	public static final int REAPPLY_STATUS = 11;
-	public static final int NOTIF_UPDATE_STATUS = 12;
 
     private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 	private boolean isTablet;
 	private boolean isFocusMenuTablet;
-	ElementApplyManager elementMgr;
+	private ElementApplyManager elementMgr;
 
 	public int currentStatus;
-	FragmentManager fragmentManager;
-	Fragment fragmentLeft, fragmentContent;
+	private FragmentManager fragmentManager;
+	private Fragment fragmentLeft, fragmentContent;
 	private List<ElementApply> listElementApply = new ArrayList<>();
 	private List<ElementApply> listCertificate = new ArrayList<>();
 
@@ -72,12 +59,14 @@ public class MenuAcivity extends FragmentActivity {
 	    if (!ValidateParams.nullOrEmpty(id_update)) {
 			startNotifUpdateFragment(id_update, NOT_SCROLL);
 	    }else {
-		    if (savedInstanceState == null) {
-			    createView();
-		    } else if (isTablet) {
-			    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
-			    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
-			    currentStatus = savedInstanceState.getInt("currentStatus");
+		    if (isTablet) {
+			    if (savedInstanceState == null) {
+				    gotoMenuTablet();
+			    } else {
+				    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
+				    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
+				    currentStatus = savedInstanceState.getInt("currentStatus");
+			    }
 		    }
 	    }
 	    checkGoToConfirmIfNeed();
@@ -105,13 +94,6 @@ public class MenuAcivity extends FragmentActivity {
 			savedInstanceState.putInt("currentStatus", currentStatus);
 			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentContent", fragmentContent);
 			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentLeft", fragmentLeft);
-		}
-	}
-
-	private void createView() {
-		if (isTablet) {
-			isFocusMenuTablet = true;
-			gotoMenuTablet();
 		}
 	}
 
@@ -269,6 +251,7 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply, false);
 		startUpdateFragment();
 	}
+
 	public void startUpdateFragmentFromNotification(String idConfirmApply){
 		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply, true);
 		startUpdateFragment();

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
@@ -12,6 +11,8 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
 
 public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 
@@ -59,9 +60,10 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 
 	@Override
 	protected void updateButtonFooterStatus(int position) {
-//		gotoCompleteApply
 		if (position != 1 && position != 2) {
 			btnSkip.setVisibility(View.GONE);
+		} else {
+			((TabletInputFragment)adapter.getItem(position)).onPageSelected();
 		}
 	}
 
@@ -80,12 +82,12 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 		if (current < 0) {
 			InputApplyInfo.deletePref(getActivity());
 			if (isUpdateFromNotification) {
-				((MenuAcivity) getActivity()).startNotifUpdateFragment(idConfirmApply, MenuAcivity.SCROLL_TO_RIGHT);
+				((MenuAcivity) getActivity()).startNotifUpdateFragment(idConfirmApply, SCROLL_TO_RIGHT);
 			} else {
-				((MenuAcivity) getActivity()).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_RIGHT);
+				((MenuAcivity) getActivity()).startListApplyUpdateFragment(SCROLL_TO_RIGHT);
 			}
 		} else {
-			viewPager.setCurrentItem(current, true);
+			viewPager.setCurrentItem(current);
 		}
 		setStatusBackNext(current);
 	}
@@ -99,7 +101,7 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 				int nextPageIndex = viewPager.getCurrentItem() + 1;
 				goneSkip();
 				if (nextPageIndex >= 0 && nextPageIndex < adapter.getCount()) {
-					viewPager.setCurrentItem(nextPageIndex, true);
+					viewPager.setCurrentItem(nextPageIndex);
 					setStatusBackNext(nextPageIndex);
 				}
 			}

@@ -42,11 +42,11 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 			tabletAbtractInputFragment = (TabletAbtractInputFragment) getActivity().getSupportFragmentManager().getFragment(savedInstanceState,
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
-		View view = inflater.inflate(R.layout.fragment_input_email_tablet, container, false);
-		txtEmail = (EditText) view.findViewById(R.id.txtEmail);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		viewFragment = inflater.inflate(R.layout.fragment_input_email_tablet, container, false);
+		txtEmail = (EditText) viewFragment.findViewById(R.id.txtEmail);
+		titleInput = (TextView) viewFragment.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.set_notification_destination_email_address));
-		return view;
+		return viewFragment;
 	}
 
 	@Override
@@ -100,19 +100,8 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 	}
 
 	@Override
-	public void setMenuVisibility(final boolean visible) {
-		super.setMenuVisibility(visible);
-		if (visible) {
-			initValueControl();
-		}
-	}
-
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-			initValueControl();
-		}
+	public void onPageSelected() {
+		initValueControl();
 	}
 
 	/**
@@ -124,6 +113,8 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 		}
 		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getEmail())) {
 			txtEmail.setText(tabletAbtractInputFragment.getInputApplyInfo().getEmail());
+		}else {
+			txtEmail.setText("");
 		}
 		setStatusControl();
 		updateStatusSkipButton();

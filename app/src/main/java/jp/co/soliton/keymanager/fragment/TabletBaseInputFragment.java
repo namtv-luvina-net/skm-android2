@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
@@ -13,6 +12,8 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
 
 /**
  * Created by nguyenducdat on 5/4/2017.
@@ -83,7 +84,7 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 					nextPageIndex++;
 				}
 				if (nextPageIndex >= 0 && nextPageIndex < adapter.getCount()) {
-					viewPager.setCurrentItem(nextPageIndex, true);
+					viewPager.setCurrentItem(nextPageIndex);
 					setStatusBackNext(nextPageIndex);
 				}
 			}
@@ -105,6 +106,8 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 		btnNext.setVisibility(position == 2 ? View.INVISIBLE : View.VISIBLE);
 		if (position != 4 && position != 5) {
 			btnSkip.setVisibility(View.GONE);
+		} else {
+			((TabletInputFragment)adapter.getItem(position)).onPageSelected();
 		}
 	}
 
@@ -135,13 +138,13 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 				if (((MenuAcivity)getActivity()).getListCertificate().isEmpty()) {
 					((MenuAcivity) getActivity()).gotoMenuTablet();
 				} else {
-					((MenuAcivity) getActivity()).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_RIGHT);
+					((MenuAcivity) getActivity()).startListApplyUpdateFragment(SCROLL_TO_RIGHT);
 				}
 			} else if (currentStatus == STATUS_RE_APPLY) {
-				((MenuAcivity) getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+				((MenuAcivity) getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 			}
 		} else {
-			viewPager.setCurrentItem(current, true);
+			viewPager.setCurrentItem(current);
 		}
 		setStatusBackNext(current);
 	}

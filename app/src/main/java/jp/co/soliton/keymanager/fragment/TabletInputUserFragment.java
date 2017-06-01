@@ -72,7 +72,11 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		titleInput.setText(getString(R.string.input_user_id_and_password));
+		if (ValidateParams.nullOrEmpty(update_apply)) {
+			titleInput.setText(getString(R.string.input_user_id_and_password));
+		}else {
+			titleInput.setText(getString(R.string.input_password));
+		}
 		return view;
 	}
 
@@ -405,6 +409,8 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
 						if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
 							tabletAbtractInputFragment.getInputApplyInfo().setEmail(p_data.GetData());
+						} else {
+							tabletAbtractInputFragment.getInputApplyInfo().setEmail("");
 						}
 					}
 				}

@@ -21,6 +21,7 @@ import java.util.List;
 
 public class ContentListCertificateTabletFragment extends Fragment implements AdapterListCertificateTablet.ItemListener {
 
+	private View viewFragment;
 	private List<ElementApply> listCertificate;
 	private ListView listView;
 	private TextView tvNew;
@@ -40,10 +41,10 @@ public class ContentListCertificateTabletFragment extends Fragment implements Ad
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_list_apply_update_tablet, container, false);
-		listView = (ListView) view.findViewById(R.id.listCertificate);
-		tvNew = (TextView) view.findViewById(R.id.tvNewApply);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_list_apply_update_tablet, container, false);
+		listView = (ListView) viewFragment.findViewById(R.id.listCertificate);
+		tvNew = (TextView) viewFragment.findViewById(R.id.tvNewApply);
+		return viewFragment;
 	}
 
 	@Override
@@ -69,5 +70,9 @@ public class ContentListCertificateTabletFragment extends Fragment implements Ad
 		((MenuAcivity)getActivity()).updateLeftSideListCertAndReapply(0);
 	}
 
-
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

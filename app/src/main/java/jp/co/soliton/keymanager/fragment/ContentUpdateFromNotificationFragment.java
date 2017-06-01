@@ -17,8 +17,9 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 public class ContentUpdateFromNotificationFragment extends Fragment {
 
-	String id;
-	Button btnStartUpdate;
+	private String id;
+	private Button btnStartUpdate;
+	private View viewFragment;
 
 	public static Fragment newInstance(String id) {
 		ContentUpdateFromNotificationFragment f = new ContentUpdateFromNotificationFragment();
@@ -29,9 +30,9 @@ public class ContentUpdateFromNotificationFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_notif_update_tablet, container, false);
-		btnStartUpdate = (Button) view.findViewById(R.id.btnStartUpdate);
-		return view;
+		viewFragment = inflater.inflate(R.layout.fragment_notif_update_tablet, container, false);
+		btnStartUpdate = (Button) viewFragment.findViewById(R.id.btnStartUpdate);
+		return viewFragment;
 	}
 
     @Override
@@ -44,4 +45,10 @@ public class ContentUpdateFromNotificationFragment extends Fragment {
 		    }
 	    });
     }
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

@@ -41,6 +41,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+
 /**
  * Created by nguyenducdat on 4/28/2017.
  */
@@ -253,7 +255,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				@Override
 				public void onOkDismissMessage() {
 					if (activity instanceof MenuAcivity) {
-						((MenuAcivity)activity).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+						((MenuAcivity)activity).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 					} else {
 						StringList.GO_TO_LIST_APPLY = "1";
 						Intent intent = new Intent(activity, MenuAcivity.class);

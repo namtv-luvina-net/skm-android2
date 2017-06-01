@@ -84,19 +84,8 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 	}
 
 	@Override
-	public void setMenuVisibility(final boolean visible) {
-		super.setMenuVisibility(visible);
-		if (visible) {
-			initValueControl();
-		}
-	}
-
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (isVisibleToUser) {
-			initValueControl();
-		}
+	public void onPageSelected() {
+		initValueControl();
 	}
 
 	/**

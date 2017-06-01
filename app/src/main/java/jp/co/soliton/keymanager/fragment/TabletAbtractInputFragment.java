@@ -61,7 +61,7 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 	protected String portName;
 	protected boolean isShowingKeyboard = false;
 	protected String idConfirmApply;
-
+	private View viewFragment;
 
 	@Override
 	public void onAttach(Context context) {
@@ -79,16 +79,16 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
+		viewFragment = inflater.inflate(R.layout.fragment_base_input_tablet, container, false);
 		sdk_int_version = Build.VERSION.SDK_INT;
-		view.setOnTouchListener(new View.OnTouchListener() {
+		viewFragment.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				return dispatchTouchEvent(v, event);
 			}
 		});
-		DetectsSoftKeyboard.addListenner(view, this);
-		return view;
+		DetectsSoftKeyboard.addListenner(viewFragment, this);
+		return viewFragment;
 	}
 
 	@Override
@@ -162,7 +162,6 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 			}
 		});
 	}
-
 
 	/**
 	 * Show message
@@ -276,7 +275,6 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 	public abstract void clickButtonBack();
 	public abstract void clickButtonNext();
 
-
 	public void goneSkip() {
 		btnSkip.setVisibility(View.GONE);
 	}
@@ -326,5 +324,11 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 		} else {
 			isShowingKeyboard = true;
 		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

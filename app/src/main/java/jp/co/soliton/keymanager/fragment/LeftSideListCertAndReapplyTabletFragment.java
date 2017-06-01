@@ -18,9 +18,10 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 public class LeftSideListCertAndReapplyTabletFragment extends Fragment {
 
-	TextView[] listTextTitle;
-	TextView tvBack;
-	int currentPositionHighlight = 0;
+	private View viewFragment;
+	private TextView[] listTextTitle;
+	private TextView tvBack;
+	private int currentPositionHighlight = 0;
 
 	public static Fragment newInstance() {
 		LeftSideListCertAndReapplyTabletFragment f = new LeftSideListCertAndReapplyTabletFragment();
@@ -30,15 +31,15 @@ public class LeftSideListCertAndReapplyTabletFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_leftside_list_certificate_and_reapply, container, false);
-		tvBack = (TextView) view.findViewById(R.id.tvBack);
+		viewFragment = inflater.inflate(R.layout.fragment_leftside_list_certificate_and_reapply, container, false);
+		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
 		listTextTitle = new TextView[5];
-		listTextTitle[0] = (TextView) view.findViewById(R.id.tvListCertificate);
-		listTextTitle[1] = (TextView) view.findViewById(R.id.tvInputPassword);
-		listTextTitle[2] = (TextView) view.findViewById(R.id.tvInputEmail);
-		listTextTitle[3] = (TextView) view.findViewById(R.id.tvInputReason);
-		listTextTitle[4] = (TextView) view.findViewById(R.id.tvConfirmApply);
-		return view;
+		listTextTitle[0] = (TextView) viewFragment.findViewById(R.id.tvListCertificate);
+		listTextTitle[1] = (TextView) viewFragment.findViewById(R.id.tvInputPassword);
+		listTextTitle[2] = (TextView) viewFragment.findViewById(R.id.tvInputEmail);
+		listTextTitle[3] = (TextView) viewFragment.findViewById(R.id.tvInputReason);
+		listTextTitle[4] = (TextView) viewFragment.findViewById(R.id.tvConfirmApply);
+		return viewFragment;
 	}
 
 	public void highlightItem(int possition) {
@@ -74,5 +75,11 @@ public class LeftSideListCertAndReapplyTabletFragment extends Fragment {
 			}
 		});
 		highlightItem(currentPositionHighlight);
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

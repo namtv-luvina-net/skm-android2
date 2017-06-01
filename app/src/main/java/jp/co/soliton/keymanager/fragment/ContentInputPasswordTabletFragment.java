@@ -33,13 +33,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
 
 public class ContentInputPasswordTabletFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
 
-	Activity activity;
+	private View viewFragment;
+	private Activity activity;
 	private TextView titleInput;
 	private TextView txtUserId;
 	private EditText txtPassword;
@@ -50,7 +53,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	private InformCtrl m_InformCtrl;
 	private ElementApplyManager elementMgr;
 	private ElementApply element;
-	LogCtrl logCtrl;
+	private LogCtrl logCtrl;
 	private int status;
 	boolean isShowingKeyboard;
 	boolean isCancelApply;
@@ -75,15 +78,15 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		viewFragment = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
+		titleInput = (TextView) viewFragment.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.input_password));
-		txtUserId = (TextView) view.findViewById(R.id.txtUserId);
-		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
-		btnNext = (Button) view.findViewById(R.id.btnNext);
-		btnBack = (Button) view.findViewById(R.id.btnBack);
-		DetectsSoftKeyboard.addListenner(view, this);
-		return view;
+		txtUserId = (TextView) viewFragment.findViewById(R.id.txtUserId);
+		txtPassword = (EditText) viewFragment.findViewById(R.id.txtPassword);
+		btnNext = (Button) viewFragment.findViewById(R.id.btnNext);
+		btnBack = (Button) viewFragment.findViewById(R.id.btnBack);
+		DetectsSoftKeyboard.addListenner(viewFragment, this);
+		return viewFragment;
 	}
 
 	@Override
@@ -163,7 +166,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+				((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 			}
 		});
 	}
@@ -281,15 +284,15 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 				return false;
 			}
 			// ログイン結果
-			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
+			if (m_InformCtrl.GetRtn().startsWith(getString(R.string.Forbidden))) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
 				m_nErroType = InputBasePageFragment.ERR_FORBIDDEN;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
+			} else if (m_InformCtrl.GetRtn().startsWith(getString(R.string.Unauthorized))) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
 				m_nErroType = InputBasePageFragment.ERR_UNAUTHORIZED;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
+			} else if (m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR))) {
 				logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
 				m_nErroType = InputBasePageFragment.ERR_COLON;
 				return false;
@@ -440,7 +443,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 					@Override
 					public void onClick(View v) {
 						dialog.dismiss();
-						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_RIGHT);
+						((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 					}
 				});
 				dialog.show();
@@ -512,5 +515,11 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		} else {
 			isShowingKeyboard = true;
 		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

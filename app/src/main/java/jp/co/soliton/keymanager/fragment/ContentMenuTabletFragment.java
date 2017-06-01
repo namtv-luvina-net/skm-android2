@@ -12,12 +12,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.activity.*;
-import jp.co.soliton.keymanager.alarm.AlarmReceiver;
+import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.manager.APIDManager;
 
 import java.util.List;
+
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -34,6 +35,7 @@ public class ContentMenuTabletFragment extends Fragment {
 	TextView titleVPN;
 	private APIDManager apidManager;
 	Activity activity;
+	private View viewFragment;
 
 	public static Fragment newInstance() {
 		ContentMenuTabletFragment f = new ContentMenuTabletFragment();
@@ -49,16 +51,16 @@ public class ContentMenuTabletFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_content_menu_tablet, container, false);
-		rlMenuStart = (RelativeLayout) view.findViewById(R.id.rl_menu_start);
-		rlMenuAPID = (RelativeLayout) view.findViewById(R.id.rl_menu_apid);
-		rlMenuConfirmApply = (RelativeLayout) view.findViewById(R.id.rl_menu_confirm_apply);
-		contentVPN = (TextView) view.findViewById(R.id.content_vpn);
-		contentWifi = (TextView) view.findViewById(R.id.content_wifi);
-		titleWifi = (TextView) view.findViewById(R.id.title_wifi);
-		titleVPN = (TextView) view.findViewById(R.id.title_vpn);
+		viewFragment = inflater.inflate(R.layout.fragment_content_menu_tablet, container, false);
+		rlMenuStart = (RelativeLayout) viewFragment.findViewById(R.id.rl_menu_start);
+		rlMenuAPID = (RelativeLayout) viewFragment.findViewById(R.id.rl_menu_apid);
+		rlMenuConfirmApply = (RelativeLayout) viewFragment.findViewById(R.id.rl_menu_confirm_apply);
+		contentVPN = (TextView) viewFragment.findViewById(R.id.content_vpn);
+		contentWifi = (TextView) viewFragment.findViewById(R.id.content_wifi);
+		titleWifi = (TextView) viewFragment.findViewById(R.id.title_wifi);
+		titleVPN = (TextView) viewFragment.findViewById(R.id.title_vpn);
 		apidManager = new APIDManager(activity);
-		return view;
+		return viewFragment;
 	}
 
 	@Override
@@ -96,7 +98,7 @@ public class ContentMenuTabletFragment extends Fragment {
 					if (((MenuAcivity)getActivity()).getListCertificate().isEmpty()) {
 						((MenuAcivity) activity).startApplyActivityFragment(TabletBaseInputFragment.START_FROM_MENU);
 					} else {
-						((MenuAcivity) activity).startListApplyUpdateFragment(MenuAcivity.SCROLL_TO_LEFT);
+						((MenuAcivity) activity).startListApplyUpdateFragment(SCROLL_TO_LEFT);
 					}
 				}
 			});
@@ -121,12 +123,18 @@ public class ContentMenuTabletFragment extends Fragment {
                 public void onClick(View v) {
 	                if (listElementApply.size() == 1) {
 		                StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
-		                ((MenuAcivity)activity).startDetailConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
+		                ((MenuAcivity)activity).startDetailConfirmApplyFragment(SCROLL_TO_LEFT);
 	                } else {
-		                ((MenuAcivity)activity).startListConfirmApplyFragment(MenuAcivity.SCROLL_TO_LEFT);
+		                ((MenuAcivity)activity).startListConfirmApplyFragment(SCROLL_TO_LEFT);
 	                }
                 }
             });
         }
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

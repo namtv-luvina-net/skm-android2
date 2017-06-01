@@ -26,7 +26,8 @@ public class ContentDetailConfirmFragment extends Fragment {
 	private TextView tvStatus;
 	private TextView tvDeleteApply;
 	private TextView tvConfirmApply;
-	String[] listData = new String[4];
+	private String[] listData = new String[4];
+	private View viewFragment;
 
 	public static Fragment newInstance() {
 		ContentDetailConfirmFragment f = new ContentDetailConfirmFragment();
@@ -36,15 +37,15 @@ public class ContentDetailConfirmFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_detail_confirm_apply_tablet, container, false);
+		viewFragment = inflater.inflate(R.layout.fragment_detail_confirm_apply_tablet, container, false);
 		elementMgr = new ElementApplyManager(getActivity());
-		tvHostName = (TextView) view.findViewById(R.id.tvHostName);
-		tvUserId = (TextView) view.findViewById(R.id.titleUserId);
-		tvDate = (TextView) view.findViewById(R.id.tvDate);
-		tvStatus = (TextView) view.findViewById(R.id.tvStatus);
-		tvDeleteApply = (TextView) view.findViewById(R.id.tvDeleteApply);
-		tvConfirmApply = (TextView) view.findViewById(R.id.tvConfirmApply);
-		return view;
+		tvHostName = (TextView) viewFragment.findViewById(R.id.tvHostName);
+		tvUserId = (TextView) viewFragment.findViewById(R.id.titleUserId);
+		tvDate = (TextView) viewFragment.findViewById(R.id.tvDate);
+		tvStatus = (TextView) viewFragment.findViewById(R.id.tvStatus);
+		tvDeleteApply = (TextView) viewFragment.findViewById(R.id.tvDeleteApply);
+		tvConfirmApply = (TextView) viewFragment.findViewById(R.id.tvConfirmApply);
+		return viewFragment;
 	}
 
 	@Override
@@ -119,4 +120,9 @@ public class ContentDetailConfirmFragment extends Fragment {
 		}
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
+	}
 }

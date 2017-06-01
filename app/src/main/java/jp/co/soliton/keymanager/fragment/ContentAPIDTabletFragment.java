@@ -33,6 +33,7 @@ public class ContentAPIDTabletFragment extends Fragment {
 	private StringBuilder builderAPID;
 	private LogCtrl logCtrl;
 	private APIDManager apidManager;
+	private View viewFragment;
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -42,16 +43,16 @@ public class ContentAPIDTabletFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_content_apid_tablet, container, false);
-		btnCopy = (Button) view.findViewById(R.id.btnCopy);
-		btnMail = (Button) view.findViewById(R.id.btnMail);
-		contentWifi = (TextView) view.findViewById(R.id.content_wifi);
-		contentVPN = (TextView) view.findViewById(R.id.content_vpn);
-		titleVPN = (TextView) view.findViewById(R.id.title_vpn);
-		titleWifi = (TextView) view.findViewById(R.id.title_wifi);
+		viewFragment = inflater.inflate(R.layout.fragment_content_apid_tablet, container, false);
+		btnCopy = (Button) viewFragment.findViewById(R.id.btnCopy);
+		btnMail = (Button) viewFragment.findViewById(R.id.btnMail);
+		contentWifi = (TextView) viewFragment.findViewById(R.id.content_wifi);
+		contentVPN = (TextView) viewFragment.findViewById(R.id.content_vpn);
+		titleVPN = (TextView) viewFragment.findViewById(R.id.title_vpn);
+		titleWifi = (TextView) viewFragment.findViewById(R.id.title_wifi);
 		logCtrl = LogCtrl.getInstance(getActivity());
 		apidManager = new APIDManager(getActivity());
-		return view;
+		return viewFragment;
 	}
 
 	@Override
@@ -117,5 +118,11 @@ public class ContentAPIDTabletFragment extends Fragment {
 			logCtrl.loggerDebug("APIDActivity:sendMail: There are no email clients installed.");
 			Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }

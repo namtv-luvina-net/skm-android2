@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.ListConfirmActivity;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 
 /**
@@ -16,17 +15,17 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
  */
 
 public class LeftSideListConfirmTabletFragment extends Fragment {
-
-	TextView tvTitle;
-	TextView tvBack;
+	private View viewFragment;
+	private TextView tvTitle;
+	private TextView tvBack;
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_left_side_list_confirm_tablet, container, false);
-		tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+		viewFragment = inflater.inflate(R.layout.fragment_left_side_list_confirm_tablet, container, false);
+		tvTitle = (TextView) viewFragment.findViewById(R.id.tvTitle);
 		tvTitle.setText(getString(R.string.list_application));
-		tvBack = (TextView) view.findViewById(R.id.tvBack);
-		return view;
+		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		return viewFragment;
 	}
 
 	@Override
@@ -43,5 +42,11 @@ public class LeftSideListConfirmTabletFragment extends Fragment {
 				((MenuAcivity)getActivity()).gotoMenuTablet();
 			}
 		});
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		viewFragment = null;
 	}
 }
