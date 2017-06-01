@@ -23,6 +23,7 @@ import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
@@ -97,7 +98,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    hideKeyboard(v, getContext());
+                    SoftKeyboardCtrl.hideKeyboard(v, getContext());
                 }
             }
         });

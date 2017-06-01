@@ -23,6 +23,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_weight="112"
+			android:layout_gravity="center_horizontal"
 			android:background="@color/background_color_white"
 			android:orientation="vertical">
 
@@ -44,8 +45,9 @@
 				android:background="#9fa0a0" />
 
 		<LinearLayout
-				android:layout_width="match_parent"
+				android:layout_width="@dimen/width_line_complete_using_procedures_tablet"
 				android:layout_height="0dp"
+				android:layout_gravity="center_horizontal"
 				android:layout_marginTop="@dimen/margin_item_menu"
 				android:layout_marginBottom="@dimen/margin_content_complete_using_procedures_tablet"
 				android:layout_weight="58">
@@ -100,10 +102,11 @@
 						android:id="@+id/txtCN"
 						android:layout_width="match_parent"
 						android:layout_height="0dp"
+						android:singleLine="true"
+						android:maxLines="1"
 						android:layout_weight="1"
 						android:textSize="@dimen/tv_button_input_tablet"
 						android:gravity="center_vertical"
-						android:text="User ID"
 						android:textColor="@color/text_color"/>
 
 				<TextView
@@ -113,7 +116,6 @@
 						android:layout_weight="1"
 						android:textSize="@dimen/tv_button_input_tablet"
 						android:gravity="center_vertical"
-						android:text="123"
 						android:textColor="@color/text_color"/>
 
 				<TextView
@@ -123,7 +125,6 @@
 						android:layout_weight="1"
 						android:textSize="@dimen/tv_button_input_tablet"
 						android:gravity="center_vertical"
-						android:text="2017/09/30"
 						android:textColor="@color/text_color"/>
 			</LinearLayout>
 		</LinearLayout>

@@ -43,7 +43,7 @@
 	<dimen name="margin_left_detail_confirm_apply_tablet">60.16dp</dimen>
 	<dimen name="margin_left_img_detail_confirm_apply_tablet">49.22dp</dimen>
 	<dimen name="margin_left_side">15.63dp</dimen>
-	<dimen name="margin_left_side_menu">0.78dp</dimen>
+	<dimen name="margin_left_side_menu">3.91dp</dimen>
 	<dimen name="margin_left_thumb_item_apply_update_tablet">13.28dp</dimen>
 	<dimen name="margin_right_item_apply_update_tablet">35.16dp</dimen>
 	<dimen name="margin_right_user_input_tablet">85.94dp</dimen>
@@ -80,7 +80,7 @@
 	<dimen name="width_img_succes_tablet">78.13dp</dimen>
 	<dimen name="width_item_menu">253.91dp</dimen>
 	<dimen name="width_item_vpn_input_tablet">140.63dp</dimen>
-	<dimen name="width_line_complete_using_procedures_tablet">250.00dp</dimen>
+	<dimen name="width_line_complete_using_procedures_tablet">328.13dp</dimen>
 	<dimen name="text_size_btn_content_tablet">12.50sp</dimen>
 	<dimen name="text_size_content_item_apid">10.94sp</dimen>
 	<dimen name="text_size_description_download_ca">14.06sp</dimen>

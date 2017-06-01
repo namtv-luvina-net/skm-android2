@@ -26,16 +26,6 @@ public abstract class TabletInputFragment extends Fragment {
 		return value.trim().isEmpty();
 	}
 
-	/**
-	 * Hide keyboard in edit text controls
-	 * @param view
-	 * @param context
-	 */
-	protected void hideKeyboard(View view, Context context) {
-		InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-		inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-	}
-
 	public void onPageSelected(){}
 
 	/**

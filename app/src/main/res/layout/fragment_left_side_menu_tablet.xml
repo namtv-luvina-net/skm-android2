@@ -43,8 +43,8 @@
 			android:layout_height="match_parent"
 			android:layout_alignParentTop="true"
 			android:layout_alignParentLeft="true"
-			android:layout_marginLeft="@dimen/pading_content_item_apid"
-			android:layout_marginRight="@dimen/pading_content_item_apid"
+			android:layout_marginLeft="@dimen/margin_left_side_menu"
+			android:layout_marginRight="@dimen/margin_left_side_menu"
 			android:layout_alignParentStart="true">
 		<TextView
 				android:id="@+id/tv_guide_1"

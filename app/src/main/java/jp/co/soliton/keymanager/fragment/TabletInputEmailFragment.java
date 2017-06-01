@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -77,7 +78,7 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 				if (!hasFocus) {
 					String email = txtEmail.getText().toString().trim();
 					txtEmail.setText(email);
-					hideKeyboard(v, getContext());
+					SoftKeyboardCtrl.hideKeyboard(v, getContext());
 					updateStatusSkipButton();
 				} else {
 					tabletAbtractInputFragment.goneSkip();

@@ -33,7 +33,7 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
      */
     public class ViewHolder {
         public TextView titleDateInfo;
-        public TextView titleUserId;
+        public TextView titleCN;
         public TextView btnApplyUpdate;
 	    public ImageView icCertificate;
     }
@@ -92,7 +92,7 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_apply_update_tablet, parent, false);
             viewHolder.titleDateInfo = (TextView) convertView.findViewById(R.id.titleDateInfo);
-            viewHolder.titleUserId = (TextView) convertView.findViewById(R.id.titleUserId);
+            viewHolder.titleCN = (TextView) convertView.findViewById(R.id.titleCN);
             viewHolder.btnApplyUpdate = (TextView) convertView.findViewById(R.id.btnApplyUpdate);
             viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icCertificate);
             convertView.setTag(viewHolder);
@@ -138,16 +138,16 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
 		    }
 		    ElementApply elementApply = listCertificate.get(position);
 		    final int id = elementApply.getId();
-		    final String userId = elementApply.getUserId();
-		    if (userId != null) {
-			    viewHolder.titleUserId.setText(userId);
+		    final String strCN = elementApply.getcNValue();
+		    if (strCN != null) {
+			    viewHolder.titleCN.setText(strCN);
 		    }
 		    viewHolder.btnApplyUpdate.setOnClickListener(new View.OnClickListener() {
 			    @Override
 			    public void onClick(View v) {
 				    LogCtrl logCtrl = LogCtrl.getInstance(getContext());
 				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate id: " + id);
-				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + userId);
+				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + strCN);
 				    listener.clickApplyButton(String.valueOf(id));
 			    }
 		    });

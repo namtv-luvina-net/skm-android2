@@ -9,17 +9,14 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
@@ -40,7 +37,7 @@ import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentInputPasswordTabletFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
+public class ContentInputPasswordTabletFragment extends Fragment implements SoftKeyboardCtrl.DetectsListenner{
 
 	private View viewFragment;
 	private Activity activity;
@@ -86,8 +83,30 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Dete
 		txtPassword = (EditText) viewFragment.findViewById(R.id.txtPassword);
 		btnNext = (Button) viewFragment.findViewById(R.id.btnNext);
 		btnBack = (Button) viewFragment.findViewById(R.id.btnBack);
-		DetectsSoftKeyboard.addListenner(viewFragment, this);
+		SoftKeyboardCtrl.addListenner(viewFragment, this);
+		viewFragment.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return dispatchTouchEvent(v, event);
+			}
+		});
 		return viewFragment;
+	}
+
+	public boolean dispatchTouchEvent(View view, MotionEvent ev) {
+		View v = activity.getCurrentFocus();
+		if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+				v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+			int scrcoords[] = new int[2];
+			v.getLocationOnScreen(scrcoords);
+			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+			float y = ev.getRawY() + v.getTop() - scrcoords[1];
+			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
+				SoftKeyboardCtrl.hideKeyboard(activity);
+				v.clearFocus();
+			}
+		}
+		return true;
 	}
 
 	@Override

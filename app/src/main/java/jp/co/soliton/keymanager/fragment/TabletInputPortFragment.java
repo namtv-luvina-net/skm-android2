@@ -21,6 +21,7 @@ import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
@@ -95,7 +96,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					hideKeyboard(v, getContext());
+					SoftKeyboardCtrl.hideKeyboard(v, getContext());
 				}
 			}
 		});

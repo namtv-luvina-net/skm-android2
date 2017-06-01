@@ -3,11 +3,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 	android:orientation="vertical">
+
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_item_confirm_apply_tablet"
 			android:orientation="vertical"
 			android:paddingLeft="@dimen/padding_left_content_item_confirm_apply_tablet">
+
 		<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
@@ -34,12 +36,14 @@
 					android:orientation="vertical"
 					android:layout_marginRight="@dimen/margin_right_item_apply_update_tablet"
 					android:layout_marginLeft="@dimen/margin_item_menu"
-					android:layout_weight="221" >
+					android:layout_weight="221">
+
 				<android.support.v4.widget.Space
 						android:id="@+id/space_center"
 						android:layout_centerVertical="true"
 						android:layout_width="1dp"
 						android:layout_height="@dimen/pading_content_item_apid"/>
+
 				<TextView
 						android:id="@+id/titleDateInfo"
 						android:layout_width="wrap_content"
@@ -48,8 +52,9 @@
 						android:layout_above="@+id/space_center"
 						android:textColor="@color/text_color"
 						android:textSize="@dimen/text_size_btn_content_tablet"/>
+
 				<TextView
-						android:id="@+id/titleUserId"
+						android:id="@+id/titleCN"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
 						android:textSize="@dimen/text_size_btn_content_tablet"
@@ -76,10 +81,10 @@
 						android:textColor="@color/text_color_active"/>
 			</RelativeLayout>
 		</LinearLayout>
+
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:background="#c9caca"/>
 	</LinearLayout>
-
 </LinearLayout>

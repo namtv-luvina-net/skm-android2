@@ -6,15 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -72,7 +71,7 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
             public void onFocusChange(View v, boolean hasFocus) {
 	            if (!hasFocus) {
 		            txtReason.setText(txtReason.getText().toString().trim());
-		            hideKeyboard(v, getContext());
+		            SoftKeyboardCtrl.hideKeyboard(v, getContext());
 		            updateStatusSkipButton();
 	            } else {
 		            btnSkipReason.setVisibility(View.INVISIBLE);

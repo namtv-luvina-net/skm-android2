@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
@@ -20,19 +19,17 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
-import jp.co.soliton.keymanager.common.DetectsSoftKeyboard;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
 /**
  * Created by nguyenducdat on 5/4/2017.
  */
 
-public abstract class TabletAbtractInputFragment extends Fragment implements DetectsSoftKeyboard.DetectsListenner{
+public abstract class TabletAbtractInputFragment extends Fragment implements SoftKeyboardCtrl.DetectsListenner{
 
 	public final static String TARGET_VPN = "0";
 	public final static String TARGET_WiFi = "1";
@@ -79,7 +76,7 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 				return dispatchTouchEvent(v, event);
 			}
 		});
-		DetectsSoftKeyboard.addListenner(viewFragment, this);
+		SoftKeyboardCtrl.addListenner(viewFragment, this);
 		return viewFragment;
 	}
 
@@ -104,18 +101,11 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Det
 			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
 			float y = ev.getRawY() + v.getTop() - scrcoords[1];
 			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
-				hideKeyboard(activity);
+				SoftKeyboardCtrl.hideKeyboard(activity);
 				v.clearFocus();
 			}
 		}
 		return true;
-	}
-
-	private void hideKeyboard(Activity activity) {
-		if (activity != null && activity.getWindow() != null && activity.getWindow().getDecorView() != null) {
-			InputMethodManager imm = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-		}
 	}
 
 	@Override
