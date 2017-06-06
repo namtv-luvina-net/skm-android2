@@ -150,6 +150,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
+            android:name=".activity.SettingTabletActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.UserDialog">
+        </activity>
+        <activity
             android:name=".activity.ProductInfoActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"

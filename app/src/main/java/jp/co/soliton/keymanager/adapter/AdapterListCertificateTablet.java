@@ -117,8 +117,7 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
 			    if (differenceDates == 1) {
 				    status = context.getResources().getString(R.string.one_day_remaining);
 			    } else {
-				    status = String.format(context.getResources().getString(R.string.many_days_remaining), String.valueOf
-						    (differenceDates));
+				    status = String.format(context.getResources().getString(R.string.many_days_remaining), String.valueOf(differenceDates));
 			    }
 			    viewHolder.titleDateInfo.setText(status);
 			    viewHolder.btnApplyUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));

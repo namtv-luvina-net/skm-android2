@@ -176,6 +176,8 @@
 	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">通知先メールアドレス:</string>
 	<string name="title_expiration_date">有効期限 :</string>
+	<string name="title_place">格納先 :\u0020</string>
+	<string name="place">格納先</string>
 	<string name="title_host_name">ホスト名 :</string>
 	<string name="title_http_port_number">HTTPポート番号 :</string>
 	<string name="title_https_port_number">HTTPSポート番号 :</string>

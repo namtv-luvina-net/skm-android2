@@ -139,6 +139,7 @@ public class ElementApplyManager {
                 elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
                 elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
                 elementApply.setcNValue(cursor.getString(cursor.getColumnIndexOrThrow("cn_value")));
+                elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
 
                 elementApplyList.add(elementApply);
             } while (cursor.moveToNext());

@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.SettingActivity;
+import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -55,7 +55,7 @@ public class LeftSideMenuTabletFragment extends Fragment {
 		btnSetting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(activity, SettingActivity.class);
+				Intent intent = new Intent(activity, SettingTabletActivity.class);
 				startActivity(intent);
 			}
 		});

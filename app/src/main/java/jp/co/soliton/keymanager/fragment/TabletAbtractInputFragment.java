@@ -73,7 +73,7 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 		viewFragment.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				return dispatchTouchEvent(v, event);
+				return SoftKeyboardCtrl.hideKeyboardIfTouchOutEditText(getActivity(), event);
 			}
 		});
 		SoftKeyboardCtrl.addListenner(viewFragment, this);
@@ -90,22 +90,6 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 		viewPager.setPagingEnabled(false);
 		viewPager.setCurrentItem(0);
 		setTab();
-	}
-
-	public boolean dispatchTouchEvent(View view, MotionEvent ev) {
-		View v = activity.getCurrentFocus();
-		if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
-				v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
-			int scrcoords[] = new int[2];
-			v.getLocationOnScreen(scrcoords);
-			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
-			float y = ev.getRawY() + v.getTop() - scrcoords[1];
-			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
-				SoftKeyboardCtrl.hideKeyboard(activity);
-				v.clearFocus();
-			}
-		}
-		return true;
 	}
 
 	@Override

@@ -76,6 +76,49 @@
 					android:textSize="17sp"
 					android:background="#ddebfc"
 					android:textAllCaps="true"
+					android:text="@string/place"/>
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/line_cert"/>
+			<LinearLayout
+					android:orientation="horizontal"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@color/background_color_white">
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:background="@color/background_color_white"
+						android:paddingBottom="10dp"
+						android:paddingTop="10dp"
+						android:paddingLeft="20dp"
+						android:textSize="17sp"
+						android:textColor="@color/color_black"
+						android:gravity="left|center_vertical"
+						android:text="@string/place"/>
+				<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:background="@color/background_color_white"
+						android:paddingLeft="10dp"
+						android:paddingBottom="10dp"
+						android:paddingTop="10dp"
+						android:paddingRight="10dp"
+						android:textSize="17sp"
+						android:textColor="@color/text_cert_content_detail"
+						android:gravity="right|center_vertical"
+						android:text="@string/main_apid_vpn"/>
+			</LinearLayout><!-- Subject name-->
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingBottom="10dp"
+					android:paddingTop="25dp"
+					android:paddingLeft="20dp"
+					android:textSize="17sp"
+					android:background="#ddebfc"
+					android:textAllCaps="true"
 					android:text="@string/label_subject_name"/>
 			<TextView
 					android:layout_width="match_parent"

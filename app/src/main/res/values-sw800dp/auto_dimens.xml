@@ -34,7 +34,6 @@
 	<dimen name="margin_content_complete_using_procedures_tablet">26.04dp</dimen>
 	<dimen name="margin_content_input_tablet">57.29dp</dimen>
 	<dimen name="margin_footer_input_tablet">33.33dp</dimen>
-	<dimen name="margin_guide_input_left_side">67.71dp</dimen>
 	<dimen name="margin_guide_left_side">72.92dp</dimen>
 	<dimen name="margin_icon_setting">10.42dp</dimen>
 	<dimen name="margin_item_menu">10.42dp</dimen>
