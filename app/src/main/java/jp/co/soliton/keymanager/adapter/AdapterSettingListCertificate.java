@@ -12,11 +12,14 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.SettingDetailCertificateActivity;
+import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
 
 /**
  * Created by lexuanvinh on 03/04/2017.
@@ -135,9 +138,13 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
             viewHolder.llSettingCert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), SettingDetailCertificateActivity.class);
-                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
-                    getContext().startActivity(intent);
+	                if (isTablet) {
+		                ((SettingTabletActivity)getContext()).gotoDetailCertificatesSetting(String.valueOf(id), SCROLL_TO_LEFT);
+	                }else {
+		                Intent intent = new Intent(getContext(), SettingDetailCertificateActivity.class);
+		                intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
+		                getContext().startActivity(intent);
+	                }
                 }
             });
 

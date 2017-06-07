@@ -22,11 +22,13 @@ import static jp.co.soliton.keymanager.common.TypeScrollFragment.*;
 public class SettingTabletActivity extends FragmentActivity {
 	public static final int STATUS_MENU = 1;
 	public static final int STATUS_LIST_CERTS = 2;
-	public static final int STATUS_NOTIFICATION_ALL = 3;
-	public static final int STATUS_PRODUCT = 4;
-	public static final int STATUS_LIBRARY = 5;
+	public static final int STATUS_DETAIL_CERT = 3;
+	public static final int STATUS_NOTIFICATION_ALL = 4;
+	public static final int STATUS_PRODUCT = 5;
+	public static final int STATUS_LIBRARY = 6;
+	public static final float RATIO_SCALE_WIDTH = 0.6f;
+	public static final float RATIO_SCALE_HEIGHT = 0.8f;
 	private int currentStatus;
-
 
 	Fragment fragmentContent;
 	private FragmentManager fragmentManager;
@@ -45,8 +47,8 @@ public class SettingTabletActivity extends FragmentActivity {
 	    int height = displayMetrics.heightPixels;
 	    int width = displayMetrics.widthPixels;
 	    WindowManager.LayoutParams params = getWindow().getAttributes();
-	    params.height = (int) (height*0.8f);
-	    params.width = (int) (width*0.6f);
+	    params.height = (int) (height*RATIO_SCALE_HEIGHT);
+	    params.width = (int) (width*RATIO_SCALE_WIDTH);
 	    this.getWindow().setAttributes(params);
 	    this.getWindow().getDecorView().setBackgroundResource(R.drawable.border_setting_tablet);
     }
@@ -60,6 +62,12 @@ public class SettingTabletActivity extends FragmentActivity {
     public void gotoListCertificatesSetting(int typeScroll) {
 	    currentStatus = STATUS_LIST_CERTS;
 	    fragmentContent = ContentListCertificateSettingFragment.newInstance();
+		changeFragmentContent(typeScroll);
+    }
+
+    public void gotoDetailCertificatesSetting(String id, int typeScroll) {
+	    currentStatus = STATUS_DETAIL_CERT;
+	    fragmentContent = ContentDetailCertSettingFragment.newInstance(id);
 		changeFragmentContent(typeScroll);
     }
 
@@ -82,11 +90,13 @@ public class SettingTabletActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (currentStatus == STATUS_MENU) {
-			super.onBackPressed();
-		} else if (currentStatus == STATUS_NOTIFICATION_ALL || currentStatus == STATUS_PRODUCT || currentStatus ==
+		if (currentStatus == STATUS_NOTIFICATION_ALL || currentStatus == STATUS_PRODUCT || currentStatus ==
 				STATUS_LIBRARY || currentStatus == STATUS_LIST_CERTS) {
 			gotoMenuSetting(SCROLL_TO_RIGHT);
+		} else if (currentStatus == STATUS_DETAIL_CERT) {
+			gotoListCertificatesSetting(SCROLL_TO_RIGHT);
+		} else {
+			super.onBackPressed();
 		}
 	}
 

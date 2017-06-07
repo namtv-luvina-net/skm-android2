@@ -76,7 +76,7 @@
 					android:textSize="17sp"
 					android:background="#ddebfc"
 					android:textAllCaps="true"
-					android:text="@string/place"/>
+					android:text=""/>
 			<TextView
 					android:layout_width="match_parent"
 					android:layout_height="1dp"
@@ -98,6 +98,7 @@
 						android:gravity="left|center_vertical"
 						android:text="@string/place"/>
 				<TextView
+						android:id="@+id/tvStorageDestination"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:background="@color/background_color_white"

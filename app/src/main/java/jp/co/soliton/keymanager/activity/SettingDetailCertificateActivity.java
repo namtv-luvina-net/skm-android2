@@ -25,6 +25,7 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 public class SettingDetailCertificateActivity extends Activity {
     private ElementApplyManager elementMgr;
     private TextView tvTitleHeader;
+    private TextView tvStorageDestination;
     private TextView tvDetailSubjectCountry;
     private TextView tvDetailSubjectSpName;
     private TextView tvDetailSubjectLocal;
@@ -71,6 +72,7 @@ public class SettingDetailCertificateActivity extends Activity {
         tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
 	    moreOption = (LinearLayout) findViewById(R.id.more_option);
 	    textViewBack = (TextView) findViewById(R.id.textViewBack);
+	    tvStorageDestination = (TextView) findViewById(R.id.tvStorageDestination);
         tvDetailSubjectCountry = (TextView) findViewById(R.id.tvDetailSubjectCountry);
         tvDetailSubjectSpName = (TextView) findViewById(R.id.tvDetailSubjectSpName);
         tvDetailSubjectLocal = (TextView) findViewById(R.id.tvDetailSubjectLocal);
@@ -170,6 +172,17 @@ public class SettingDetailCertificateActivity extends Activity {
         ElementApply elementApply = elementMgr.getElementApply(id);
 	    setTextForControl(tvTitleHeader, elementApply.getcNValue());
 	    updateTitle();
+	    String strTarget;
+	    if (elementApply.getTarger() != null) {
+		    if (elementApply.getTarger().startsWith("WIFI")) {
+			    strTarget = getString(R.string.main_apid_wifi);
+		    } else {
+			    strTarget = getString(R.string.main_apid_vpn);
+		    }
+	    }else {
+		    strTarget = "";
+	    }
+	    setTextForControl(tvStorageDestination, strTarget);
 	    setTextForControl(tvDetailSubjectCountry, elementApply.getSubjectCountryName());
         setTextForControl(tvDetailSubjectSpName, elementApply.getSubjectStateOrProvinceName());
         setTextForControl(tvDetailSubjectLocal, elementApply.getSubjectLocalityName());
@@ -187,9 +200,10 @@ public class SettingDetailCertificateActivity extends Activity {
         setTextForControl(tvDetailIssuerVersion, elementApply.getVersion());
         setTextForControl(tvDetailIssuerSerialNum, elementApply.getSerialNumber());
 
-        setTextForControl(tvDetailSignAlgorithm, elementApply.getSignatureAlogrithm());
-        setTextForControl(tvDetailNotValidBefore, elementApply.getNotValidBefore());
-        setTextForControl(tvDetailNotValidAfter, elementApply.getNotValidAfter());
+	    setTextForControl(tvDetailNotValidBefore, elementApply.getNotValidBefore());
+	    setTextForControl(tvDetailNotValidAfter, elementApply.getNotValidAfter());
+
+	    setTextForControl(tvDetailSignAlgorithm, elementApply.getSignatureAlogrithm());
 
         setTextForControl(tvDetailPublicAlgorithm, elementApply.getPublicKeyAlogrithm());
 	    String detailPublicData = elementApply.getPublicKeyData().toUpperCase().replace(":", " ");
