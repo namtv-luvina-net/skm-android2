@@ -64,21 +64,24 @@ public class AdapterSettingDetailCertificate extends BaseExpandableListAdapter {
 
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-		String headerTitle = (groupPosition == 0) ? "" : (String) getGroup(groupPosition);
+		String headerTitle = (String) getGroup(groupPosition);
+		HeaderHolder headerHolder = new HeaderHolder();
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = infalInflater.inflate(R.layout.item_header_detail_cert_setting, null);
-		}
-		TextView lineTopHeader = (TextView) convertView.findViewById(R.id.lineTopHeader);
-		if (groupPosition == 0) {
-			lineTopHeader.setVisibility(View.GONE);
+			headerHolder.title = (TextView) convertView.findViewById(R.id.header_item);
+			headerHolder.lineTop = (TextView) convertView.findViewById(R.id.lineTopHeader);
+			convertView.setTag(headerHolder);
 		}else {
-			lineTopHeader.setVisibility(View.VISIBLE);
+			headerHolder = (HeaderHolder) convertView.getTag();
 		}
-
-		TextView lblListHeader = (TextView) convertView.findViewById(R.id.header_item);
-		lblListHeader.setText(headerTitle);
+		if (groupPosition == 0) {
+			headerHolder.lineTop.setVisibility(View.GONE);
+		}else {
+			headerHolder.lineTop.setVisibility(View.VISIBLE);
+		}
+		headerHolder.title.setText(headerTitle);
 		((ExpandableListView) parent).expandGroup(groupPosition);
 		return convertView;
 	}
@@ -100,7 +103,7 @@ public class AdapterSettingDetailCertificate extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 		ItemChildDetailCertSetting itemChild = listDataChild.get(groupPosition).get(childPosition);
-		ViewHolder viewHolder = new ViewHolder();
+		ChildHolder childHolder = new ChildHolder();
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			int itemType = getChildType(groupPosition, childPosition);
@@ -109,19 +112,19 @@ public class AdapterSettingDetailCertificate extends BaseExpandableListAdapter {
 			}else {
 				convertView = infalInflater.inflate(R.layout.item_child_two_detail_cert_setting, null);
 			}
-			viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
-			viewHolder.detail = (TextView) convertView.findViewById(R.id.tvDetail);
-			viewHolder.lineBottom = (TextView) convertView.findViewById(R.id.lineBottom);
-			convertView.setTag(viewHolder);
+			childHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
+			childHolder.detail = (TextView) convertView.findViewById(R.id.tvDetail);
+			childHolder.lineBottom = (TextView) convertView.findViewById(R.id.lineBottom);
+			convertView.setTag(childHolder);
 		}else {
-			viewHolder = (ViewHolder) convertView.getTag();
+			childHolder = (ChildHolder) convertView.getTag();
 		}
-		viewHolder.title.setText(itemChild.getTitle());
-		viewHolder.detail.setText(itemChild.getDetail());
+		childHolder.title.setText(itemChild.getTitle());
+		childHolder.detail.setText(itemChild.getDetail());
 		if (childPosition == listDataChild.get(groupPosition).size() - 1) {
-			viewHolder.lineBottom.setVisibility(View.INVISIBLE);
+			childHolder.lineBottom.setVisibility(View.INVISIBLE);
 		}else {
-			viewHolder.lineBottom.setVisibility(View.VISIBLE);
+			childHolder.lineBottom.setVisibility(View.VISIBLE);
 		}
 		return convertView;
 	}
@@ -131,9 +134,13 @@ public class AdapterSettingDetailCertificate extends BaseExpandableListAdapter {
 		return false;
 	}
 
-	public class ViewHolder {
+	public class ChildHolder {
 		public TextView title;
 		public TextView detail;
 		public TextView lineBottom;
+	}
+	public class HeaderHolder {
+		public TextView lineTop;
+		public TextView title;
 	}
 }

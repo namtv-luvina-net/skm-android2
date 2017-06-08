@@ -95,6 +95,7 @@ public class ContentDetailCertSettingFragment extends Fragment {
 
 	private void prepareHeader() {
 		listDataHeader = new ArrayList<>();
+		listDataHeader.add("");
 		listDataHeader.add(getString(R.string.label_subject_name));
 		listDataHeader.add(getString(R.string.label_issuer_name));
 		listDataHeader.add(getString(R.string.validity_period));
