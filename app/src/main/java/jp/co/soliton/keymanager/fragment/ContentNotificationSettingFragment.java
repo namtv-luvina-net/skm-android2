@@ -49,11 +49,21 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 	private View viewFragment;
 	private boolean goBack = false;
 
+	/**
+	 * For Notification All
+	 * @return
+	 */
 	public static Fragment newInstance() {
 		ContentNotificationSettingFragment f = new ContentNotificationSettingFragment();
 		f.mode = NotifModeEnum.ALL;
 		return f;
 	}
+
+	/**
+	 * For Notificate One
+	 * @param idCert
+	 * @return
+	 */
 	public static Fragment newInstance(String idCert) {
 		ContentNotificationSettingFragment f = new ContentNotificationSettingFragment();
 		f.idCert = idCert;

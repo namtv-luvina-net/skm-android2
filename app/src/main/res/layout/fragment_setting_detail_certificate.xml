@@ -37,7 +37,6 @@
 				android:textColor="@color/text_color"
 				android:text="TITLE"/>
 		<LinearLayout
-				android:id="@+id/more_option"
 				android:layout_width="wrap_content"
 				android:layout_height="25dp"
 				android:orientation="horizontal"
@@ -49,6 +48,7 @@
 				android:paddingLeft="10dp"
 				android:background="@android:color/transparent">
 			<Button
+					android:id="@+id/more_option"
 					android:layout_width="25dp"
 					android:layout_height="25dp"
 					android:background="@drawable/ic_menu_48"/>

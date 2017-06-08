@@ -26,9 +26,11 @@ public class SettingTabletActivity extends FragmentActivity {
 	public static final int STATUS_NOTIFICATION_ALL = 4;
 	public static final int STATUS_PRODUCT = 5;
 	public static final int STATUS_LIBRARY = 6;
+	public static final int STATUS_NOTIFICATION_ONE = 7;
 	public static final float RATIO_SCALE_WIDTH = 0.6f;
 	public static final float RATIO_SCALE_HEIGHT = 0.8f;
 	private int currentStatus;
+	private String currentIdDetail = "";
 
 	Fragment fragmentContent;
 	private FragmentManager fragmentManager;
@@ -66,6 +68,9 @@ public class SettingTabletActivity extends FragmentActivity {
     }
 
     public void gotoDetailCertificatesSetting(String id, int typeScroll) {
+	    if (!id.equals(currentIdDetail)) {
+		    currentIdDetail = id;
+	    }
 	    currentStatus = STATUS_DETAIL_CERT;
 	    fragmentContent = ContentDetailCertSettingFragment.newInstance(id);
 		changeFragmentContent(typeScroll);
@@ -74,6 +79,12 @@ public class SettingTabletActivity extends FragmentActivity {
     public void gotoNotificationAllSetting(int typeScroll) {
 	    currentStatus = STATUS_NOTIFICATION_ALL;
 	    fragmentContent = ContentNotificationSettingFragment.newInstance();
+		changeFragmentContent(typeScroll);
+    }
+
+    public void gotoNotificationOneSetting(int typeScroll) {
+	    currentStatus = STATUS_NOTIFICATION_ONE;
+	    fragmentContent = ContentNotificationSettingFragment.newInstance(currentIdDetail);
 		changeFragmentContent(typeScroll);
     }
 
@@ -90,11 +101,16 @@ public class SettingTabletActivity extends FragmentActivity {
 
 	@Override
 	public void onBackPressed() {
+		if (currentStatus != STATUS_NOTIFICATION_ONE && currentIdDetail.length() > 0) {
+			currentIdDetail = "";
+		}
 		if (currentStatus == STATUS_NOTIFICATION_ALL || currentStatus == STATUS_PRODUCT || currentStatus ==
 				STATUS_LIBRARY || currentStatus == STATUS_LIST_CERTS) {
 			gotoMenuSetting(SCROLL_TO_RIGHT);
 		} else if (currentStatus == STATUS_DETAIL_CERT) {
 			gotoListCertificatesSetting(SCROLL_TO_RIGHT);
+		} else if (currentStatus == STATUS_NOTIFICATION_ONE) {
+			gotoDetailCertificatesSetting(currentIdDetail, SCROLL_TO_RIGHT);
 		} else {
 			super.onBackPressed();
 		}
