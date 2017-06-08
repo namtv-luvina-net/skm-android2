@@ -10,13 +10,29 @@ public class ItemChildDetailCertSetting {
 	private boolean isOneRow;
 
 	public ItemChildDetailCertSetting(String title, String detail) {
-		this.title = title;
-		this.detail = detail;
+		if (ValidateParams.nullOrEmpty(title)) {
+			this.title = "";
+		} else {
+			this.title = title;
+		}
+		if (ValidateParams.nullOrEmpty(detail)) {
+			this.detail = "";
+		} else {
+			this.detail = detail;
+		}
 		this.isOneRow = true;
 	}
 	public ItemChildDetailCertSetting(String title, String detail, boolean isOneRow) {
-		this.title = title;
-		this.detail = detail;
+		if (ValidateParams.nullOrEmpty(title)) {
+			this.title = "";
+		} else {
+			this.title = title;
+		}
+		if (ValidateParams.nullOrEmpty(detail)) {
+			this.detail = "";
+		} else {
+			this.detail = detail;
+		}
 		this.isOneRow = isOneRow;
 	}
 
