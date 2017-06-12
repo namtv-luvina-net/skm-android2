@@ -57,6 +57,7 @@ public class LeftSideMenuTabletFragment extends Fragment {
 			public void onClick(View v) {
 				Intent intent = new Intent(activity, SettingTabletActivity.class);
 				startActivity(intent);
+				getActivity().overridePendingTransition(0, 0);
 			}
 		});
 		String str1 = activity.getString(R.string.guide_31);

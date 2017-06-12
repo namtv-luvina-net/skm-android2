@@ -93,6 +93,7 @@ public class SettingTabletActivity extends FragmentActivity {
 			gotoDetailCertificatesSetting(currentIdDetail, SCROLL_TO_RIGHT);
 		} else {
 			super.onBackPressed();
+			overridePendingTransition(0, 0);
 		}
 	}
 
