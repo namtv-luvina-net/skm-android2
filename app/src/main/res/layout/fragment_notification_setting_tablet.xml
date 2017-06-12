@@ -2,51 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:id="@+id/rootView"
-    android:weightSum="1">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/textViewBack"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/ic_back2"
-            android:gravity="center_vertical"
-            android:text="@string/label_setting"
-            android:onClick="btnBackClick"
-            android:clickable="true"
-            android:textSize="@dimen/text_size_value"
-            android:textColor="@color/add_cert"
-            />
-
-        <TextView
-            android:id="@+id/tvTitleHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:textSize="@dimen/text_size_value"
-            android:textColor="@color/color_black"
-            android:text="@string/notif_setting"/>
-	    <TextView
-			    android:id="@+id/spaceRightTitle"
-			    android:layout_width="wrap_content"
-			    android:layout_height="35dp"
-			    android:layout_alignParentRight="true"
-			    android:drawableRight="@drawable/ic_back2"
-	            android:visibility="invisible" />
-    </RelativeLayout>
+    android:layout_height="match_parent" >
+    <include layout="@layout/header_setting_tablet" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -70,19 +27,24 @@
 			android:orientation="horizontal"
 			android:background="@color/background_color_white"
 			android:paddingLeft="20dp">
+
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:textSize="17sp"
 				android:textColor="@color/color_black"
-				android:text="@string/label_notification"/>
+				android:text="@string/label_notification"
+				android:id="@+id/textView2"/>
+
 		<Switch
+				android:theme="@style/Theme.AppCompat.Light.NoActionBar"
 				android:id="@+id/swNotifFlag"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:paddingBottom="10dp"
 				android:paddingTop="10dp"
+				android:visibility="visible"
 				android:paddingLeft="20dp"
 				android:paddingRight="20dp"
 				android:textSize="20dp"
@@ -119,9 +81,11 @@
 				android:textColor="@color/color_black"
 				android:text="@string/label_notification"/>
 		<Switch
+				android:theme="@style/Theme.AppCompat.Light.NoActionBar"
 				android:id="@+id/swNotifBeforeFlag"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:visibility="visible"
 				android:paddingBottom="10dp"
 				android:paddingTop="10dp"
 				android:paddingLeft="20dp"

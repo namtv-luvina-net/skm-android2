@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.List;
-
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterSettingListCertificate;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+
+import java.util.List;
 
 /**
  * Created by luongdolong on 4/3/2017.
@@ -34,6 +33,9 @@ public class SettingListCertificateActivity extends Activity {
         title.setText(getString(R.string.list_cert));
         list = (ListView)findViewById(R.id.listSettingCert);
         elementMgr = new ElementApplyManager(getApplicationContext());
+	    listCertificate = elementMgr.getAllCertificate();
+	    adapterListCertificate = new AdapterSettingListCertificate(this, listCertificate, false);
+	    list.setAdapter(adapterListCertificate);
     }
 
     public void btnBackClick(View v) {
@@ -52,7 +54,7 @@ public class SettingListCertificateActivity extends Activity {
         } else {
             tvNoCertInstalled.setVisibility(View.GONE);
         }
-        adapterListCertificate = new AdapterSettingListCertificate(this, listCertificate);
-        list.setAdapter(adapterListCertificate);
+	    adapterListCertificate.setListElementApply(listCertificate);
+	    adapterListCertificate.notifyDataSetChanged();
     }
 }

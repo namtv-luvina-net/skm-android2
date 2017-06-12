@@ -256,7 +256,12 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				@Override
 				public void onOkDismissMessage() {
 					if (activity instanceof MenuAcivity) {
-						((MenuAcivity)activity).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+						int sizeListElementApply = ((MenuAcivity)activity).getListElementApply().size();
+						if (sizeListElementApply == 1) {
+							((MenuAcivity) activity).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+						} else {
+							((MenuAcivity) activity).startListConfirmApplyFragment(SCROLL_TO_RIGHT);
+						}
 					} else {
 						StringList.GO_TO_LIST_APPLY = "1";
 						Intent intent = new Intent(activity, MenuAcivity.class);

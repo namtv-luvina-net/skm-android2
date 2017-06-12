@@ -35,7 +35,7 @@
 	<string name="label_uri">URI</string>
 	<string name="label_list_certificate">Certificate</string>
 	<!-- Settings-->
-    <string name="label_settings">Settings</string>
+    <string name="label_setting">Setting</string>
 	<string name="label_expired_notification">EXPIRED NOTIFICATION</string>
     <string name="label_before_expired_notification">BEFORE EXPIRATION NOTIFICATION</string>
     <string name="label_notification">Notification</string>
@@ -178,6 +178,8 @@
 	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Destination Email Address :</string>
 	<string name="title_expiration_date">Expiration :</string>
+	<string name="title_place">Storage destination :\u0020</string>
+	<string name="place">Storage destination</string>
 	<string name="title_host_name">Host name :</string>
 	<string name="title_http_port_number">HTTP port number :</string>
 	<string name="title_https_port_number">HTTPS port number :</string>
@@ -205,4 +207,5 @@
 	<string name="one_day_remaining">1 day remaining</string>
 	<string name="many_days_remaining">%s days remaining</string>
 	<string name="expiration_date">Expiration:\u0020</string>
+	<string name="close">Close</string>
 </resources>

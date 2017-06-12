@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/llSettingCert"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/padding_left_content_item_confirm_apply_tablet">
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/height_item_confirm_apply_tablet"
+			android:orientation="horizontal">
+
+		<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:padding="10dp">
+
+			<ImageView
+					android:id="@+id/icSettingCertificate"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:src="@drawable/ic_certificate"/>
+		</LinearLayout>
+
+		<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:gravity="center_vertical"
+				android:orientation="vertical"
+				android:layout_weight="10">
+
+			<TextView
+					android:id="@+id/txtStore"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textSize="15dp"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:textColor="@color/text_color"
+					android:layout_marginBottom="5dp"
+					android:text="Store"/>
+
+			<TextView
+					android:id="@+id/txtStatusCert"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textSize="15dp"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:textColor="@color/text_color"
+					android:layout_marginBottom="5dp"
+					android:text="Expired"/>
+
+			<TextView
+					android:id="@+id/txtCommonNameCert"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textSize="15dp"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:textColor="@color/text_color"
+					android:text="Common Name"/>
+		</LinearLayout>
+
+		<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:gravity="right|center"
+				android:layout_weight="3">
+
+			<TextView
+					android:layout_width="9dp"
+					android:layout_height="15dp"
+					android:gravity="center"
+					android:textSize="15dp"
+					android:background="@drawable/ic_arrow"
+					android:scaleType="centerInside"
+					android:layout_marginRight="15dp"
+					android:textColor="@color/text_color_inactive"/>
+		</LinearLayout>
+	</LinearLayout>
+
+	<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
+</LinearLayout>

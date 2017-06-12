@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_color_white">
+
+	<include layout="@layout/header_setting_tablet" />
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
+    <ExpandableListView
+        android:id="@+id/expand_detail_cert"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:groupIndicator="@null"
+        android:divider="@android:color/transparent"
+        android:childDivider="@android:color/transparent"
+        android:dividerHeight="1dp" />
+</LinearLayout>

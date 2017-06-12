@@ -3,9 +3,11 @@ package jp.co.soliton.keymanager.common;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -52,5 +54,21 @@ public class SoftKeyboardCtrl {
 	public static void hideKeyboard(View view, Context context) {
 		InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
+
+	public static boolean hideKeyboardIfTouchOutEditText(Activity activity, MotionEvent ev) {
+		View v = activity.getCurrentFocus();
+		if (v != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) &&
+				v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+			int scrcoords[] = new int[2];
+			v.getLocationOnScreen(scrcoords);
+			float x = ev.getRawX() + v.getLeft() - scrcoords[0];
+			float y = ev.getRawY() + v.getTop() - scrcoords[1];
+			if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
+				SoftKeyboardCtrl.hideKeyboard(activity);
+				v.clearFocus();
+			}
+		}
+		return true;
 	}
 }

@@ -9,16 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.activity.SettingDetailCertificateActivity;
+import jp.co.soliton.keymanager.activity.SettingTabletActivity;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.activity.SettingDetailCertificateActivity;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
 
 /**
  * Created by lexuanvinh on 03/04/2017.
@@ -27,11 +28,12 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
     // Param in AdapterListConfirmApply
     private List<ElementApply> listElementApply;
-
+	private boolean isTablet;
     /**
      * This Item View
      */
     public class ViewHolder {
+        public TextView txtStore;
         public TextView txtStatus;
         public TextView txtCN;
         public ImageView icCertificate;
@@ -44,12 +46,17 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
      * @param context
      * @param listElementApply
      */
-    public AdapterSettingListCertificate(Context context, List<ElementApply> listElementApply) {
+    public AdapterSettingListCertificate(Context context, List<ElementApply> listElementApply, boolean isTablet) {
         super(context, 0);
-        this.listElementApply = listElementApply;
+        setListElementApply(listElementApply);
+	    this.isTablet = isTablet;
     }
 
-    /**
+	public void setListElementApply(List<ElementApply> listElementApply) {
+		this.listElementApply = listElementApply;
+	}
+
+	/**
      * This method get size listElementApply
      *
      * @return
@@ -84,7 +91,12 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
         ViewHolder viewHolder = new ViewHolder();
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_setting_certificate, parent, false);
+	        if (isTablet) {
+		        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_setting_certificate_tablet, parent, false);
+	        }else {
+		        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_setting_certificate, parent, false);
+	        }
+            viewHolder.txtStore = (TextView) convertView.findViewById(R.id.txtStore);
             viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatusCert);
             viewHolder.txtCN = (TextView) convertView.findViewById(R.id.txtCommonNameCert);
             viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icSettingCertificate);
@@ -93,10 +105,10 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        ElementApply elementApply = listElementApply.get(position);
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-            Date expirationDate = formatter.parse(listElementApply.get(position).getExpirationDate());
+            Date expirationDate = formatter.parse(elementApply.getExpirationDate());
             Date date = new Date();
 
             //Comparing dates
@@ -106,46 +118,54 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
                 differenceDates++;
             }
 
-            if (differenceDates > 0 && differenceDates <= listElementApply.get(position).getNotiEnableBefore()) {
-                if (ValidateParams.isJPLanguage()) {
-                    viewHolder.txtStatus.setText("残り" + differenceDates + "日");
-                } else {
-                    if (differenceDates == 1) {
-                        viewHolder.txtStatus.setText(differenceDates + " day remaining");
-                    } else {
-                        viewHolder.txtStatus.setText(differenceDates + " days remaining");
-                    }
-                }
-            } else if (differenceDates > listElementApply.get(position).getNotiEnableBefore()){
-                if (ValidateParams.isJPLanguage()) {
-                    viewHolder.txtStatus.setText("有効期限：" + formatter.format(expirationDate).split(" ")[0]);
-                } else {
-                    viewHolder.txtStatus.setText("Expiration: " + formatter.format(expirationDate).split(" ")[0]);
-                }
+            if (differenceDates > 0 && differenceDates <= elementApply.getNotiEnableBefore()) {
+	            String status;
+	            if (differenceDates == 1) {
+		            status = getContext().getResources().getString(R.string.one_day_remaining);
+	            } else {
+		            status = String.format(getContext().getResources().getString(R.string.many_days_remaining), String.valueOf
+				            (differenceDates));
+	            }
+	            viewHolder.txtStatus.setText(status);
+            } else if (differenceDates > elementApply.getNotiEnableBefore()){
+	            viewHolder.txtStatus.setText(getContext().getResources().getString(R.string.expiration_date) + formatter
+			            .format(expirationDate).split(" ")[0]);
             } else {
-                if (ValidateParams.isJPLanguage()) {
-                    viewHolder.txtStatus.setText("有効期限切れ");
-                } else {
-                    viewHolder.txtStatus.setText("Expired");
-                }
+	            viewHolder.txtStatus.setText(getContext().getResources().getString(R.string.label_expired));
                 viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
             }
-            final int id = listElementApply.get(position).getId();
+            final int id = elementApply.getId();
             viewHolder.llSettingCert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), SettingDetailCertificateActivity.class);
-                    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
-                    getContext().startActivity(intent);
+	                if (isTablet) {
+		                ((SettingTabletActivity)getContext()).gotoDetailCertificatesSetting(String.valueOf(id), SCROLL_TO_LEFT);
+	                }else {
+		                Intent intent = new Intent(getContext(), SettingDetailCertificateActivity.class);
+		                intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
+		                getContext().startActivity(intent);
+	                }
                 }
             });
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        if (listElementApply.get(position).getUserId() != null) {
-            viewHolder.txtCN.setText(listElementApply.get(position).getcNValue());
+        if (elementApply.getUserId() != null) {
+            viewHolder.txtCN.setText(elementApply.getcNValue());
         }
+
+	    if (elementApply.getTarger() != null) {
+		    if (elementApply.getTarger().startsWith("WIFI")) {
+			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
+					    .main_apid_wifi));
+		    } else {
+			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
+					    .main_apid_vpn));
+		    }
+        }else {
+		    viewHolder.txtStore.setVisibility(View.GONE);
+	    }
         return convertView;
     }
 }
