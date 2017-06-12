@@ -8,10 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.*;
+import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
 
@@ -19,16 +20,13 @@ import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentSettingFragment extends Fragment {
+public class ContentSettingFragment extends TabletBaseSettingFragment {
 
 	private Activity activity;
-	private TextView titleScreen;
-	private TextView textViewBack;
 	private RelativeLayout menuSettingCertList;
 	private RelativeLayout menuSettingNotif;
 	private RelativeLayout menuSettingProduct;
 	private RelativeLayout menuSettingLibrary;
-	private View viewFragment;
 
 	public static Fragment newInstance() {
 		ContentSettingFragment f = new ContentSettingFragment();
@@ -45,7 +43,8 @@ public class ContentSettingFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_setting_tablet, container, false);
-		titleScreen = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		moreOption = (Button) viewFragment.findViewById(R.id.more_option);
 		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
 		menuSettingCertList = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingCertList);
 		menuSettingNotif = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingNotif);
@@ -55,58 +54,46 @@ public class ContentSettingFragment extends Fragment {
 	}
 
 	@Override
+	protected void setTextBtnBack() {
+		textViewBack.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+		RelativeLayout.LayoutParams llp = (RelativeLayout.LayoutParams) textViewBack.getLayoutParams();
+		llp.setMargins((int) (20*getActivity().getResources().getDisplayMetrics().density), llp.topMargin, llp
+				.rightMargin, llp.bottomMargin);
+		textViewBack.setLayoutParams(llp);
+		textViewBack.setText(R.string.close);
+	}
+
+	@Override
 	public void onResume() {
 		super.onResume();
 		setupControl();
 	}
 
 	public void setupControl() {
-		titleScreen.setText(getString(R.string.label_settings));
+		tvTitleHeader.setText(getString(R.string.label_setting));
 		menuSettingCertList.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(), SettingListCertificateActivity.class);
-//				startActivity(intent);
 				((SettingTabletActivity)getActivity()).gotoListCertificatesSetting(SCROLL_TO_LEFT);
 			}
 		});
 		menuSettingNotif.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(), NotificationSettingActivity.class);
-//				intent.putExtra(NotificationSettingActivity.KEY_NOTIF_MODE, NotificationSettingActivity.NotifModeEnum.ALL);
-//				startActivity(intent);
 				((SettingTabletActivity)getActivity()).gotoNotificationAllSetting(SCROLL_TO_LEFT);
 			}
 		});
 		menuSettingProduct.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(), ProductInfoActivity.class);
-//				startActivity(intent);
 				((SettingTabletActivity)getActivity()).gotoProductInfo(SCROLL_TO_LEFT);
 			}
 		});
 		menuSettingLibrary.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getActivity(), LibraryInfoActivity.class);
-//				startActivity(intent);
 				((SettingTabletActivity)getActivity()).gotoLibrary(SCROLL_TO_LEFT);
 			}
 		});
-
-		textViewBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getActivity().finish();
-			}
-		});
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		viewFragment = null;
 	}
 }

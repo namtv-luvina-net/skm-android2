@@ -1,17 +1,15 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.ItemChildDetailCertSetting;
 import jp.co.soliton.keymanager.R;
@@ -25,26 +23,21 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 import java.util.List;
 
-import static jp.co.soliton.keymanager.activity.SettingTabletActivity.RATIO_SCALE_WIDTH;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentDetailCertSettingFragment extends Fragment {
+public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment {
 
-	private View viewFragment;
-	private TextView tvTitleHeader;
-	private TextView textViewBack;
-	private Button moreOption;
 	private ExpandableListView expandableListView;
 	private List<String> listDataHeader;
 	private List<List<ItemChildDetailCertSetting>> listDataChild;
 	private AdapterSettingDetailCertificate adapterSettingDetailCertificate;
 	private ElementApplyManager elementMgr;
 	private String id;
-	ElementApply elementApply;
+	private ElementApply elementApply;
 
 	public static Fragment newInstance(String id) {
 		ContentDetailCertSettingFragment f = new ContentDetailCertSettingFragment();
@@ -62,6 +55,7 @@ public class ContentDetailCertSettingFragment extends Fragment {
 		tvTitleHeader.setText(elementApply.getcNValue());
 		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
 		moreOption = (Button) viewFragment.findViewById(R.id.more_option);
+		moreOption.setVisibility(View.VISIBLE);
 		expandableListView = (ExpandableListView) viewFragment.findViewById(R.id.expand_detail_cert);
 		adapterSettingDetailCertificate = new AdapterSettingDetailCertificate(getActivity(), true);
 		expandableListView.setAdapter(adapterSettingDetailCertificate);
@@ -79,14 +73,7 @@ public class ContentDetailCertSettingFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateTitle();
 		prepareData();
-		textViewBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getActivity().onBackPressed();
-			}
-		});
 		moreOption.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -124,7 +111,7 @@ public class ContentDetailCertSettingFragment extends Fragment {
 				elementMgr.deleteElementApply(id);
 				AlarmReceiver alarm = new AlarmReceiver();
 				alarm.setupNotification(getActivity());
-				getActivity().finish();
+				getActivity().onBackPressed();
 			}
 		});
 		dialog.show();
@@ -136,30 +123,5 @@ public class ContentDetailCertSettingFragment extends Fragment {
 		adapterSettingDetailCertificate.setListDataHeader(listDataHeader);
 		adapterSettingDetailCertificate.setListDataChild(listDataChild);
 		adapterSettingDetailCertificate.notifyDataSetChanged();
-	}
-
-	private void updateTitle() {
-		tvTitleHeader.measure(0, 0);
-		textViewBack.measure(0, 0);
-		viewFragment.measure(0, 0);
-		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		int width = (int) (displayMetrics.widthPixels * RATIO_SCALE_WIDTH);
-
-		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
-			textViewBack.setText("");
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-			params.addRule(RelativeLayout.RIGHT_OF, textViewBack.getId());
-			params.addRule(RelativeLayout.LEFT_OF, moreOption.getId());
-			tvTitleHeader.setLayoutParams(params);
-		}
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		viewFragment = null;
 	}
 }

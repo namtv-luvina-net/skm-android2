@@ -4,13 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.*;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
@@ -22,18 +24,20 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import java.util.Calendar;
 import java.util.Date;
 
+import static jp.co.soliton.keymanager.activity.SettingTabletActivity.STATUS_NOTIFICATION_ALL;
+import static jp.co.soliton.keymanager.activity.SettingTabletActivity.STATUS_NOTIFICATION_ONE;
+
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentNotificationSettingFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
+public class ContentNotificationSettingFragment extends TabletBaseSettingFragment implements CompoundButton.OnCheckedChangeListener{
 
 	public enum NotifModeEnum {
 		ALL, ONE;
 	}
-	private TextView textViewBack;
-	private TextView spaceRightTitle;
-	private TextView tvTitleHeader;
+	private static final int MAX_BEFORE_DATE = 120;
+	private static final int MIN_BEFORE_DATE = 1;
 	private Switch swNotifFlag;
 	private Switch swNotifBeforeFlag;
 	private TextView tvNotifBefore;
@@ -43,11 +47,7 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 	private NotifModeEnum mode;
 	private String idCert;
 	private ElementApplyManager elementMgr;
-	private static final int MAX_BEFORE_DATE = 120;
-	private static final int MIN_BEFORE_DATE = 1;
-	String numDateNotifBefore = "";
-	private View viewFragment;
-	private boolean goBack = false;
+	private String numDateNotifBefore = "";
 
 	/**
 	 * For Notification All
@@ -78,7 +78,6 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
 		tvTitleHeader.setText(getString(R.string.notif_setting));
 		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
-		spaceRightTitle = (TextView) viewFragment.findViewById(R.id.spaceRightTitle);
 		swNotifFlag = (Switch) viewFragment.findViewById(R.id.swNotifFlag);
 		swNotifBeforeFlag = (Switch) viewFragment.findViewById(R.id.swNotifBeforeFlag);
 		tvNotifBefore = (TextView) viewFragment.findViewById(R.id.tvNotifBefore);
@@ -102,10 +101,18 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 		swNotifBeforeFlag.setOnCheckedChangeListener(this);
 	}
 
+	@Override
+	protected void setTextBtnBack() {
+		if (NotifModeEnum.ONE == mode) {
+			textViewBack.setText(R.string.back);
+		}else {
+			textViewBack.setText(R.string.label_setting);
+		}
+	}
+
 	public void setupControl() {
 		if (NotifModeEnum.ONE == mode) {
 			ElementApply element = elementMgr.getElementApply(idCert);
-			textViewBack.setText(R.string.back);
 			swNotifFlag.setChecked(element.isNotiEnableFlag());
 			swNotifBeforeFlag.setChecked(element.isNotiEnableBeforeFlag());
 			tvNotifBefore.setText(String.valueOf(element.getNotiEnableBefore()));
@@ -126,7 +133,6 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 				LogCtrl.getInstance(getActivity()).loggerError(ex.toString());
 			}
 		} else {
-			textViewBack.setText(R.string.label_settings);
 			swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getActivity(), StringList.KEY_NOTIF_ENABLE_FLAG));
 			swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getActivity(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
 			tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefIntegerWithDefaultValue(getActivity(), StringList
@@ -134,7 +140,6 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 
 			updateEnableViewExpired(swNotifBeforeFlag.isChecked());
 		}
-		updateHeader();
 
 		btnDayBeforePlus.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -179,32 +184,6 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 				return false;
 			}
 		});
-
-		textViewBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				goBack = true;
-				getActivity().onBackPressed();
-			}
-		});
-	}
-
-	private void updateHeader() {
-		tvTitleHeader.measure(0, 0);
-		textViewBack.measure(0, 0);
-		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		int width = displayMetrics.widthPixels;
-
-		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
-			textViewBack.setText("");
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-			params.addRule(RelativeLayout.RIGHT_OF, textViewBack.getId());
-			params.addRule(RelativeLayout.LEFT_OF, spaceRightTitle.getId());
-			tvTitleHeader.setLayoutParams(params);
-		}
 	}
 
 	@Override
@@ -227,7 +206,8 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 	}
 
 	public void btnSaveNotifClick() {
-		if (goBack) {
+		int currentStatus = ((SettingTabletActivity)getActivity()).getCurrentStatus();
+		if (currentStatus != STATUS_NOTIFICATION_ONE && currentStatus != STATUS_NOTIFICATION_ALL) {
 			return;
 		}
 		if (!isValidateInput()) {
@@ -310,11 +290,5 @@ public class ContentNotificationSettingFragment extends Fragment implements Comp
 	@NonNull
 	private String getTextNotifBefore() {
 		return tvNotifBefore.getText().toString().trim();
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		viewFragment = null;
 	}
 }

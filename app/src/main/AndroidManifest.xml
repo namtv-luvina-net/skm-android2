@@ -152,7 +152,7 @@
         <activity
             android:name=".activity.SettingTabletActivity"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.UserDialog">
         </activity>
         <activity

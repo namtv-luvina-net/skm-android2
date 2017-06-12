@@ -35,7 +35,7 @@
 	<string name="label_uri">URI</string>
 	<string name="label_list_certificate">Certificate</string>
 	<!-- Settings-->
-    <string name="label_settings">Settings</string>
+    <string name="label_setting">Setting</string>
 	<string name="label_expired_notification">EXPIRED NOTIFICATION</string>
     <string name="label_before_expired_notification">BEFORE EXPIRATION NOTIFICATION</string>
     <string name="label_notification">Notification</string>
@@ -207,4 +207,5 @@
 	<string name="one_day_remaining">1 day remaining</string>
 	<string name="many_days_remaining">%s days remaining</string>
 	<string name="expiration_date">Expiration:\u0020</string>
+	<string name="close">Close</string>
 </resources>

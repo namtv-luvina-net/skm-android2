@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,7 +42,7 @@ public class SettingActivity  extends Activity {
     }
 
     public void setupControl() {
-        titleScreen.setText(getString(R.string.label_settings));
+        titleScreen.setText(getString(R.string.label_setting));
         menuSettingCertList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

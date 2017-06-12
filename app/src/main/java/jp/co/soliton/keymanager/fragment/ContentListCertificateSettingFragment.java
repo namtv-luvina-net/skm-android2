@@ -19,16 +19,13 @@ import java.util.List;
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentListCertificateSettingFragment extends Fragment {
+public class ContentListCertificateSettingFragment extends TabletBaseSettingFragment {
 
-	private View viewFragment;
 	private ListView list;
 	private AdapterSettingListCertificate adapterListCertificate;
 	private ElementApplyManager elementMgr;
 	private List<ElementApply> listCertificate;
-	private TextView title;
 	private TextView tvNoCertInstalled;
-	private TextView textViewBack;
 
 	public static Fragment newInstance() {
 		ContentListCertificateSettingFragment f = new ContentListCertificateSettingFragment();
@@ -51,8 +48,8 @@ public class ContentListCertificateSettingFragment extends Fragment {
 		tvNoCertInstalled = (TextView) viewFragment.findViewById(R.id.tvNoCertInstalled);
 		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
 		list = (ListView) viewFragment.findViewById(R.id.listSettingCert);
-		title = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
-		title.setText(getString(R.string.list_cert));
+		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		tvTitleHeader.setText(getString(R.string.list_cert));
 		return viewFragment;
 	}
 
@@ -70,17 +67,5 @@ public class ContentListCertificateSettingFragment extends Fragment {
 			adapterListCertificate.setListElementApply(listCertificate);
 			adapterListCertificate.notifyDataSetChanged();
 		}
-		textViewBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				getActivity().onBackPressed();
-			}
-		});
-	}
-
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		viewFragment = null;
 	}
 }

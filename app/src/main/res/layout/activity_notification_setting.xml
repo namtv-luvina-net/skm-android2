@@ -20,7 +20,7 @@
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/ic_back2"
             android:gravity="center_vertical"
-            android:text="@string/label_settings"
+            android:text="@string/label_setting"
             android:onClick="btnBackClick"
             android:clickable="true"
             android:textSize="@dimen/text_size_value"

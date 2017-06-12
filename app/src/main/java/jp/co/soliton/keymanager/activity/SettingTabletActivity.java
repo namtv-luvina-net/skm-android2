@@ -5,11 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.fragment.*;
 
@@ -28,31 +23,16 @@ public class SettingTabletActivity extends FragmentActivity {
 	public static final int STATUS_LIBRARY = 6;
 	public static final int STATUS_NOTIFICATION_ONE = 7;
 	public static final float RATIO_SCALE_WIDTH = 0.6f;
-	public static final float RATIO_SCALE_HEIGHT = 0.8f;
 	private int currentStatus;
 	private String currentIdDetail = "";
-
 	Fragment fragmentContent;
 	private FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    fragmentManager = getSupportFragmentManager();
-        setContentView(R.layout.activity_setting_tablet);
-	    initViewLikeDialog();
+	    setContentView(R.layout.activity_setting_tablet);
 	    gotoMenuSetting(NOT_SCROLL);
-    }
-
-    private void initViewLikeDialog() {
-	    DisplayMetrics displayMetrics = new DisplayMetrics();
-	    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-	    int height = displayMetrics.heightPixels;
-	    int width = displayMetrics.widthPixels;
-	    WindowManager.LayoutParams params = getWindow().getAttributes();
-	    params.height = (int) (height*RATIO_SCALE_HEIGHT);
-	    params.width = (int) (width*RATIO_SCALE_WIDTH);
-	    this.getWindow().setAttributes(params);
-	    this.getWindow().getDecorView().setBackgroundResource(R.drawable.border_setting_tablet);
     }
 
     public void gotoMenuSetting(int typeScroll) {
@@ -116,10 +96,9 @@ public class SettingTabletActivity extends FragmentActivity {
 		}
 	}
 
-	@Override
-    protected void onResume() {
-        super.onResume();
-    }
+	public int getCurrentStatus() {
+		return currentStatus;
+	}
 
 	private void changeFragmentContent(int typeScroll) {
 		switch (typeScroll) {
@@ -156,11 +135,5 @@ public class SettingTabletActivity extends FragmentActivity {
 		fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
 		fragmentTransaction.replace(R.id.fragment_content_tablet, fragmentContent);
 		fragmentTransaction.commit();
-	}
-
-	@Override
-	protected void onUserLeaveHint() {
-//		finish();
-		super.onUserLeaveHint();
 	}
 }

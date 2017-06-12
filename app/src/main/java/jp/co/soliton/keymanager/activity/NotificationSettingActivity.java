@@ -147,7 +147,7 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 		        LogCtrl.getInstance(getApplicationContext()).loggerError(ex.toString());
             }
         } else {
-            textViewBack.setText(R.string.label_settings);
+            textViewBack.setText(R.string.label_setting);
             swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG));
             swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
             tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefIntegerWithDefaultValue(getApplicationContext(), StringList
