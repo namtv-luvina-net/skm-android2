@@ -68,6 +68,8 @@
 						android:layout_weight="5"
 						android:paddingLeft="@dimen/margin_item_menu"
 						android:textSize="@dimen/tv_button_input_tablet"
+						android:ellipsize="end"
+						android:maxLines="1"
 						android:text="anhvt"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"

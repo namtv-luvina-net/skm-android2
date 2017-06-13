@@ -50,12 +50,11 @@ public class MenuAcivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    isTablet = getResources().getBoolean(R.bool.isTablet);
-	    elementMgr = new ElementApplyManager(this);
 	    setContentView(R.layout.activity_menu);
-	    setOrientation();
+	    elementMgr = new ElementApplyManager(this);
 	    fragmentManager = getSupportFragmentManager();
-
 	    String id_update = getIdUpdate();
+	    checkGoToConfirmIfNeed();
 	    if (!ValidateParams.nullOrEmpty(id_update)) {
 			startNotifUpdateFragment(id_update, NOT_SCROLL);
 	    }else {
@@ -64,12 +63,13 @@ public class MenuAcivity extends FragmentActivity {
 				    gotoMenuTablet();
 			    } else {
 				    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
-				    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
+				    if (savedInstanceState.containsKey("fragmentLeft")) {
+					    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
+				    }
 				    currentStatus = savedInstanceState.getInt("currentStatus");
 			    }
 		    }
 	    }
-	    checkGoToConfirmIfNeed();
     }
 
     private String getIdUpdate() {
@@ -93,15 +93,9 @@ public class MenuAcivity extends FragmentActivity {
 		if (isTablet) {
 			savedInstanceState.putInt("currentStatus", currentStatus);
 			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentContent", fragmentContent);
-			getSupportFragmentManager().putFragment(savedInstanceState, "fragmentLeft", fragmentLeft);
-		}
-	}
-
-	private void setOrientation() {
-		if (!isTablet) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		} else {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+			if (fragmentLeft != null) {
+				getSupportFragmentManager().putFragment(savedInstanceState, "fragmentLeft", fragmentLeft);
+			}
 		}
 	}
 
@@ -129,12 +123,12 @@ public class MenuAcivity extends FragmentActivity {
 					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
 				}
 			}else if (currentStatus == NOTIF_UPDATE_STATUS) {
-				super.onBackPressed();
+				finish();
 			} else {
 				gotoMenuTablet();
 			}
 		} else {
-			super.onBackPressed();
+			finish();
 		}
 	}
 

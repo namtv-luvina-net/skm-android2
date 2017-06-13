@@ -453,7 +453,7 @@ public class ElementApply implements Serializable {
 			public int compare(ElementApply o1, ElementApply o2) {
 				Date date1 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o1.getExpirationDate().replace("/", "-"));
 				Date date2 = DateUtils.convertSringToDate("yyyy-MM-dd HH:mm:ss", o2.getExpirationDate().replace("/", "-"));
-				return date1.before(date2) ? 1 : -1;
+				return date1.before(date2) ? -1 : 1;
 			}
 		});
 	}
