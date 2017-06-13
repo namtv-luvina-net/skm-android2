@@ -151,8 +151,10 @@
         </activity>
         <activity
             android:name=".activity.SettingTabletActivity"
-            android:configChanges="orientation"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="sensorLandscape"
+            android:isScrollContainer="true"
             android:theme="@style/Theme.UserDialog">
         </activity>
         <activity

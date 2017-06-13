@@ -100,6 +100,11 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 		});
 	}
 
+	@Override
+	protected void setTextBtnBack() {
+		textViewBack.setText(getString(R.string.list_cert));
+	}
+
 	private void confirmDeleteCert() {
 		final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
 		dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)

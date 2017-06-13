@@ -5,10 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.*;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.*;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
@@ -17,6 +14,7 @@ import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
+import jp.co.soliton.keymanager.common.DaysBeforeNotifEditText;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -31,7 +29,8 @@ import static jp.co.soliton.keymanager.activity.SettingTabletActivity.STATUS_NOT
  * Created by nguyenducdat on 4/25/2017.
  */
 
-public class ContentNotificationSettingFragment extends TabletBaseSettingFragment implements CompoundButton.OnCheckedChangeListener{
+public class ContentNotificationSettingFragment extends TabletBaseSettingFragment implements CompoundButton
+		.OnCheckedChangeListener, SoftKeyboardCtrl.DetectsListenner{
 
 	public enum NotifModeEnum {
 		ALL, ONE;
@@ -40,7 +39,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	private static final int MIN_BEFORE_DATE = 1;
 	private Switch swNotifFlag;
 	private Switch swNotifBeforeFlag;
-	private TextView tvNotifBefore;
+	private DaysBeforeNotifEditText tvNotifBefore;
 	private Button btnDayBeforeMinus;
 	private Button btnDayBeforePlus;
 
@@ -48,6 +47,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	private String idCert;
 	private ElementApplyManager elementMgr;
 	private String numDateNotifBefore = "";
+	private boolean isShowingKeyboard;
 
 	/**
 	 * For Notification All
@@ -80,7 +80,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
 		swNotifFlag = (Switch) viewFragment.findViewById(R.id.swNotifFlag);
 		swNotifBeforeFlag = (Switch) viewFragment.findViewById(R.id.swNotifBeforeFlag);
-		tvNotifBefore = (TextView) viewFragment.findViewById(R.id.tvNotifBefore);
+		tvNotifBefore = (DaysBeforeNotifEditText) viewFragment.findViewById(R.id.tvNotifBefore);
 		btnDayBeforeMinus = (Button) viewFragment.findViewById(R.id.btnDayBeforeMinus);
 		btnDayBeforePlus = (Button) viewFragment.findViewById(R.id.btnDayBeforePlus);
 		elementMgr = new ElementApplyManager(getActivity());
@@ -90,6 +90,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 				return SoftKeyboardCtrl.hideKeyboardIfTouchOutEditText(getActivity(), event);
 			}
 		});
+		SoftKeyboardCtrl.addListenner(viewFragment, this);
 		return viewFragment;
 	}
 
@@ -99,6 +100,15 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 		setupControl();
 		swNotifFlag.setOnCheckedChangeListener(this);
 		swNotifBeforeFlag.setOnCheckedChangeListener(this);
+		tvNotifBefore.setOnKeyboardHidden(new DaysBeforeNotifEditText.OnKeyboardHidden() {
+			@Override
+			public void onKeyboardHidden() {
+				View v = getActivity().getCurrentFocus();
+				if (v != null && v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+					v.clearFocus();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -290,5 +300,20 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	@NonNull
 	private String getTextNotifBefore() {
 		return tvNotifBefore.getText().toString().trim();
+	}
+
+	@Override
+	public void onSoftKeyboardShown(boolean isShowing) {
+		if (!isShowing) {
+			if (isShowingKeyboard) {
+				View v = getActivity().getCurrentFocus();
+				if (v != null && v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
+					v.clearFocus();
+				}
+				isShowingKeyboard = false;
+			}
+		} else {
+			isShowingKeyboard = true;
+		}
 	}
 }
