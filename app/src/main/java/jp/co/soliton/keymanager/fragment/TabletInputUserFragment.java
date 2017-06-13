@@ -165,7 +165,8 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			return;
 		}
 		if (!ValidateParams.nullOrEmpty(update_apply)) {
-			txtUserId.setEnabled(false);
+			txtUserId.setTag(txtUserId.getKeyListener());
+			txtUserId.setKeyListener(null);
 			txtUserId.setBackgroundColor(android.R.color.transparent);
 		}
 		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getUserId())) {

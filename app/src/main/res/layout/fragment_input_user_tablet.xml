@@ -52,18 +52,20 @@
 				<EditText
 						android:id="@+id/txtUserId"
 						android:layout_width="match_parent"
+						android:ellipsize="end"
 						android:maxLines="1"
-						android:textColor="@color/text_color"
+						android:scrollHorizontally="true"
 						android:singleLine="true"
+						android:textColor="@color/text_color"
 						android:paddingLeft="@dimen/margin_item_menu"
 						android:paddingRight="@dimen/margin_item_menu"
 						android:maxLength="64"
 						android:imeOptions="actionNext"
 						android:gravity="center_vertical"
-						android:inputType="text|textVisiblePassword|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
 						android:textSize="@dimen/text_size_input_tablet"
 						android:layout_height="@dimen/height_item_input_host_tablet"/>
+
 				<EditText
 						android:id="@+id/txtPassword"
 						android:layout_below="@id/txtUserId"

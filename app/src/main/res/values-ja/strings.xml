@@ -184,7 +184,7 @@
 	<string name="title_input_email">"メールアドレス : "</string>
 	<string name="title_input_host_name">ホスト名を入力 :</string>
 	<string name="title_list_certificate">証明書を選択</string>
-	<string name="title_password">"パスワード : "</string>
+	<string name="title_password">"パスワード :"</string>
 	<string name="title_port_number">ポート番号 :</string>
 	<string name="title_reason_for_apply">申請理由 :</string>
 	<string name="title_sn">S/N :</string>

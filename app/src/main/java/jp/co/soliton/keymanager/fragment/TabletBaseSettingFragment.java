@@ -49,8 +49,8 @@ public class TabletBaseSettingFragment extends Fragment {
 		if (tvTitleHeader.getMeasuredWidth() > width - ((textViewBack.getMeasuredWidth() + paramBackBtn.leftMargin) * 2)) {
 			textViewBack.setText("");
 			textViewBack.measure(0, 0);
-
-			int tmp = textViewBack.getMeasuredWidth() + + paramBackBtn.leftMargin;
+			int tmp = paramBackBtn.leftMargin * 3;
+			tmp += textViewBack.getMeasuredWidth();
 			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvTitleHeader.getLayoutParams();
 			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 			params.setMargins(tmp, params.topMargin, tmp, params.bottomMargin);

@@ -12,29 +12,20 @@ import android.view.inputmethod.InputMethodManager;
 public class DaysBeforeNotifEditText extends AppCompatEditText {
     OnKeyboardHidden mOnKeyboardHidden;
 
-    public DaysBeforeNotifEditText(Context context)
-    {
+    public DaysBeforeNotifEditText(Context context) {
         super(context);
-        init();
     }
 
-    public DaysBeforeNotifEditText(Context context, AttributeSet attrs)
-    {
+    public DaysBeforeNotifEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
-    public DaysBeforeNotifEditText(Context context, AttributeSet attrs, int defStyle)
-    {
+    public DaysBeforeNotifEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
     }
-
-    private void init()
-    { }
 
     public interface OnKeyboardHidden {
-        public void onKeyboardHidden();
+        void onKeyboardHidden();
     }
 
     public void setOnKeyboardHidden(OnKeyboardHidden action) {
@@ -45,13 +36,11 @@ public class DaysBeforeNotifEditText extends AppCompatEditText {
     public boolean onKeyPreIme(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
             // User has pressed Back key. So hide the keyboard
-            InputMethodManager imm = (InputMethodManager) getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-
-            imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
+	        SoftKeyboardCtrl.hideKeyboard(this, getContext());
 	        if (mOnKeyboardHidden != null) {
 		        mOnKeyboardHidden.onKeyboardHidden();
 	        }
+	        this.clearFocus();
         }
         return super.dispatchKeyEvent(event);
     }

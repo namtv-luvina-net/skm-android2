@@ -30,7 +30,7 @@ import static jp.co.soliton.keymanager.activity.SettingTabletActivity.STATUS_NOT
  */
 
 public class ContentNotificationSettingFragment extends TabletBaseSettingFragment implements CompoundButton
-		.OnCheckedChangeListener, SoftKeyboardCtrl.DetectsListenner{
+		.OnCheckedChangeListener{
 
 	public enum NotifModeEnum {
 		ALL, ONE;
@@ -47,7 +47,6 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	private String idCert;
 	private ElementApplyManager elementMgr;
 	private String numDateNotifBefore = "";
-	private boolean isShowingKeyboard;
 
 	/**
 	 * For Notification All
@@ -90,7 +89,6 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 				return SoftKeyboardCtrl.hideKeyboardIfTouchOutEditText(getActivity(), event);
 			}
 		});
-		SoftKeyboardCtrl.addListenner(viewFragment, this);
 		return viewFragment;
 	}
 
@@ -100,15 +98,6 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 		setupControl();
 		swNotifFlag.setOnCheckedChangeListener(this);
 		swNotifBeforeFlag.setOnCheckedChangeListener(this);
-		tvNotifBefore.setOnKeyboardHidden(new DaysBeforeNotifEditText.OnKeyboardHidden() {
-			@Override
-			public void onKeyboardHidden() {
-				View v = getActivity().getCurrentFocus();
-				if (v != null && v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
-					v.clearFocus();
-				}
-			}
-		});
 	}
 
 	@Override
@@ -300,20 +289,5 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	@NonNull
 	private String getTextNotifBefore() {
 		return tvNotifBefore.getText().toString().trim();
-	}
-
-	@Override
-	public void onSoftKeyboardShown(boolean isShowing) {
-		if (!isShowing) {
-			if (isShowingKeyboard) {
-				View v = getActivity().getCurrentFocus();
-				if (v != null && v instanceof EditText && !v.getClass().getName().startsWith("android.webkit.")) {
-					v.clearFocus();
-				}
-				isShowingKeyboard = false;
-			}
-		} else {
-			isShowingKeyboard = true;
-		}
 	}
 }
