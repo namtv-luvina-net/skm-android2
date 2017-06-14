@@ -21,6 +21,7 @@ public class SettingListCertificateActivity extends Activity {
     private AdapterSettingListCertificate adapterListCertificate;
     private ElementApplyManager elementMgr;
     private List<ElementApply> listCertificate;
+    private TextView textViewBack;
     private TextView title;
     private TextView tvNoCertInstalled;
 
@@ -29,8 +30,10 @@ public class SettingListCertificateActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_list_certificate);
         title = (TextView) findViewById(R.id.tvTitleHeader);
-        tvNoCertInstalled = (TextView) findViewById(R.id.tvNoCertInstalled);
-        title.setText(getString(R.string.list_cert));
+	    title.setText(getString(R.string.list_cert));
+	    textViewBack = (TextView) findViewById(R.id.textViewBack);
+	    textViewBack.setText(getString(R.string.label_setting));
+	    tvNoCertInstalled = (TextView) findViewById(R.id.tvNoCertInstalled);
         list = (ListView)findViewById(R.id.listSettingCert);
         elementMgr = new ElementApplyManager(getApplicationContext());
 	    listCertificate = elementMgr.getAllCertificate();
