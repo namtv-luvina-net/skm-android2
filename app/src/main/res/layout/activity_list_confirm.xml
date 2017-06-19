@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@drawable/background"
               android:orientation="vertical">
 	<include layout="@layout/layout_header"/>
 
@@ -10,7 +11,6 @@
 			android:layout_height="match_parent"
 			android:layout_width="match_parent"
 			android:divider="@color/background_color_white"
-			android:dividerHeight="1dp"
-			android:background="@drawable/background"/>
+			android:dividerHeight="1dp" />
 
 </LinearLayout>
