@@ -1,20 +1,16 @@
 package jp.co.soliton.keymanager.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import jp.co.soliton.keymanager.R;
 
 /**
  * Created by luongdolong on 3/31/2017.
  */
 
-public class SettingActivity  extends Activity {
-    private TextView titleScreen;
+public class SettingActivity  extends BaseSettingPhoneActivity {
     private RelativeLayout menuSettingCertList;
     private RelativeLayout menuSettingNotif;
     private RelativeLayout menuSettingProduct;
@@ -24,7 +20,6 @@ public class SettingActivity  extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        titleScreen = (TextView) findViewById(R.id.tvTitleHeader);
         menuSettingCertList = (RelativeLayout) findViewById(R.id.menuSettingCertList);
         menuSettingNotif = (RelativeLayout) findViewById(R.id.menuSettingNotif);
         menuSettingProduct = (RelativeLayout) findViewById(R.id.menuSettingProduct);
@@ -37,12 +32,9 @@ public class SettingActivity  extends Activity {
         setupControl();
     }
 
-    public void btnBackClick(View v) {
-        finish();
-    }
-
     public void setupControl() {
-        titleScreen.setText(getString(R.string.label_setting));
+	    textViewBack.setText(getString(R.string.back));
+        tvTitleHeader.setText(getString(R.string.label_setting));
         menuSettingCertList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

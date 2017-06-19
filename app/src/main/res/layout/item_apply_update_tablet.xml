@@ -1,97 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-	android:orientation="vertical">
+              android:id="@+id/llSettingCert"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/padding_left_content_item_confirm_apply_tablet">
 
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_item_confirm_apply_tablet"
-			android:orientation="vertical"
-			android:paddingLeft="@dimen/padding_left_content_item_confirm_apply_tablet">
+			android:orientation="horizontal">
 
 		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="0dp"
-				android:layout_weight="1"
-				android:layout_marginTop="@dimen/margin_top_item_apply_update_tablet"
-				android:layout_marginBottom="@dimen/margin_bottom_item_apply_update_tablet"
-				android:orientation="horizontal">
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:padding="10dp">
 
 			<ImageView
 					android:id="@+id/icCertificate"
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:layout_weight="46"
-					android:layout_gravity="center"
-					android:paddingLeft="@dimen/margin_left_thumb_item_apply_update_tablet"
-					android:paddingRight="@dimen/margin_left_thumb_item_apply_update_tablet"
-					android:scaleType="centerCrop"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
 					android:src="@drawable/ic_expired"/>
-
-			<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="match_parent"
-					android:gravity="center_vertical"
-					android:orientation="horizontal"
-					android:layout_marginRight="@dimen/margin_right_item_apply_update_tablet"
-					android:layout_marginLeft="@dimen/margin_item_menu"
-					android:layout_weight="221" >
-				<RelativeLayout
-						android:layout_width="0dp"
-						android:layout_height="match_parent"
-						android:layout_weight="1"
-						android:layout_marginRight="@dimen/margin_right_item_apply_update_tablet">
-
-					<android.support.v4.widget.Space
-							android:id="@+id/space_center"
-							android:layout_centerVertical="true"
-							android:layout_width="1dp"
-							android:layout_height="@dimen/pading_content_item_apid"/>
-
-					<TextView
-							android:id="@+id/titleDateInfo"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/title_expiration_date"
-							android:layout_above="@+id/space_center"
-							android:textColor="@color/text_color"
-							android:textSize="@dimen/text_size_btn_content_tablet"/>
-
-					<TextView
-							android:id="@+id/titleCN"
-							android:layout_width="fill_parent"
-							android:layout_height="wrap_content"
-							android:textSize="@dimen/text_size_btn_content_tablet"
-							android:ellipsize="end"
-							android:singleLine="true"
-							android:textColor="@color/text_color"
-							android:text="name"
-							android:layout_below="@+id/space_center"
-							android:layout_alignParentLeft="true"
-							android:layout_alignParentStart="true"/>
-
-				</RelativeLayout>
-
-				<TextView
-						android:id="@+id/btnApplyUpdate"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_centerVertical="true"
-						android:layout_alignParentRight="true"
-						android:paddingLeft="@dimen/margin_item_menu"
-						android:paddingRight="@dimen/margin_item_menu"
-						android:paddingTop="3dp"
-						android:paddingBottom="5dp"
-						android:text="@string/btn_update"
-						android:textSize="@dimen/text_size_btn_content_tablet"
-						android:textColor="@color/text_color_active"/>
-			</LinearLayout>
 		</LinearLayout>
 
-		<FrameLayout
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:background="#c9caca"/>
+		<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:gravity="center_vertical"
+				android:orientation="vertical"
+				android:layout_weight="10">
+
+			<TextView
+					android:id="@+id/txtStore"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textSize="15dp"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:textColor="@color/text_color"
+					android:layout_marginBottom="5dp"
+					android:text="Store"/>
+
+			<TextView
+					android:id="@+id/titleDateInfo"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textSize="15dp"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:textColor="@color/text_color"
+					android:layout_marginBottom="5dp"
+					android:text="Expired"/>
+
+			<TextView
+					android:id="@+id/titleCN"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textSize="15dp"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:textColor="@color/text_color"
+					android:text="Common Name"/>
+		</LinearLayout>
+
+		<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:layout_weight="3">
+
+			<TextView
+					android:id="@+id/btnApplyUpdate"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingLeft="@dimen/margin_item_menu"
+					android:paddingRight="@dimen/margin_item_menu"
+					android:paddingTop="3dp"
+					android:paddingBottom="5dp"
+					android:text="@string/btn_update"
+					android:textSize="@dimen/text_size_btn_content_tablet"
+					android:textColor="@color/text_color_active"/>
+		</LinearLayout>
 	</LinearLayout>
+
+	<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
 </LinearLayout>

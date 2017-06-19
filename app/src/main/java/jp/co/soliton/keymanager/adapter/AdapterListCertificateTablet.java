@@ -32,6 +32,7 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
      * This Item View
      */
     public class ViewHolder {
+        public TextView txtStore;
         public TextView titleDateInfo;
         public TextView titleCN;
         public TextView btnApplyUpdate;
@@ -91,10 +92,11 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_apply_update_tablet, parent, false);
-            viewHolder.titleDateInfo = (TextView) convertView.findViewById(R.id.titleDateInfo);
-            viewHolder.titleCN = (TextView) convertView.findViewById(R.id.titleCN);
-            viewHolder.btnApplyUpdate = (TextView) convertView.findViewById(R.id.btnApplyUpdate);
-            viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icCertificate);
+	        viewHolder.txtStore = (TextView) convertView.findViewById(R.id.txtStore);
+	        viewHolder.titleDateInfo = (TextView) convertView.findViewById(R.id.titleDateInfo);
+	        viewHolder.titleCN = (TextView) convertView.findViewById(R.id.titleCN);
+	        viewHolder.btnApplyUpdate = (TextView) convertView.findViewById(R.id.btnApplyUpdate);
+	        viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icCertificate);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -141,6 +143,18 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
 		    if (strCN != null) {
 			    viewHolder.titleCN.setText(strCN);
 		    }
+		    if (elementApply.getTarger() != null) {
+			    if (elementApply.getTarger().startsWith("WIFI")) {
+				    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
+						    .main_apid_wifi));
+			    } else {
+				    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
+						    .main_apid_vpn));
+			    }
+		    }else {
+			    viewHolder.txtStore.setVisibility(View.GONE);
+		    }
+
 		    viewHolder.btnApplyUpdate.setOnClickListener(new View.OnClickListener() {
 			    @Override
 			    public void onClick(View v) {

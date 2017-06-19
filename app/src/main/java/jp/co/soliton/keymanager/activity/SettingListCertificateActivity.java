@@ -1,6 +1,5 @@
 package jp.co.soliton.keymanager.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -16,23 +15,17 @@ import java.util.List;
  * Created by luongdolong on 4/3/2017.
  */
 
-public class SettingListCertificateActivity extends Activity {
+public class SettingListCertificateActivity extends BaseSettingPhoneActivity {
     private ListView list;
     private AdapterSettingListCertificate adapterListCertificate;
     private ElementApplyManager elementMgr;
     private List<ElementApply> listCertificate;
-    private TextView textViewBack;
-    private TextView title;
     private TextView tvNoCertInstalled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_list_certificate);
-        title = (TextView) findViewById(R.id.tvTitleHeader);
-	    title.setText(getString(R.string.list_cert));
-	    textViewBack = (TextView) findViewById(R.id.textViewBack);
-	    textViewBack.setText(getString(R.string.label_setting));
 	    tvNoCertInstalled = (TextView) findViewById(R.id.tvNoCertInstalled);
         list = (ListView)findViewById(R.id.listSettingCert);
         elementMgr = new ElementApplyManager(getApplicationContext());
@@ -41,16 +34,14 @@ public class SettingListCertificateActivity extends Activity {
 	    list.setAdapter(adapterListCertificate);
     }
 
-    public void btnBackClick(View v) {
-        finish();
-    }
-
     /**
      * Update List Certificate
      */
     @Override
     protected void onResume() {
         super.onResume();
+	    tvTitleHeader.setText(getString(R.string.list_cert));
+	    textViewBack.setText(getString(R.string.label_setting));
         listCertificate = elementMgr.getAllCertificate();
         if (listCertificate == null || listCertificate.isEmpty()) {
             tvNoCertInstalled.setVisibility(View.VISIBLE);

@@ -29,6 +29,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
      * This Item View
      */
     public class ViewHolder {
+        public TextView txtStore;
         public TextView txtStatus;
         public TextView txtCN;
         public TextView btnUpdate;
@@ -83,6 +84,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_certificate, parent, false);
+	        viewHolder.txtStore = (TextView) convertView.findViewById(R.id.txtStore);
             viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatus);
             viewHolder.txtCN = (TextView) convertView.findViewById(R.id.txtCN);
             viewHolder.btnUpdate = (TextView) convertView.findViewById(R.id.btnUpdate);
@@ -91,10 +93,11 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        ElementApply elementApply = listElementApply.get(position);
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-            Date expirationDate = formatter.parse(listElementApply.get(position).getExpirationDate());
+            Date expirationDate = formatter.parse(elementApply.getExpirationDate());
             Date date = new Date();
 
             //Comparing dates
@@ -104,7 +107,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                 differenceDates++;
             }
 
-            if (differenceDates > 0 && differenceDates <= listElementApply.get(position).getNotiEnableBefore()) {
+            if (differenceDates > 0 && differenceDates <= elementApply.getNotiEnableBefore()) {
 	            String status;
 	            if (differenceDates == 1) {
 		            status = context.getResources().getString(R.string.one_day_remaining);
@@ -115,7 +118,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                 viewHolder.txtStatus.setText(status);
                 viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
-            } else if (differenceDates > listElementApply.get(position).getNotiEnableBefore()){
+            } else if (differenceDates > elementApply.getNotiEnableBefore()){
                 viewHolder.txtStatus.setText(context.getResources().getString(R.string.expiration_date) + formatter
 		                .format(expirationDate).split(" ")[0]);
 
@@ -127,8 +130,8 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
                 viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
             }
-            final int id = listElementApply.get(position).getId();
-	        final String userId = listElementApply.get(position).getUserId();
+            final int id = elementApply.getId();
+	        final String userId = elementApply.getUserId();
             viewHolder.btnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -145,9 +148,20 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        if (listElementApply.get(position).getUserId() != null) {
-            viewHolder.txtCN.setText(listElementApply.get(position).getcNValue());
+        if (elementApply.getUserId() != null) {
+            viewHolder.txtCN.setText(elementApply.getcNValue());
         }
+	    if (elementApply.getTarger() != null) {
+		    if (elementApply.getTarger().startsWith("WIFI")) {
+			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
+					    .main_apid_wifi));
+		    } else {
+			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
+					    .main_apid_vpn));
+		    }
+	    }else {
+		    viewHolder.txtStore.setVisibility(View.GONE);
+	    }
         return convertView;
     }
 }

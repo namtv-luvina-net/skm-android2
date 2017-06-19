@@ -5,59 +5,7 @@
               android:orientation="vertical"
               android:background="#e8effb"
               android:baselineAligned="false">
-	<RelativeLayout
-	              android:layout_width="match_parent"
-	              android:layout_height="wrap_content"
-	              android:layout_marginTop="10dp"
-	              android:layout_marginBottom="10dp"
-	              android:orientation="horizontal">
-		<TextView
-				android:id="@+id/textViewBack"
-				android:layout_width="wrap_content"
-				android:layout_height="35dp"
-				android:layout_alignParentLeft="true"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:layout_centerVertical="true"
-				android:drawableLeft="@drawable/ic_back2"
-				android:gravity="center_vertical"
-				android:text="@string/list_cert"
-				android:onClick="btnBackClick"
-				android:clickable="true"
-				android:textSize="@dimen/text_size_value"
-				android:textColor="@color/add_cert" />
-
-		<TextView
-				android:id="@+id/tvTitleHeader"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:singleLine="true"
-				android:maxLines="1"
-				android:layout_centerInParent="true"
-				android:gravity="center"
-				android:textSize="@dimen/text_size_value"
-				android:textColor="@color/text_color"
-				android:text=""/>
-		<LinearLayout
-				android:id="@+id/more_option"
-				android:layout_width="wrap_content"
-				android:layout_height="25dp"
-				android:orientation="horizontal"
-				android:layout_gravity="center"
-				android:layout_centerInParent="true"
-				android:layout_alignParentRight="true"
-				android:gravity="end"
-				android:paddingRight="20dp"
-				android:paddingLeft="10dp"
-				android:background="@android:color/transparent">
-			<Button
-					android:layout_width="25dp"
-					android:layout_height="25dp"
-					android:onClick="onMenuSettingClick"
-					android:background="@drawable/ic_menu_48"/>
-		</LinearLayout>
-	</RelativeLayout>
-
+	<include layout="@layout/layout_header" />
 	<TextView
 			android:layout_width="match_parent"
 			android:layout_height="1dp"

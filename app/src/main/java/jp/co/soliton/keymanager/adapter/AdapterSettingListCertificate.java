@@ -154,7 +154,6 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
         if (elementApply.getUserId() != null) {
             viewHolder.txtCN.setText(elementApply.getcNValue());
         }
-
 	    if (elementApply.getTarger() != null) {
 		    if (elementApply.getTarger().startsWith("WIFI")) {
 			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string

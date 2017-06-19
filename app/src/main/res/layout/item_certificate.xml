@@ -1,68 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="13"
-    android:orientation="horizontal">
+              android:id="@+id/llSettingCert"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="13"
+              android:clickable="true"
+              android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_weight="4">
-        <ImageView
-            android:id="@+id/icCertificate"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_certificate"/>
-    </LinearLayout>
+	<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:padding="10dp"
+			android:layout_weight="4">
+		<ImageView
+				android:id="@+id/icCertificate"
+				android:layout_width="100dp"
+				android:layout_height="100dp"
+				android:src="@drawable/ic_certificate"/>
+	</LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:layout_weight="6"
-        >
-        <TextView
-            android:id="@+id/txtStatus"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="@color/text_color"
-            android:layout_marginBottom="10dp"
-            android:text="Expired" />
-        <TextView
-            android:id="@+id/txtCN"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="@color/text_color"
-            android:text="Common Name" />
-    </LinearLayout>
+	<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:gravity="center_vertical"
+			android:orientation="vertical"
+			android:layout_weight="6" >
+		<TextView
+				android:id="@+id/txtStore"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="15dp"
+				android:ellipsize="end"
+				android:singleLine="true"
+				android:textColor="@color/text_color"
+				android:layout_marginBottom="10dp"
+				android:text="Store" />
+		<TextView
+				android:id="@+id/txtStatus"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="15dp"
+				android:ellipsize="end"
+				android:singleLine="true"
+				android:textColor="@color/text_color"
+				android:layout_marginBottom="10dp"
+				android:text="Expired" />
+		<TextView
+				android:id="@+id/txtCN"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="15dp"
+				android:ellipsize="end"
+				android:singleLine="true"
+				android:textColor="@color/text_color"
+				android:text="Common Name" />
+	</LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:gravity="right|center"
-        android:layout_weight="3" >
-        <TextView
-            android:id="@+id/btnUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/btn_update"
-            android:textSize="15dp"
-            android:background="@drawable/border_button_inactive"
-            android:scaleType="centerInside"
-            android:layout_marginRight="15dp"
-            android:textColor="@color/text_color_inactive" />
-    </LinearLayout>
+	<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:layout_weight="3" >
+		<TextView
+				android:id="@+id/btnUpdate"
+				android:layout_width="wrap_content"
+				android:layout_height="28dp"
+				android:gravity="center"
+				android:paddingLeft="5dp"
+				android:paddingRight="5dp"
+				android:text="@string/btn_update"
+				android:textSize="15dp"
+				android:background="@drawable/border_button_inactive"
+				android:scaleType="centerInside"
+				android:layout_marginRight="15dp"
+				android:textColor="@color/text_color_inactive" />
+	</LinearLayout>
 </LinearLayout>

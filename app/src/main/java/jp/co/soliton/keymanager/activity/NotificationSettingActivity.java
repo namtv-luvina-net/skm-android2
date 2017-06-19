@@ -1,9 +1,7 @@
 package jp.co.soliton.keymanager.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.*;
@@ -25,14 +23,11 @@ import java.util.Date;
  * Created by luongdolong on 3/31/2017.
  */
 
-public class NotificationSettingActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
+public class NotificationSettingActivity extends BaseSettingPhoneActivity implements CompoundButton.OnCheckedChangeListener {
     public static final String KEY_NOTIF_MODE = "KEY_NOTIF_MODE";
     public enum NotifModeEnum {
         ALL, ONE;
     }
-    private TextView textViewBack;
-    private TextView spaceRightTitle;
-    private TextView tvTitleHeader;
     private Switch swNotifFlag;
     private Switch swNotifBeforeFlag;
     private TextView tvNotifBefore;
@@ -58,9 +53,6 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
         if (NotifModeEnum.ONE == mode) {
             idCert = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
         }
-	    tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
-        textViewBack = (TextView) findViewById(R.id.textViewBack);
-	    spaceRightTitle = (TextView) findViewById(R.id.spaceRightTitle);
         swNotifFlag = (Switch) findViewById(R.id.swNotifFlag);
         swNotifBeforeFlag = (Switch) findViewById(R.id.swNotifBeforeFlag);
         tvNotifBefore = (TextView) findViewById(R.id.tvNotifBefore);
@@ -91,13 +83,10 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
     @Override
     protected void onResume() {
         super.onResume();
+	    tvTitleHeader.setText(getString(R.string.notif_setting));
         setupControl();
 	    swNotifFlag.setOnCheckedChangeListener(this);
 	    swNotifBeforeFlag.setOnCheckedChangeListener(this);
-    }
-
-    public void btnBackClick(View v) {
-        finish();
     }
 
     public void btnSaveNotifClick() {
@@ -155,8 +144,6 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 
 	        updateEnableViewExpired(swNotifBeforeFlag.isChecked());
         }
-	    updateHeader();
-
         findViewById(R.id.rootView).setOnClickListener(new View.OnClickListener() {
 	        @Override
 	        public void onClick(View v) {
@@ -212,24 +199,6 @@ public class NotificationSettingActivity extends Activity implements CompoundBut
 		    }
 	    });
     }
-
-	private void updateHeader() {
-		tvTitleHeader.measure(0, 0);
-		textViewBack.measure(0, 0);
-		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		int width = displayMetrics.widthPixels;
-
-		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
-			textViewBack.setText("");
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-			params.addRule(RelativeLayout.RIGHT_OF, textViewBack.getId());
-			params.addRule(RelativeLayout.LEFT_OF, spaceRightTitle.getId());
-			tvTitleHeader.setLayoutParams(params);
-		}
-	}
 
 	private void updateEnableViewExpired(boolean isChecked) {
 		tvNotifBefore.setEnabled(isChecked);
