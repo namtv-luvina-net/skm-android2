@@ -3,13 +3,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="#e8effb"
+              android:background="@drawable/background"
               android:baselineAligned="false">
 	<include layout="@layout/layout_header" />
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="@color/line_cert"/>
 	<ExpandableListView
 			android:id="@+id/expand_detail_cert"
 			android:layout_height="match_parent"

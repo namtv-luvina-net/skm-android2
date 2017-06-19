@@ -9,10 +9,6 @@
     <include layout="@layout/layout_header" />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_cert"/>
-    <TextView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:paddingTop="25dp"

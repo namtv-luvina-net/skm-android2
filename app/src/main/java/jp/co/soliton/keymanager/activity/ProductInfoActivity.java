@@ -31,6 +31,7 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
     protected void onResume() {
         super.onResume();
 	    tvTitleHeader.setText(getString(R.string.label_product_setting));
+	    textViewBack.setText(getString(R.string.label_setting));
         setupControl();
     }
 
