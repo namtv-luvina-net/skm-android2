@@ -287,6 +287,9 @@ public class WifiControl {
     	WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 
     	List<WifiConfiguration> configs = wifiManager.getConfiguredNetworks();
+	    if (configs == null || configs.isEmpty()) {
+		    return bRet;
+	    }
 		for (WifiConfiguration config : configs) {
 		//	Log.d("Wifi", "Config:" + config.toString());
 
