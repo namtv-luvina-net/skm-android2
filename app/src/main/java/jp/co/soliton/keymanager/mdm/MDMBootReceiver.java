@@ -46,7 +46,7 @@ public class MDMBootReceiver extends BroadcastReceiver {
         	
         	// 読み込んだ情報をMDM制御クラスに引き渡して、SacServiceを実行
         	MDMControl MDM_ctrl = new MDMControl(context, mdm.GetUDID());
-        	MDM_ctrl.SrartService(mdm);
+        	MDM_ctrl.startService(mdm);
 		
 
 		} else if(action.equals(Intent.ACTION_SCREEN_OFF)) {

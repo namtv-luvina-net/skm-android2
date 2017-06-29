@@ -18,7 +18,6 @@ import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.mdm.MDMFlgs;
@@ -121,20 +120,21 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 //		SetMDM();
 //		SetScepItem();
 //		SetScepWifi();
+		Log.d("StartUsingProceduresControl:datnd", "resultWithRequestCodeMDM: ");
+		SetMDM();
+		handler.sendEmptyMessage(0);
 		DownloadCACertificate();
 	}
 
 	public void afterIntallCert() {
 		SetScepWifi();
-		SetMDM();
-		handler.sendEmptyMessage(0);
 	}
 
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			// プログレスダイアログ終了
 			try{
-				mdmctrl.SrartService();
+				mdmctrl.startService();
 				//progressDialog.dismiss();
 			}catch(Exception e){
 				e.printStackTrace();
@@ -610,6 +610,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			apid = XmlPullParserAided.GetVpnApid(activity);
 		}
 		m_InformCtrl.SetAPID(apid);
+		Log.d("StartUsingProceduresControl:datnd", "CallMDMCheckIn: ========================================= ");
 		mdmctrl = new MDMControl(activity, m_InformCtrl.GetAPID());
 
 		if (isDeviceAdmin() == false) {
@@ -618,7 +619,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 //			SetMDM();
 //			SetScepItem();
 //			SetScepWifi();
-			DownloadCACertificate();
+//			DownloadCACertificate();
+			resultWithRequestCodeMDM();
 		}
 	}
 
@@ -636,7 +638,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					if(mdm.GetCheckOut() == true) {
 						MDMControl.CheckOut(mdm, activity);
 					}
-
+					Log.d("StartUsingProceduresControl:datnd", "run: ===================================== OldMdmCheckOut");
 					MDMControl mdmctrl = new MDMControl(activity, mdm.GetUDID());	// この時点でサービスを止める
 					filename_mdm.delete();
 				}
@@ -656,11 +658,11 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					return;
 				}
 
-				Log.d("MDMCheckinActivity", "SetMDM()");
+				Log.d("StartUsingProceduresControl", "SetMDM()");
 				// 2. GetMDMDictionary
 				XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
 				if (mdm_dict == null) {
-					Log.d("CertLoginActivity", "SetMDM() No profile");
+					Log.d("StartUsingProceduresControl", "SetMDM() No profile");
 					return;
 				}
 
@@ -672,15 +674,15 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 				// 5. OKならスレッド起動...定期通信
 				if(bret == false) {
-					//	mdmctrl.SrartService();
-					Log.e("MDMCheckinActivity::SetMDM", "Checkin err");
+					//	mdmctrl.startService();
+					Log.e("StartUsingProceduresControl::SetMDM", "Checkin err");
 					return;
 				}
 
 				bret = mdmctrl.TokenUpdate();
 				if(bret == false) {
-					//	mdmctrl.SrartService();
-					Log.e("MDMCheckinActivity::SetMDM", "TokenUpdate err");
+					//	mdmctrl.startService();
+					Log.e("StartUsingProceduresControl::SetMDM", "TokenUpdate err");
 					return;
 				}
 			}

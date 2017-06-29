@@ -36,10 +36,10 @@ public class MDMControl {
 	// BootReceiver経由で実行.
 	// 保存ファイルからMDMFlgsメンバに値を割り当てて、SrartServiceに渡す。
 	// コンストラクタで作成したMDMFlgsインスタンスやUDIDは上書きされる
-	public void SrartService(MDMFlgs flgs) {
+	public void startService(MDMFlgs flgs) {
 		// MDMServiceのIntentを作成してサービス開始.
 		
-		Log.i("MDMControl", "SrartService start.");
+		Log.i("MDMControl", "startService start.");
 		m_flgs = flgs;
 		
 		Intent intent = new Intent(context, MDMService.class);
@@ -55,10 +55,10 @@ public class MDMControl {
 	// チェックイン後に実行
 	// MDMControl::SetMDMmemberでプロファイルで取得したMDM情報をMDMFlagsに設定している
 	// UDID(APID)はコンストラクタで設定
-	public void SrartService() {
+	public void startService() {
 		// MDMServiceのIntentを作成してサービス開始.
 		
-		Log.i("MDMControl", "SrartService start.");
+		Log.i("MDMControl", "startService start.");
 		
 		Intent intent = new Intent(context, MDMService.class);
 		
