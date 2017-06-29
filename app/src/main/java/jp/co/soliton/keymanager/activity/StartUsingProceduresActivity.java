@@ -45,6 +45,7 @@ public class StartUsingProceduresActivity extends Activity {
 	    logCtrl.loggerInfo("StartUsingProceduresActivity:onActivityResult start REC CODE = " + Integer.toString
 			    (requestCode));
 	    if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {
+		    StartUsingProceduresControl.getInstance(this).afterIntallCert();
 		    // After CertificateEnrollTask
 		    Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
 		    if (resultCode != 0) {
