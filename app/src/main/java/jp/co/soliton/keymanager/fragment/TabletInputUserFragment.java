@@ -39,12 +39,12 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private ElementApplyManager elementMgr;
 	private boolean isSubmitted;
 	TabletAbtractInputFragment tabletAbtractInputFragment;
-	private String update_apply;
+	private String id_update;
 
 	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment, String id) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
 		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
-		f.update_apply = id;
+		f.id_update = id;
 		return f;
 	}
 
@@ -72,7 +72,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
 		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
 		titleInput = (TextView) view.findViewById(R.id.titleInput);
-		if (ValidateParams.nullOrEmpty(update_apply)) {
+		if (ValidateParams.nullOrEmpty(id_update)) {
 			titleInput.setText(getString(R.string.input_user_id_and_password));
 		}else {
 			titleInput.setText(getString(R.string.input_password));
@@ -164,7 +164,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (tabletAbtractInputFragment == null || txtUserId == null || txtPassword == null) {
 			return;
 		}
-		if (!ValidateParams.nullOrEmpty(update_apply)) {
+		if (!ValidateParams.nullOrEmpty(id_update)) {
 			txtUserId.setTag(txtUserId.getKeyListener());
 			txtUserId.setKeyListener(null);
 			txtUserId.setBackgroundColor(android.R.color.transparent);
@@ -241,24 +241,27 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				inputApplyInfo.setPassword(null);
 				inputApplyInfo.savePref(getActivity());
 				ElementApply element;
-				if (ValidateParams.nullOrEmpty(update_apply)) {
+				if (ValidateParams.nullOrEmpty(id_update)) {
 					String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
 							inputApplyInfo.getUserId()));
 					element = elementMgr.getElementApply(id);
 				} else {
-					element = elementMgr.getElementApply(update_apply);
+					String host = (inputApplyInfo.getHost());
+					String userId = (inputApplyInfo.getUserId());
+					id_update = String.valueOf(elementMgr.getIdElementApply(host, userId));
+					element = elementMgr.getElementApply(id_update);
 				}
 				tabletAbtractInputFragment.gotoCompleteApply(informCtrl, element);
 			} else {
 				if (isSubmitted) {
 					saveElementApply();
 					ElementApply element;
-					if (ValidateParams.nullOrEmpty(update_apply)) {
+					if (ValidateParams.nullOrEmpty(id_update)) {
 						String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
 								inputApplyInfo.getUserId()));
 						element = elementMgr.getElementApply(id);
 					} else {
-						element = elementMgr.getElementApply(update_apply);
+						element = elementMgr.getElementApply(id_update);
 					}
 					tabletAbtractInputFragment.gotoCompleteConfirmApplyFragment(ElementApply.STATUS_APPLY_PENDING,
 							element, informCtrl);
@@ -302,8 +305,8 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (elementMgr == null) {
 			elementMgr = new ElementApplyManager(getActivity());
 		}
-		if (!ValidateParams.nullOrEmpty(update_apply)) {
-			elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
+		if (!ValidateParams.nullOrEmpty(id_update)) {
+			elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, id_update);
 		}
 		String rtnserial;
 		if (InputBasePageFragment.TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace())) {

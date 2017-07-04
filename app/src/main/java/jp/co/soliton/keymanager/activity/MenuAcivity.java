@@ -474,6 +474,7 @@ public class MenuAcivity extends FragmentActivity {
 
 		if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {
 			// After CertificateEnrollTask
+			StartUsingProceduresControl.getInstance(this).afterIntallCert();
 			Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
 			if (resultCode != 0) {
 				ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());

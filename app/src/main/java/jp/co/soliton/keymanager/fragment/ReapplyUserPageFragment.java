@@ -224,11 +224,15 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
             if (isEnroll) {
                 //save element apply
                 saveElementApply();
-                pagerReapplyActivity.getInputApplyInfo().setPassword(null);
-                pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
-                Intent intent = new Intent(pagerReapplyActivity, CompleteApplyActivity.class);
-                intent.putExtra(StringList.BACK_AUTO, true);
-                intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
+	            InputApplyInfo inputApplyInfo = pagerReapplyActivity.getInputApplyInfo();
+	            inputApplyInfo.setPassword(null);
+	            inputApplyInfo.savePref(pagerReapplyActivity);
+	            String host = (inputApplyInfo.getHost());
+	            String userId = (inputApplyInfo.getUserId());
+	            pagerReapplyActivity.idConfirmApply = String.valueOf(elementMgr.getIdElementApply(host, userId));
+	            Intent intent = new Intent(pagerReapplyActivity, CompleteApplyActivity.class);
+	            intent.putExtra(StringList.BACK_AUTO, true);
+	            intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
                 ElementApply element = elementMgr.getElementApply(pagerReapplyActivity.idConfirmApply);
                 intent.putExtra("ELEMENT_APPLY", element);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

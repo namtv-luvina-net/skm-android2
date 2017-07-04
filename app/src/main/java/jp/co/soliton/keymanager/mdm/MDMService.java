@@ -102,7 +102,7 @@ public class MDMService extends Service {
         	
         	// 読み込んだ情報をMDM制御クラスに引き渡して、SacServiceを実行
 //        	MDMControl MDM_ctrl = new MDMControl(this);
-//        	MDM_ctrl.SrartService(mdm);
+//        	MDM_ctrl.startService(mdm);
 		}
 	}
 	
@@ -114,8 +114,11 @@ public class MDMService extends Service {
 	//	Toast.makeText(this, "Stop monitoring.", Toast.LENGTH_SHORT).show();
 		this.stopSelf();
 		super.onDestroy();
-		
-		unregisterReceiver(mReceiver);
+		try {
+			unregisterReceiver(mReceiver);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

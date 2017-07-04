@@ -36,10 +36,10 @@ public class MDMControl {
 	// BootReceiver経由で実行.
 	// 保存ファイルからMDMFlgsメンバに値を割り当てて、SrartServiceに渡す。
 	// コンストラクタで作成したMDMFlgsインスタンスやUDIDは上書きされる
-	public void SrartService(MDMFlgs flgs) {
+	public void startService(MDMFlgs flgs) {
 		// MDMServiceのIntentを作成してサービス開始.
 		
-		Log.i("MDMControl", "SrartService start.");
+		Log.i("MDMControl", "startService start.");
 		m_flgs = flgs;
 		
 		Intent intent = new Intent(context, MDMService.class);
@@ -55,10 +55,10 @@ public class MDMControl {
 	// チェックイン後に実行
 	// MDMControl::SetMDMmemberでプロファイルで取得したMDM情報をMDMFlagsに設定している
 	// UDID(APID)はコンストラクタで設定
-	public void SrartService() {
+	public void startService() {
 		// MDMServiceのIntentを作成してサービス開始.
 		
-		Log.i("MDMControl", "SrartService start.");
+		Log.i("MDMControl", "startService start.");
 		
 		Intent intent = new Intent(context, MDMService.class);
 		
@@ -86,7 +86,7 @@ public class MDMControl {
 		
 		HttpConnectionCtrl conn = new HttpConnectionCtrl(context);	
 		rtn = conn.RunHttpMDMConnection(inform);
-		
+
 		// チェックイン/アウトの場合、
 		int ret_code = inform.GetResponseCode();
 		if(ret_code == StringList.RES_200_OK) {
@@ -95,7 +95,28 @@ public class MDMControl {
 		
 		return rtn;
 	}
-	
+
+	public void OldMdmCheckOut() {
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				String filedir = "/data/data/" + context.getPackageName() + "/files/";
+
+				java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
+				if(filename_mdm.exists()) {
+					MDMFlgs mdm = new MDMFlgs();
+					boolean bRet = mdm.ReadAndSetScepMdmInfo(context);
+					if(mdm.GetCheckOut() == true) {
+						MDMControl.CheckOut(mdm, context);
+					}
+					MDMControl mdmctrl = new MDMControl(context, mdm.GetUDID());	// この時点でサービスを止める
+					filename_mdm.delete();
+				}
+			}
+		});
+		t.start();
+	}
+
 	public static boolean CheckOut(MDMFlgs flgs, Context cont) {
 		Log.i("MDMControl", "CheckOut start.");
 		boolean rtn = true;
@@ -153,14 +174,13 @@ public class MDMControl {
 			XmlStringData p_data = str_list.get(i);
 			SetConfigrationChild(p_data);
 		}
-		
 	}
 	
 	private void SetConfigrationChild(XmlStringData p_data) {
 		String strKeyName = p_data.GetKeyName();	// キー名
 		int    i_type = p_data.GetType();		// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
 		String strData = p_data.GetData();		// 要素
-		
+
 		Log.i("WifiControl::SetConfigrationChild", "Start. " + strKeyName);
 
 		boolean b_type = true;
@@ -172,7 +192,7 @@ public class MDMControl {
 			m_flgs.SetCheckin(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_topic)) {
 			m_flgs.SetTopic(strData);
-		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_AccessRights)) {	// 
+		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_AccessRights)) {	//
 			m_flgs.SetAccessRight(Integer.parseInt(strData));
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_CheckOutRemoved)) {
 			m_flgs.SetCheckOut(b_type);

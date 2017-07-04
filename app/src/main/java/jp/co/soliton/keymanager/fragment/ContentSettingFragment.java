@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.SettingTabletActivity;
+import jp.co.soliton.keymanager.mdm.MDMFlgs;
 
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
 
@@ -27,6 +29,9 @@ public class ContentSettingFragment extends TabletBaseSettingFragment {
 	private RelativeLayout menuSettingNotif;
 	private RelativeLayout menuSettingProduct;
 	private RelativeLayout menuSettingLibrary;
+	private RelativeLayout menuSettingMDM;
+	private LinearLayout layoutMDM;
+	private MDMFlgs mdm;
 
 	public static Fragment newInstance() {
 		ContentSettingFragment f = new ContentSettingFragment();
@@ -50,6 +55,9 @@ public class ContentSettingFragment extends TabletBaseSettingFragment {
 		menuSettingNotif = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingNotif);
 		menuSettingProduct = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingProduct);
 		menuSettingLibrary = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingLibrary);
+		menuSettingMDM = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingMDM);
+		layoutMDM = (LinearLayout) viewFragment.findViewById(R.id.ll_mdm);
+		mdm = new MDMFlgs();
 		return viewFragment;
 	}
 
@@ -67,6 +75,12 @@ public class ContentSettingFragment extends TabletBaseSettingFragment {
 	public void onResume() {
 		super.onResume();
 		setupControl();
+		boolean bRet = mdm.ReadAndSetScepMdmInfo(getActivity());
+		if (!bRet) {
+			layoutMDM.setVisibility(View.GONE);
+		} else {
+			layoutMDM.setVisibility(View.VISIBLE);
+		}
 	}
 
 	public void setupControl() {
@@ -93,6 +107,12 @@ public class ContentSettingFragment extends TabletBaseSettingFragment {
 			@Override
 			public void onClick(View v) {
 				((SettingTabletActivity)getActivity()).gotoLibrary(SCROLL_TO_LEFT);
+			}
+		});
+		menuSettingMDM.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((SettingTabletActivity)getActivity()).gotoMDM(mdm, SCROLL_TO_LEFT);
 			}
 		});
 	}

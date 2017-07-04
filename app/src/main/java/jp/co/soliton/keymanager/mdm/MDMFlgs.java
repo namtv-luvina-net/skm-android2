@@ -71,6 +71,27 @@ public class MDMFlgs implements Serializable{
 	public String GetServerurl() { return m_str_serverurl;}
 	public String GetCheckin() { return m_str_checkein;}
 	public int GetAccessRight() { return m_n_accessright;}
+
+	public int getM_n_devicelock() {
+		return m_n_devicelock;
+	}
+
+	public int getM_n_devaiceerace() {
+		return m_n_devaiceerace;
+	}
+
+	public int getM_n_deviceinf() {
+		return m_n_deviceinf;
+	}
+
+	public int getM_n_network() {
+		return m_n_network;
+	}
+
+	public int getM_n_inst_appinf() {
+		return m_n_inst_appinf;
+	}
+
 	public String GetUDID() { return m_str_UDID;}
 	public boolean GetCheckOut() { return m_b_checkout;}
 	public boolean GetWipe() { return m_b_wipe; }
@@ -661,7 +682,6 @@ public class MDMFlgs implements Serializable{
 			XmlStringData p_data = str_list.get(i);
 			SetParametorFromFile(p_data);
 		}
-			
 		return bRet;
 	}
 			
@@ -694,7 +714,7 @@ public class MDMFlgs implements Serializable{
 			m_n_accessright = Integer.parseInt(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_udid)) {
 			Log.d("ReadAndSetScepMdmInfo :: UDID", strData);
-			m_str_UDID = strData;
+			SetUDID(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_CheckOutRemoved)) {
 			Log.d("ReadAndSetScepMdmInfo :: CheckOut", Integer.toString(i_type));
 			m_b_checkout = b_type;

@@ -208,4 +208,16 @@
 	<string name="many_days_remaining">%s days remaining</string>
 	<string name="expiration_date">Expiration:\u0020</string>
 	<string name="close">Close</string>
+	<string name="mdm">MDM</string>
+	<string name="profile">Profile</string>
+	<string name="delete">Delete</string>
+	<string name="enable">Enable</string>
+	<string name="disable">Disable</string>
+	<string name="device_lock">Device Lock</string>
+	<string name="remote_wipe">Remote Wipe</string>
+	<string name="device_info">Device Info</string>
+	<string name="network_info">Network Info</string>
+	<string name="app_info">App Info</string>
+	<string name="title_delete_mdm_profile_dialog">Delete MDM profile</string>
+	<string name="content_delete_mdm_profile_dialog">Delete the MDM profile.\nIs it OK?</string>
 </resources>

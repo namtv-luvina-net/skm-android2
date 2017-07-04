@@ -9,212 +9,288 @@
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:background="@color/line_cert"/>
-
-	<TextView
+	<ScrollView
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingBottom="10dp"
-			android:paddingTop="25dp"
-			android:paddingLeft="20dp"
-			android:textSize="17sp"
-			android:textAllCaps="true"
-			android:text="@string/label_list_certificate"/>
-
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="@color/line_cert"/>
-
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/background_color_white">
-
-		<RelativeLayout
-				android:id="@+id/menuSettingCertList"
+			android:layout_height="match_parent">
+		<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:clickable="true"
-				android:background="@drawable/button_setting_selector">
-
-			<Button
-					android:id="@+id/btnSettingListCert"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+			<TextView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:clickable="false"
-					android:background="@android:color/transparent"
-					android:layout_toLeftOf="@+id/ivBtnSetting1End"
 					android:paddingBottom="10dp"
-					android:textAllCaps="false"
-					android:paddingTop="10dp"
+					android:paddingTop="25dp"
 					android:paddingLeft="20dp"
-					android:paddingRight="10dp"
 					android:textSize="17sp"
-					android:gravity="left|center_vertical"
-					android:text="@string/list_cert"/>
+					android:textAllCaps="true"
+					android:text="@string/label_list_certificate"/>
 
-			<ImageView
-					android:id="@+id/ivBtnSetting1End"
-					android:layout_width="9dp"
-					android:layout_height="15dp"
-					android:src="@drawable/ic_arrow"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:layout_marginRight="20dp"/>
-		</RelativeLayout>
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/line_cert"/>
 
-		<RelativeLayout
-				android:id="@+id/menuSettingNotif"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:layout_alignTop="@+id/tv1"
-				android:clickable="true"
-				android:background="@drawable/button_setting_selector">
-
-			<Button
-					android:id="@+id/btnSettingNotification"
+			<RelativeLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:clickable="false"
-					android:background="@android:color/transparent"
-					android:layout_toLeftOf="@+id/ivBtnSetting2End"
-					android:paddingBottom="10dp"
-					android:paddingTop="10dp"
-					android:paddingLeft="20dp"
-					android:paddingRight="10dp"
-					android:textSize="17sp"
-					android:textAllCaps="false"
-					android:gravity="left|center_vertical"
-					android:text="@string/notif_setting"/>
+					android:background="@color/background_color_white">
 
-			<ImageView
-					android:id="@+id/ivBtnSetting2End"
-					android:layout_width="9dp"
-					android:layout_height="15dp"
-					android:src="@drawable/ic_arrow"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:layout_marginRight="20dp"/>
-		</RelativeLayout>
+				<RelativeLayout
+						android:id="@+id/menuSettingCertList"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:clickable="true"
+						android:background="@drawable/button_setting_selector">
 
-		<TextView
-				android:id="@+id/tv1"
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_alignBottom="@+id/menuSettingCertList"
-				android:layout_marginLeft="20dp"
-				android:background="@color/line_cert"/>
-	</RelativeLayout>
+					<Button
+							android:id="@+id/btnSettingListCert"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clickable="false"
+							android:background="@android:color/transparent"
+							android:layout_toLeftOf="@+id/ivBtnSetting1End"
+							android:paddingBottom="10dp"
+							android:textAllCaps="false"
+							android:paddingTop="10dp"
+							android:paddingLeft="20dp"
+							android:paddingRight="10dp"
+							android:textSize="17sp"
+							android:gravity="left|center_vertical"
+							android:text="@string/list_cert"/>
 
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="@color/line_cert"/>
+					<ImageView
+							android:id="@+id/ivBtnSetting1End"
+							android:layout_width="9dp"
+							android:layout_height="15dp"
+							android:src="@drawable/ic_arrow"
+							android:layout_centerVertical="true"
+							android:layout_alignParentRight="true"
+							android:layout_marginRight="20dp"/>
+				</RelativeLayout>
 
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:paddingBottom="10dp"
-			android:paddingTop="25dp"
-			android:paddingLeft="20dp"
-			android:textSize="17sp"
-			android:textAllCaps="true"
-			android:text="@string/label_other_setting"/>
+				<RelativeLayout
+						android:id="@+id/menuSettingNotif"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_alignTop="@+id/tv1"
+						android:clickable="true"
+						android:background="@drawable/button_setting_selector">
 
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="@color/line_cert"/>
+					<Button
+							android:id="@+id/btnSettingNotification"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clickable="false"
+							android:background="@android:color/transparent"
+							android:layout_toLeftOf="@+id/ivBtnSetting2End"
+							android:paddingBottom="10dp"
+							android:paddingTop="10dp"
+							android:paddingLeft="20dp"
+							android:paddingRight="10dp"
+							android:textSize="17sp"
+							android:textAllCaps="false"
+							android:gravity="left|center_vertical"
+							android:text="@string/notif_setting"/>
 
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/background_color_white">
+					<ImageView
+							android:id="@+id/ivBtnSetting2End"
+							android:layout_width="9dp"
+							android:layout_height="15dp"
+							android:src="@drawable/ic_arrow"
+							android:layout_centerVertical="true"
+							android:layout_alignParentRight="true"
+							android:layout_marginRight="20dp"/>
+				</RelativeLayout>
 
-		<RelativeLayout
-				android:id="@+id/menuSettingProduct"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:clickable="true"
-				android:background="@drawable/button_setting_selector">
-
-			<Button
-					android:id="@+id/btnSettingProductInfo"
+				<TextView
+						android:id="@+id/tv1"
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:layout_alignBottom="@+id/menuSettingCertList"
+						android:layout_marginLeft="20dp"
+						android:background="@color/line_cert"/>
+			</RelativeLayout>
+			<LinearLayout
+					android:id="@+id/ll_mdm"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:clickable="false"
-					android:background="@android:color/transparent"
-					android:paddingBottom="10dp"
-					android:paddingTop="10dp"
-					android:paddingLeft="20dp"
-					android:paddingRight="10dp"
-					android:textSize="17sp"
-					android:textAllCaps="false"
-					android:gravity="left|center_vertical"
-					android:text="@string/label_product_setting"
-					android:layout_alignParentTop="true"
-					android:layout_alignParentLeft="true"
-					android:layout_alignParentStart="true"/>
+					android:orientation="vertical">
 
-			<ImageView
-					android:id="@+id/ivBtnSetting3End"
-					android:layout_width="9dp"
-					android:layout_height="15dp"
-					android:src="@drawable/ic_arrow"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:layout_marginRight="20dp"/>
-		</RelativeLayout>
+				<TextView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/line_cert"/>
 
-		<RelativeLayout
-				android:id="@+id/menuSettingLibrary"
-				android:layout_width="match_parent"
-				android:layout_alignTop="@+id/tv2"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:clickable="true"
-				android:background="@drawable/button_setting_selector">
+				<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:paddingBottom="10dp"
+						android:paddingTop="25dp"
+						android:paddingLeft="20dp"
+						android:textSize="17sp"
+						android:textAllCaps="true"
+						android:text="@string/mdm"/>
 
-			<Button
-					android:id="@+id/btnSettingLibrary"
+				<TextView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/line_cert"/>
+
+				<RelativeLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:background="@color/background_color_white">
+
+					<RelativeLayout
+							android:id="@+id/menuSettingMDM"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:gravity="center_vertical"
+							android:clickable="true"
+							android:background="@drawable/button_setting_selector">
+
+						<Button
+								android:id="@+id/btnSettingMDM"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:clickable="false"
+								android:background="@android:color/transparent"
+								android:paddingBottom="10dp"
+								android:paddingTop="10dp"
+								android:paddingLeft="20dp"
+								android:paddingRight="10dp"
+								android:textSize="17sp"
+								android:textAllCaps="false"
+								android:gravity="left|center_vertical"
+								android:text="@string/profile"
+								android:layout_alignParentTop="true"
+								android:layout_alignParentLeft="true"
+								android:layout_alignParentStart="true"/>
+
+						<ImageView
+								android:id="@+id/ivBtnSettingMDM"
+								android:layout_width="9dp"
+								android:layout_height="15dp"
+								android:src="@drawable/ic_arrow"
+								android:layout_centerVertical="true"
+								android:layout_alignParentRight="true"
+								android:layout_marginRight="20dp"/>
+					</RelativeLayout>
+				</RelativeLayout>
+			</LinearLayout>
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/line_cert"/>
+
+			<TextView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:clickable="false"
-					android:background="@android:color/transparent"
-					android:layout_toLeftOf="@+id/ivBtnSetting4End"
 					android:paddingBottom="10dp"
-					android:paddingTop="10dp"
+					android:paddingTop="25dp"
 					android:paddingLeft="20dp"
-					android:paddingRight="10dp"
 					android:textSize="17sp"
-					android:textAllCaps="false"
-					android:gravity="left|center_vertical"
-					android:text="@string/label_library_setting"/>
+					android:textAllCaps="true"
+					android:text="@string/label_other_setting"/>
 
-			<ImageView
-					android:id="@+id/ivBtnSetting4End"
-					android:layout_width="9dp"
-					android:layout_height="15dp"
-					android:src="@drawable/ic_arrow"
-					android:layout_centerVertical="true"
-					android:layout_alignParentRight="true"
-					android:layout_marginRight="20dp"/>
-		</RelativeLayout>
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/line_cert"/>
 
-		<TextView
-				android:id="@+id/tv2"
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_alignBottom="@+id/menuSettingProduct"
-				android:layout_marginLeft="20dp"
-				android:background="@color/line_cert"/>
-	</RelativeLayout>
+			<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@color/background_color_white">
 
-	<TextView
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="@color/line_cert"/>
+				<RelativeLayout
+						android:id="@+id/menuSettingProduct"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:clickable="true"
+						android:background="@drawable/button_setting_selector">
+
+					<Button
+							android:id="@+id/btnSettingProductInfo"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clickable="false"
+							android:background="@android:color/transparent"
+							android:paddingBottom="10dp"
+							android:paddingTop="10dp"
+							android:paddingLeft="20dp"
+							android:paddingRight="10dp"
+							android:textSize="17sp"
+							android:textAllCaps="false"
+							android:gravity="left|center_vertical"
+							android:text="@string/label_product_setting"
+							android:layout_alignParentTop="true"
+							android:layout_alignParentLeft="true"
+							android:layout_alignParentStart="true"/>
+
+					<ImageView
+							android:id="@+id/ivBtnSetting3End"
+							android:layout_width="9dp"
+							android:layout_height="15dp"
+							android:src="@drawable/ic_arrow"
+							android:layout_centerVertical="true"
+							android:layout_alignParentRight="true"
+							android:layout_marginRight="20dp"/>
+				</RelativeLayout>
+
+				<RelativeLayout
+						android:id="@+id/menuSettingLibrary"
+						android:layout_width="match_parent"
+						android:layout_alignTop="@+id/tv2"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:clickable="true"
+						android:background="@drawable/button_setting_selector">
+
+					<Button
+							android:id="@+id/btnSettingLibrary"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clickable="false"
+							android:background="@android:color/transparent"
+							android:layout_toLeftOf="@+id/ivBtnSetting4End"
+							android:paddingBottom="10dp"
+							android:paddingTop="10dp"
+							android:paddingLeft="20dp"
+							android:paddingRight="10dp"
+							android:textSize="17sp"
+							android:textAllCaps="false"
+							android:gravity="left|center_vertical"
+							android:text="@string/label_library_setting"/>
+
+					<ImageView
+							android:id="@+id/ivBtnSetting4End"
+							android:layout_width="9dp"
+							android:layout_height="15dp"
+							android:src="@drawable/ic_arrow"
+							android:layout_centerVertical="true"
+							android:layout_alignParentRight="true"
+							android:layout_marginRight="20dp"/>
+				</RelativeLayout>
+
+				<TextView
+						android:id="@+id/tv2"
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:layout_alignBottom="@+id/menuSettingProduct"
+						android:layout_marginLeft="20dp"
+						android:background="@color/line_cert"/>
+			</RelativeLayout>
+
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/line_cert"/>
+		</LinearLayout>
+	</ScrollView>
+
 </LinearLayout>

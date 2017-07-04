@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
 import android.util.Log;
@@ -16,7 +18,6 @@ import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.mdm.MDMFlgs;
@@ -116,11 +117,29 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	}
 
 	public void resultWithRequestCodeMDM() {
+//		SetMDM();
+//		SetScepItem();
+//		SetScepWifi();
 		SetMDM();
-		SetScepItem();
-		SetScepWifi();
+		handler.sendEmptyMessage(0);
 		DownloadCACertificate();
 	}
+
+	public void afterIntallCert() {
+		SetScepWifi();
+	}
+
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			// プログレスダイアログ終了
+			try{
+				mdmctrl.startService();
+				//progressDialog.dismiss();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	};
 
 	/**
 	 * Task processing GetDeviceCertTask
@@ -206,7 +225,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
 			if (mdm_dict == null) {
 				Log.d("CertLoginActivity", "SetMDM() No profile");
-				SetScepWifi();
+//				SetScepWifi();
 				DownloadCACertificate();
 			} else {
 				Log.d("CertLoginActivity", "SetMDM() Has profile");
@@ -578,70 +597,70 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private void CallMDMCheckIn() {
 		logCtrl.loggerDebug("CertLoginActivity CallMDMActivity()");
 
-		// 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
-		OldMdmCheckOut();
-
 		m_DPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		m_DeviceAdmin = new ComponentName(activity, EpsapAdminReceiver.class);
+		String apid;
+		if (element.getTarger().startsWith("WIFI")) {
+			apid = XmlPullParserAided.GetUDID(activity);
+		} else {
+			apid = XmlPullParserAided.GetVpnApid(activity);
+		}
+		m_InformCtrl.SetAPID(apid);
 		mdmctrl = new MDMControl(activity, m_InformCtrl.GetAPID());
+		// 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
+		mdmctrl.OldMdmCheckOut();
 
 		if (isDeviceAdmin() == false) {
 			addDeviceAdmin();
 		} else {
-			SetMDM();
-			SetScepItem();
-			SetScepWifi();
-			DownloadCACertificate();
-		}
-	}
-
-	private void OldMdmCheckOut() {
-		String filedir = "/data/data/" + activity.getPackageName() + "/files/";
-
-		java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
-		if(filename_mdm.exists()) {
-			logCtrl.loggerInfo("MDMCheckinActivity OldMdmCheckOut()");
-			MDMFlgs mdm = new MDMFlgs();
-			boolean bRet = mdm.ReadAndSetScepMdmInfo(activity);
-			if(mdm.GetCheckOut() == true) {
-				MDMControl.CheckOut(mdm, activity);
-			}
-
-			MDMControl mdmctrl = new MDMControl(activity, mdm.GetUDID());	// この時点でサービスを止める
-			filename_mdm.delete();
+//			SetMDM();
+//			SetScepItem();
+//			SetScepWifi();
+//			DownloadCACertificate();
+			resultWithRequestCodeMDM();
 		}
 	}
 
 	// MDMのチェックインおよび、定期通信サービススレッドの起動
 	// HTTP通信を行うため、スレッドから呼び出されること
-	private void SetMDM() {
-		Log.d("MDMCheckinActivity", "SetMDM()");
-		// 2. GetMDMDictionary
-		XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
-		if (mdm_dict == null) {
-			Log.d("CertLoginActivity", "SetMDM() No profile");
-			return;
-		}
+	public void SetMDM() {
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				if (element == null) {
+					return;
+				}
 
-		// 3. MDMFlgsにセット(MDMControlにMDMFlgs変数を持たせてそちらにやってもらう
-		mdmctrl.SetMDMmember(mdm_dict);
+				Log.d("StartUsingProceduresControl", "SetMDM()");
+				// 2. GetMDMDictionary
+				XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
+				if (mdm_dict == null) {
+					Log.d("StartUsingProceduresControl", "SetMDM() No profile");
+					return;
+				}
 
-		// 4. チェックイン(HTTP(S)) (新しいMDM設定情報もここでファイル保存する)
-		boolean bret = mdmctrl.CheckIn(true);
+				// 3. MDMFlgsにセット(MDMControlにMDMFlgs変数を持たせてそちらにやってもらう
+				mdmctrl.SetMDMmember(mdm_dict);
 
-		// 5. OKならスレッド起動...定期通信
-		if(bret == false) {
-			//	mdmctrl.SrartService();
-			Log.e("MDMCheckinActivity::SetMDM", "Checkin err");
-			return;
-		}
+				// 4. チェックイン(HTTP(S)) (新しいMDM設定情報もここでファイル保存する)
+				boolean bret = mdmctrl.CheckIn(true);
 
-		bret = mdmctrl.TokenUpdate();
-		if(bret == false) {
-			//	mdmctrl.SrartService();
-			Log.e("MDMCheckinActivity::SetMDM", "TokenUpdate err");
-			return;
-		}
+				// 5. OKならスレッド起動...定期通信
+				if(bret == false) {
+					//	mdmctrl.startService();
+					Log.e("StartUsingProceduresControl::SetMDM", "Checkin err");
+					return;
+				}
+
+				bret = mdmctrl.TokenUpdate();
+				if(bret == false) {
+					//	mdmctrl.startService();
+					Log.e("StartUsingProceduresControl::SetMDM", "TokenUpdate err");
+					return;
+				}
+			}
+		});
+		t.start();
 	}
 
 	private void addDeviceAdmin() {
