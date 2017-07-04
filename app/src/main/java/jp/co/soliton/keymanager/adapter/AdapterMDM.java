@@ -20,6 +20,7 @@ public class AdapterMDM extends ArrayAdapter<AdapterMDM.ItemMDM> {
     public class ViewHolder {
         public TextView txtName;
         public TextView txtValue;
+        public TextView line;
     }
 
     /**
@@ -75,6 +76,7 @@ public class AdapterMDM extends ArrayAdapter<AdapterMDM.ItemMDM> {
 	        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_mdm, parent, false);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.txtName);
             viewHolder.txtValue = (TextView) convertView.findViewById(R.id.txtValue);
+            viewHolder.line = (TextView) convertView.findViewById(R.id.line);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -84,6 +86,11 @@ public class AdapterMDM extends ArrayAdapter<AdapterMDM.ItemMDM> {
 		    viewHolder.txtValue.setText(getContext().getString(R.string.enable));
 	    } else {
 		    viewHolder.txtValue.setText(getContext().getString(R.string.disable));
+	    }
+	    if (position == getCount()-1) {
+		    ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) viewHolder.line.getLayoutParams();
+		    p.setMargins(0,0,0,0);
+		    viewHolder.line.requestLayout();
 	    }
 	    return convertView;
     }
