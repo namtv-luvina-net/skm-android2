@@ -114,8 +114,11 @@ public class MDMService extends Service {
 	//	Toast.makeText(this, "Stop monitoring.", Toast.LENGTH_SHORT).show();
 		this.stopSelf();
 		super.onDestroy();
-		
-		unregisterReceiver(mReceiver);
+		try {
+			unregisterReceiver(mReceiver);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

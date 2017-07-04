@@ -94,6 +94,62 @@
             />
     </RelativeLayout>
     </LinearLayout>
+	<LinearLayout
+			android:id="@+id/ll_mdm"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@color/line_cert"/>
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="10dp"
+				android:paddingTop="25dp"
+				android:paddingLeft="20dp"
+				android:textSize="17sp"
+				android:textAllCaps="true"
+				android:text="@string/mdm"/>
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@color/line_cert"/>
+		<RelativeLayout
+				android:id="@+id/menuSettingMDM"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:clickable="true"
+				android:background="@color/background_color_white">
+			<Button
+					android:id="@+id/btnSettingMDM"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:clickable="false"
+					android:background="@android:color/transparent"
+					android:layout_toLeftOf="@+id/ivBtnSettingMDM"
+					android:paddingBottom="10dp"
+					android:paddingTop="10dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="10dp"
+					android:textSize="17sp"
+					android:textAllCaps="false"
+					android:gravity="left|center_vertical"
+					android:text="@string/profile"/>
+			<ImageView
+					android:id="@+id/ivBtnSettingMDM"
+					android:layout_width="9dp"
+					android:layout_height="15dp"
+					android:src="@drawable/ic_arrow"
+					android:layout_centerVertical="true"
+					android:layout_alignParentRight="true"
+					android:layout_marginRight="20dp"
+					/>
+		</RelativeLayout>
+	</LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"

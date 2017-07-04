@@ -120,7 +120,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 //		SetMDM();
 //		SetScepItem();
 //		SetScepWifi();
-		Log.d("StartUsingProceduresControl:datnd", "resultWithRequestCodeMDM: ");
 		SetMDM();
 		handler.sendEmptyMessage(0);
 		DownloadCACertificate();
@@ -598,9 +597,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private void CallMDMCheckIn() {
 		logCtrl.loggerDebug("CertLoginActivity CallMDMActivity()");
 
-		// 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
-		OldMdmCheckOut();
-
 		m_DPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		m_DeviceAdmin = new ComponentName(activity, EpsapAdminReceiver.class);
 		String apid;
@@ -610,8 +606,9 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			apid = XmlPullParserAided.GetVpnApid(activity);
 		}
 		m_InformCtrl.SetAPID(apid);
-		Log.d("StartUsingProceduresControl:datnd", "CallMDMCheckIn: ========================================= ");
 		mdmctrl = new MDMControl(activity, m_InformCtrl.GetAPID());
+		// 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
+		mdmctrl.OldMdmCheckOut();
 
 		if (isDeviceAdmin() == false) {
 			addDeviceAdmin();
@@ -622,30 +619,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 //			DownloadCACertificate();
 			resultWithRequestCodeMDM();
 		}
-	}
-
-	private void OldMdmCheckOut() {
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				String filedir = "/data/data/" + activity.getPackageName() + "/files/";
-
-				java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
-				if(filename_mdm.exists()) {
-					logCtrl.loggerInfo("MDMCheckinActivity OldMdmCheckOut()");
-					MDMFlgs mdm = new MDMFlgs();
-					boolean bRet = mdm.ReadAndSetScepMdmInfo(activity);
-					if(mdm.GetCheckOut() == true) {
-						MDMControl.CheckOut(mdm, activity);
-					}
-					Log.d("StartUsingProceduresControl:datnd", "run: ===================================== OldMdmCheckOut");
-					MDMControl mdmctrl = new MDMControl(activity, mdm.GetUDID());	// この時点でサービスを止める
-					filename_mdm.delete();
-				}
-			}
-		});
-		t.start();
-
 	}
 
 	// MDMのチェックインおよび、定期通信サービススレッドの起動

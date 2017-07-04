@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.fragment.*;
+import jp.co.soliton.keymanager.mdm.MDMFlgs;
 
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.*;
 
@@ -22,6 +23,7 @@ public class SettingTabletActivity extends FragmentActivity {
 	public static final int STATUS_PRODUCT = 5;
 	public static final int STATUS_LIBRARY = 6;
 	public static final int STATUS_NOTIFICATION_ONE = 7;
+	public static final int STATUS_MDM = 8;
 	public static final float RATIO_SCALE_WIDTH = 0.6f;
 	private int currentStatus;
 	private String currentIdDetail = "";
@@ -78,6 +80,11 @@ public class SettingTabletActivity extends FragmentActivity {
 	    fragmentContent = ContentLibrarySettingFragment.newInstance();
 		changeFragmentContent(typeScroll);
     }
+    public void gotoMDM(MDMFlgs mdm, int typeScroll) {
+	    currentStatus = STATUS_MDM;
+	    fragmentContent = ContentMDMSettingFragment.newInstance(mdm);
+		changeFragmentContent(typeScroll);
+    }
 
 	@Override
 	public void onBackPressed() {
@@ -85,7 +92,7 @@ public class SettingTabletActivity extends FragmentActivity {
 			currentIdDetail = "";
 		}
 		if (currentStatus == STATUS_NOTIFICATION_ALL || currentStatus == STATUS_PRODUCT || currentStatus ==
-				STATUS_LIBRARY || currentStatus == STATUS_LIST_CERTS) {
+				STATUS_LIBRARY || currentStatus == STATUS_LIST_CERTS || currentStatus == STATUS_MDM) {
 			gotoMenuSetting(SCROLL_TO_RIGHT);
 		} else if (currentStatus == STATUS_DETAIL_CERT) {
 			gotoListCertificatesSetting(SCROLL_TO_RIGHT);

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:paddingBottom="20dp">
+    <include layout="@layout/layout_header"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="25dp"
+        android:paddingLeft="20dp"
+        android:textSize="17sp"
+        android:background="#ddebfc"
+        android:textAllCaps="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_cert"/>
+
+	<ListView
+			android:id="@+id/listMdmItem"
+			android:layout_height="0dp"
+			android:layout_width="match_parent"
+			android:divider="@color/background_color_white"
+			android:layout_weight="1"/>
+
+	<TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_cert"/>
+	<Button
+		android:id="@+id/btnDeleteMDM"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:clickable="false"
+		android:background="@color/background_color_white"
+		android:layout_toLeftOf="@+id/ivBtnSettingMDM"
+		android:paddingBottom="10dp"
+		android:paddingTop="10dp"
+		android:paddingLeft="20dp"
+		android:paddingRight="10dp"
+		android:textSize="18sp"
+		android:textAllCaps="false"
+		android:gravity="center"
+		android:textColor="@color/color_red"
+		android:text="@string/delete"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_cert"/>
+
+</LinearLayout>
