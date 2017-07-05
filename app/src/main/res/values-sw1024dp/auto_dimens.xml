@@ -27,8 +27,7 @@
 	<dimen name="margin_bottom_content_left_side_list_cert_and_reapply_tablet">200.00dp</dimen>
 	<dimen name="margin_bottom_img_vpn_input_store_tablet">26.67dp</dimen>
 	<dimen name="margin_bottom_img_wifi_input_store_tablet">40.00dp</dimen>
-	<dimen name="margin_bottom_item_apply_update_tablet">33.33dp</dimen>
-	<dimen name="margin_bottom_title_complete_using_procedures_tablet">66.67dp</dimen>
+    <dimen name="margin_bottom_title_complete_using_procedures_tablet">66.67dp</dimen>
 	<dimen name="margin_bottom_with_line_input_confirm_tablet">46.67dp</dimen>
 	<dimen name="margin_content_apid">133.33dp</dimen>
 	<dimen name="margin_content_complete_using_procedures_tablet">33.33dp</dimen>
@@ -43,9 +42,7 @@
 	<dimen name="margin_left_img_detail_confirm_apply_tablet">84.00dp</dimen>
 	<dimen name="margin_left_side">26.67dp</dimen>
 	<dimen name="margin_left_side_menu">6.67dp</dimen>
-	<dimen name="margin_left_thumb_item_apply_update_tablet">22.67dp</dimen>
-	<dimen name="margin_right_item_apply_update_tablet">60.00dp</dimen>
-	<dimen name="margin_right_user_input_tablet">146.67dp</dimen>
+    <dimen name="margin_right_user_input_tablet">146.67dp</dimen>
 	<dimen name="margin_top_btn_start_update_tablet">126.67dp</dimen>
 	<dimen name="margin_top_content_apply_success_tablet">213.33dp</dimen>
 	<dimen name="margin_top_content_input_host_tablet">266.67dp</dimen>
@@ -55,8 +52,7 @@
 	<dimen name="margin_top_content_left_side_input_tablet">120.00dp</dimen>
 	<dimen name="margin_top_content_left_side_list_cert_and_reapply_tablet">186.67dp</dimen>
 	<dimen name="margin_top_img_complete_confirm_apply_tablet">346.67dp</dimen>
-	<dimen name="margin_top_item_apply_update_tablet">46.67dp</dimen>
-	<dimen name="margin_top_title_complete_confirm_apply_tablet">233.33dp</dimen>
+    <dimen name="margin_top_title_complete_confirm_apply_tablet">233.33dp</dimen>
 	<dimen name="margin_top_title_dialog_tablet">33.33dp</dimen>
 	<dimen name="margin_top_title_start_using_procedures_tablet">240.00dp</dimen>
 	<dimen name="margin_top_with_line_input_confirm_tablet">53.33dp</dimen>

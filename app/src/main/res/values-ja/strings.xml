@@ -6,9 +6,7 @@
 	<string name="Property_array">array</string>
 	<string name="Property_dict">dict</string>
 	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-	<string name="Dialog_title_wifiinfo">Wi-Fi設定</string>
-	<string name="Dialog_msg_wifiinfo">本バージョンのOSにおいては、手動でEAPの設定を行ってください。</string>
-	<string name="Forbidden">Forbidden</string>
+    <string name="Forbidden">Forbidden</string>
 	<string name="Unauthorized">Unauthorized</string>
 	<string name="ERR">ERR:</string>
 	<string name="main_apid_wifi">Wi-Fi</string>

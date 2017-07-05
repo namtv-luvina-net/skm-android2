@@ -265,22 +265,6 @@ public class WifiControl {
     	return bRet;
     }
 
-    // Android 4.3以降のEAPのプロパティが存在するときの確認ダイアログを表示
-    private void EAPWifi43Info() {
-		AlertDialog.Builder dlg;
-		dlg = new AlertDialog.Builder(context);
-		dlg.setTitle(context.getText(R.string.Dialog_title_wifiinfo).toString());
-		dlg.setMessage(context.getText(R.string.Dialog_msg_wifiinfo).toString());
-		dlg.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-			 public void onClick(DialogInterface dialog, int id) {
-			 // 確認だけなので動作は何も行わない
-			    }
-		});
-
-
-		dlg.show();
-	}
-
     public boolean deleteConfig(String ssid) {
     	boolean bRet = false;
 
