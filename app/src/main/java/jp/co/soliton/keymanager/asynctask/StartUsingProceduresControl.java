@@ -117,9 +117,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	}
 
 	public void resultWithRequestCodeMDM() {
-//		SetMDM();
-//		SetScepItem();
-//		SetScepWifi();
 		SetMDM();
 		handler.sendEmptyMessage(0);
 		DownloadCACertificate();
@@ -225,7 +222,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
 			if (mdm_dict == null) {
 				Log.d("CertLoginActivity", "SetMDM() No profile");
-//				SetScepWifi();
 				DownloadCACertificate();
 			} else {
 				Log.d("CertLoginActivity", "SetMDM() Has profile");
@@ -613,10 +609,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		if (isDeviceAdmin() == false) {
 			addDeviceAdmin();
 		} else {
-//			SetMDM();
-//			SetScepItem();
-//			SetScepWifi();
-//			DownloadCACertificate();
 			resultWithRequestCodeMDM();
 		}
 	}
