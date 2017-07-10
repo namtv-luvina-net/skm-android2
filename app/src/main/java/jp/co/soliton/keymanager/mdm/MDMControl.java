@@ -97,24 +97,18 @@ public class MDMControl {
 	}
 
 	public void OldMdmCheckOut() {
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				String filedir = "/data/data/" + context.getPackageName() + "/files/";
+		String filedir = "/data/data/" + context.getPackageName() + "/files/";
 
-				java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
-				if(filename_mdm.exists()) {
-					MDMFlgs mdm = new MDMFlgs();
-					boolean bRet = mdm.ReadAndSetScepMdmInfo(context);
-					if(mdm.GetCheckOut() == true) {
-						MDMControl.CheckOut(mdm, context);
-					}
-					MDMControl mdmctrl = new MDMControl(context, mdm.GetUDID());	// この時点でサービスを止める
-					filename_mdm.delete();
-				}
+		java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
+		if(filename_mdm.exists()) {
+			MDMFlgs mdm = new MDMFlgs();
+			boolean bRet = mdm.ReadAndSetScepMdmInfo(context);
+			if(mdm.GetCheckOut() == true) {
+				MDMControl.CheckOut(mdm, context);
 			}
-		});
-		t.start();
+			MDMControl mdmctrl = new MDMControl(context, mdm.GetUDID());	// この時点でサービスを止める
+			filename_mdm.delete();
+		}
 	}
 
 	public static boolean CheckOut(MDMFlgs flgs, Context cont) {
