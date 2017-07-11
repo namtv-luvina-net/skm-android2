@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -46,11 +47,13 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
 
 	private String hostName;
 	private String portName;
+	private Bundle savedInstanceState;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+	    this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_pager_input);
         setUpView();
         setTab();
@@ -79,6 +82,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
     public void onResume() {
         super.onResume();
         setChangePage();
+	    setStatusBackNext(mViewPager.getCurrentItem());
     }
 
     @Override
@@ -139,7 +143,16 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
         mViewPager = (InputApplyViewPager) findViewById(R.id.viewPager);
         backButton = (Button) findViewById(R.id.btnInputBack);
         nextButton = (Button) findViewById(R.id.btnInputNext);
-        adapter = new ViewPagerAdapter(getApplicationContext(),getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(this,getSupportFragmentManager());
+	    if (savedInstanceState == null){
+		    adapter.init();
+	    }else{
+		    Integer  count  = savedInstanceState.getInt("tabsCount");
+		    String[] titles = savedInstanceState.getStringArray("titles");
+		    for (int i = 0; i < count; i++){
+			    adapter.addFragment(getFragment(i), titles[i]);
+		    }
+	    }
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);
 	    mViewPager.setOffscreenPageLimit(3);
@@ -148,6 +161,21 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
 	    sdk_int_version = Build.VERSION.SDK_INT;
 	    SoftKeyboardCtrl.addListenner(findViewById(R.id.activityRoot), this);
     }
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt("tabsCount",      adapter.getCount());
+		outState.putStringArray("titles", adapter.getTitles().toArray(new String[0]));
+	}
+
+	private Fragment getFragment(int position){
+		return savedInstanceState == null ? adapter.getItem(position) : getSupportFragmentManager().findFragmentByTag(getFragmentTag(position));
+	}
+
+	private String getFragmentTag(int position) {
+		return "android:switcher:" + R.id.viewPager + ":" + position;
+	}
 
     /**
      * Action change tab page
