@@ -20,7 +20,6 @@ import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
-import jp.co.soliton.keymanager.mdm.MDMFlgs;
 import jp.co.soliton.keymanager.scep.Requester;
 import jp.co.soliton.keymanager.scep.RequesterException;
 import jp.co.soliton.keymanager.scep.cert.CertificateUtility;
@@ -604,13 +603,17 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		m_InformCtrl.SetAPID(apid);
 		mdmctrl = new MDMControl(activity, m_InformCtrl.GetAPID());
 		// 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
-		mdmctrl.OldMdmCheckOut();
-
-		if (isDeviceAdmin() == false) {
-			addDeviceAdmin();
-		} else {
-			resultWithRequestCodeMDM();
-		}
+		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(activity, new MDMControl.CheckOutListener() {
+			@Override
+			public void checkOutComplete() {
+				if (isDeviceAdmin() == false) {
+					addDeviceAdmin();
+				} else {
+					resultWithRequestCodeMDM();
+				}
+			}
+		});
+		checkOutMdmTask.execute();
 	}
 
 	// MDMのチェックインおよび、定期通信サービススレッドの起動
@@ -758,6 +761,4 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			showMessage(activity.getString(R.string.error_install_certificate));
 		}
 	}
-
-
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
@@ -96,47 +97,9 @@ public class MDMControl {
 		return rtn;
 	}
 
-	public void OldMdmCheckOut() {
-		String filedir = "/data/data/" + context.getPackageName() + "/files/";
-
-		java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
-		if(filename_mdm.exists()) {
-			MDMFlgs mdm = new MDMFlgs();
-			boolean bRet = mdm.ReadAndSetScepMdmInfo(context);
-			if(mdm.GetCheckOut() == true) {
-				MDMControl.CheckOut(mdm, context);
-			}
-			MDMControl mdmctrl = new MDMControl(context, mdm.GetUDID());	// この時点でサービスを止める
-			filename_mdm.delete();
-		}
-	}
-
-	public static boolean CheckOut(MDMFlgs flgs, Context cont) {
-		Log.i("MDMControl", "CheckOut start.");
-		boolean rtn = true;
-		
-		InformCtrl inform = new InformCtrl();
-		
-		String sendmsg = flgs.CheckinoutMsg(false);
-		Log.i("CheckOut RTN MESSAGE", sendmsg);		
-		inform.SetMessage(sendmsg);
-		
-		inform.SetURL(flgs.GetCheckin());
-		
-		HttpConnectionCtrl conn = new HttpConnectionCtrl(cont);	
-		rtn = conn.RunHttpMDMConnection(inform);
-		
-		int ret_code = inform.GetResponseCode();
-		if(ret_code == StringList.RES_200_OK) {
-			rtn = true;
-		}
-		
-		return rtn;
-	}
-	
 	public boolean TokenUpdate() {
 		Log.i("MDMControl", "TokenUpdate start.");
-		boolean rtn = true;
+		boolean rtn;
 		
 		InformCtrl inform = new InformCtrl();
 
@@ -191,5 +154,64 @@ public class MDMControl {
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_CheckOutRemoved)) {
 			m_flgs.SetCheckOut(b_type);
 		}
+	}
+
+	public static class CheckOutMdmTask extends AsyncTask<Object, Object, Void> {
+		private Context context;
+		private CheckOutListener checkOutListener;
+
+		public CheckOutMdmTask(Context context, CheckOutListener checkOutListener) {
+			this.context = context;
+			this.checkOutListener = checkOutListener;
+		}
+
+		@Override
+		protected Void doInBackground(Object... params) {
+			String filedir = "/data/data/" + context.getPackageName() + "/files/";
+
+			java.io.File filename_mdm = new java.io.File(filedir + StringList.m_strMdmOutputFile);
+			if(filename_mdm.exists()) {
+				MDMFlgs mdm = new MDMFlgs();
+				boolean bRet = mdm.ReadAndSetScepMdmInfo(context);
+				if(mdm.GetCheckOut()) {
+					CheckOut(mdm, context);
+				}
+				MDMControl mdmctrl = new MDMControl(context, mdm.GetUDID());	// この時点でサービスを止める
+				filename_mdm.delete();
+			}
+			return null;
+		}
+
+		private boolean CheckOut(MDMFlgs flgs, Context cont) {
+			Log.i("MDMControl", "CheckOut start.");
+			boolean rtn;
+
+			InformCtrl inform = new InformCtrl();
+
+			String sendmsg = flgs.CheckinoutMsg(false);
+			Log.i("CheckOut RTN MESSAGE", sendmsg);
+			inform.SetMessage(sendmsg);
+
+			inform.SetURL(flgs.GetCheckin());
+
+			HttpConnectionCtrl conn = new HttpConnectionCtrl(cont);
+			rtn = conn.RunHttpMDMConnection(inform);
+
+			int ret_code = inform.GetResponseCode();
+			if(ret_code == StringList.RES_200_OK) {
+				rtn = true;
+			}
+
+			return rtn;
+		}
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			super.onPostExecute(aVoid);
+			checkOutListener.checkOutComplete();
+		}
+	}
+
+	public interface CheckOutListener{
+		void checkOutComplete();
 	}
 }

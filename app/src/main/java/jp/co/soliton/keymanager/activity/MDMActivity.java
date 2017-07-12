@@ -4,10 +4,10 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import jp.co.soliton.keymanager.EpsapAdminReceiver;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterMDM;
@@ -28,7 +28,8 @@ public class MDMActivity extends BaseSettingPhoneActivity {
 	private ListView listView;
 	private AdapterMDM adapterMDM;
 	private List<AdapterMDM.ItemMDM> listItemMDM;
-	MDMFlgs mdm;
+	private MDMFlgs mdm;
+	private RelativeLayout viewProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MDMActivity extends BaseSettingPhoneActivity {
         setContentView(R.layout.activity_mdm_setting);
 	    btnDeleteMDM = (Button) findViewById(R.id.btnDeleteMDM);
 	    listView = (ListView) findViewById(R.id.listMdmItem);
+	    viewProgressBar = (RelativeLayout) findViewById(R.id.pb);
 	    listItemMDM = new ArrayList<>();
 	    adapterMDM = new AdapterMDM(this, listItemMDM);
 	    listView.setAdapter(adapterMDM);
@@ -80,11 +82,15 @@ public class MDMActivity extends BaseSettingPhoneActivity {
 			m_DPM.removeActiveAdmin(m_DeviceAdmin);
 		}
 		//CheckOutMDM
-		if (mdm.GetCheckOut()) {
-			mdmctrl.CheckOut(mdm, this);
-		}
-		mdmctrl.OldMdmCheckOut();
-		finish();
+		viewProgressBar.setVisibility(View.VISIBLE);
+		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(this, new MDMControl.CheckOutListener() {
+			@Override
+			public void checkOutComplete() {
+				viewProgressBar.setVisibility(View.GONE);
+				finish();
+			}
+		});
+		checkOutMdmTask.execute();
 	}
 
 	private void prepareData() {
