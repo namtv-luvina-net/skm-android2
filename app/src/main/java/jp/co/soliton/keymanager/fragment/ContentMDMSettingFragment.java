@@ -72,7 +72,7 @@ public class ContentMDMSettingFragment extends TabletBaseSettingFragment {
 			@Override
 			public void onClick(View v) {
 				final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
-				dialog.setTextDisplay(getString(R.string.title_delete_mdm_profile_dialog), getString(R.string.content_delete_mdm_profile_dialog)
+				dialog.setTextDisplay(null, getString(R.string.content_delete_mdm_profile_dialog)
 						, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
 				dialog.setOnClickOK(new View.OnClickListener() {
 					@Override

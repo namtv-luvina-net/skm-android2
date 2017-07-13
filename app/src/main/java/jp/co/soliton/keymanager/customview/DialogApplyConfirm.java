@@ -55,7 +55,11 @@ public class DialogApplyConfirm extends Dialog {
     }
 
     public void setTextDisplay(String title, String message, String btnCancel, String btnOK) {
-        txtDlgApplyTitle.setText(title);
+	    if (title == null || title.length() == 0) {
+		    txtDlgApplyTitle.setVisibility(View.GONE);
+	    } else {
+		    txtDlgApplyTitle.setText(title);
+	    }
         txtDlgApplyMsg.setText(message);
         this.btnOK.setText(btnOK);
         this.btnCancel.setText(btnCancel);

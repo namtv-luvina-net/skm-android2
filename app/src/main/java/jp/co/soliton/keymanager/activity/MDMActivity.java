@@ -58,7 +58,7 @@ public class MDMActivity extends BaseSettingPhoneActivity {
 			@Override
 			public void onClick(View v) {
 				final DialogApplyConfirm dialog = new DialogApplyConfirm(MDMActivity.this);
-				dialog.setTextDisplay(getString(R.string.title_delete_mdm_profile_dialog), getString(R.string.content_delete_mdm_profile_dialog)
+				dialog.setTextDisplay(null, getString(R.string.content_delete_mdm_profile_dialog)
 						, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
 				dialog.setOnClickOK(new View.OnClickListener() {
 					@Override

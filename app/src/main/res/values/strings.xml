@@ -216,6 +216,5 @@
 	<string name="device_info">Device Info</string>
 	<string name="network_info">Network Info</string>
 	<string name="app_info">App Info</string>
-	<string name="title_delete_mdm_profile_dialog">Delete MDM profile</string>
 	<string name="content_delete_mdm_profile_dialog">Delete the MDM profile.\nIs it OK?</string>
 </resources>
