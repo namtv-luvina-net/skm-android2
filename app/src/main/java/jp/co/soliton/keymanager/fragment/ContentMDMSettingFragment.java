@@ -11,12 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.EpsapAdminReceiver;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.MDMActivity;
 import jp.co.soliton.keymanager.adapter.AdapterMDM;
-import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.mdm.MDMFlgs;
@@ -34,7 +33,8 @@ public class ContentMDMSettingFragment extends TabletBaseSettingFragment {
 	private ListView listView;
 	private AdapterMDM adapterMDM;
 	private List<AdapterMDM.ItemMDM> listItemMDM;
-	MDMFlgs mdm;
+	private RelativeLayout viewProgressBar;
+	private MDMFlgs mdm;
 
 	public static Fragment newInstance(MDMFlgs mdm) {
 		ContentMDMSettingFragment f = new ContentMDMSettingFragment();
@@ -51,6 +51,7 @@ public class ContentMDMSettingFragment extends TabletBaseSettingFragment {
 		tvTitleHeader.setText(getString(R.string.profile));
 		btnDeleteMDM = (Button) viewFragment.findViewById(R.id.btnDeleteMDM);
 		listView = (ListView) viewFragment.findViewById(R.id.listMdmItem);
+		viewProgressBar = (RelativeLayout) viewFragment.findViewById(R.id.pb);
 		listItemMDM = new ArrayList<>();
 		adapterMDM = new AdapterMDM(getActivity(), listItemMDM);
 		listView.setAdapter(adapterMDM);
@@ -95,11 +96,15 @@ public class ContentMDMSettingFragment extends TabletBaseSettingFragment {
 			m_DPM.removeActiveAdmin(m_DeviceAdmin);
 		}
 		//CheckOutMDM
-		if (mdm.GetCheckOut()) {
-			mdmctrl.CheckOut(mdm, getActivity());
-		}
-		mdmctrl.OldMdmCheckOut();
-		getActivity().onBackPressed();
+		viewProgressBar.setVisibility(View.VISIBLE);
+		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(getActivity(), new MDMControl.CheckOutListener() {
+			@Override
+			public void checkOutComplete() {
+				viewProgressBar.setVisibility(View.GONE);
+				getActivity().onBackPressed();
+			}
+		});
+		checkOutMdmTask.execute();
 	}
 
 	private void prepareData() {

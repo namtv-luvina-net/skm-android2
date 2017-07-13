@@ -3,7 +3,6 @@ package jp.co.soliton.keymanager.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.*;
@@ -23,9 +22,7 @@ import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT;
 import static jp.co.soliton.keymanager.common.StatusFragmentTablet.*;
-import static jp.co.soliton.keymanager.common.TypeScrollFragment.NOT_SCROLL;
-import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_LEFT;
-import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+import static jp.co.soliton.keymanager.common.TypeScrollFragment.*;
 
 /**
  * Created by luongdolong on 2/3/2017.
