@@ -6,33 +6,46 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import jp.co.soliton.keymanager.fragment.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by luongdolong on 2/3/2017.
  */
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    public static int totalPage = 6;
-
     private Context context;
-    private Fragment [] listFragment = new Fragment[6];
+    private ArrayList<Fragment> listFragment = new ArrayList<>();
+	private ArrayList<String> titles = new ArrayList<>();
 
     public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
-	    listFragment[0] = InputHostPageFragment.newInstance(context);
-        listFragment[1] = InputPortPageFragment.newInstance(context);
-        listFragment[2] = InputPlacePageFragment.newInstance(context);
-        listFragment[3] = InputUserPageFragment.newInstance(context);
-        listFragment[4] = InputEmailPageFragment.newInstance(context);
-        listFragment[5] = InputReasonPageFragment.newInstance(context);
     }
 
-    @Override
+    public void init() {
+	    addFragment(InputHostPageFragment.newInstance(context), InputHostPageFragment.class.getName());
+	    addFragment(InputPortPageFragment.newInstance(context), InputPortPageFragment.class.getName());
+	    addFragment(InputPlacePageFragment.newInstance(context), InputPlacePageFragment.class.getName());
+	    addFragment(InputUserPageFragment.newInstance(context), InputUserPageFragment.class.getName());
+	    addFragment(InputEmailPageFragment.newInstance(context), InputEmailPageFragment.class.getName());
+	    addFragment(InputReasonPageFragment.newInstance(context) , InputReasonPageFragment.class.getName());
+    }
+
+	public void addFragment(Fragment fragment, String title) {
+		listFragment.add(fragment);
+		titles.add(title);
+	}
+
+	public ArrayList<String> getTitles() {
+		return titles;
+	}
+
+	@Override
     public Fragment getItem(int position) {
-        return listFragment[position];
+        return listFragment.get(position);
     }
     @Override
     public int getCount() {
-        return totalPage;
+        return listFragment.size();
     }
 }

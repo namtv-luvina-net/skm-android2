@@ -452,7 +452,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					}
 					element.setPurpose(X509Utils.getPurpose(certRep.getCertificate()));
 					element.setNotiEnableFlag(CommonUtils.getPrefBoolean(activity, StringList.KEY_NOTIF_ENABLE_FLAG));
-					element.setNotiEnableBeforeFlag(CommonUtils.getPrefBoolean(activity, StringList.KEY_NOTIF_ENABLE_FLAG));
+					element.setNotiEnableBeforeFlag(CommonUtils.getPrefBoolean(activity, StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
 					element.setNotiEnableBefore(CommonUtils.getPrefInteger(activity, StringList.KEY_NOTIF_ENABLE_BEFORE));
 				} else {
 					return false;
