@@ -85,6 +85,8 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 				getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
 			}
 			getInputApplyInfo().setUserId(detail.getUserId());
+			getInputApplyInfo().setEmail(detail.getEmail());
+			getInputApplyInfo().setReason(detail.getReason());
 			getInputApplyInfo().savePref(getActivity());
 			viewPager.setCurrentItem(3);
 		}

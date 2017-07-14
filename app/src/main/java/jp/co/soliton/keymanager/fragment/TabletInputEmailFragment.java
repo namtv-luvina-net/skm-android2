@@ -76,6 +76,8 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
+					tabletAbtractInputFragment.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
+					tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 					String email = txtEmail.getText().toString().trim();
 					txtEmail.setText(email);
 					SoftKeyboardCtrl.hideKeyboard(v, getContext());

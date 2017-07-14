@@ -79,6 +79,8 @@ public class InputEmailPageFragment extends InputBasePageFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
+	                pagerInputActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
+	                pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
 	                txtEmail.setText(txtEmail.getText().toString().trim());
                     SoftKeyboardCtrl.hideKeyboard(v, getContext());
 	                updateStatusSkipButton();
@@ -153,7 +155,7 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     @Override
     public void nextAction() {
         pagerInputActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
-        pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+	    pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         if (!ValidateParams.isValidEmail(txtEmail.getText().toString().trim())) {
             showMessage(getString(R.string.apply_mail_error));
             return;
@@ -168,9 +170,11 @@ public class InputEmailPageFragment extends InputBasePageFragment {
         if (pagerInputActivity == null) {
             return;
         }
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getEmail())) {
-            txtEmail.setText(pagerInputActivity.getInputApplyInfo().getEmail());
-        }
+	    if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getEmail())) {
+		    txtEmail.setText(pagerInputActivity.getInputApplyInfo().getEmail());
+	    } else {
+		    txtEmail.setText("");
+	    }
         updateStatusSkipButton();
         setStatusControl();
     }

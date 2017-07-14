@@ -76,7 +76,6 @@ public class InputPasswordActivity extends Activity {
     public void clickNext(View v) {
 	    logCtrl.loggerInfo("CertLoginAcrivity::onClick  " + "Push LoginButton");
         String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
-	    Log.d("InputPasswordActivity:datnd", "clickNext: url = " + url);
 	    m_InformCtrl.SetURL(url);
         //make parameter
         boolean ret = makeParameterLogon();

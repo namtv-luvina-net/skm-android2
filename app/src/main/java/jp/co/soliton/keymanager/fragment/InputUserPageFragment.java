@@ -45,6 +45,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
     private boolean challenge;
     private ElementApplyManager elementMgr;
     private boolean isSubmitted;
+	private String lastUserId;
 
     public static Fragment newInstance(Context context) {
         InputUserPageFragment f = new InputUserPageFragment();
@@ -166,8 +167,12 @@ public class InputUserPageFragment extends InputBasePageFragment {
             showMessage(getString(R.string.user_id_is_invalid));
             return;
         }
-        pagerInputActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
-        pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
+	    lastUserId = pagerInputActivity.getInputApplyInfo().getUserId();
+	    if (lastUserId == null) {
+		    lastUserId = "";
+	    }
+	    pagerInputActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
+	    pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         //make parameter
         boolean ret = makeParameterLogon();
@@ -421,11 +426,15 @@ public class InputUserPageFragment extends InputBasePageFragment {
                         challenge = (6 == p_data.GetType());
                     }
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
-                        if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
-                            pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
-                        } else {
-	                        pagerInputActivity.getInputApplyInfo().setEmail("");
-                        }
+	                    if (!lastUserId.equals(pagerInputActivity.getInputApplyInfo().getUserId())) {
+		                    if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+			                    pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
+		                    } else {
+			                    pagerInputActivity.getInputApplyInfo().setEmail("");
+		                    }
+		                    pagerInputActivity.getInputApplyInfo().setReason("");
+		                    pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+	                    }
                     }
                 }
             }

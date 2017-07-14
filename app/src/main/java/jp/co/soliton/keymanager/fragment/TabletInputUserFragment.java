@@ -40,6 +40,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private boolean isSubmitted;
 	TabletAbtractInputFragment tabletAbtractInputFragment;
 	private String id_update;
+	private String lastUserId;
 
 	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment, String id) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
@@ -195,6 +196,10 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		if (!ValidateParams.isValidUserID(txtUserId.getText().toString().trim())) {
 			tabletAbtractInputFragment.showMessage(getString(R.string.user_id_is_invalid));
 			return;
+		}
+		lastUserId = tabletAbtractInputFragment.getInputApplyInfo().getUserId();
+		if (lastUserId == null) {
+			lastUserId = "";
 		}
 		String userId = txtUserId.getText().toString().trim();
 		String password = txtPassword.getText().toString();
@@ -411,10 +416,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						challenge = (6 == p_data.GetType());
 					}
 					if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
-						if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
-							tabletAbtractInputFragment.getInputApplyInfo().setEmail(p_data.GetData());
-						} else {
-							tabletAbtractInputFragment.getInputApplyInfo().setEmail("");
+						if (!lastUserId.equals(tabletAbtractInputFragment.getInputApplyInfo().getUserId())) {
+							if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+								tabletAbtractInputFragment.getInputApplyInfo().setEmail(p_data.GetData());
+							} else {
+								tabletAbtractInputFragment.getInputApplyInfo().setEmail("");
+							}
+							tabletAbtractInputFragment.getInputApplyInfo().setReason("");
+							tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 						}
 					}
 				}

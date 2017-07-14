@@ -1,6 +1,5 @@
 package jp.co.soliton.keymanager.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -48,6 +47,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
     private boolean challenge;
     private ElementApplyManager elementMgr;
     private boolean isSubmitted;
+	private String lastUserId;
 
     public static Fragment newInstance(Context context) {
         ReapplyUserPageFragment f = new ReapplyUserPageFragment();
@@ -156,8 +156,13 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
      */
     @Override
     public void nextAction() {
-        pagerReapplyActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
-        pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+	    lastUserId = pagerReapplyActivity.getInputApplyInfo().getUserId();
+	    if (lastUserId == null) {
+		    lastUserId = "";
+	    }
+	    pagerReapplyActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString());
+	    pagerReapplyActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
+	    pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
@@ -413,9 +418,15 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                         challenge = (6 == p_data.GetType());
                     }
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
-                        if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
-                            pagerReapplyActivity.getInputApplyInfo().setEmail(p_data.GetData());
-                        }
+	                    if (!lastUserId.equals(pagerReapplyActivity.getInputApplyInfo().getUserId())) {
+		                    if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+			                    pagerReapplyActivity.getInputApplyInfo().setEmail(p_data.GetData());
+		                    } else {
+			                    pagerReapplyActivity.getInputApplyInfo().setEmail("");
+		                    }
+		                    pagerReapplyActivity.getInputApplyInfo().setReason("");
+		                    pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+	                    }
                     }
                 }
             }

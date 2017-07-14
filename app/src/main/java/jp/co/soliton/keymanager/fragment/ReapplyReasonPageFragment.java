@@ -70,7 +70,10 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 	            if (!hasFocus) {
-		            txtReason.setText(txtReason.getText().toString().trim());
+		            String reason = txtReason.getText().toString().trim();
+		            pagerReapplyActivity.getInputApplyInfo().setReason(reason);
+		            pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+		            txtReason.setText(reason);
 		            SoftKeyboardCtrl.hideKeyboard(v, getContext());
 		            updateStatusSkipButton();
 	            } else {
@@ -143,9 +146,11 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
         if (pagerReapplyActivity == null) {
             return;
         }
-        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getReason())) {
-            txtReason.setText(pagerReapplyActivity.getInputApplyInfo().getReason());
-        }
+	    if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getReason())) {
+		    txtReason.setText(pagerReapplyActivity.getInputApplyInfo().getReason());
+	    } else {
+		    txtReason.setText("");
+	    }
 	    updateStatusSkipButton();
         setStatusControl();
     }

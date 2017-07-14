@@ -74,7 +74,10 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					txtReason.setText(txtReason.getText().toString().trim());
+					String reason = txtReason.getText().toString().trim();
+					tabletAbtractInputFragment.getInputApplyInfo().setReason(reason);
+					tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+					txtReason.setText(reason);
 					SoftKeyboardCtrl.hideKeyboard(v, getContext());
 					updateStatusSkipButton();
 				} else {
@@ -98,6 +101,8 @@ public class TabletInputReasonFragment extends TabletInputFragment {
 		}
 		if (!nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getReason())) {
 			txtReason.setText(tabletAbtractInputFragment.getInputApplyInfo().getReason());
+		} else {
+			txtReason.setText("");
 		}
 		setStatusControl();
 		updateStatusSkipButton();

@@ -73,6 +73,8 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
                 getInputApplyInfo().setPlace(InputBasePageFragment.TARGET_VPN);
             }
             getInputApplyInfo().setUserId(detail.getUserId());
+            getInputApplyInfo().setEmail(detail.getEmail());
+            getInputApplyInfo().setReason(detail.getReason());
             getInputApplyInfo().savePref(this);
             gotoPage(3);
         }

@@ -78,6 +78,8 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 	            if (!hasFocus) {
+		            pagerReapplyActivity.getInputApplyInfo().setEmail(txtEmail.getText().toString().trim());
+		            pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
 		            txtEmail.setText(txtEmail.getText().toString().trim());
 		            SoftKeyboardCtrl.hideKeyboard(v, getContext());
 		            updateStatusSkipButton();
@@ -167,9 +169,11 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
         if (pagerReapplyActivity == null) {
             return;
         }
-        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getEmail())) {
-            txtEmail.setText(pagerReapplyActivity.getInputApplyInfo().getEmail());
-        }
+	    if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getEmail())) {
+		    txtEmail.setText(pagerReapplyActivity.getInputApplyInfo().getEmail());
+	    } else {
+		    txtEmail.setText("");
+	    }
 	    updateStatusSkipButton();
         setStatusControl();
     }
