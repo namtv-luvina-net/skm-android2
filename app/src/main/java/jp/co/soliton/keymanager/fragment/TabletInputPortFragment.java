@@ -35,14 +35,12 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	EditText edtPort;
 	TextView txtGuideDownloadCaCertificate;
 	TextView titleInput;
-	private LogCtrl logCtrl;
 
 	TabletAbtractInputFragment tabletAbtractInputFragment;
 
 	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputPortFragment f = new TabletInputPortFragment();
 		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
-		f.logCtrl = LogCtrl.getInstance(context);
 		return f;
 	}
 
@@ -166,7 +164,6 @@ public class TabletInputPortFragment extends TabletInputFragment {
 
 	@Override
 	public void nextAction() {
-			logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
 			tabletAbtractInputFragment.getInputApplyInfo().setPort(edtPort.getText().toString().trim());
 			tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 			tabletAbtractInputFragment.getProgressDialog().show();

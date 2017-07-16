@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import jp.co.soliton.keymanager.EpsapAdminReceiver;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterMDM;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
@@ -86,6 +87,7 @@ public class MDMActivity extends BaseSettingPhoneActivity {
 		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(this, new MDMControl.CheckOutListener() {
 			@Override
 			public void checkOutComplete() {
+				LogCtrl.getInstance().info("Setting: MDM profile has deleted");
 				viewProgressBar.setVisibility(View.GONE);
 				finish();
 			}

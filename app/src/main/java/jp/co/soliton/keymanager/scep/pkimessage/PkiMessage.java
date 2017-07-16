@@ -21,6 +21,8 @@ import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
 import org.bouncycastle.asn1.DERObjectIdentifier;
 
+import jp.co.soliton.keymanager.LogCtrl;
+
 public class PkiMessage extends CMSSignedData {
 	private Hashtable<DERObjectIdentifier, Attribute> scepAttributeTable = null;
 	
@@ -72,7 +74,7 @@ public class PkiMessage extends CMSSignedData {
 			} else {
 				throw new CMSException("Unable to verify");
 			}
-			System.out.println("Verify OK");
+			LogCtrl.getInstance().info("PKIMessage: Verify OK");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			throw new CMSException(e.getMessage());

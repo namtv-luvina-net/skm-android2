@@ -18,7 +18,6 @@ import javax.net.ssl.X509ExtendedKeyManager;
 
 public class SSLUtils {
 
-	private static final boolean LOG_ENABLED = false;
 	public static final String TAG = "SSLUtils";
 	
 	
@@ -66,28 +65,17 @@ public class SSLUtils {
 
         @Override
         public String chooseClientAlias(String[] keyTypes, Principal[] issuers, Socket socket) {
-            if (LOG_ENABLED) {
-                InetAddress address = socket.getInetAddress();
-                Log.i(TAG, "TrackingKeyManager: requesting a client cert alias for "
-                        + address.getCanonicalHostName());
-            }
             mLastTimeCertRequested = System.currentTimeMillis();
             return null;
         }
 
         @Override
         public X509Certificate[] getCertificateChain(String alias) {
-            if (LOG_ENABLED) {
-                Log.i(TAG, "TrackingKeyManager: returning a null cert chain");
-            }
             return null;
         }
 
         @Override
         public PrivateKey getPrivateKey(String alias) {
-            if (LOG_ENABLED) {
-                Log.i(TAG, "TrackingKeyManager: returning a null private key");
-            }
             return null;
         }
 
@@ -115,17 +103,12 @@ public class SSLUtils {
          */
         public static KeyChainKeyManager fromAlias(Context context, String alias)
                 throws CertificateException {
-	        LogCtrl logCtrl = LogCtrl.getInstance(context);
             X509Certificate[] certificateChain;
             try {
                 certificateChain = KeyChain.getCertificateChain(context, alias);
             } catch (KeyChainException e) {
-                logError(alias, "certificate chain", e);
-	            logCtrl.loggerError(alias + " :certificate chain : " + e.toString());
                 throw new CertificateException(e);
             } catch (InterruptedException e) {
-                logError(alias, "certificate chain", e);
-	            logCtrl.loggerError(alias + " :certificate chain : " + e.toString());
                 throw new CertificateException(e);
             }
 
@@ -133,30 +116,16 @@ public class SSLUtils {
             try {
                 privateKey = KeyChain.getPrivateKey(context, alias);
             } catch (KeyChainException e) {
-                logError(alias, "private key", e);
-	            logCtrl.loggerError(alias + " : private key : " + e.toString());
                 throw new CertificateException(e);
             } catch (InterruptedException e) {
-	            logCtrl.loggerError(alias + " : private key : " + e.toString());
-                logError(alias, "private key", e);
                 throw new CertificateException(e);
             }
 
             if (certificateChain == null || privateKey == null) {
-	            logCtrl.loggerError("SSLUtils::KeyChainKeyManager:: Can't access certificate from keystore");
                 throw new CertificateException("Can't access certificate from keystore");
             }
 
             return new KeyChainKeyManager(alias, certificateChain, privateKey);
-        }
-
-        private static void logError(String alias, String type, Exception ex) {
-            // Avoid logging PII when explicit logging is not on.
-            if (LOG_ENABLED) {
-                Log.e(TAG, "Unable to retrieve " + type + " for [" + alias + "] due to " + ex);
-            } else {
-                Log.e(TAG, "Unable to retrieve " + type + " due to " + ex);
-            }
         }
 
         private KeyChainKeyManager(
@@ -169,25 +138,16 @@ public class SSLUtils {
 
         @Override
         public String chooseClientAlias(String[] keyTypes, Principal[] issuers, Socket socket) {
-            if (LOG_ENABLED) {
-                Log.i(TAG, "Requesting a client cert alias for " + Arrays.toString(keyTypes));
-            }
             return mClientAlias;
         }
 
         @Override
         public X509Certificate[] getCertificateChain(String alias) {
-            if (LOG_ENABLED) {
-                Log.i(TAG, "Requesting a client certificate chain for alias [" + alias + "]");
-            }
             return mCertificateChain;
         }
 
         @Override
         public PrivateKey getPrivateKey(String alias) {
-            if (LOG_ENABLED) {
-                Log.i(TAG, "Requesting a client private key for alias [" + alias + "]");
-            }
             return mPrivateKey;
         }
     }

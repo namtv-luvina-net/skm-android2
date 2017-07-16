@@ -25,11 +25,9 @@ public class ControlPagesInput {
 	public static int REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT = 4955;
 
 	private Activity activity;
-	private LogCtrl logCtrl;
 
 	public ControlPagesInput(Activity activity) {
 		this.activity = activity;
-		logCtrl = LogCtrl.getInstance(activity);
 	}
 
 	/**
@@ -42,7 +40,7 @@ public class ControlPagesInput {
 		XmlPullParserAided m_p_aided = new XmlPullParserAided(activity, cacert, 2);	// 最上位dictの階層は2になる
 		boolean ret = m_p_aided.TakeApartProfileList();
 		if (!ret) {
-			logCtrl.loggerError("InputPortPageFragment:downloadCert1: " + activity.getString(R.string
+			LogCtrl.getInstance().error("Apply: Download CA Certificate Error: " + activity.getString(R.string
 					.error_install_certificate));
 			return activity.getString(R.string.error_install_certificate);
 		}
@@ -52,13 +50,15 @@ public class ControlPagesInput {
 		//Install certificate
 		Intent intent = KeyChain.createInstallIntent();
 		try {
+			LogCtrl.getInstance().info("Apply: Install CA Certificate " + Integer.toString(cacert.length()));
+			LogCtrl.getInstance().debug(cacert);
+
 			X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
 			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
 			intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
 			activity.startActivityForResult(intent, REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT);
 		} catch (Exception e) {
-			logCtrl.loggerError("InputPortPageFragment:downloadCert2: " + activity.getString(R.string
-					.error_install_certificate));
+			LogCtrl.getInstance().error("Apply: Install CA Certificate Error: " +  activity.getString(R.string.error_install_certificate));
 			return activity.getString(R.string.error_install_certificate);
 		}
 		return "";
@@ -83,8 +83,7 @@ public class ControlPagesInput {
 					"&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
 					"&" + StringList.m_strSerial + rtnserial;
 		} catch (Exception ex) {
-			LogCtrl.getInstance(activity).loggerInfo("InputUserPageFragment:makeParameterLogon: " + ex.toString());
-			Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
+			LogCtrl.getInstance().error("Apply: Make parameter error: " + ex.getMessage());
 			return false;
 		}
 		// 入力データを情報管理クラスへセットする

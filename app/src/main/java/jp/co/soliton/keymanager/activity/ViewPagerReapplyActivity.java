@@ -116,8 +116,6 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    LogCtrl.getInstance(this).loggerInfo("ViewPagerReapplyActivity:onActivityResult requestCode = " + requestCode + ". " +
-			    "resultCode = " + requestCode);
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
         }

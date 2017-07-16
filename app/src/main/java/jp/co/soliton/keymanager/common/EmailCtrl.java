@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ProcessInfoAndZipTask;
 
@@ -14,6 +16,7 @@ import jp.co.soliton.keymanager.asynctask.ProcessInfoAndZipTask;
 public class EmailCtrl {
 
 	public static void sentEmailInfo(Context context, ProcessInfoAndZipTask.ContentZip contentZip) {
+		LogCtrl.getInstance().info("Diag: Show app chooser");
 		Uri contentUri = FileProvider.getUriForFile(context, "jp.co.soliton.keymanager", contentZip.file);
 		Intent intent = new Intent(Intent.ACTION_SEND, contentUri);
 		intent.setType("application/octet-stream");

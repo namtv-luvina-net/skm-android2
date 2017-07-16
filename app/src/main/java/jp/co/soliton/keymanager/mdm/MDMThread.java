@@ -45,33 +45,32 @@ public class MDMThread {
 
 	private class MDMRunThread extends Thread {
 		public void run() {
-			Log.i("MDMRunThread::run", "Start.");
+			LogCtrl.getInstance().info("MDMThread: Start");
 
 			while(running == true) {
-				Log.i("MDMRunThread::run", "Sleep 30sec.");
+				LogCtrl.getInstance().debug("MDMThread: 30sec intervals");
 				try {
 					sleep(30000);
-					
-					
+
 					// EPS-apへ問い合わせ
 					InformCtrl inform = new InformCtrl();
 					inform.SetURL(m_flgs.GetServerurl());
-						
+
+					LogCtrl.getInstance().debug("MDMThread: Send message");
+
 					String sendmsg = m_flgs.StatusMsg(StringList.m_strIdle);		
-					Log.i("MDMRunThread RTN MESSAGE", sendmsg);		
 					inform.SetMessage(sendmsg);
 					
 					// Idle送信
 					HttpConnectionCtrl conn = new HttpConnectionCtrl(context);
 					boolean ret = conn.RunHttpMDMConnection(inform);
 					if (ret == false) {
-						Log.e("MDMThread::MDMRunThread", "IDLE Error.");
+						LogCtrl.getInstance().info("MDMThread: Idle (No commands)");
 						continue;
 					}
 					
 					while(true) {
-						Log.i("MDMThread::MDMRunThread:RTN", inform.GetRtn());
-						
+
 						// 解析して、CommandUUID or RequestTypeがなければcontinueするか？
 						XmlPullParserAided aided = new XmlPullParserAided(context, inform.GetRtn(), 2);	// 最上位dictの階層は2になる
 						
@@ -81,9 +80,11 @@ public class MDMThread {
 						String uuid = xmlKeyword.GetCmdUUID();
 						if(uuid == null) {
 							// コマンドが入っていない場合は抜けて、Idleからやり直す.
-							Log.i("MDMThread::MDMRunThread", "Reply No Packet.");
+							LogCtrl.getInstance().debug("MDMThread: No commands");
 							break;
 						}
+
+						LogCtrl.getInstance().info("MDMThread: Receive commands");
 						
 						// perseしたコマンドを解析して、結果をreplyする
 						String str_replycmd = m_flgs.CmdRepliesMsg(aided, context, m_DPM, m_DeviceAdmin);
@@ -99,24 +100,22 @@ public class MDMThread {
 						
 						// 送信後にwipe判定
 						if(b_wipe == true) {
-							// wipe実行. 
-							Log.i("MDMThread::MDMRunThread", "Wipe Run!");
+							// wipe実行.
+							LogCtrl.getInstance().info("MDMThread: Run wipe");
 							MDMFlgs.RunWipe(m_DPM);
 						}
 						
 						if (ret == false) {
-							LogCtrl.getInstance(context).loggerError("MDMThread::MDMRunThread Reply Error.");
 							break;
 						}
 					}
 					
 				} catch (InterruptedException e) {
-					LogCtrl.getInstance(context).loggerError("MDMThread::MDMRunThread InterruptedException : " + e.toString());
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
+					LogCtrl.getInstance().error("MDMThread::MDMRunThread:InterruptedException: " + e.toString());
 				}
 			}
 
+			LogCtrl.getInstance().info("MDMThread: Stop");
 		}
 	}
 }

@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.ContentCompleteUsingProceduresFragment;
@@ -44,9 +46,16 @@ public class CompleteUsingProceduresActivity extends FragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		txtCN.setText(elementApply.getcNValue());
-		txtSN.setText(elementApply.getsNValue());
-		txtEpDate.setText(elementApply.getExpirationDate().split(" ")[0]);
+
+		String cn = elementApply.getcNValue();
+		String sn = elementApply.getsNValue();
+		String ex = elementApply.getExpirationDate().split(" ")[0];
+		txtCN.setText(cn);
+		txtSN.setText(sn);
+		txtEpDate.setText(ex);
+
+		LogCtrl.getInstance().info("Proc: Complete Processing");
+		LogCtrl.getInstance().debug("CN=" + cn + ", S/N=" + sn + ", Expiration=" + ex);
 	}
 
 	@Override

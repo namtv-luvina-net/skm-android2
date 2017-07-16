@@ -12,6 +12,8 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.util.Log;
 import android.util.Xml;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -121,8 +123,6 @@ public class WifiControl {
 		int    i_type = p_data.GetType();		// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
 		String strData = p_data.GetData();		// 要素
 
-		Log.i("WifiControl::SetConfigrationChild", "Start. " + strKeyName);
-
 		boolean b_type = true;
 		if(i_type == 7) b_type = false;
 
@@ -186,11 +186,12 @@ public class WifiControl {
     ///// yoshim add.
     // Connect
     public boolean PublicConnect(int nProfileType) {
-    	Log.i("WifiControl", "PublicConnect start.");
 
     	boolean bRet = false;
     	// Wifi情報がないときは抜ける.
     	if(m_pWifiItem.size() < 1) { return true; }
+
+        LogCtrl.getInstance().info("WifiControl: Write wi-fi info");
 
     	// 設定内容をファイル保存
     	if(nProfileType == INSTANT_WIFI) {
@@ -223,8 +224,6 @@ public class WifiControl {
     		bRet = connect(wifiConfig);
     	}
     */
-    	Log.i("WifiControl", "PublicConnect end.");
-
     	return bRet;
     }
 
@@ -237,14 +236,14 @@ public class WifiControl {
     	int sdk_int_version = Build.VERSION.SDK_INT;
 
     	if(wifiitem.GetEAPType() == NONE) {
-    		Log.d("WifiControl::PublicConnectChild", "EAPType NONE. ");
+            LogCtrl.getInstance().info("WifiControl: EAPType=None");
     		wifiConfig = this.createPskConfig(wifiitem);
     		if(sdk_int_version > Build.VERSION_CODES.LOLLIPOP_MR1) bConnect = false;
     	} else if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
-    		Log.d("WifiControl::PublicConnectChild", "EAPType = " + wifiitem.GetEAPType());
+            LogCtrl.getInstance().info("WifiControl: EAPType=" + wifiitem.GetEAPType());
     		wifiConfig =this.createEapConfigEAP(wifiitem);
     	} else {
-    		Log.d("WifiControl::PublicConnectChild over 4.3", "EAPType = " + wifiitem.GetEAPType());
+            LogCtrl.getInstance().info("WifiControl: EAPType=" + wifiitem.GetEAPType() + " (4.3+)");
     		// 4.3以降のEAPはとりあえず、Wi-Fiセット不可
     	//	wifiConfig =this.createEapConfigEAPover43(wifiitem);
     		wifiConfig =this.createEapConfigEAP(wifiitem);
@@ -259,8 +258,6 @@ public class WifiControl {
     	if (wifiConfig != null) {
     		bRet = connect(wifiConfig, bConnect);
     	}
-
-    	Log.i("WifiControl", "PublicConnectChild end.");
 
     	return bRet;
     }
@@ -279,12 +276,13 @@ public class WifiControl {
 
 			if (config.SSID.equals("\"" + ssid + "\"")) {
 				if (wifiManager.removeNetwork(config.networkId)) {
-					Log.d("Wifi", "Remove network success. " + config.SSID);
+                    LogCtrl.getInstance().info("WifiControl: Remove SSID successful");
 					bRet = true;
 				}
 				else {
-					Log.w("Wifi", "Remove network failed. " + config.SSID);
+                    LogCtrl.getInstance().error("WifiControl: Remove SSID failed");
 				}
+                LogCtrl.getInstance().debug("SSID=" + config.SSID);
 			}
 		}
 
@@ -317,23 +315,19 @@ public class WifiControl {
         WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 
         if (!wifiManager.isWifiEnabled()) {
-        	Log.d("Wifi", "Set WifiEnabled.");
+            LogCtrl.getInstance().info("WifiControl: Set enabled");
         	wifiManager.setWifiEnabled(true);
         }
-        //Log.i("WifiControl::connect", "trace1");
         int ID = wifiManager.addNetwork(wifiConfig);
-        Log.d("Wifi", "Network ID = " + ID);
         if(bConnect == true)	// #23021
         	wifiManager.enableNetwork(wifiConfig.networkId, false);
-        //Log.i("WifiControl::connect", "trace2");
         wifiManager.saveConfiguration();
-        //Log.i("WifiControl::connect", "trace3");
         wifiManager.updateNetwork(wifiConfig);
-        //Log.i("WifiControl::connect", "trace4");
         if(bConnect == true)
         	bRet = wifiManager.enableNetwork(ID, true);	// ここで接続にいく.従って設定のみ行いたい場合は実行しない
         else bRet = true;	// 接続を行わないときは戻り値をtrueにする
-        Log.d("Wifi", "Enable network is " + bRet);
+
+        LogCtrl.getInstance().info("WifiControl: Eanble network is " + bRet);
 
     	return bRet;
     }
@@ -487,7 +481,6 @@ public class WifiControl {
             Method wcefSetValue = null;
             if(!noEnterpriseFieldType){
             for(Method m: wcEnterpriseField.getMethods())
-                //System.out.println(m.getName());
                 if(m.getName().trim().equals("setValue"))
                     wcefSetValue = m;
             }
@@ -662,7 +655,6 @@ public class WifiControl {
             Method wcefSetValue = null;
             if(!noEnterpriseFieldType){
             for(Method m: wcEnterpriseField.getMethods())
-                //System.out.println(m.getName());
                 if(m.getName().trim().equals("setValue"))
                     wcefSetValue = m;
             }
@@ -670,21 +662,17 @@ public class WifiControl {
             /*EAP Method*/
  /*           if (!noEnterpriseFieldType) {
             	if (m_numEaptype == PEAP) {
-            		Log.i("WifiControl", "createEapConfig2 Selected PEAP.");
             		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_PEAP);
             	}
 	           	else if(m_numEaptype == TLS){
-	           		Log.i("WifiControl", "createEapConfig2 Selected TLS.");
 	           		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_TLS);
 	           	//	ENTERPRISE_CLIENT_CERT = "keystore://USRCERT_" + usercert;	// user certificateを渡す手段がない
 	           	//	ENTERPRISE_PRIV_KEY = "keystore://USRPKEY_" + usercert;
 	           	}
 	           	else if(m_numEaptype == TTLS){
-	           		Log.i("WifiControl", "createEapConfig2 Selected TTLS.");
 	           		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_TTLS);
 	           	}
 	           	else if(m_numEaptype == LEAP){
-	           		Log.i("WifiControl", "createEapConfig2 Selected LEAP.");
 	           		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_LEAP);
 	           	}
 
@@ -860,7 +848,6 @@ public class WifiControl {
             Method wcefSetValue = null;
             if(!noEnterpriseFieldType){
             for(Method m: wcEnterpriseField.getMethods())
-                //System.out.println(m.getName());
                 if(m.getName().trim().equals("setValue"))
                     wcefSetValue = m;
             }
@@ -868,13 +855,9 @@ public class WifiControl {
             /*EAP Method*/
             if (!noEnterpriseFieldType) {
             	if (wifiitem.GetEAPType() == PEAP) {
-            		Log.i("WifiControl", "createEapConfigEAP Selected PEAP.");
             		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_PEAP);
             	}
 	           	else if(wifiitem.GetEAPType()  == TLS){
-	           		Log.i("WifiControl", "createEapConfigEAP Selected TLS.");
-	           		Log.i("WifiControl", "CA CERT = " + m_strCaCert);
-	           		Log.i("WifiControl", "USER CERT = " + m_strUserCert);
 	           		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_TLS);
 	           		ENTERPRISE_CLIENT_CERT = "keystore://USRCERT_" + m_strUserCert;	// user certificateを渡す手段がない
             		ENTERPRISE_PRIV_KEY = "keystore://USRPKEY_" + m_strUserCert;//m_strUserCert;
@@ -882,11 +865,9 @@ public class WifiControl {
             		ENTERPRISE_PRIV_KEY_ID = "USRPKEY_" + m_strUserCert;		// ユーザー証明書のキーID
 	           	}
 	           	else if(wifiitem.GetEAPType() == TTLS){
-	           		Log.i("WifiControl", "createEapConfig2 Selected TTLS.");
 	           		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_TTLS);
 	           	}
 	           	else if(wifiitem.GetEAPType() == LEAP){
-	           		Log.i("WifiControl", "createEapConfig2 Selected LEAP.");
 	           		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_LEAP);
 	           	}
 
@@ -924,13 +905,11 @@ public class WifiControl {
             /*EAP Identity*/
             if(!noEnterpriseFieldType) {
                 wcefSetValue.invoke(wcefIdentity.get(wifiConfig), /*wifiitem.GetIdentity()*/wifiitem.GetUserName());
-                Log.i("WifiControl", "EAP UserName::" + wifiitem.GetUserName());
             }
 
             /*EAP Password*/
             if(!noEnterpriseFieldType) {
                 wcefSetValue.invoke(wcefPassword.get(wifiConfig), wifiitem.GetUserPass());
-                Log.i("WifiControl", "EAP Password::" + wifiitem.GetUserPass());
             }
 
             /*EAp Client certificate*/
@@ -1072,20 +1051,15 @@ public class WifiControl {
             Method wcefSetValue = null;
             if(!noEnterpriseFieldType){
             for(Method m: wcEnterpriseField.getMethods())
-                //System.out.println(m.getName());
                 if(m.getName().trim().equals("setValue"))
                     wcefSetValue = m;
             }
 
             /*EAP Method*/
            	if (wifiitem.GetEAPType() == PEAP) {
-           		Log.i("WifiControl", "createEapConfigEAP Selected PEAP.");
            		mEnterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PEAP);
            	}
            	else if(wifiitem.GetEAPType()  == TLS){
-           		Log.i("WifiControl", "createEapConfigEAP Selected TLS.");
-           		Log.i("WifiControl", "CA CERT = " + m_strCaCert);
-           		Log.i("WifiControl", "USER CERT = " + m_strUserCert);
            		mEnterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TLS);
 
 
@@ -1095,11 +1069,9 @@ public class WifiControl {
            		ENTERPRISE_PRIV_KEY_ID = "USRPKEY_" + m_strUserCert;		// ユーザー証明書のキーID
            	}
            	else if(wifiitem.GetEAPType() == TTLS){
-           		Log.i("WifiControl", "createEapConfig2 Selected TTLS.");
            		mEnterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.TTLS);
            	}
            	else if(wifiitem.GetEAPType() == LEAP){
-           		Log.i("WifiControl", "createEapConfig2 Selected LEAP.");
            		wcefSetValue.invoke(wcefEap.get(wifiConfig), ENTERPRISE_EAP_LEAP);
            	}
 
@@ -1231,7 +1203,7 @@ public class WifiControl {
  	        // アウトプットをストリング型へ変換する
  	        retmsg = writer.toString();
  	    } catch (IOException e){
- 			Log.e("WriteRestrictionsInfo::IOException ", e.toString());
+            LogCtrl.getInstance().error("WifiControl::WriteWifiInfo:IOException " + e.toString());
  		}
 
 
@@ -1245,11 +1217,9 @@ public class WifiControl {
  			//出力ストリームにデータを出力
  			outputStreamObj.write(byArrData, 0, byArrData.length);
  		} catch (FileNotFoundException e) {
- 			// TODO 自動生成された catch ブロック
- 			e.printStackTrace();
+            LogCtrl.getInstance().error("WifiControl::WriteWifiInfo:FileNotFoundException " + e.toString());
  		} catch (IOException e) {
- 			// TODO 自動生成された catch ブロック
- 			e.printStackTrace();
+            LogCtrl.getInstance().error("WifiControl::WriteWifiInfo:IOException " + e.toString());
  		}
  	}
 
@@ -1465,7 +1435,6 @@ public class WifiControl {
                 if(!noEnterpriseFieldType)
                 {
                 	for(Method m: wcEnterpriseField.getMethods())
-                		//System.out.println(m.getName());
                 		if(m.getName().trim().equals("value")){
                 			wcefSetValue = m;
                 			break;

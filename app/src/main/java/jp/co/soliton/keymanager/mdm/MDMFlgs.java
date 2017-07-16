@@ -24,6 +24,8 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.Xml;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlKeyWord;
@@ -139,7 +141,7 @@ public class MDMFlgs implements Serializable{
 			retmsg = writer.toString();
 
 		} catch (IOException e){
-			Log.e("CertLoginActivity::IOException ", e.toString());
+			LogCtrl.getInstance().error("MDMFlags::CheckinoutMsg:IOException " + e.toString());
 		}
 		
 		return retmsg;
@@ -178,7 +180,7 @@ public class MDMFlgs implements Serializable{
 			retmsg = writer.toString();
 
 		} catch (IOException e){
-			Log.e("CertLoginActivity::IOException ", e.toString());
+			LogCtrl.getInstance().error("MDMFlags::TokenUpdateMsg:IOException " + e.toString());
 		}
 		
 		return retmsg;
@@ -209,7 +211,7 @@ public class MDMFlgs implements Serializable{
 			retmsg = writer.toString();
 
 		} catch (IOException e){
-			Log.e("MDMFlgs::IOException ", e.toString());
+			LogCtrl.getInstance().error("MDMFlags::StatusMsg:IOException " + e.toString());
 		}
 		
 		return retmsg;
@@ -251,7 +253,6 @@ public class MDMFlgs implements Serializable{
 				// EraseDevice
 				if(dp_running == true) {
 				//	RunWipe(dpm);
-					Log.i("MDMFlgs::CmdRepliesMsg ", "Wipe Run!");
 					m_b_wipe = true;
 					retmsg = AckMsg(aided);
 				} else retmsg = ErroMsg(aided, 12029);
@@ -260,7 +261,6 @@ public class MDMFlgs implements Serializable{
 			retmsg = ErroMsg(aided, 12021);	// Invalid request type
 		}
 		
-		Log.i("MDMFlgs::CmdRepliesMsg ", retmsg);
 		return retmsg;
 	}
 	
@@ -355,7 +355,6 @@ public class MDMFlgs implements Serializable{
 			
 			
 			PackageInfo PI = PM.getPackageInfo(info.packageName, PackageManager.GET_META_DATA);
-			Log.i("SetApplicationInfo package", PI.packageName + ":"+PI.versionName+":"+PI.versionCode);
 			// Identifier : パッケージ名
 			XmlPullParserAided.SetParameter4Output(serializer, "Identifier", info.packageName);
 			
@@ -414,7 +413,7 @@ public class MDMFlgs implements Serializable{
 	        	
 	        	// Serverから送信されたarrayの項目を、返信のkeyに設定する
 	        	String info_parameter = RtnIdEtc(parameter, context);
-	        	if(info_parameter.length() > 0)
+				if(info_parameter != null && info_parameter.length() > 0)
 	        	XmlPullParserAided.SetParameter4Output(serializer, parameter, /*RtnIdEtc(parameter, context)*/info_parameter);
 	        }
 	        
@@ -512,7 +511,6 @@ public class MDMFlgs implements Serializable{
 	}
 	
 	private String RtnIdEtc(String word, Context context) {
-		//Log.i("EnrollActivity::RtnIdEtc", word);
 		String rtnstr = "";
 		try {
 			// Wi-Fi
@@ -527,28 +525,17 @@ public class MDMFlgs implements Serializable{
 				if(rtnstr == null) {
 					rtnstr = "";
 				}
-	        	Log.i("IMEI = ", rtnstr);
 			} else if(word.equals("OSVersion")) {
 				//int sdkInt = Integer.parseInt(Build.VERSION.SDK);
 				rtnstr = Build.VERSION.RELEASE;
-				if (rtnstr.length() > 0)
-		        	Log.i("OSVersion = ", rtnstr);
 			} else if (word.equals("BuildVersion")) {
 				rtnstr = Build.VERSION.INCREMENTAL;
-				if (rtnstr.length() > 0)
-		        	Log.i("BuildVersion = ", rtnstr);
 			} else if(word.equals("ModelName")) {
 				rtnstr = Build.MODEL;
-				if (rtnstr.length() > 0)
-		        	Log.i("ModelName = ", rtnstr);
 			} else if(word.equals("ICCID")) {
 				rtnstr = telManager.getSimSerialNumber();
-				if (rtnstr.length() > 0)
-		        	Log.i("ICCID = ", rtnstr);
 			} else if(word.equals("WiFiMAC")) {
 				rtnstr = XmlPullParserAided.GetMacAddress();//wifiInfo.getMacAddress();
-		        if (rtnstr.length() > 0)
-		        	Log.i("WiFiMAC = ", rtnstr);
 			} else if(word.equals("PhoneNumber")) {
 				try {
 				rtnstr = telManager.getLine1Number();
@@ -559,11 +546,9 @@ public class MDMFlgs implements Serializable{
 				if(rtnstr == null) {
 					rtnstr = "None";
 				}
-		        Log.i("PhoneNumber = ", rtnstr);				
 			} 
 		} catch(Exception e) {
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("MDMFlags::RtnIdEtc:IOException " + e.toString());
 			rtnstr = "";
 		}
 		
@@ -607,10 +592,9 @@ public class MDMFlgs implements Serializable{
 			retmsg = writer.toString();
 
 		} catch (IOException e){
-			Log.e("CertLoginActivity::IOException ", e.toString());
+			LogCtrl.getInstance().error("MDMFlags::WriteScepMdmInfo:IOException: " + e.toString());
 		}
 			    
-		Log.i("CertLoginActivity::WriteScepMdmInfo", retmsg);
 		byte[] byArrData = retmsg.getBytes();
 		OutputStream outputStreamObj=null;
 				
@@ -621,11 +605,9 @@ public class MDMFlgs implements Serializable{
 			//出力ストリームにデータを出力
 			outputStreamObj.write(byArrData, 0, byArrData.length);
 		} catch (FileNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			LogCtrl.getInstance().error("MDMFlags::WriteScepMdmInfo:FileNotFoundException: " + e.toString());
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			LogCtrl.getInstance().error("MDMFlags::WriteScepMdmInfo:IOException: " + e.toString());
 		}
 	}
 	
@@ -652,14 +634,14 @@ public class MDMFlgs implements Serializable{
 			//ByteArrayOutputStreamからbyte配列に変換
 			byArrData_read = byteArrayOutputStreamObj.toByteArray();
 		} catch (Exception e) {
-			Log.d("ReadAndSetScepMdmInfo", e.getMessage());
+			LogCtrl.getInstance().error("MDMFlags::ReadAndSetScepMdmInfo:Exception: " + e.toString());
 			bRet = false;
 		} finally{
 			try {
 				if (inputStreamObj!=null) inputStreamObj.close();
 				if (byteArrayOutputStreamObj!=null) byteArrayOutputStreamObj.close();
 			} catch (Exception e2) {
-				Log.d("ReadAndSetScepMdmInfo", e2.getMessage());
+				LogCtrl.getInstance().error("MDMFlags::ReadAndSetScepMdmInfo:Exception: " + e2.toString());
 				bRet = false;
 			}
 					
@@ -668,8 +650,7 @@ public class MDMFlgs implements Serializable{
 		if(bRet == false) return bRet;
 			
 		String read_string = new String(byArrData_read);
-		Log.d("*****Re-Read*****", read_string);
-			
+
 		// 新しくXmlPullParserAidedを作成する.
 		XmlPullParserAided p_aided = new XmlPullParserAided(ctx, read_string, 2);
 		p_aided.TakeApartControll();		// ここで分解する
@@ -696,27 +677,20 @@ public class MDMFlgs implements Serializable{
 		if(i_type == 7) b_type = false;
 		// 
 		if(strKeyName.equalsIgnoreCase(StringList.m_strEPSapURL)) {
-			Log.d("ReadAndSetScepMdmInfo :: URL", strData);
 			m_strEpsapURL = strData;
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_strAlias)) {
-			Log.d("ReadAndSetScepMdmInfo :: Alias", strData);
 			m_strSelectAlias = strData;
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_mdm_server)) {
-			Log.d("ReadAndSetScepMdmInfo :: ServerURL", strData);
 			m_str_serverurl = strData;
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_mdm_checkin)) {
-			Log.d("ReadAndSetScepMdmInfo :: CheckInURL", strData);
 			m_str_checkein = strData;
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_topic)) {
-			Log.d("ReadAndSetScepMdmInfo :: Topic", strData);
 			m_str_topic = strData;
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_AccessRights)) {
 			m_n_accessright = Integer.parseInt(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_udid)) {
-			Log.d("ReadAndSetScepMdmInfo :: UDID", strData);
 			SetUDID(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_CheckOutRemoved)) {
-			Log.d("ReadAndSetScepMdmInfo :: CheckOut", Integer.toString(i_type));
 			m_b_checkout = b_type;
 		}
 	}

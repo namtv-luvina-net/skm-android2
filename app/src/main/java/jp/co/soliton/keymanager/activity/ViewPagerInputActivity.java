@@ -129,8 +129,6 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    LogCtrl.getInstance(this).loggerInfo("ViewPagerInputActivity:onActivityResult  requestCode = " + requestCode + ". " +
-			    "resultCode = " + requestCode);
         if (requestCode == REQUEST_CODE_APPLY_COMPLETE && resultCode != Activity.RESULT_OK) {
             finish();
         } else if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT) {

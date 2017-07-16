@@ -81,6 +81,6 @@ public class PkiStatus implements PrivateObjectIdentifier {
 	
 	@Override
 	public String toString() {
-		return new String("pkiStatus : " + pkiStatus.name() + "(" + pkiStatus.getValue().toString() + ")");
+		return new String("pkiStatus=" + pkiStatus.name() + "(" + pkiStatus.getValue().toString() + ")");
 	}
 }

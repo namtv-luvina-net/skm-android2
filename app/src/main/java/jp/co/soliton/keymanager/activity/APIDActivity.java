@@ -23,17 +23,15 @@ public class APIDActivity extends Activity implements View.OnClickListener {
 	String strUDID = "";
 	String strVpnID = "";
 	private StringBuilder builderAPID;
-	LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apid);
-	    logCtrl = LogCtrl.getInstance(this);
 	    this.layoutShareAPID = (LinearLayout)findViewById(R.id.layoutShareAPID);
         layoutShareAPID.setOnClickListener(this);
 		Bundle extras = getIntent().getExtras();
-	    if (extras != null) {
+	    if (extras != null) {   
 		    strVpnID = extras.getString("m_strAPIDVPN");
 		    strUDID = extras.getString("m_strAPIDWifi");
 	    }
@@ -54,6 +52,8 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = android.content.ClipData.newPlainText("Text", builderAPID.toString());
         clipboard.setPrimaryClip(clip);
+
+        LogCtrl.getInstance().info("APID: Copied");
     }
 
     private void sendMail() {
@@ -63,9 +63,10 @@ public class APIDActivity extends Activity implements View.OnClickListener {
         email.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.apid_subject_email).toString());
         email.putExtra(Intent.EXTRA_TEXT, builderAPID.toString());
         try {
+            LogCtrl.getInstance().info("APID: Show email apps chooser");
             startActivity(Intent.createChooser(email, ""));
         } catch (android.content.ActivityNotFoundException ex) {
-			logCtrl.loggerDebug("APIDActivity:sendMail: There are no email clients installed.");
+            LogCtrl.getInstance().warn("APID: No email apps");
             Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }

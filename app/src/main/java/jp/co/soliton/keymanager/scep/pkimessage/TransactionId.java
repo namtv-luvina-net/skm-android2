@@ -77,6 +77,6 @@ public class TransactionId implements PrivateObjectIdentifier {
 	
 	@Override
 	public String toString() {
-		return new String("Transaction ID : " + transactionId + "(" + transactionId.length() + ")");
+		return new String("transactionID=" + transactionId + "(" + transactionId.length() + ")");
 	}
 }

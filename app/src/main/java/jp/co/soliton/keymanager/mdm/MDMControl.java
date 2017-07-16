@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import jp.co.soliton.keymanager.HttpConnectionCtrl;
 import jp.co.soliton.keymanager.InformCtrl;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.ServiceInfo;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -19,7 +20,7 @@ public class MDMControl {
 	private MDMFlgs m_flgs;
 	
 	public MDMControl(Context con, String strapid) {
-		Log.i("MDMControl", "constlucter start.");
+		LogCtrl.getInstance().info("MDMControl: Initialize");
     	context = con;
     	m_flgs = new MDMFlgs();
     	m_flgs.SetUDID(/*XmlPullParserAided.GetUDID(context)*/strapid);
@@ -27,7 +28,7 @@ public class MDMControl {
     	// SacServiceが起動していたら一旦止める.
 		boolean running = ServiceInfo.IsRunning(context, ".mdm.MDMService");
 		if(running) {
-			Log.i("MDMControl", "MDMService Stop!!");
+			LogCtrl.getInstance().info("MDMControl: Stop service");
 			Intent intent = new Intent(context, MDMService.class);
 	    	
 			context.stopService(intent);
@@ -39,8 +40,8 @@ public class MDMControl {
 	// コンストラクタで作成したMDMFlgsインスタンスやUDIDは上書きされる
 	public void startService(MDMFlgs flgs) {
 		// MDMServiceのIntentを作成してサービス開始.
-		
-		Log.i("MDMControl", "startService start.");
+
+		LogCtrl.getInstance().info("MDMControl: Start service");
 		m_flgs = flgs;
 		
 		Intent intent = new Intent(context, MDMService.class);
@@ -59,7 +60,7 @@ public class MDMControl {
 	public void startService() {
 		// MDMServiceのIntentを作成してサービス開始.
 		
-		Log.i("MDMControl", "startService start.");
+		LogCtrl.getInstance().info("MDMControl: Start service2");
 		
 		Intent intent = new Intent(context, MDMService.class);
 		
@@ -72,15 +73,15 @@ public class MDMControl {
 	}
 	
 	public boolean CheckIn(boolean chkin) {
+		LogCtrl.getInstance().info("MDMControl: Check-in");
+
 		// チェックアウトのときはm_flgsに値が入っていないので別に設定しないと...
-		Log.i("MDMControl", "CheckInOut start.");
 		boolean rtn = true;
 		if(chkin == true) m_flgs.WriteScepMdmInfo(context);
 		
 		InformCtrl inform = new InformCtrl();
 
 		String sendmsg = m_flgs.CheckinoutMsg(chkin);		
-		Log.i("CheckInOut RTN MESSAGE", sendmsg);		
 		inform.SetMessage(sendmsg);
 		
 		inform.SetURL(m_flgs.GetCheckin());
@@ -91,21 +92,24 @@ public class MDMControl {
 		// チェックイン/アウトの場合、
 		int ret_code = inform.GetResponseCode();
 		if(ret_code == StringList.RES_200_OK) {
+			LogCtrl.getInstance().info("MDMControl: Check-in successful");
 			rtn = true;
+		}
+		else {
+			LogCtrl.getInstance().error("MDMControl: Check-in failed");
 		}
 		
 		return rtn;
 	}
 
 	public boolean TokenUpdate() {
-		Log.i("MDMControl", "TokenUpdate start.");
+		LogCtrl.getInstance().info("MDMControl: Token update");
 		boolean rtn;
 		
 		InformCtrl inform = new InformCtrl();
 
 		String sendmsg = m_flgs.TokenUpdateMsg();
 		
-		Log.i("TokenUpdate RTN MESSAGE", sendmsg);		
 		inform.SetMessage(sendmsg);
 		
 		inform.SetURL(m_flgs.GetCheckin());
@@ -116,7 +120,11 @@ public class MDMControl {
 		// 
 		int ret_code = inform.GetResponseCode();
 		if(ret_code == StringList.RES_200_OK) {
+			LogCtrl.getInstance().info("MDMControl: Token update successful");
 			rtn = true;
+		}
+		else {
+			LogCtrl.getInstance().error("MDMControl: Token update failed");
 		}
 		
 		return rtn;
@@ -138,19 +146,21 @@ public class MDMControl {
 		int    i_type = p_data.GetType();		// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
 		String strData = p_data.GetData();		// 要素
 
-		Log.i("WifiControl::SetConfigrationChild", "Start. " + strKeyName);
-
 		boolean b_type = true;
 		if(i_type == 7) b_type = false;
 		
 		if(strKeyName.equalsIgnoreCase(StringList.m_str_mdm_server)) {	// ServerURL
 			m_flgs.SetServerurl(strData);
+			LogCtrl.getInstance().debug("MDMControl: Server=" + strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_mdm_checkin)) {	// チェックインURL
 			m_flgs.SetCheckin(strData);
+			LogCtrl.getInstance().debug("MDMControl: Check-in URL=" + strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_topic)) {
 			m_flgs.SetTopic(strData);
+			LogCtrl.getInstance().debug("MDMControl: Topic=" + strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_AccessRights)) {	//
 			m_flgs.SetAccessRight(Integer.parseInt(strData));
+			LogCtrl.getInstance().info("MDMControl: AccessRights=" + strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_CheckOutRemoved)) {
 			m_flgs.SetCheckOut(b_type);
 		}
@@ -183,13 +193,12 @@ public class MDMControl {
 		}
 
 		private boolean CheckOut(MDMFlgs flgs, Context cont) {
-			Log.i("MDMControl", "CheckOut start.");
+			LogCtrl.getInstance().info("MDMControl: Check-out");
 			boolean rtn;
 
 			InformCtrl inform = new InformCtrl();
 
 			String sendmsg = flgs.CheckinoutMsg(false);
-			Log.i("CheckOut RTN MESSAGE", sendmsg);
 			inform.SetMessage(sendmsg);
 
 			inform.SetURL(flgs.GetCheckin());
@@ -199,7 +208,11 @@ public class MDMControl {
 
 			int ret_code = inform.GetResponseCode();
 			if(ret_code == StringList.RES_200_OK) {
+				LogCtrl.getInstance().info("MDMControl: Check-out successful");
 				rtn = true;
+			}
+			else {
+				LogCtrl.getInstance().error("MDMControl: Check-out failed");
 			}
 
 			return rtn;

@@ -32,27 +32,29 @@ public class DownloadCertificateTask extends AsyncTask<Void, Void, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(activity);
 		HttpConnectionCtrl conn = new HttpConnectionCtrl(activity);
 		//send request to server
 		boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrl);
 		//parse result return
 		if (ret == false) {
-			logCtrlAsyncTask.loggerError("DownloadCertificateTask Network error");
+			LogCtrl.getInstance().error("Download Certificate: Connection error");
 			m_nErroType = ERR_NETWORK;
 			return false;
 		}
+
+		String retStr = m_InformCtrl.GetRtn();
+
 		// ログイン結果
-		if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Forbidden).toString())) {
-			logCtrlAsyncTask.loggerError("DownloadCertificateTask Forbidden.");
+		if (retStr.startsWith(activity.getText(R.string.Forbidden).toString())) {
+			LogCtrl.getInstance().error("Download Certificate: Receive " + retStr);
 			m_nErroType = ERR_FORBIDDEN;
 			return false;
-		} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Unauthorized).toString())) {
-			logCtrlAsyncTask.loggerError("DownloadCertificateTask Unauthorized.");
+		} else if (retStr.startsWith(activity.getText(R.string.Unauthorized).toString())) {
+			LogCtrl.getInstance().error("Download Certificate: Receive " + retStr);
 			m_nErroType = ERR_UNAUTHORIZED;
 			return false;
-		} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.ERR).toString())) {
-			logCtrlAsyncTask.loggerError("DownloadCertificateTask ERR:");
+		} else if (retStr.startsWith(activity.getText(R.string.ERR).toString())) {
+			LogCtrl.getInstance().error("Download Certificate: Receive " + retStr);
 			m_nErroType = ERR_COLON;
 			return false;
 		}

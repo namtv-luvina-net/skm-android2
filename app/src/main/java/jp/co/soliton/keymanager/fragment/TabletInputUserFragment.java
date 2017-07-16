@@ -343,31 +343,33 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン開始 <=========
 			////////////////////////////////////////////////////////////////////////////
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
+
+			LogCtrl.getInstance().info("Apply: Login");
+
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(getActivity());
 			boolean ret = conn.RunHttpApplyLoginUrlConnection(tabletAbtractInputFragment.getInformCtrl());
 
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
+				LogCtrl.getInstance().error("Apply Login: Connection error");
 				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
 			// ログイン結果
 			String strRtn = tabletAbtractInputFragment.getInformCtrl().GetRtn();
 			if (strRtn.startsWith(getText(R.string.Forbidden).toString())) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
+				LogCtrl.getInstance().error("Apply Login: Receive " + strRtn);
 				tabletAbtractInputFragment.setErroType(ERR_FORBIDDEN);
 				return false;
 			} else if (strRtn.startsWith(getText(R.string.Unauthorized).toString())) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
+				LogCtrl.getInstance().error("Apply Login: Receive " + strRtn);
 				tabletAbtractInputFragment.setErroType(ERR_UNAUTHORIZED);
 				return false;
 			} else if (strRtn.startsWith(getText(R.string.ERR).toString())) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
+				LogCtrl.getInstance().error("Apply Login: Receive " + strRtn);
 				tabletAbtractInputFragment.setErroType(ERR_COLON);
 				return false;
 			} else if (strRtn.startsWith("NG")) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask NG");
+				LogCtrl.getInstance().error("Apply Login: Receive " + strRtn);
 				tabletAbtractInputFragment.setErroType(ERR_LOGIN_FAIL);
 				return false;
 			}
@@ -382,7 +384,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 
 			ret = m_p_aided.TakeApartUserAuthenticationResponse(tabletAbtractInputFragment.getInformCtrl());
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
 				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}

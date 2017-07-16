@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -147,6 +148,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 	private void confirmClickOKBtnDelete(Dialog dialog) {
 		dialog.dismiss();
 		elementMgr.deleteElementApply(id);
+		LogCtrl.getInstance().info("Apply: Application has deleted");
 		final Activity activity = this;
 		Intent intent = new Intent(activity, MenuAcivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

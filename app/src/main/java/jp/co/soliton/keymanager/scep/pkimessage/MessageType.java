@@ -84,6 +84,6 @@ public class MessageType implements PrivateObjectIdentifier {
 	
 	@Override
 	public String toString() {
-		return new String("Message Type : " + messageType.name() + "(" + messageType.getValue().toString() + ")");
+		return new String("messageType=" + messageType.name() + "(" + messageType.getValue().toString() + ")");
 	}
 }

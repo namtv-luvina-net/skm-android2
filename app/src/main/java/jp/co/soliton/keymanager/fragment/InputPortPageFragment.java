@@ -40,11 +40,9 @@ public class InputPortPageFragment extends InputBasePageFragment {
 	private TextView txtGuideDownloadCaCertificate;
     private LinearLayout zoneInputPort;
     public static String payloadDisplayName = "EACert";
-	private LogCtrl logCtrl;
 
     public static Fragment newInstance(Context context) {
         InputPortPageFragment f = new InputPortPageFragment();
-	    f.logCtrl = LogCtrl.getInstance(context);
         return f;
     }
 
@@ -142,7 +140,6 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
-	    logCtrl.loggerInfo("InputPortPageFragment--nextAction--");
         pagerInputActivity.getInputApplyInfo().setPort(txtPort.getText().toString().trim());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         progressDialog.show();
@@ -170,6 +167,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     public void finishInstallCertificate(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
+            LogCtrl.getInstance().info("Apply: CA Certificate Installation Successful");
 	        if (pagerInputActivity.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2){
 		        progressDialog.show();
 		        String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
@@ -186,6 +184,9 @@ public class InputPortPageFragment extends InputBasePageFragment {
 	        }else {
 		        pagerInputActivity.gotoPage(2);
 	        }
+        }
+        else {
+            LogCtrl.getInstance().warn("Apply: CA Certificate Installation Canceled");
         }
     }
 
@@ -204,6 +205,9 @@ public class InputPortPageFragment extends InputBasePageFragment {
 			    pagerInputActivity.gotoPage(2);
 		    }
 	    }
+	    else {
+            LogCtrl.getInstance().warn("Apply: TLS Connection Failure");
+        }
     }
 
     private void endConnection(boolean result) {

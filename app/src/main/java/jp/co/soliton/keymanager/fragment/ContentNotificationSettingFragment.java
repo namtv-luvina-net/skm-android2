@@ -129,7 +129,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 					updateEnableViewExpired(swNotifBeforeFlag.isChecked());
 				}
 			} catch (Exception ex) {
-				LogCtrl.getInstance(getActivity()).loggerError(ex.toString());
+				LogCtrl.getInstance().error(ex.toString());
 			}
 		} else {
 			swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getActivity(), StringList.KEY_NOTIF_ENABLE_FLAG));

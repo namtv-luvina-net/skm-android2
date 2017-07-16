@@ -35,6 +35,6 @@ public class SenderNonce extends Nonce implements PrivateObjectIdentifier {
 			formatter.format("%02x", b);  
 		}  
 
-		return new String("Sender Nonce : " + sb.toString());
+		return new String("senderNonce=" + sb.toString());
 	}
 }

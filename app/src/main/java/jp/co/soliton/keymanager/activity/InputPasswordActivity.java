@@ -50,13 +50,11 @@ public class InputPasswordActivity extends Activity {
     private int m_nErroType;
     private InformCtrl m_InformCtrl;
     private ElementApply element;
-	private LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_password);
-	    logCtrl = LogCtrl.getInstance(this);
         id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
         cancelApply = getIntent().getStringExtra("CANCEL_APPLY");
         txtUserId = (TextView) findViewById(R.id.txtUserId);
@@ -74,9 +72,8 @@ public class InputPasswordActivity extends Activity {
     }
 
     public void clickNext(View v) {
-	    logCtrl.loggerInfo("CertLoginAcrivity::onClick  " + "Push LoginButton");
         String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
-	    m_InformCtrl.SetURL(url);
+        m_InformCtrl.SetURL(url);
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
@@ -106,11 +103,8 @@ public class InputPasswordActivity extends Activity {
 		            "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
 		            "&" + StringList.m_strSerial + rtnserial;
 
-	        logCtrl.loggerInfo("http_user_login-- " + "USER ID=" + strUserid);
-		    logCtrl.loggerInfo("http_user_login-- " + "URL=" + str_url);
         } catch (UnsupportedEncodingException ex) {
-	        logCtrl.loggerError("InputPasswordActivity::makeParameterLogon UnsupportedEncodingException "+ ex.toString());
-            Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
+	        LogCtrl.getInstance().error("InputPasswordActivity::makeParameterLogon:UnsupportedEncodingException: "+ ex.toString());
             return false;
         }
         // 入力データを情報管理クラスへセットする
@@ -130,11 +124,8 @@ public class InputPasswordActivity extends Activity {
         String message;
         try {
             message = "Action=drop";
-	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop1 "+ m_InformCtrl.GetURL());
-	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop2"+ m_InformCtrl.GetUserID());
         } catch (Exception ex) {
-	        logCtrl.loggerError("InputPasswordActivity::makeParameterDrop3 " + ex.toString());
-            Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
+	        LogCtrl.getInstance().error("InputPasswordActivity::makeParameterDrop:Exception: " + ex.toString());
             return false;
         }
         // 入力データを情報管理クラスへセットする
@@ -220,29 +211,34 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
+
+            LogCtrl.getInstance().info("Apply: Login");
+
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpApplyLoginUrlConnection(m_InformCtrl);
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             if (ret == false) {
-                logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
+                LogCtrl.getInstance().error("Apply Login: Connection error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
+
+            String retStr = m_InformCtrl.GetRtn();
+
             // ログイン結果
-            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
+            if (retStr.startsWith(getText(R.string.Forbidden).toString())) {
+                LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
+            } else if (retStr.startsWith(getText(R.string.Unauthorized).toString())) {
+                LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
+            } else if (retStr.startsWith(getText(R.string.ERR).toString())) {
+                LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
                 m_nErroType = ERR_COLON;
                 return false;
-            } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
+            } else if (retStr.startsWith("NG")) {
+                LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
                 m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
@@ -256,10 +252,10 @@ public class InputPasswordActivity extends Activity {
 
             ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
             if (ret == false) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
+
             status = ElementApply.STATUS_APPLY_PENDING;
             //parse xml return from server
             XmlDictionary xmldict = m_p_aided.GetDictionary();
@@ -309,30 +305,32 @@ public class InputPasswordActivity extends Activity {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
-	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getApplicationContext());
             HttpConnectionCtrl conn = new HttpConnectionCtrl(getApplicationContext());
             boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
             cancelApply = "";
             if (ret == false) {
-                logCtrlAsyncTask.loggerError("DropApplyTask Network error");
+                LogCtrl.getInstance().error("Withdraw: Connection error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
+
+            String retStr = m_InformCtrl.GetRtn();
+
             // ログイン結果
-            if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-                logCtrlAsyncTask.loggerError("DropApplyTask Forbidden.");
+            if (retStr.startsWith(getText(R.string.Forbidden).toString())) {
+                LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-	            logCtrlAsyncTask.loggerError("DropApplyTask Unauthorized.");
+            } else if (retStr.startsWith(getText(R.string.Unauthorized).toString())) {
+                LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
-            } else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-	            logCtrlAsyncTask.loggerError("DropApplyTask ERR:");
+            } else if (retStr.startsWith(getText(R.string.ERR).toString())) {
+                LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
                 m_nErroType = ERR_COLON;
                 return false;
-            } else if (m_InformCtrl.GetRtn().startsWith("NG")) {
-	            logCtrlAsyncTask.loggerError("DropApplyTask NG");
+            } else if (retStr.startsWith("NG")) {
+                LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
                 m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }

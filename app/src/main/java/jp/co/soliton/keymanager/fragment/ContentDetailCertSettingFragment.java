@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.ItemChildDetailCertSetting;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 import jp.co.soliton.keymanager.adapter.AdapterSettingDetailCertificate;
@@ -114,6 +115,8 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 			public void onClick(View v) {
 				dialog.dismiss();
 				elementMgr.deleteElementApply(id);
+				LogCtrl.getInstance().info("Certificate: Deleted");
+				LogCtrl.getInstance().debug("CN=" + elementApply.getcNValue() + "S/N=" + elementApply.getsNValue());
 				AlarmReceiver alarm = new AlarmReceiver();
 				alarm.setupNotification(getActivity());
 				getActivity().onBackPressed();

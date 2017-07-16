@@ -171,18 +171,16 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			try {
 				message_ma = message_ma + URLEncoder.encode(inputApplyInfo.getEmail(), "UTF-8");
 			} catch (UnsupportedEncodingException ex) {
-				LogCtrl.getInstance(getActivity()).loggerInfo("CompleteApplyActivity:makeParameterApply:Email:: " + "Message=" + ex
+				LogCtrl.getInstance().error("CompleteApplyActivity:makeParameterApply:Email:: " + "Message=" + ex
 						.getMessage());
-				Log.i(StringList.m_str_SKMTag, "apply:: " + "Message=" + ex.getMessage());
 			}
 		}
 		if (!nullOrEmpty(inputApplyInfo.getReason())) {
 			try {
 				message_dc = message_dc + URLEncoder.encode(inputApplyInfo.getReason(), "UTF-8");
 			} catch (UnsupportedEncodingException ex) {
-				LogCtrl.getInstance(getActivity()).loggerInfo("CompleteApplyActivity:makeParameterApply:Reason:: " + "Message=" + ex
+				LogCtrl.getInstance().error("CompleteApplyActivity:makeParameterApply:Reason:: " + "Message=" + ex
 						.getMessage());
-				Log.i(StringList.m_str_SKMTag, "apply:: " + "Message=" + ex.getMessage());
 			}
 		}
 		message = "Action=apply" + message_ma + message_dc + "&" + StringList.m_strSerial + rtnserial;
@@ -317,7 +315,6 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	private class ProcessApplyTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			boolean ret;
 			//Call to server
 			ret = conn.RunHttpApplyCerUrlConnection(m_InformCtrl);
@@ -338,37 +335,40 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;
 			}
-			if (m_InformCtrl.GetRtn().startsWith("OK")) {
+
+			String retStr = m_InformCtrl.GetRtn();
+
+			if (retStr.startsWith("OK")) {
 				tabletAbtractInputFragment.setErroType(RET_ESP_AP_OK);
 				return true;
 			}
-			if (m_InformCtrl.GetRtn().startsWith("NG")) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground NG");
+			if (retStr.startsWith("NG")) {
+				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_LOGIN_FAIL);
 				return false;
 			}
-			if (m_InformCtrl.GetRtn().startsWith("EPS-ap Service is stopped.")) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground EPS-ap Service is stopped.");
+			if (retStr.startsWith("EPS-ap Service is stopped.")) {
+				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_ESP_AP_STOP);
 				return false;
 			}
-			if (m_InformCtrl.GetRtn().startsWith("No session")) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground No session.");
+			if (retStr.startsWith("No session")) {
+				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_SESSION_TIMEOUT);
 				return false;
 			}
-			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Forbidden.");
+			if (retStr.startsWith(getText(R.string.Forbidden).toString())) {
+				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_FORBIDDEN);
 				return false;
 			}
-			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground Unauthorized.");
+			if (retStr.startsWith(getText(R.string.Unauthorized).toString())) {
+				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_UNAUTHORIZED);
 				return false;
 			}
-			if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR).toString())) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground ERR:");
+			if (retStr.length() > 4 && retStr.startsWith(getString(R.string.ERR).toString())) {
+				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_COLON);
 				return false;
 			}
@@ -376,7 +376,6 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 			m_p_aided = new XmlPullParserAided(getActivity(), m_InformCtrl.GetRtn(), 2);    // 最上位dictの階層は2になる
 			ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("ConfirmApplyActivity:ProcessApplyTask:doInBackground TakeApartDevice false");
 				reTry = false;
 				tabletAbtractInputFragment.setErroType(ERR_NETWORK);
 				return false;

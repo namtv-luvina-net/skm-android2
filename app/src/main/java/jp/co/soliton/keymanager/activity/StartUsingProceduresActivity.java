@@ -26,13 +26,11 @@ public class StartUsingProceduresActivity extends Activity {
 
     private static InformCtrl m_InformCtrl;
     private ElementApply element;
-	private LogCtrl logCtrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_using_procedures);
-	    logCtrl = LogCtrl.getInstance(this);
         Intent intent = getIntent();
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
         element = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
@@ -42,13 +40,11 @@ public class StartUsingProceduresActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    logCtrl.loggerInfo("StartUsingProceduresActivity:onActivityResult start REC CODE = " + Integer.toString
-			    (requestCode));
 	    if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {
 		    StartUsingProceduresControl.getInstance(this).afterIntallCert();
 		    // After CertificateEnrollTask
-		    Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
 		    if (resultCode != 0) {
+				LogCtrl.getInstance().info("Proc: Certificate Installation Successful");
 			    ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
 			    mgr.updateElementCertificate(StartUsingProceduresControl.getInstance(this).getElement());
 			    AlarmReceiver alarm = new AlarmReceiver();
@@ -58,6 +54,7 @@ public class StartUsingProceduresActivity extends Activity {
 			    finish();
 			    startActivity(intent);
 		    } else {
+				LogCtrl.getInstance().warn("Proc: Certificate Installation Cancelled");
 			    StringList.GO_TO_LIST_APPLY = "1";
 			    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
 			    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -71,8 +68,16 @@ public class StartUsingProceduresActivity extends Activity {
 		    }
 	    } else if (requestCode == ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT) {
 		    if (resultCode == Activity.RESULT_OK) {
+				LogCtrl.getInstance().info("Proc: CA Certificate Installation Successful");
 			    StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
 		    }
+		    else {
+				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
+				StringList.GO_TO_LIST_APPLY = "1";
+				Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+			}
 	    }
     }
 }

@@ -61,7 +61,6 @@ public class ListCertificateActivity extends Activity {
             finish();
         }
         listCertificate = elementMgr.getAllCertificate();
-	    LogCtrl.getInstance(this).loggerInfo("ListCertificateActivity::ListSize = " + listCertificate.size());
         adapterListCertificate = new AdapterListCertificate(this, listCertificate);
         list.setAdapter(adapterListCertificate);
     }

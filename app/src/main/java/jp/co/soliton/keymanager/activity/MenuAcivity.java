@@ -463,8 +463,6 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		LogCtrl.getInstance(this).loggerInfo("MenuAcivity:onActivityResult start REC CODE = " + Integer
-				.toString(requestCode));
 		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT) {
 			((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
 		}
@@ -472,7 +470,6 @@ public class MenuAcivity extends FragmentActivity {
 		if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {
 			// After CertificateEnrollTask
 			StartUsingProceduresControl.getInstance(this).afterIntallCert();
-			Log.i("CertLoginActivity","REC CODE = " + Integer.toString(resultCode));
 			if (resultCode != 0) {
 				ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
 				mgr.updateElementCertificate(StartUsingProceduresControl.getInstance(this).getElement());

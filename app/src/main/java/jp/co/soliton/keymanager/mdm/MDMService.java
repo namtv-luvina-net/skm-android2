@@ -13,6 +13,7 @@ import android.os.Parcel;
 import android.os.RemoteException;
 import android.util.Log;
 import jp.co.soliton.keymanager.EpsapAdminReceiver;
+import jp.co.soliton.keymanager.LogCtrl;
 
 public class MDMService extends Service {
 
@@ -28,7 +29,7 @@ public class MDMService extends Service {
 	}
 	
 	public void onCreate() {
-		Log.i("MDMService", "onCreate");
+		LogCtrl.getInstance().info("MDMService: onCreate");
 		m_DPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
 		m_DeviceAdmin = new ComponentName(MDMService.this, EpsapAdminReceiver.class);
 		// Initialize Monitoring log
@@ -59,8 +60,7 @@ public class MDMService extends Service {
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		
-		Log.i("MDMService", "onStart");
+		LogCtrl.getInstance().info("MDMService: onStart");
 		try {
 		//	m_mdmflgs = (MDMFlgs)intent.getSerializableExtra(StringList.m_str_MdmFlgs);
 			// サービスが実行される頃にはすでにチェックインを済ませて情報を保存しているため,
@@ -69,7 +69,7 @@ public class MDMService extends Service {
         	boolean bRet = mdm.ReadAndSetScepMdmInfo(this);
         	
         	if (bRet == false) {
-        		Log.i("MDMService", "No MDM Return");
+				LogCtrl.getInstance().error("MDMService: No MDM info");
         		return;
         	}
 			m_ndmthread.init(/*m_mdmflgs*/mdm);
@@ -90,13 +90,12 @@ public class MDMService extends Service {
 			// ログを見るとなぜかServiceがAndroidのシステム？から起動されることがあり、
 			// MDMFlgsが無いため、NullPointerExceptionが発生してここに来ることがある。
 			// その場合、BootReceiverも止まってしまうようなので、ここでMDMFlgsを作成して再実行が必要かも
-			Log.e("MDMService::onStart", e.toString());
+			LogCtrl.getInstance().error("MDMService::onStart:Exception" + e.toString());
 			
 //			MDMFlgs mdm = new MDMFlgs();
 //        	boolean bRet = mdm.ReadAndSetScepMdmInfo(this);
         	
 //        	if (bRet == false) {
-//        		Log.i("MDMService", "No MDM Return");
 //        		return;
 //        	}
         	
@@ -108,6 +107,8 @@ public class MDMService extends Service {
 	
 	@Override
 	public void onDestroy() {
+		LogCtrl.getInstance().info("MDMService: onDestory");
+
 		// Stop Monitoring log
 		m_ndmthread.stop();
 		

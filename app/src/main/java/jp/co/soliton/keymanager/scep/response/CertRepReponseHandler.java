@@ -13,20 +13,26 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.bouncycastle.cms.CMSException;
+
+import jp.co.soliton.keymanager.LogCtrl;
+import jp.co.soliton.keymanager.SKMApplication;
 import jp.co.soliton.keymanager.scep.pkimessage.CertRep;
 import jp.co.soliton.keymanager.scep.pkimessage.MessageType;
 import jp.co.soliton.keymanager.scep.pkimessage.PkiMessage;
 import jp.co.soliton.keymanager.scep.pkimessage.PkiStatus;
+import jp.co.soliton.keymanager.scep.pkimessage.RecipientNonce;
+import jp.co.soliton.keymanager.scep.pkimessage.SenderNonce;
+import jp.co.soliton.keymanager.scep.pkimessage.TransactionId;
 import jp.co.soliton.keymanager.scep.request.Request;
+import jp.co.soliton.keymanager.scep.transaction.Transaction;
 
 public class CertRepReponseHandler implements ResponseHandler<CertRep> {
-	
+
 	@Override
 	public CertRep processResponse(HttpURLConnection connection, Request request) {
 		CertRep certRep = new CertRep();
 		final String contentType = connection.getContentType();
 
-		System.out.println("ContentType : " + contentType);
 		if (contentType.equals("application/x-pki-message") == false) {
 			certRep.setPkiStatus(PkiStatus.Status.FAILURE);
 			return certRep;
@@ -51,15 +57,26 @@ public class CertRepReponseHandler implements ResponseHandler<CertRep> {
 		}
 		
 		try {
-			if (pkiMessage.getMessageType().getMessageType() != MessageType.Type.CertRep) {
+			TransactionId requestTransactionId = requestPkiMessage.getTransactionId();
+			TransactionId transactionId = pkiMessage.getTransactionId();
+			MessageType msgType = pkiMessage.getMessageType();
+			SenderNonce senderNonce = requestPkiMessage.getSenderNonce();
+			RecipientNonce recipientNonce = pkiMessage.getRecipientNonce();
+			LogCtrl.getInstance().info("SCEP: " + pkiMessage.getPkiStatus().toString() + ", " + msgType.toString());
+			LogCtrl.getInstance().info("SCEP: REQ:" + requestTransactionId.toString() + ", RES:" + transactionId.toString());
+			LogCtrl.getInstance().debug("SCEP: " + senderNonce.toString() + ", " + recipientNonce.toString());
+
+			if (msgType.getMessageType() != MessageType.Type.CertRep) {
 				certRep.setPkiStatus(PkiStatus.Status.FAILURE);
 				return certRep;
 			}
 			if (requestPkiMessage.getTransactionId().equals(pkiMessage.getTransactionId()) == false) {
+				LogCtrl.getInstance().error("SCEP: TransactionId Mismatch");
 				certRep.setPkiStatus(PkiStatus.Status.FAILURE);
 				return certRep;
 			}
 			if (requestPkiMessage.getSenderNonce().equals(pkiMessage.getRecipientNonce()) == false) {
+				LogCtrl.getInstance().error("SCEP: Nonce Mismatch");
 				certRep.setPkiStatus(PkiStatus.Status.FAILURE);
 				return certRep;
 			}
@@ -82,8 +99,8 @@ public class CertRepReponseHandler implements ResponseHandler<CertRep> {
 			certificateCollection = (Collection<? extends Certificate>) certStore.getCertificates(null);
 			Iterator<? extends Certificate> it = certificateCollection.iterator();
 			X509Certificate cert = (X509Certificate) it.next();
-			System.out.println("Subject : " + cert.getSubjectDN().toString());
-			System.out.println("Issure : " + cert.getIssuerDN().toString());
+			LogCtrl.getInstance().info("SCEP: Receive X509Certificate");
+			LogCtrl.getInstance().debug("SCEP: Subject: " + cert.getSubjectDN().toString() + ", Issuer" + cert.getIssuerDN().toString());
 			certRep.setCertificate(cert);
 			return certRep;
 		} catch (NoSuchAlgorithmException e1) {

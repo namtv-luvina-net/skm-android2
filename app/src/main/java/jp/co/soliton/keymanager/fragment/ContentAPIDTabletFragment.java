@@ -31,7 +31,6 @@ public class ContentAPIDTabletFragment extends Fragment {
 	private TextView titleVPN;
 	private TextView titleWifi;
 	private StringBuilder builderAPID;
-	private LogCtrl logCtrl;
 	private APIDManager apidManager;
 	private View viewFragment;
 
@@ -50,7 +49,6 @@ public class ContentAPIDTabletFragment extends Fragment {
 		contentVPN = (TextView) viewFragment.findViewById(R.id.content_vpn);
 		titleVPN = (TextView) viewFragment.findViewById(R.id.title_vpn);
 		titleWifi = (TextView) viewFragment.findViewById(R.id.title_wifi);
-		logCtrl = LogCtrl.getInstance(getActivity());
 		apidManager = new APIDManager(getActivity());
 		return viewFragment;
 	}
@@ -104,6 +102,7 @@ public class ContentAPIDTabletFragment extends Fragment {
 		ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
 		ClipData clip = android.content.ClipData.newPlainText("Text", builderAPID.toString());
 		clipboard.setPrimaryClip(clip);
+		LogCtrl.getInstance().info("APID: Show email apps chooser");
 	}
 
 	private void sendMail() {
@@ -113,9 +112,10 @@ public class ContentAPIDTabletFragment extends Fragment {
 		email.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.apid_subject_email).toString());
 		email.putExtra(Intent.EXTRA_TEXT, builderAPID.toString());
 		try {
+			LogCtrl.getInstance().info("APID: Show email apps chooser");
 			startActivity(Intent.createChooser(email, ""));
 		} catch (android.content.ActivityNotFoundException ex) {
-			logCtrl.loggerDebug("APIDActivity:sendMail: There are no email clients installed.");
+			LogCtrl.getInstance().warn("APID: No email apps");
 			Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
 		}
 	}

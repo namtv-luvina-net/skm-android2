@@ -61,7 +61,7 @@ public class CertificateUtility {
 			}
 		} catch (CertStoreException e) {
 			e.printStackTrace();
-			LogCtrl.getInstance(context).loggerError("CertificateUtility::certStoreToKeyChain CertStoreException::" + e
+			LogCtrl.getInstance().error("CertificateUtility::certStoreToKeyChain CertStoreException::" + e
 					.toString());
 		}
 	}
@@ -72,13 +72,14 @@ public class CertificateUtility {
 			String alias,
 			int requestCode) {
 		try {
+			LogCtrl.getInstance().info("CertificateUtility: Install Certificate");
+			LogCtrl.getInstance().debug("CertificateUtility: Alias=" + alias);
 			Intent intent = KeyChain.createInstallIntent();
 			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, certificate.getEncoded());
 			intent.putExtra(KeyChain.EXTRA_NAME, alias);
 			context.startActivityForResult(intent, requestCode);
 		} catch (CertificateEncodingException e) {
-			e.printStackTrace();
-			LogCtrl.getInstance(context).loggerError("CertificateUtility::certificateToKeyChain CertificateEncodingException::"
+			LogCtrl.getInstance().error("CertificateUtility::certificateToKeyChain CertificateEncodingException::"
 					+ e.toString());
 		}
 	}
@@ -150,7 +151,6 @@ public class CertificateUtility {
 		if (challenge != null) {
 			// <== debug
 			// create the extension value
-			Log.d("PKCS10CertificationRequest::generateCertificateSigningRequest", "trace01. subject alt name:" + sbjectAltName);
 			GeneralNames subjectAltName = new GeneralNames( 
 					new GeneralName(GeneralName.rfc822Name, sbjectAltName/*"soliton@example.local"*/));
 			// create the extensions object and add it as an attribute
@@ -168,7 +168,6 @@ public class CertificateUtility {
 			                           PKCSObjectIdentifiers.pkcs_9_at_extensionRequest,
 			                           attrValues1/*new DERSet(extensions)*/);
 
-			Log.d("PKCS10CertificationRequest::generateCertificateSigningRequest", "trace02");
 			// debug ==>
 			DERObjectIdentifier attrType = PKCSObjectIdentifiers.pkcs_9_at_challengePassword;
 			ASN1Set attrValues = new DERSet(new DERPrintableString(challenge));
@@ -185,7 +184,6 @@ public class CertificateUtility {
 							attributes,
 							keyPair.getPrivate(),
 							"BC");
-			Log.d("PKCS10CertificationRequest::generateCertificateSigningRequest", "trace03");
 			return certificateSigningRequest;
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.CompleteUsingProceduresActivity;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
@@ -45,9 +47,17 @@ public class ContentCompleteUsingProceduresFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        txtCN.setText(elementApply.getcNValue());
-        txtSN.setText(elementApply.getsNValue());
-        txtEpDate.setText(elementApply.getExpirationDate().split(" ")[0]);
+
+		String cn = elementApply.getcNValue();
+		String sn = elementApply.getsNValue();
+		String ex = elementApply.getExpirationDate().split(" ")[0];
+		txtCN.setText(cn);
+		txtSN.setText(sn);
+		txtEpDate.setText(ex);
+
+		LogCtrl.getInstance().info("Proc: Complete Processing");
+		LogCtrl.getInstance().debug("CN=" + cn + ", S/N=" + sn + ", Expiration=" + ex);
+
 	    backToTop.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {

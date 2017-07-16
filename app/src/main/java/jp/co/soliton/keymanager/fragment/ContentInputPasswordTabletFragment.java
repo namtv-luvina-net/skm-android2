@@ -51,7 +51,6 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	private InformCtrl m_InformCtrl;
 	private ElementApplyManager elementMgr;
 	private ElementApply element;
-	private LogCtrl logCtrl;
 	private int status;
 	private boolean isShowingKeyboard;
 	private boolean isCancelApply;
@@ -70,7 +69,6 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 		if (progressDialog == null) {
 			progressDialog = new DialogApplyProgressBar(getActivity());
 		}
-		logCtrl = logCtrl.getInstance(getActivity());
 	}
 
 	@Nullable
@@ -202,7 +200,6 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	}
 
 	private void clickNext(View v) {
-		logCtrl.loggerInfo("CertLoginAcrivity::onClick  " + "Push LoginButton");
 		String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
 		m_InformCtrl.SetURL(url);
 		//make parameter
@@ -234,11 +231,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 					"&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
 					"&" + StringList.m_strSerial + rtnserial;
 
-			logCtrl.loggerInfo("http_user_login-- " + "USER ID=" + strUserid);
-			logCtrl.loggerInfo("http_user_login-- " + "URL=" + str_url);
 		} catch (UnsupportedEncodingException ex) {
-			logCtrl.loggerError("InputPasswordActivity::makeParameterLogon UnsupportedEncodingException "+ ex.toString());
-			Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
 			return false;
 		}
 		// 入力データを情報管理クラスへセットする
@@ -258,11 +251,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 		String message;
 		try {
 			message = "Action=drop";
-			logCtrl.loggerError("InputPasswordActivity::makeParameterDrop1 "+ m_InformCtrl.GetURL());
-			logCtrl.loggerError("InputPasswordActivity::makeParameterDrop2"+ m_InformCtrl.GetUserID());
 		} catch (Exception ex) {
-			logCtrl.loggerError("InputPasswordActivity::makeParameterDrop3 " + ex.toString());
-			Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
+			LogCtrl.getInstance().error("ContentInputPasswordTabletFragment::makeParameterDrop:Exception: " + ex.toString());
 			return false;
 		}
 		// 入力データを情報管理クラスへセットする
@@ -279,29 +269,34 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン開始 <=========
 			////////////////////////////////////////////////////////////////////////////
+
+			LogCtrl.getInstance().info("Apply: Login");
+
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(getActivity());
 			boolean ret = conn.RunHttpApplyLoginUrlConnection(m_InformCtrl);
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
+				LogCtrl.getInstance().error("Apply Login: Connection error");
 				m_nErroType = ERR_NETWORK;
 				return false;
 			}
+
+			String retStr = m_InformCtrl.GetRtn();
+
 			// ログイン結果
-			if (m_InformCtrl.GetRtn().startsWith(getString(R.string.Forbidden))) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
+			if (retStr.startsWith(getString(R.string.Forbidden))) {
+				LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
 				m_nErroType = ERR_FORBIDDEN;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getString(R.string.Unauthorized))) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
+			} else if (retStr.startsWith(getString(R.string.Unauthorized))) {
+				LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
 				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR))) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
+			} else if (retStr.startsWith(getString(R.string.ERR))) {
+				LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
 				m_nErroType = ERR_COLON;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith("NG")) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask NG");
+			} else if (retStr.startsWith("NG")) {
+				LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
 				m_nErroType = ERR_LOGIN_FAIL;
 				return false;
 			}
@@ -315,7 +310,6 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 
 			ret = m_p_aided.TakeApartUserAuthenticationResponse(m_InformCtrl);
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
 				m_nErroType = ERR_NETWORK;
 				return false;
 			}
@@ -368,31 +362,33 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン開始 <=========
 			////////////////////////////////////////////////////////////////////////////
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(getActivity());
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(getActivity());
 			boolean ret = conn.RunHttpDropUrlConnection(m_InformCtrl);
 //			((InputPasswordTabletActivity)getActivity()).setCancelApply("");
 			isCancelApply = false;
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("DropApplyTask Network error");
+				LogCtrl.getInstance().error("Withdraw: Connection error");
 				m_nErroType = ERR_NETWORK;
 				return false;
 			}
+
+			String retStr = m_InformCtrl.GetRtn();
+
 			// ログイン結果
-			if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-				logCtrlAsyncTask.loggerError("DropApplyTask Forbidden.");
+			if (retStr.startsWith(getText(R.string.Forbidden).toString())) {
+				LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
 				m_nErroType = ERR_FORBIDDEN;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-				logCtrlAsyncTask.loggerError("DropApplyTask Unauthorized.");
+			} else if (retStr.startsWith(getText(R.string.Unauthorized).toString())) {
+				LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
 				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(getText(R.string.ERR).toString())) {
-				logCtrlAsyncTask.loggerError("DropApplyTask ERR:");
+			} else if (retStr.startsWith(getText(R.string.ERR).toString())) {
+				LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
 				m_nErroType = ERR_COLON;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith("NG")) {
-				logCtrlAsyncTask.loggerError("DropApplyTask NG");
+			} else if (retStr.startsWith("NG")) {
+				LogCtrl.getInstance().error("Withdraw: Receive " + retStr);
 				m_nErroType = ERR_LOGIN_FAIL;
 				return false;
 			}

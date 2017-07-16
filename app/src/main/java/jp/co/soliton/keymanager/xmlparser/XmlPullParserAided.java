@@ -72,7 +72,6 @@ public class XmlPullParserAided /*extends Activity*/{
 
 	// 分解
 	public boolean TakeApart() {
-		Log.i("EnrollActivity::TakeApart", "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -104,27 +103,22 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
-					//	Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 					} else if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())){
 						//////////////////////////////////
 						// dictの処理
 						//////////////////////////////////
-					//	Log.i("EnrollActivity::tagname = ", tagName);
 
 						m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -138,7 +132,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -146,7 +139,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-						//	Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						m_xmlDictionary.setParam(keyName, typeName, strdata);
@@ -159,24 +151,18 @@ public class XmlPullParserAided /*extends Activity*/{
 			}
 
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
-
 
 		return true;
 	}
 
 	// 分解
 	public boolean TakeApartUserAuthenticationResponse(InformCtrl inf) {
-		Log.i(StringList.m_str_SKMTag, "XmlPullParserAded::TakeApartUserAuthenticationResponse= "+ "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -210,22 +196,18 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
 						bArray = false;
-					//	Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 
 						// フラグMailAddress, DescriptionがONだったらkeyをそれぞれに変更
@@ -248,8 +230,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// dictの処理
 						//////////////////////////////////
 						bArray = false;
-					//	Log.i("EnrollActivity::tagname = ", tagName);
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 
 						//m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -263,7 +243,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -271,29 +250,30 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						// キーワードにセットしていく
 						if(keyName.equalsIgnoreCase(StringList.m_str_challenge)) {	// 一応 大文字・小文字の区別を行わない
 							m_xmlKeyword.SetChallenge(strdata);
-							Log.i(StringList.m_str_SKMTag, "Challenge string = "+ strdata);
+							LogCtrl.getInstance().debug("XML Parser: Profile Challenge=" + strdata);
 						} else if(keyName.equalsIgnoreCase("URL")) {
 							m_xmlKeyword.SetSituationURL(strdata);
 							inf.SetSituationURL(strdata);
-							Log.i(StringList.m_str_SKMTag, "URL string = "+ strdata);
+							LogCtrl.getInstance().info("XML Parser: Response contained profile configuration");
+							LogCtrl.getInstance().debug("XML Parser: Profile URL=" + strdata);
 						} else if(bArray == true) {
 							m_xmlKeyword.SetArrayString(strdata);
-							Log.i(StringList.m_str_SKMTag, "Array string = "+ strdata);
 						} else if(keyName.equalsIgnoreCase(StringList.m_str_mailaddress)) {
 							bMailAdd = false;
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
+							LogCtrl.getInstance().info("XML Parser: Response contained an mail address");
+							LogCtrl.getInstance().debug(strdata);
 						} else if (keyName.equalsIgnoreCase(StringList.m_str_description)) {
 							bDescription = false;
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
+							LogCtrl.getInstance().info("XML Parser: Response contained a description");
+							LogCtrl.getInstance().debug(strdata);
 						} else {
-							Log.i(StringList.m_str_SKMTag, "keyName = "+ keyName);
-							Log.i(StringList.m_str_SKMTag, "typeNameA = "+ typeName);
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
 						}
 					} // else
@@ -305,14 +285,10 @@ public class XmlPullParserAided /*extends Activity*/{
 			}
 
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
 
@@ -322,7 +298,6 @@ public class XmlPullParserAided /*extends Activity*/{
 
 	// SCEP Info
 	public boolean TakeApartScepInfoResponse(InformCtrl inf) {
-		Log.i("EnrollActivity::TakeApartScepInfoResponse", "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -355,22 +330,18 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
 					//	bArray = false;
-					//	Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 
 						// keyが[MailAddress],または[Description]だったらフラグをONにする。
@@ -384,8 +355,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// dictの処理
 						//////////////////////////////////
 					//	bArray = false;
-					//	Log.i("EnrollActivity::tagname = ", tagName);
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 
 						//m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -399,7 +368,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -407,19 +375,17 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						// キーワードにセットしていく
 						if(keyName.equalsIgnoreCase(StringList.m_str_scep_url)) {
 							m_xmlKeyword.SetSituationURL(strdata);
 							inf.SetSituationURL(strdata);
-							Log.i("URL string = ", strdata);
+							LogCtrl.getInstance().info("XMLParser: Profile contained SCEP configuration");
+							LogCtrl.getInstance().debug("XMLParser: SCEP URL=" + strdata);
 						} else if(keyName.equalsIgnoreCase(StringList.m_str_subject)) {
 							m_StrListScepSubject.add(strdata);
 						} else {
-							Log.i("keyName = ", keyName);
-							Log.i("typeNameA = ", typeName);
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
 						}
 					} // else
@@ -431,14 +397,10 @@ public class XmlPullParserAided /*extends Activity*/{
 			}
 
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
 
@@ -451,7 +413,6 @@ public class XmlPullParserAided /*extends Activity*/{
 	// (dictやarrayは無視する？
 	/////////////////////////////
 	public boolean TakeApartControll(/*InformCtrl inf*/) {
-		Log.i("EnrollActivity::TakeApartControll", "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -482,28 +443,22 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 					} else if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())){
 						//////////////////////////////////
 						// dictの処理
 						//////////////////////////////////
-					//	Log.i("EnrollActivity::tagname = ", tagName);
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 
 						//m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -517,7 +472,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -525,7 +479,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						m_xmlDictionary.setParam(keyName, typeName, strdata);
@@ -538,14 +491,10 @@ public class XmlPullParserAided /*extends Activity*/{
 			}
 
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
 		return true;
@@ -556,7 +505,6 @@ public class XmlPullParserAided /*extends Activity*/{
 	// EPS-ap 1.2
 	/////////////////////////////
 	public boolean TakeApartProfile(/*InformCtrl inf*/) {
-		Log.i("XmlPullparserAided::TakeApartProfile", "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -590,28 +538,23 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-				//	Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 					} else if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())){
 						//////////////////////////////////
 						// dictの処理
 						//////////////////////////////////
 						dict_count++;
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 
 						//m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -625,7 +568,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -633,12 +575,10 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						if(keyName.equals(StringList.m_str_payloadtype)) {
 							// keyがPayloadTypeのとき
-							Log.i("PayloadType = ", strdata);
 							xmldict.SetPayloadType(strdata);
 						} else {
 							xmldict.setParam(keyName, typeName, strdata);
@@ -652,7 +592,6 @@ public class XmlPullParserAided /*extends Activity*/{
 					if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())) {
 						dict_count--;
 						if(dict_count == 0) {
-							Log.i("TakeApartProfile::endtag","Dict Reset");
 							SetPayloadDictionary(xmldict);
 							xmldict = new XmlDictionary(DepthOfDict + 1, "", m_xmldata_string);
 						}
@@ -662,14 +601,10 @@ public class XmlPullParserAided /*extends Activity*/{
 				}
 			}
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
 
@@ -677,7 +612,6 @@ public class XmlPullParserAided /*extends Activity*/{
 	}
 
 	public boolean TakeApartProfileList() {
-		Log.i("XmlPullparserAided::TakeApartProfile", "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -711,28 +645,23 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 					} else if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())){
 						//////////////////////////////////
 						// dictの処理
 						//////////////////////////////////
 						dict_count++;
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 
 						//m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -746,7 +675,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -754,24 +682,21 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						if(keyName.equals(StringList.m_str_profileid)) {
 							// keyがProfileIDのとき
-							Log.i("ProfileID = ", strdata);
 							xmlpiece.SetID(strdata);
 						} else if (keyName.equals(StringList.m_str_payloaddisplayname)){
 							// keyがPayloadDisplayNameのとき
-							Log.i("PayloadDisplayName = ", strdata);
 							xmlpiece.SetProfileName(strdata);
 							if (!ValidateParams.nullOrEmpty(strdata)) {
 								InputPortPageFragment.payloadDisplayName = strdata;
+								LogCtrl.getInstance().info("XML Parser: CA Certificate Profile contained a payload display name");
+								LogCtrl.getInstance().debug("XML Parser: Payload Display Name=" + strdata);
 							}
 
 						} else {
-							Log.i("keyName = ", keyName);
-							Log.i("typeName = ", typeName);
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
 						}
 					}
@@ -783,7 +708,6 @@ public class XmlPullParserAided /*extends Activity*/{
 					if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())) {
 						dict_count--;
 						if(dict_count == 0) {
-							Log.i("TakeApartProfile::endtag","Dict Reset");
 							if(xmlpiece.GetId() != null) m_xmlProfile.add(xmlpiece);	// 連絡先が追加されたことによる、条件追加
 							xmlpiece = new XmlProfilePiece();
 						}
@@ -793,14 +717,10 @@ public class XmlPullParserAided /*extends Activity*/{
 				}
 			}
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
 
@@ -808,7 +728,6 @@ public class XmlPullParserAided /*extends Activity*/{
 	}
 
 	public boolean TakeApartMdmCommand(InformCtrl inf) {
-		Log.i("::TakeApartMdmCommand", "Start.");
 
 		//XMLパーサーを生成する
 		XmlPullParserFactory factory;
@@ -842,22 +761,18 @@ public class XmlPullParserAided /*extends Activity*/{
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 					//
 					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
 						bArray = false;
-					//	Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
 						}
 
 						// フラグMailAddress, DescriptionがONだったらkeyをそれぞれに変更
@@ -880,8 +795,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// dictの処理
 						//////////////////////////////////
 						bArray = false;
-					//	Log.i("EnrollActivity::tagname = ", tagName);
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 
 						//m_xmlDictionary.setDict(keyName);
 					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
@@ -895,7 +808,6 @@ public class XmlPullParserAided /*extends Activity*/{
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
 
 						//次の要素へ進む
 						parser.next();
@@ -903,23 +815,17 @@ public class XmlPullParserAided /*extends Activity*/{
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
 						} else strdata = "";
 
 						// キーワードにセットしていく
 						if(keyName.equalsIgnoreCase(StringList.m_str_cmduuid)) {	// 一応 大文字・小文字の区別を行わない
 							m_xmlKeyword.SetCmdUUID(strdata);
-							Log.i("Command UUID = ", strdata);
 						} else if(keyName.equalsIgnoreCase(StringList.m_str_RequestType)) {
 							m_xmlKeyword.SetReqtype(strdata);
 						//	inf.SetSituationURL(strdata);
-							Log.i("RequestType = ", strdata);
 						} else if(bArray == true) {
 							m_xmlKeyword.SetArrayString(strdata);
-							Log.i("Array string = ", strdata);
 						} else {
-							Log.i("keyName = ", keyName);
-							Log.i("typeNameA = ", typeName);
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
 						}
 					} // else
@@ -931,184 +837,33 @@ public class XmlPullParserAided /*extends Activity*/{
 			}
 
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			return false;
 		}
 
-
-		return true;
-	}
-
-	public boolean TakeApartApplicationList() {
-		LogCtrl.getInstance(m_ctx).loggerInfo("XmlPullparserAided::TakeApartApplicationList Start");
-
-		//XMLパーサーを生成する
-		XmlPullParserFactory factory;
-		try {
-			XmlApplicationPiece xmlpiece = new XmlApplicationPiece();
-
-			factory = XmlPullParserFactory.newInstance();
-			XmlPullParser parser = factory.newPullParser();
-
-			//XMLパーサに解析したい内容を設定する
-			parser.setInput(new StringReader(m_xmldata_string));
-
-			String keyName = "";	// 初期化
-			String typeName;
-			String strdata;
-
-			int dict_count = 0;	// 初期値0
-			//XML文章の終わりまでループして解析する
-			for(int eventType = parser.getEventType(); eventType !=
-				XmlPullParser.END_DOCUMENT; eventType = parser.next()){
-				String tagName;
-				String tagText;
-
-				if(parser.getDepth() < DepthOfDict + 1) {
-					continue;
-				}
-
-				switch(eventType){
-				//TAGの始まり
-				case XmlPullParser.START_TAG:
-					//TAGの名前を取得する
-					tagName = parser.getName();
-
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
-					//
-					if (tagName.equals(m_ctx.getText(R.string.Property_key).toString())){
-						//////////////////////////////////
-						// keyの処理
-						//////////////////////////////////
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
-						//次の要素へ進む
-						parser.next();
-
-						//要素がTEXTだったら内容を取り出す
-						if(parser.getEventType() == XmlPullParser.TEXT){
-							keyName = parser.getText();		// key Nameにセット
-						//	Log.i("keyname = ", keyName);
-						}
-					} else if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())){
-						//////////////////////////////////
-						// dictの処理
-						//////////////////////////////////
-						dict_count++;
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
-
-						//m_xmlDictionary.setDict(keyName);
-					} else if (tagName.equals(m_ctx.getText(R.string.Property_array).toString())) {
-						//////////////////////////////////
-						// arrayの処理
-						//////////////////////////////////
-						//bArray = true;	// フラグを立てるだけ
-						//m_xmlDictionary.setArray(keyName);
-					} else {
-						//////////////////////////////////
-						// それ以外のstarttag要素
-						//////////////////////////////////
-						typeName = tagName;		// 型名を取得
-					//	Log.i("typeName = ", typeName);
-
-						//次の要素へ進む
-						parser.next();
-
-						//要素がTEXTだったら内容を取り出す
-						if(parser.getEventType() == XmlPullParser.TEXT){
-							strdata = parser.getText();		// セット
-					//		Log.i("strdata = ", strdata);
-						} else strdata = "";
-
-						if(keyName.equals(StringList.m_str_uuid)) {
-							// keyがUUIDのとき
-							Log.i("UUID = ", strdata);
-							xmlpiece.SetUUID(strdata);
-						} else if (keyName.equals(StringList.m_str_app_name)){
-							// keyがのとき
-							Log.i("ApplicationName = ", strdata);
-							xmlpiece.SetAppName(strdata);
-						} else if (keyName.equals(StringList.m_str_app_version)){
-							// keyがのとき
-							Log.i("Application Version = ", strdata);
-							xmlpiece.SetAppVersion(strdata);
-						} else if (keyName.equals(StringList.m_str_app_icon)){
-							// keyがのとき
-							Log.i("iconge", "");
-							xmlpiece.SetIcon(strdata);
-						} else if (keyName.equals(StringList.m_str_app_apk)){
-							// keyがのとき
-							Log.i("Application APK Name = ", strdata);
-							xmlpiece.SetApkName(strdata);
-						} else {
-							Log.i("keyName = ", keyName);
-							Log.i("typeName = ", typeName);
-							m_xmlDictionary.setParam(keyName, typeName, strdata);
-						}
-					}
-					break;
-				case XmlPullParser.END_TAG:
-					//TAGの名前を取得する
-					tagName = parser.getName();
-
-					if(tagName.equals(m_ctx.getText(R.string.Property_dict).toString())) {
-						dict_count--;
-						if(dict_count == 0) {
-							Log.i("TakeApartApplicationList::endtag","Dict Reset");
-							m_xmlApppiecceList.add(xmlpiece);
-							xmlpiece = new XmlApplicationPiece();
-						}
-					}
-
-					break;
-				}
-			}
-		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::XmlPullParserException", e.toString());
-			return false;
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
-			return false;
-		}
 
 		return true;
 	}
 
 	private void SetPayloadDictionary(XmlDictionary xmldict) {
 		if(xmldict.GetPaylodaType().equals(StringList.m_str_scep_profile)) {
-			Log.i("SetPayloadDictionary","Scep");
 			m_xmlScepDictionary = xmldict;
 		} else if(xmldict.GetPaylodaType().equals(StringList.m_str_wifi_profile)) {
-			Log.i("SetPayloadDictionary","wifi");
 			m_xmlwifiDictList.add(xmldict);
 		} else if(xmldict.GetPaylodaType().equals(StringList.m_str_pass_profile)) {
-			Log.i("SetPayloadDictionary","passcode");
 			m_xmlPassDictionary = xmldict;
 		} else if(xmldict.GetPaylodaType().equals(StringList.m_str_appli_profile)) {
-			Log.i("SetPayloadDictionary","application");
 			m_xmlAppDictionary = xmldict;
 		} else if(xmldict.GetPaylodaType().equals(StringList.m_str_webclip_profile)) {
-			Log.i("SetPayloadDictionary","webclip");
 			m_xmlShortcutDictList.add(xmldict);
 		} else if(xmldict.GetPaylodaType().equals(StringList.m_str_removalpwd_profile)) {
-			Log.i("SetPayloadDictionary","removal password");
 			m_xmlRmvPwdDictionary = xmldict;
 		} else if(xmldict.GetPaylodaType().equals(StringList.m_str_mdm_profile)) {
-			Log.i("SetPayloadDictionary","MDM");
 			m_xmlMdmDictionary = xmldict;
 		} else {
-			Log.i("SetPayloadDictionary","other");
 			m_xmlDictionary = xmldict;
 		}
 
@@ -1196,7 +951,6 @@ public class XmlPullParserAided /*extends Activity*/{
 	}*/
 
 	private String RtnIdEtc(String word, String apid_position) {
-		//Log.i("EnrollActivity::RtnIdEtc", word);
 		String rtnstr = "";
 		try {
 			// Wi-Fi
@@ -1214,29 +968,22 @@ public class XmlPullParserAided /*extends Activity*/{
 			//	else rtnstr = GetVpnApid(m_ctx);
 			} else if(word.equals("MAC_ADDRESS_EN0")) {
 				rtnstr = GetMacAddress();//wifiInfo.getMacAddress();
-		        if (rtnstr.length() > 0)
-		        	Log.i("Wi-FI Mac = ", rtnstr);
 			} else if(word.equals("IMEI")) {
 				rtnstr = telManager.getDeviceId();
 				if(rtnstr == null) {
 					rtnstr = "0000000000000000";
 				}
-	        	Log.i("IMEI = ", rtnstr);
 			} else if(word.equals("ICCID")) {
 				rtnstr = telManager.getSimSerialNumber();
-				if (rtnstr.length() > 0)
-		        	Log.i("ICCID = ", rtnstr);
 			} else if(word.equals("VERSION")) {
 				//int sdkInt = Integer.parseInt(Build.VERSION.SDK);
 				rtnstr = Build.VERSION.RELEASE;
-				if (rtnstr.length() > 0)
-		        	Log.i("VERSION = ", rtnstr);
 			} else if(word.equals("PRODUCT")) {
 				rtnstr = "Android";
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-			Log.e("EnrollActivity::IOException", e.toString());
+			LogCtrl.getInstance().error("EnrollActivity::IOException: " + e.toString());
 			rtnstr = "";
 		}
 
@@ -1260,7 +1007,6 @@ public class XmlPullParserAided /*extends Activity*/{
 	// AndroidIDからAPIDの基礎文字列を生成
 	private static String GetAndroididToApid(Context ctx) {
 		 String str_id = Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
-		LogCtrl.getInstance(ctx).loggerInfo("XmlPullParserAded::GetAndroididToApid ID=" + str_id);
 
 		 while(str_id.length() < 40) {
 			 str_id += str_id;
@@ -1281,38 +1027,6 @@ public class XmlPullParserAided /*extends Activity*/{
 		dst = encodeSHA1(dst);
 
 		return dst;
-	}
-
-	// アカウントから疑似APIDを作成(VPNとアプリ用)
-	private static String GetAccountToApid(Context ctx) {
-		LogCtrl logCtrl = LogCtrl.getInstance(ctx);
-		Account[] accountsall = AccountManager.get(ctx).getAccounts();
-		for (Account account_debug : accountsall) {
-			String name = account_debug.name;
-			String type = account_debug.type;
-			int describeContents = account_debug.describeContents();
-			int hashCode = account_debug.hashCode();
-
-			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg name=" + name);
-			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg type=" + type);
-			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg describe=" + Integer.toString(describeContents));
-			logCtrl.loggerInfo("XmlPullParserAded::GetAccountToApid dbg hashCode=" + Integer.toString(hashCode));
-		}
-		Account[] accounts = AccountManager.get(ctx).getAccountsByType("com.google");//getAccounts();
-		Account account = accounts[0];
-		LogCtrl.getInstance(ctx).loggerInfo("XmlPullParserAded::GetAccountToApid  account name=" + account.name);
-		int hashCode = account.hashCode();
-		String hashStr = Integer.toString(hashCode);
-		while(hashStr.length() < 40) {
-			hashStr += hashStr;
-		}
-		hashStr = hashStr.substring(0, 40);
-
-		hashStr = encodeSHA1(hashStr);
-
-		logCtrl.loggerInfo("GetAccountToApid = " + hashStr);
-
-		return hashStr;
 	}
 
 	// VPNとアプリのAPID
@@ -1354,9 +1068,7 @@ public class XmlPullParserAided /*extends Activity*/{
 			rtnstr = rtnstr.substring(0, 40);
 		}
 		if (rtnstr.length() > 0) {
-        	Log.i("UDID no sha-1 = ", rtnstr);
         	rtnstr = encodeSHA1(rtnstr);	// Sha-1エンコード
-        	Log.i("UDID yes sha-1 = ", rtnstr);
 		}
 
 		return rtnstr;
@@ -1394,10 +1106,8 @@ public class XmlPullParserAided /*extends Activity*/{
                 retstr = res1.toString();
             }
         } catch (Exception ex) {
-
+			LogCtrl.getInstance().error("XMLPullParserAided::GetMacAddress:IOException: " + ex.toString());
         }
-		//Log.i("GetMacAddress", "trace1");
-		//Log.i("GetMacAddress", "Mac id=" + retstr);
 		return retstr;
 	}
 
@@ -1415,8 +1125,7 @@ public class XmlPullParserAided /*extends Activity*/{
 		   	}
 
 		} catch (NoSuchAlgorithmException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
+			LogCtrl.getInstance().error("XMLPullParserAided::encodeSHA1:NoSuchAlgorithmException: " + e.toString());
 		}
 
 	   	return result;
@@ -1431,7 +1140,7 @@ public class XmlPullParserAided /*extends Activity*/{
 			if(parameter != null) serializer.text(parameter);
 			serializer.endTag("", "string");
 		} catch (IOException e){
-			Log.e("SetParameter::IOException ", e.toString());
+			LogCtrl.getInstance().error("XMLPullParserAided::SetParameter4Output:IOException: " + e.toString());
 		}
 
 	}
@@ -1459,7 +1168,7 @@ public class XmlPullParserAided /*extends Activity*/{
 			serializer.text(parameter);
 			serializer.endTag("", "data");
 		} catch (IOException e){
-			Log.e("SetParameter::IOException ", e.toString());
+			LogCtrl.getInstance().error("XMLPullParserAided::SetDataParameter4Output:IOException: " + e.toString());
 		}
 
 	}
@@ -1477,7 +1186,7 @@ public class XmlPullParserAided /*extends Activity*/{
 		        serializer.endTag("", StringList.m_strtrue);
 	        }
 		} catch (IOException e){
-			Log.e("SetParameter::IOException ", e.toString());
+			LogCtrl.getInstance().error("XMLPullParserAided::SetBoolParameter4Output:IOException: " + e.toString());
 		}
 
 	}

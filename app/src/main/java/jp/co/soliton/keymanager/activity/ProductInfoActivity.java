@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import jp.co.soliton.keymanager.BuildConfig;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ProcessInfoAndZipTask;
 import jp.co.soliton.keymanager.common.EmailCtrl;
@@ -51,6 +52,7 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
 		            @Override
 		            public void endConnection(ProcessInfoAndZipTask.ContentZip contentZip) {
 			            progressDialog.dismiss();
+						LogCtrl.getInstance().info("Diag: Zip archiving successful");
 			            EmailCtrl.sentEmailInfo(ProductInfoActivity.this, contentZip);
 		            }
 	            }).execute();

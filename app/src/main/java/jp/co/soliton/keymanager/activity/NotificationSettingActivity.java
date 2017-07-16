@@ -133,7 +133,7 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
 	                updateEnableViewExpired(swNotifBeforeFlag.isChecked());
                 }
             } catch (Exception ex) {
-		        LogCtrl.getInstance(getApplicationContext()).loggerError(ex.toString());
+		        LogCtrl.getInstance().error(ex.toString());
             }
         } else {
             textViewBack.setText(R.string.label_setting);

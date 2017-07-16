@@ -1,6 +1,8 @@
 package jp.co.soliton.keymanager.scep;
 
 import android.util.Log;
+
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.scep.pkimessage.CertRep;
 import jp.co.soliton.keymanager.scep.request.CertificateEnrollmentRequest;
 import jp.co.soliton.keymanager.scep.request.GetCACertificateRequest;
@@ -29,8 +31,8 @@ public class Requester {
 	}
 	
 	public CertStore getCACertificate(URL url) throws RequesterException {
-		Log.d("Requester", "getCACertificate start ");
 		try {
+			LogCtrl.getInstance().info("SCEP: Get CA Certificate");
 			Transaction<CertStore> transaction = new Transaction<CertStore>();
 			GetCACertificateRequest request = new GetCACertificateRequest(url);
 			CertStore cACertificateStore = transaction.start(request, new GetCACertificateResponseHandler());
@@ -51,6 +53,7 @@ public class Requester {
 			CertStore cACertificateStore) throws RequesterException {
 		
 		try {
+			LogCtrl.getInstance().info("SCEP: Request Certificate Enroll");
 			return certificateEnrollment(
 					new URL(url),
 					certificateSigningRequest,
@@ -75,6 +78,7 @@ public class Requester {
 		request.setPrivateKey(privateKey);
 		request.setCACertificateStore(cACertificateStore);
 		try {
+			LogCtrl.getInstance().info("SCEP: Request Certificate Enroll2");
 			Transaction<CertRep> transaction = new Transaction<CertRep>();
 			CertRepReponseHandler certRepResponseHandler = new CertRepReponseHandler();
 			return transaction.start(request, certRepResponseHandler);

@@ -158,9 +158,6 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
 		    viewHolder.btnApplyUpdate.setOnClickListener(new View.OnClickListener() {
 			    @Override
 			    public void onClick(View v) {
-				    LogCtrl logCtrl = LogCtrl.getInstance(getContext());
-				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate id: " + id);
-				    logCtrl.loggerInfo("AdapterListCertificate::click btnUpdate userId: " + strCN);
 				    listener.clickApplyButton(String.valueOf(id));
 			    }
 		    });

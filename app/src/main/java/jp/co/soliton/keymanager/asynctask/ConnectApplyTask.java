@@ -32,34 +32,39 @@ public class ConnectApplyTask extends AsyncTask<Void, Void, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-		LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(activity);
+		LogCtrl.getInstance().info("Apply Connection: Start");
+
 		HttpConnectionCtrl conn = new HttpConnectionCtrl(activity);
 		//execute send request to server
 		boolean ret = conn.RunHttpProbeHostCerConnection(m_InformCtrl);
 		//check result return from server
 		if (ret == false) {
-			logCtrlAsyncTask.loggerError("ConnectApplyTask " + "Network error");
+			LogCtrl.getInstance().error("Apply Connection: Connection error");
 			m_nErroType = ERR_NETWORK;
 			return false;
 		}
+
+		String retStr = m_InformCtrl.GetRtn();
+
 		// ログイン結果
-		if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Forbidden).toString())) {
-			logCtrlAsyncTask.loggerError("ConnectApplyTask  " + " Forbidden.");
+		if (retStr.startsWith(activity.getText(R.string.Forbidden).toString())) {
+			LogCtrl.getInstance().error("Apply Connection: Receive " + retStr);
 			m_nErroType = ERR_FORBIDDEN;
 			return false;
-		} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Unauthorized).toString())) {
-			logCtrlAsyncTask.loggerError("ConnectApplyTask  " + "Unauthorized.");
+		} else if (retStr.startsWith(activity.getText(R.string.Unauthorized).toString())) {
+			LogCtrl.getInstance().error("Apply Connection: Receive " + retStr);
 			m_nErroType = ERR_UNAUTHORIZED;
 			return false;
-		} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.ERR).toString())) {
-			logCtrlAsyncTask.loggerError("ConnectApplyTask  " + "ERR:");
+		} else if (retStr.startsWith(activity.getText(R.string.ERR).toString())) {
+			LogCtrl.getInstance().error("Apply Connection: Receive " + retStr);
 			m_nErroType = ERR_COLON;
 			return false;
 		}
-		if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.not_installed_ca).toString())) {
-			logCtrlAsyncTask.loggerError("ConnectApplyTask  " + activity.getText(R.string.not_installed_ca));
+		if (retStr.startsWith(activity.getText(R.string.not_installed_ca).toString())) {
+			LogCtrl.getInstance().error("Apply Connection: CA Certificate is not installed");
 			m_nErroType = NOT_INSTALL_CA;
 		} else {
+			LogCtrl.getInstance().info("Apply Connection: Successful");
 			m_nErroType = SUCCESSFUL;
 		}
 		return ret;

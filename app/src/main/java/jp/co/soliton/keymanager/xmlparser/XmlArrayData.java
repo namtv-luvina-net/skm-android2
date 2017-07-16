@@ -10,6 +10,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.soliton.keymanager.LogCtrl;
+
 // <array>単位でのクラスライブラリ
 public class XmlArrayData {
 	private String m_xmldata_string;	// 取得データ原文
@@ -32,7 +34,6 @@ public class XmlArrayData {
 	}
 	
 	public void SetParam(String strtype, String strdata) {
-		Log.i("XmlArrayData:SetParam", "start");
 		XmlStringData p_strdata = new XmlStringData();
 		p_strdata.SetKeyName("");
 		p_strdata.SetData(strdata);
@@ -57,7 +58,6 @@ public class XmlArrayData {
 	}
 	
 	public void SetDict() {
-		Log.i("XmlArrayData:SetDict", "start");
 		// key
 		XmlDictionary new_xml_dict = new XmlDictionary(DepthOfDict + 1, "", m_xmldata_string);
 		
@@ -91,28 +91,21 @@ public class XmlArrayData {
 					//TAGの名前を取得する
 					tagName = parser.getName();
 
-					//Log.i("EnrollActivity::tagname = ", tagName);
-					//Log.i("Depth = ", String.valueOf(parser.getDepth()));
-					//
 					if (tagName.equals("key")){
 						//////////////////////////////////
 						// keyの処理
 						//////////////////////////////////
-						Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						//次の要素へ進む
 						parser.next();
 	
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							keyName = parser.getText();		// key Nameにセット
-							Log.i("keyname = ", keyName);
 						}
 					} else if(tagName.equals("dict")){
 						//////////////////////////////////
 						// dictの処理
 						//////////////////////////////////
-						Log.i("XmlArrayData::tagname = ", tagName);
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						
 						new_xml_dict.setDict(keyName);
 					} else if (tagName.equals("array")) {
@@ -126,7 +119,6 @@ public class XmlArrayData {
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-						Log.i("typeName = ", typeName);
 						
 						//次の要素へ進む
 						parser.next();
@@ -134,7 +126,6 @@ public class XmlArrayData {
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-							Log.i("strdata = ", strdata);
 						} else strdata = "";
 						
 						new_xml_dict.setParam(keyName, typeName, strdata);
@@ -147,19 +138,14 @@ public class XmlArrayData {
 			}
 			
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("XmlArrayData::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("XmlArrayData::XmlPullParserException: " + e.toString());
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("XmlArrayData::IOException", e.toString());
+			LogCtrl.getInstance().error("XmlArrayData::IOException: " + e.toString());
 		}
 		m_xmlDictionary.add(new_xml_dict);
 	}
 	
 	public void SetArray() {
-		Log.i("XmlArrayData:SetArray", "start");
 		
 		// key に対応したArrayが設定されていなかったら、XmlArrayDataを作成して追加
 		XmlArrayData new_xml_array = new XmlArrayData(DepthOfDict + 1, "", m_xmldata_string);
@@ -195,8 +181,6 @@ public class XmlArrayData {
 						//////////////////////////////////
 						// dictの処理
 						//////////////////////////////////
-						Log.i("XmlArrayData::tagname = ", tagName);
-						//Log.i("Depth = ", String.valueOf(parser.getDepth()));
 						
 						new_xml_array.SetDict();	// キーネームはなし
 					} else if (tagName.equals("array")) {
@@ -210,7 +194,6 @@ public class XmlArrayData {
 						// それ以外のstarttag要素
 						//////////////////////////////////
 						typeName = tagName;		// 型名を取得
-						Log.i("typeName = ", typeName);
 						
 						//次の要素へ進む
 						parser.next();
@@ -218,7 +201,6 @@ public class XmlArrayData {
 						//要素がTEXTだったら内容を取り出す
 						if(parser.getEventType() == XmlPullParser.TEXT){
 							strdata = parser.getText();		// セット
-							Log.i("strdata = ", strdata);
 						} else strdata = "";
 						
 						new_xml_array.SetParam(typeName, strdata);
@@ -226,13 +208,9 @@ public class XmlArrayData {
 				}
 			}
 		} catch (XmlPullParserException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("XmlArrayData::XmlPullParserException", e.toString());
+			LogCtrl.getInstance().error("XmlArrayData::XmlPullParserException: " + e.toString());
 		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-			Log.e("XmlArrayData::IOException", e.toString());
+			LogCtrl.getInstance().error("XmlArrayData::IOException: " + e.toString());
 		}
 		
 		m_Arrays.add(new_xml_array);

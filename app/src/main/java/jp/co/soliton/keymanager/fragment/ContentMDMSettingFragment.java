@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.EpsapAdminReceiver;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterMDM;
 import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
@@ -100,6 +101,7 @@ public class ContentMDMSettingFragment extends TabletBaseSettingFragment {
 		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(getActivity(), new MDMControl.CheckOutListener() {
 			@Override
 			public void checkOutComplete() {
+				LogCtrl.getInstance().info("Setting: MDM profile has deleted");
 				viewProgressBar.setVisibility(View.GONE);
 				getActivity().onBackPressed();
 			}

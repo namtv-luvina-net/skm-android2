@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import jp.co.soliton.keymanager.InformCtrl;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
@@ -53,6 +54,7 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 		if (status == ElementApply.STATUS_APPLY_APPROVED) {
 			//
 		} else if (status == ElementApply.STATUS_APPLY_PENDING) {
+			LogCtrl.getInstance().info("Apply: Application is still pending");
 			layoutComplete.setVisibility(View.GONE);
 			showMessagePhone(getString(R.string.message_pending), getString(R.string
 					.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
@@ -65,6 +67,7 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 				}
 			});
 		} else if (status == ElementApply.STATUS_APPLY_REJECT) {
+			LogCtrl.getInstance().info("Apply: Application has rejected");
 			layoutComplete.setVisibility(View.GONE);
 			showMessagePhone(getString(R.string.message_reject), getString(R.string.approval_confirmation), new DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
@@ -73,6 +76,7 @@ public class CompleteConfirmApplyActivity extends FragmentActivity {
 				}
 			});
 		} else if (status == ElementApply.STATUS_APPLY_CANCEL) {
+			LogCtrl.getInstance().info("Apply: Application has withdrawn");
 			layoutComplete.setVisibility(View.GONE);
 			showMessagePhone(getString(R.string.message_cancel), getString(R.string.title_cancel), new DialogApplyMessage
 					.OnOkDismissMessageListener() {

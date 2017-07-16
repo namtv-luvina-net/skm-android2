@@ -20,6 +20,7 @@ import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
+import jp.co.soliton.keymanager.mdm.MDMFlgs;
 import jp.co.soliton.keymanager.scep.Requester;
 import jp.co.soliton.keymanager.scep.RequesterException;
 import jp.co.soliton.keymanager.scep.cert.CertificateUtility;
@@ -71,7 +72,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private DevicePolicyManager m_DPM;
 	private MDMControl mdmctrl;
 	private ComponentName m_DeviceAdmin;
-	private LogCtrl logCtrl;
 	private static StartUsingProceduresControl instance;
 	private boolean isTablet;
 
@@ -93,7 +93,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		isTablet = activity.getResources().getBoolean(R.bool.isTablet);
 		this.m_InformCtrl = m_InformCtrl;
 		this.element = element;
-		logCtrl = LogCtrl.getInstance(activity);
 		scepRequester = getScepRequester();
 	}
 	public ElementApply getElement() {
@@ -145,29 +144,34 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			////////////////////////////////////////////////////////////////////////////
 			// 大項目1. ログイン開始 <=========
 			////////////////////////////////////////////////////////////////////////////
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(activity);
+
+			LogCtrl.getInstance().info("Proc: Get Profile");
+
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(activity);
 			boolean ret = conn.RunHttpDeviceCertUrlConnection(m_InformCtrl);
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("GetDeviceCertTask Network error");
+				LogCtrl.getInstance().error("Proc: Connection error");
 				m_nErroType = ERR_NETWORK;
 				return false;
 			}
+
+			String retStr = m_InformCtrl.GetRtn();
+
 			// ログイン結果
-			if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Forbidden).toString())) {
-				logCtrlAsyncTask.loggerError("GetDeviceCertTask Forbidden.");
+			if (retStr.startsWith(activity.getText(R.string.Forbidden).toString())) {
+				LogCtrl.getInstance().error("Proc: Receive " + retStr);
 				m_nErroType = ERR_FORBIDDEN;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.Unauthorized).toString())) {
-				logCtrlAsyncTask.loggerError("GetDeviceCertTask Unauthorized.");
+			} else if (retStr.startsWith(activity.getText(R.string.Unauthorized).toString())) {
+				LogCtrl.getInstance().error("Proc: Receive " + retStr);
 				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith(activity.getText(R.string.ERR).toString())) {
-				logCtrlAsyncTask.loggerError("GetDeviceCertTask ERR:");
+			} else if (retStr.startsWith(activity.getText(R.string.ERR).toString())) {
+				LogCtrl.getInstance().error("Proc: Receive " + retStr);
 				m_nErroType = ERR_COLON;
 				return false;
-			} else if (m_InformCtrl.GetRtn().startsWith("NG")) {
-				logCtrlAsyncTask.loggerError("GetDeviceCertTask NG:");
+			} else if (retStr.startsWith("NG")) {
+				LogCtrl.getInstance().error("Proc: Receive " + retStr);
 				m_nErroType = ERR_LOGIN_FAIL;
 				return false;
 			}
@@ -181,17 +185,18 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 			ret = m_p_aided.TakeApartScepInfoResponse(m_InformCtrl);
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
+				LogCtrl.getInstance().error("Proc: XML Parser Error");
 				m_nErroType = ERR_NETWORK;
 				return false;
 			}
+
+			LogCtrl.getInstance().info("Proc: Receive Profile");
 
 			SetScepItem();
 
 			m_p_aided_profile = m_p_aided;
 			ret = m_p_aided_profile.TakeApartProfile();
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("CertLoginAcrivity::onClick TakeApartProfile false");
 				//	m_ErrorMessage.setText(R.string.EnrollErrorMessage);
 				m_nErroType = ERR_NETWORK;
 				return false;
@@ -220,10 +225,10 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			// 2. GetMDMDictionary
 			XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
 			if (mdm_dict == null) {
-				Log.d("CertLoginActivity", "SetMDM() No profile");
+				LogCtrl.getInstance().info("Proc: Profile doesn't contained MDM configuration");
 				DownloadCACertificate();
 			} else {
-				Log.d("CertLoginActivity", "SetMDM() Has profile");
+				LogCtrl.getInstance().info("Proc: Profile contained MDM configuration");
 				CallMDMCheckIn();
 			}
 
@@ -292,7 +297,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 	@Override
 	public void alias(String alias) {
-		Log.d("CertLoginActivity", "printAlias():: " + alias);
 	}
 
 	public void startCertificateEnrollTask(){
@@ -303,7 +307,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 		@Override
 		protected Boolean doInBackground(Requester... params) {
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(activity);
 			try {
 				Requester requester = params[0];
 				// Generate Key Pair
@@ -316,8 +319,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				final Date notBefore = new Date(System.currentTimeMillis() - (5 * 60000));
 				final Date notAfter = new Date(System.currentTimeMillis() + (1 * 3600000));
 				final BigInteger serial = BigInteger.valueOf(System.currentTimeMillis());
-
-				Log.d("CertificateEnrollTask", "privatekey - " + rSAKeyPair.getPrivate());
 
 				selfSignedCertificate =
 						CertificateUtility.generateSelfSignedCertificate(
@@ -458,20 +459,20 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					return false;
 				}
 			} catch (RequesterException e) {
-				logCtrlAsyncTask.loggerError("CertificateEnrollTask RequesterException::" + e
+				LogCtrl.getInstance().error("CertificateEnrollTask RequesterException: " + e
 						.toString());
 				//	e.printStackTrace();
 				return false;
 			} catch (NoSuchAlgorithmException e) {
-				logCtrlAsyncTask.loggerError("CertificateEnrollTask NoSuchAlgorithmException::" + e.toString());
+				LogCtrl.getInstance().error("CertificateEnrollTask NoSuchAlgorithmException: " + e.toString());
 				//	e.printStackTrace();
 				return false;
 			} catch (NoSuchProviderException e) {
-				logCtrlAsyncTask.loggerError("CertificateEnrollTask NoSuchProviderException::" + e.toString());
+				LogCtrl.getInstance().error("CertificateEnrollTask NoSuchProviderException: " + e.toString());
 				//	e.printStackTrace();
 				return false;
 			} catch (Exception e) {
-				logCtrlAsyncTask.loggerError("CertificateEnrollTask Exception::" + e.toString());
+				LogCtrl.getInstance().error("CertificateEnrollTask Exception :" + e.toString());
 				//	e.printStackTrace();
 				return false;
 			}
@@ -481,13 +482,11 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		@Override
 		// プログレス処理
 		protected void onProgressUpdate(Integer... values) {
-			Log.d("CertificateEnrollTask", "onProgressUpdate - " + "values");
 		}
 
 		@Override
 		// メインスレッドに反映させる処理
 		protected void onPostExecute(Boolean result) {
-			Log.d("CertificateEnrollTask", "onPostExecute - " + "result");
 		}
 		public String bytesToHex(byte[] in) {
 			final StringBuilder builder = new StringBuilder();
@@ -509,9 +508,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		// Subject
 		List<String> list = m_p_aided.GetSubjectList();
 		String subject_string = "";
-		System.out.println("_________________---------____________________");
 		for(int n = 0; list.size() > n; n++) {
-			System.out.println(list.get(n));
 			if(subject_string.length() == 0) {
 				subject_string = list.get(n);
 				subject_string += "=";
@@ -539,7 +536,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				SetEditMemberChild(p_data);
 			}
 		}
-		logCtrl.loggerDebug("CertLoginAcrivity::SetScepItem Subject: " + m_strSubject);
+		LogCtrl.getInstance().info("Proc: SCEP Subject " + Integer.toString(m_strSubject.length()));
+		LogCtrl.getInstance().debug(m_strSubject);
 		return true;
 	}
 
@@ -547,7 +545,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		String strKeyName = data.GetKeyName();	// キー名
 		int    i_type = data.GetType();		// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
 		String strData = data.GetData();		// 要素
-		logCtrl.loggerInfo("CertLoginAcrivity::SetEditMemberChild Key= " +  strKeyName + " , Data= " + strData);
 
 		// Chalenge
 		if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_challenge)) {	// Challenge
@@ -590,7 +587,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 	// MDMのチェックインの呼び出し
 	private void CallMDMCheckIn() {
-		logCtrl.loggerDebug("CertLoginActivity CallMDMActivity()");
 
 		m_DPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		m_DeviceAdmin = new ComponentName(activity, EpsapAdminReceiver.class);
@@ -626,11 +622,12 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					return;
 				}
 
-				Log.d("StartUsingProceduresControl", "SetMDM()");
+				LogCtrl.getInstance().info("Proc: Start MDM configuration");
+
 				// 2. GetMDMDictionary
 				XmlDictionary mdm_dict = m_p_aided_profile.GetMdmDictionary();
 				if (mdm_dict == null) {
-					Log.d("StartUsingProceduresControl", "SetMDM() No profile");
+					LogCtrl.getInstance().error("Proc: No MDM profile");
 					return;
 				}
 
@@ -643,14 +640,14 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				// 5. OKならスレッド起動...定期通信
 				if(bret == false) {
 					//	mdmctrl.startService();
-					Log.e("StartUsingProceduresControl::SetMDM", "Checkin err");
+					LogCtrl.getInstance().error("Proc: Check-in failed");
 					return;
 				}
 
 				bret = mdmctrl.TokenUpdate();
 				if(bret == false) {
 					//	mdmctrl.startService();
-					Log.e("StartUsingProceduresControl::SetMDM", "TokenUpdate err");
+					LogCtrl.getInstance().error("Proc: Token udpate failed");
 					return;
 				}
 			}
@@ -659,7 +656,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	}
 
 	private void addDeviceAdmin() {
-		Log.i("ProfileActivity", "addDeviceAdmin");
+		LogCtrl.getInstance().info("Proc: Show DeviceAdmin activity");
 		// Launch the activity to have the user enable our admin.
 		Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
 		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, m_DeviceAdmin);
@@ -679,27 +676,29 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private class DownloadCACertificateTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(activity);
 			HttpConnectionCtrl conn = new HttpConnectionCtrl(activity);
 			//send request to server
 			boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrlCA);
 			//parse result return
 			if (ret == false) {
-				logCtrlAsyncTask.loggerError("DownloadCACertificateTask Network error");
+				LogCtrl.getInstance().error("Download CA Certificate: Connection error");
 				m_nErroType = ERR_NETWORK;
 				return false;
 			}
+
+			String retStr = m_InformCtrlCA.GetRtn();
+
 			// ログイン結果
-			if (m_InformCtrlCA.GetRtn().startsWith(activity.getText(R.string.Forbidden).toString())) {
-				logCtrlAsyncTask.loggerError("DownloadCACertificateTask Forbidden.");
+			if (retStr.startsWith(activity.getText(R.string.Forbidden).toString())) {
+				LogCtrl.getInstance().error("Download CA Certificate: Receive " + retStr);
 				m_nErroType = ERR_FORBIDDEN;
 				return false;
-			} else if (m_InformCtrlCA.GetRtn().startsWith(activity.getText(R.string.Unauthorized).toString())) {
-				logCtrlAsyncTask.loggerError("DownloadCACertificateTask Unauthorized.");
+			} else if (retStr.startsWith(activity.getText(R.string.Unauthorized).toString())) {
+				LogCtrl.getInstance().error("Download CA Certificate: Receive " + retStr);
 				m_nErroType = ERR_UNAUTHORIZED;
 				return false;
-			} else if (m_InformCtrlCA.GetRtn().startsWith(activity.getText(R.string.ERR).toString())) {
-				logCtrlAsyncTask.loggerError("DownloadCACertificateTask ERR:");
+			} else if (retStr.startsWith(activity.getText(R.string.ERR).toString())) {
+				LogCtrl.getInstance().error("Download CA Certificate: Receive " + retStr);
 				m_nErroType = ERR_COLON;
 				return false;
 			}
@@ -751,12 +750,15 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		//Install certificate
 		Intent intent = KeyChain.createInstallIntent();
 		try {
+			LogCtrl.getInstance().info("Proc: Install CA Certificate for Wi-Fi " + Integer.toString(cacert.length()));
+			LogCtrl.getInstance().debug(cacert);
+
 			javax.security.cert.X509Certificate x509 = javax.security.cert.X509Certificate.getInstance(cacert.getBytes());
 			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
 			intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
 			activity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT);
 		} catch (Exception e) {
-			logCtrl.loggerInfo("StartUsingProceduresActivity:installCACert : " + activity.getString(R.string
+			LogCtrl.getInstance().error("StartUsingProceduresActivity:installCACert:Exception: " + activity.getString(R.string
 					.error_install_certificate));
 			showMessage(activity.getString(R.string.error_install_certificate));
 		}

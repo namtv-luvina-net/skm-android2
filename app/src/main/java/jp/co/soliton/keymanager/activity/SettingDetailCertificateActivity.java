@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
 import jp.co.soliton.keymanager.ItemChildDetailCertSetting;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.adapter.AdapterSettingDetailCertificate;
@@ -100,6 +101,8 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
             public void onClick(View v) {
                 dialog.dismiss();
                 elementMgr.deleteElementApply(id);
+				LogCtrl.getInstance().info("Certificate: Deleted");
+				LogCtrl.getInstance().debug("CN=" + elementApply.getcNValue() + "S/N=" + elementApply.getsNValue());
                 AlarmReceiver alarm = new AlarmReceiver();
                 alarm.setupNotification(getApplicationContext());
                 finish();

@@ -317,7 +317,7 @@ public class StringList {
 	// 出力ファイル
 	public final static String m_str_debug_profile = "profile.txt";
 
-	public final static String m_str_SKMTag = "Soliton KM";
+	public final static String m_str_SKMTag = "Soliton KeyManager";
 
 	//SKM version 2.0
 	/*--- Get Cert ---*/

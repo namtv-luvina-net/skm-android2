@@ -215,8 +215,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
                     "&" + StringList.m_strSerial + rtnserial;
         } catch (Exception ex) {
-	        LogCtrl.getInstance(pagerInputActivity).loggerInfo("InputUserPageFragment:makeParameterLogon: " + ex.toString());
-            Log.i(StringList.m_str_SKMTag, "logon:: " + "Message=" + ex.getMessage());
+	        LogCtrl.getInstance().error("InputUserPageFragment:makeParameterLogon: " + ex.toString());
             return false;
         }
         // 入力データを情報管理クラスへセットする
@@ -356,30 +355,34 @@ public class InputUserPageFragment extends InputBasePageFragment {
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン開始 <=========
             ////////////////////////////////////////////////////////////////////////////
-	        LogCtrl logCtrlAsyncTask = LogCtrl.getInstance(pagerInputActivity);
+
+            LogCtrl.getInstance().info("Apply: Login");
+
             HttpConnectionCtrl conn = new HttpConnectionCtrl(pagerInputActivity);
             boolean ret = conn.RunHttpApplyLoginUrlConnection(pagerInputActivity.getInformCtrl());
 
             if (ret == false) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask Network error");
+                LogCtrl.getInstance().error("Apply Login: Network error");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }
+
+            String retStr = pagerInputActivity.getInformCtrl().GetRtn();
             // ログイン結果
-            if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Forbidden).toString())) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask Forbidden.");
+            if (retStr.startsWith(getText(R.string.Forbidden).toString())) {
+                LogCtrl.getInstance().error("Apply Login: Permission error (Forbidden)");
                 m_nErroType = ERR_FORBIDDEN;
                 return false;
-            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.Unauthorized).toString())) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask Unauthorized.");
+            } else if (retStr.startsWith(getText(R.string.Unauthorized).toString())) {
+                LogCtrl.getInstance().error("Apply Login: Permission error (Unauthorized)");
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
-            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith(getText(R.string.ERR).toString())) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask ERR:");
+            } else if (retStr.startsWith(getText(R.string.ERR).toString())) {
+                LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
                 m_nErroType = ERR_COLON;
                 return false;
-            } else if (pagerInputActivity.getInformCtrl().GetRtn().startsWith("NG")) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask NG");
+            } else if (retStr.startsWith("NG")) {
+                LogCtrl.getInstance().error("Apply Login: Receive " + retStr);
 	            m_nErroType = ERR_LOGIN_FAIL;
                 return false;
             }
@@ -393,7 +396,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
 
             ret = m_p_aided.TakeApartUserAuthenticationResponse(pagerInputActivity.getInformCtrl());
             if (ret == false) {
-	            logCtrlAsyncTask.loggerError("LogonApplyTask-- TakeApartDevice false");
                 m_nErroType = ERR_NETWORK;
                 return false;
             }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.BuildConfig;
+import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ProcessInfoAndZipTask;
 import jp.co.soliton.keymanager.common.EmailCtrl;
@@ -69,6 +70,7 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 					@Override
 					public void endConnection(ProcessInfoAndZipTask.ContentZip contentZip) {
 						progressDialog.dismiss();
+						LogCtrl.getInstance().info("Diag: Zip archiving successful");
 						EmailCtrl.sentEmailInfo(getActivity(), contentZip);
 					}
 				}).execute();

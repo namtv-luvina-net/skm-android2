@@ -22,11 +22,9 @@ public class APIDManager {
 	private String m_strAPIDWifi = "";	// APID Wi-Fi #21391
 	private String m_strAPIDVPN = "";	// APID VPN #21391
 	Context context;
-	LogCtrl logCtrl;
 
 	public APIDManager(Context context) {
 		this.context = context;
-		logCtrl = LogCtrl.getInstance(context);
 		getSAPID();
 	}
 
@@ -67,14 +65,12 @@ public class APIDManager {
 			//ByteArrayOutputStreamからbyte配列に変換
 			byArrData_read = byteArrayOutputStreamObj.toByteArray();
 		} catch (Exception e) {
-			logCtrl.loggerDebug("ReadAndSetLoginUserInfo: "+ e.getMessage());
 			bRet = false;
 		} finally{
 			try {
 				if (inputStreamObj!=null) inputStreamObj.close();
 				if (byteArrayOutputStreamObj!=null) byteArrayOutputStreamObj.close();
 			} catch (Exception e2) {
-				logCtrl.loggerDebug("ReadAndSetLoginUserInfo e2: " + e2.getMessage());
 				bRet = false;
 			}
 		}
@@ -82,7 +78,6 @@ public class APIDManager {
 		if(bRet == false) return bRet;
 
 		String read_string = new String(byArrData_read);
-		android.util.Log.d(StringList.m_str_SKMTag, "*****Re-Read***** " + read_string);
 
 		// 新しくXmlPullParserAidedを作成する.
 		XmlPullParserAided p_aided = new XmlPullParserAided(context, read_string, 2);
@@ -106,10 +101,10 @@ public class APIDManager {
 		//
 		if(strKeyName.equalsIgnoreCase(StringList.m_str_Apid_Wifi)) {
 			m_strAPIDWifi = strData;
-			logCtrl.loggerDebug("LoginUserOutputFile Wifi APID=" + strData);
+			LogCtrl.getInstance().debug("APID: Wifi=" + strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_Apid_VPN)) {
 			m_strAPIDVPN = strData;
-			logCtrl.loggerDebug("LoginUserOutputFile VPN APID=" + strData);
+			LogCtrl.getInstance().debug("APID: VPN=" + strData);
 		}
 	}
 
