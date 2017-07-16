@@ -27,6 +27,14 @@ android {
         }
     }
     buildTypes {
+        trace {
+            debuggable true
+            jniDebuggable true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.beta
+            zipAlignEnabled true
+        }
         beta {
             debuggable true
             jniDebuggable true
