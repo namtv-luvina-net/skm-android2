@@ -13,16 +13,16 @@ deploy:
 	$(CP) ./app/build/outputs/apk/*.apk $(DEPLOY_DIR)/
 
 beta:
-	./gradlew assembleBeta
+	./gradlew clean assembleBeta
 
 debug:
-	./gradlew assembleDebug
+	./gradlew clean assembleDebug
 
 release:
-	./gradlew assembleRelease
+	./gradlew clean assembleRelease
 
 buildall:
-	./gradlew assemble
+	./gradlew clean assemble
 
 clean:
 	$(RM) ./app/build/outputs/apk/*.apk
