@@ -1,8 +1,9 @@
 package jp.co.soliton.keymanager;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+
+import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.LogFileCtrl;
 
 import java.io.BufferedOutputStream;
@@ -12,9 +13,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.Calendar;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 
 public class LogCtrl {
 
@@ -31,8 +29,6 @@ public class LogCtrl {
 			synchronized (LogCtrl.class) {
 				if (instance == null) {
 					instance = new LogCtrl();
-					nameLogFile = LogFileCtrl.getLogName();
-					LogFileCtrl.deleteOldLogFile(SKMApplication.getAppContext());
 				}
 			}
 		}
@@ -69,8 +65,13 @@ public class LogCtrl {
 			return;
 		}
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String dateString = sdf.format(new Date());
+		String logName = LogFileCtrl.getLogName();
+		if (nameLogFile == null || nameLogFile.equalsIgnoreCase(logName) == false) {
+			LogFileCtrl.deleteOldLogFile(SKMApplication.getAppContext());
+		}
+		nameLogFile = logName;
+
+		String dateString = DateUtils.getCurrentDateSystem();
 		String log_path = SKMApplication.getAppContext().getFilesDir().getPath() + File.separator + nameLogFile;
 		String log_str = dateString + " [" + msgtype + "] " + msg + "\n";
 
