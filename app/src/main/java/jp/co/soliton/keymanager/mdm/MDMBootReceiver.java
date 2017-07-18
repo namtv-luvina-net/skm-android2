@@ -27,15 +27,19 @@ public class MDMBootReceiver extends BroadcastReceiver {
 		if (action == null) {
 			return;
 		}
-		
-		
-		if (action.equals(Intent.ACTION_BOOT_COMPLETED) 
-				|| action.equals(Intent.ACTION_SCREEN_ON)) {
-        	// Boot completed
-			LogCtrl.getInstance().info("MDMBootReceiver: onReceive ACTION_BOOT_COMPLETED or ACTION_SCREEN_ON");
-        	//Intent serviceIntent = new Intent(context, SacService.class );
-    		//context.startService(serviceIntent);
-        	
+
+		Boolean exec = false;
+		if (action.equals(Intent.ACTION_BOOT_COMPLETED) || action.equals(Intent.ACTION_SCREEN_ON)) {
+			exec = true;
+		}
+		else if (action.equals(Intent.ACTION_PACKAGE_REPLACED) && intent.getDataString().contains(context.getPackageName())) {
+			exec = true;
+		}
+
+		if (exec == true) {
+
+			LogCtrl.getInstance().info("MDMBootReceiver: onReceive " + action);
+
         	// MDM情報ファイルを読み込む.
         	MDMFlgs mdm = new MDMFlgs();
         	boolean bRet = mdm.ReadAndSetScepMdmInfo(context);
@@ -49,13 +53,7 @@ public class MDMBootReceiver extends BroadcastReceiver {
         	// 読み込んだ情報をMDM制御クラスに引き渡して、SacServiceを実行
         	MDMControl MDM_ctrl = new MDMControl(context, mdm.GetUDID());
         	MDM_ctrl.startService(mdm);
-		
-
-		} else if(action.equals(Intent.ACTION_SCREEN_OFF)) {
-			// SacServiceを落としてしまうと、再起動しないので駄目だ..
-		//	RestrictionsControl rest_ctrl = new RestrictionsControl(context);
 		}
-
 	}
 
 }
