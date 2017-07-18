@@ -71,7 +71,7 @@ public class LogCtrl {
 		}
 		nameLogFile = logName;
 
-		String dateString = DateUtils.getCurrentDateSystem();
+		String dateString = DateUtils.getCurrentDateSystem2();
 		String log_path = SKMApplication.getAppContext().getFilesDir().getPath() + File.separator + nameLogFile;
 		String log_str = dateString + " [" + msgtype + "] " + msg + "\n";
 

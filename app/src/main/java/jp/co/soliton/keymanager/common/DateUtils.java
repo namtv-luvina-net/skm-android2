@@ -14,6 +14,7 @@ public class DateUtils {
 	public static final String STRING_DATE_FORMAT_FOR_LOG = "yyyyMMdd";
 	public static final String STRING_DATE_FORMAT_FOR_ZIP = "yyyyMMddHHmmss";
 	public static final String STRING_DATE_FORMAT_SYSTEM_TIME = "yyyy/MM/dd HH:mm:ss";
+	public static final String STRING_DATE_FORMAT_SYSTEM_TIME2 = "yyyy/MM/dd HH:mm:ss.SSS";
 
 	public static String getCurrentDateLog() {
 		Date currentDate = Calendar.getInstance().getTime();
@@ -28,6 +29,11 @@ public class DateUtils {
 	public static String getCurrentDateSystem() {
 		Date currentDate = Calendar.getInstance().getTime();
 		return convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME, currentDate);
+	}
+
+	public static String getCurrentDateSystem2() {
+		Date currentDate = Calendar.getInstance().getTime();
+		return convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME2, currentDate);
 	}
 
 	public static String convertDateToString(String type, Date date) {
