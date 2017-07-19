@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,7 +37,7 @@ import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
  * Activity for menu apply screen
  */
 
-public class InputPasswordActivity extends Activity {
+public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.DetectsListenner{
     private String id;
     private String cancelApply;
     private int status;
@@ -50,6 +49,7 @@ public class InputPasswordActivity extends Activity {
     private int m_nErroType;
     private InformCtrl m_InformCtrl;
     private ElementApply element;
+	private boolean isShowingKeyboard = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class InputPasswordActivity extends Activity {
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
         }
+	    SoftKeyboardCtrl.addListenner(findViewById(R.id.activityRoot), this);
     }
 
     public void clickBack(View v) {
@@ -202,7 +203,22 @@ public class InputPasswordActivity extends Activity {
         return super.dispatchTouchEvent(ev);
     }
 
-    /**
+	@Override
+	public void onSoftKeyboardShown(boolean isShowing) {
+		if (!isShowing) {
+			if (isShowingKeyboard) {
+				View v = getCurrentFocus();
+				if (v != null && v instanceof EditText) {
+					v.clearFocus();
+				}
+				isShowingKeyboard = false;
+			}
+		} else {
+			isShowingKeyboard = true;
+		}
+	}
+
+	/**
      * Task processing logon
      */
     private class LogonApplyTask extends AsyncTask<Void, Void, Boolean> {

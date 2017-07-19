@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.InputApplyInfo;
+import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 

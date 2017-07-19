@@ -1,5 +1,10 @@
 package jp.co.soliton.keymanager.scep.pkimessage;
 
+import org.bouncycastle.asn1.DERObjectIdentifier;
+import org.bouncycastle.asn1.cms.Attribute;
+import org.bouncycastle.asn1.cms.AttributeTable;
+import org.bouncycastle.cms.*;
+
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -12,16 +17,6 @@ import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
-
-import org.bouncycastle.asn1.DERObjectIdentifier;
-import org.bouncycastle.asn1.cms.Attribute;
-import org.bouncycastle.asn1.cms.AttributeTable;
-import org.bouncycastle.cms.CMSEnvelopedData;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSProcessable;
-import org.bouncycastle.cms.CMSProcessableByteArray;
-import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.cms.CMSSignedDataGenerator;
 
 public class PkiMessageGenerator {
 

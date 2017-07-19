@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.List;
-
 import jp.co.soliton.keymanager.InputApplyInfo;
-import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterListCertificate;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+
+import java.util.List;
 
 /**
  * Created by lexuanvinh on 02/27/2017.

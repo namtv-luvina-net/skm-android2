@@ -1,6 +1,6 @@
 package jp.co.soliton.keymanager.xmlparser;
 
-import android.util.Log;
+import jp.co.soliton.keymanager.LogCtrl;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.co.soliton.keymanager.LogCtrl;
 
 // <array>単位でのクラスライブラリ
 public class XmlArrayData {

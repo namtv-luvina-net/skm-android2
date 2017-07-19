@@ -3,18 +3,14 @@ package jp.co.soliton.keymanager;
 import android.content.Context;
 import android.security.KeyChain;
 import android.security.KeyChainException;
-import android.util.Log;
 
-import java.net.InetAddress;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.X509ExtendedKeyManager;
 import java.net.Socket;
 import java.security.Principal;
 import java.security.PrivateKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Arrays;
-
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.X509ExtendedKeyManager;
 
 public class SSLUtils {
 

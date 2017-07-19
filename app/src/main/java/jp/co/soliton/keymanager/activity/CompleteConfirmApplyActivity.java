@@ -1,23 +1,15 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.FrameLayout;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
-import jp.co.soliton.keymanager.fragment.ContentCompleteConfirmApplyFragment;
 
 /**
  * Created by luongdolong on 2/7/2017.

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.text.SimpleDateFormat;

@@ -1,16 +1,5 @@
 package jp.co.soliton.keymanager.mdm;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.io.StringWriter;
-import java.util.List;
-
-import org.xmlpull.v1.XmlSerializer;
-
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -22,15 +11,17 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.util.Xml;
-
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlKeyWord;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.*;
+import java.util.List;
 
 public class MDMFlgs implements Serializable{
 	private static final long serialVersionUID = 4L;

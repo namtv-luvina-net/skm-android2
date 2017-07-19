@@ -1,17 +1,13 @@
 package jp.co.soliton.keymanager.scep.pkimessage;
 
+import org.bouncycastle.asn1.ASN1Encodable;
+import org.bouncycastle.cms.*;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.Security;
 import java.security.cert.X509Certificate;
-
-import org.bouncycastle.asn1.ASN1Encodable;
-import org.bouncycastle.cms.CMSEnvelopedData;
-import org.bouncycastle.cms.CMSEnvelopedDataGenerator;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSProcessable;
-import org.bouncycastle.cms.CMSProcessableByteArray;
 
 @SuppressWarnings("deprecation")
 public class PkcsPKIEnvelopeGenerator {

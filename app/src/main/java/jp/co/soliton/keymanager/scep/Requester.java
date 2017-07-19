@@ -1,7 +1,5 @@
 package jp.co.soliton.keymanager.scep;
 
-import android.util.Log;
-
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.scep.pkimessage.CertRep;
 import jp.co.soliton.keymanager.scep.request.CertificateEnrollmentRequest;

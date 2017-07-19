@@ -1,9 +1,7 @@
 package jp.co.soliton.keymanager.wifi;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.*;
 import android.net.wifi.WifiEnterpriseConfig;
@@ -12,9 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.util.Log;
 import android.util.Xml;
-
 import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;

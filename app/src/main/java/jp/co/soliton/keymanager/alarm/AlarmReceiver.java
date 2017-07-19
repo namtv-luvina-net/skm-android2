@@ -1,10 +1,5 @@
 package jp.co.soliton.keymanager.alarm;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,8 +12,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-
-import android.util.Log;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.AlarmReapplyActivity;
@@ -26,6 +19,11 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

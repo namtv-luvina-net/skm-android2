@@ -1,12 +1,12 @@
 package jp.co.soliton.keymanager.scep.pkimessage;
 
-import java.security.SecureRandom;
-
 import org.bouncycastle.asn1.DERObjectIdentifier;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSet;
 import org.bouncycastle.asn1.cms.Attribute;
 import org.bouncycastle.cms.CMSException;
+
+import java.security.SecureRandom;
 
 public abstract class Nonce {
 	final private SecureRandom secureRandom; 

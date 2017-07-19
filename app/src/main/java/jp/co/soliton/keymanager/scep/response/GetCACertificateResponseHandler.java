@@ -1,25 +1,19 @@
 package jp.co.soliton.keymanager.scep.response;
 
+import jp.co.soliton.keymanager.scep.request.GetCACertificateRequest;
+import jp.co.soliton.keymanager.scep.request.Request;
+import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.cms.CMSSignedData;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.cert.CertStore;
-import java.security.cert.CertStoreParameters;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.CollectionCertStoreParameters;
-import java.security.cert.X509Certificate;
+import java.security.cert.*;
 import java.util.Collection;
 import java.util.Collections;
-
-import jp.co.soliton.keymanager.scep.request.GetCACertificateRequest;
-import jp.co.soliton.keymanager.scep.request.Request;
-
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSSignedData;
 
 public class GetCACertificateResponseHandler implements ResponseHandler<CertStore> {
 

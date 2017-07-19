@@ -3,7 +3,6 @@ package jp.co.soliton.keymanager.common;
 import android.app.Activity;
 import android.content.Intent;
 import android.security.KeyChain;
-import android.util.Log;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;

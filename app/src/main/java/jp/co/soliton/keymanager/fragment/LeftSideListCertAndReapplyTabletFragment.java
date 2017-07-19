@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 

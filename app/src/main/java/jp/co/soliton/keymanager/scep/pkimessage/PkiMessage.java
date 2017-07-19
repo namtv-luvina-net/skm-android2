@@ -1,27 +1,21 @@
 package jp.co.soliton.keymanager.scep.pkimessage;
 
-import java.io.InputStream;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.cert.CertStore;
-import java.security.cert.CertStoreException;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateExpiredException;
-import java.security.cert.CertificateNotYetValidException;
-import java.security.cert.X509Certificate;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Hashtable;
-
+import jp.co.soliton.keymanager.LogCtrl;
+import org.bouncycastle.asn1.DERObjectIdentifier;
 import org.bouncycastle.asn1.cms.Attribute;
 import org.bouncycastle.asn1.cms.AttributeTable;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.cms.SignerInformation;
 import org.bouncycastle.cms.SignerInformationStore;
-import org.bouncycastle.asn1.DERObjectIdentifier;
 
-import jp.co.soliton.keymanager.LogCtrl;
+import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.*;
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
 
 public class PkiMessage extends CMSSignedData {
 	private Hashtable<DERObjectIdentifier, Attribute> scepAttributeTable = null;

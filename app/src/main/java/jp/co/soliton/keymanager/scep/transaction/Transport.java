@@ -1,5 +1,10 @@
 package jp.co.soliton.keymanager.scep.transaction;
 
+import jp.co.soliton.keymanager.LogCtrl;
+import jp.co.soliton.keymanager.scep.request.Request;
+import jp.co.soliton.keymanager.scep.response.ResponseHandler;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -7,15 +12,6 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import android.util.Log;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.SKMApplication;
-import jp.co.soliton.keymanager.scep.request.Request;
-import jp.co.soliton.keymanager.scep.response.ResponseHandler;
 
 public class Transport<T> {
 	private ResponseHandler<T> responseHandler;

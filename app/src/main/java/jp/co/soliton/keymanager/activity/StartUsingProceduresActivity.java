@@ -3,18 +3,14 @@ package jp.co.soliton.keymanager.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
-import jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl;
-
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
+import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
+import jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-
-import jp.co.soliton.keymanager.R;
 
 /**
  * Created by luongdolong on 2/3/2017.

@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;

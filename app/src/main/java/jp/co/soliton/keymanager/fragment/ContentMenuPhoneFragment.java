@@ -11,11 +11,8 @@ import android.widget.Button;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.*;
-import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.manager.APIDManager;
-
-import java.util.List;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
