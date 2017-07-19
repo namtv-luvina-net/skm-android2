@@ -2,16 +2,11 @@ package jp.co.soliton.keymanager.mdm;
 
 import android.app.Service;
 import android.app.admin.DevicePolicyManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
-import android.util.Log;
 import jp.co.soliton.keymanager.EpsapAdminReceiver;
 import jp.co.soliton.keymanager.LogCtrl;
 

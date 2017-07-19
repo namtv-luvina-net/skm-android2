@@ -1,18 +1,13 @@
 package jp.co.soliton.keymanager.mdm;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
-import jp.co.soliton.keymanager.HttpConnectionCtrl;
-import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.ServiceInfo;
-import jp.co.soliton.keymanager.StringList;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import java.util.List;
 
 public class MDMControl {
 

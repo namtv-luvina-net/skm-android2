@@ -1,5 +1,10 @@
 package jp.co.soliton.keymanager.scep.response;
 
+import jp.co.soliton.keymanager.LogCtrl;
+import jp.co.soliton.keymanager.scep.pkimessage.*;
+import jp.co.soliton.keymanager.scep.request.Request;
+import org.bouncycastle.cms.CMSException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -11,20 +16,6 @@ import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.bouncycastle.cms.CMSException;
-
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.SKMApplication;
-import jp.co.soliton.keymanager.scep.pkimessage.CertRep;
-import jp.co.soliton.keymanager.scep.pkimessage.MessageType;
-import jp.co.soliton.keymanager.scep.pkimessage.PkiMessage;
-import jp.co.soliton.keymanager.scep.pkimessage.PkiStatus;
-import jp.co.soliton.keymanager.scep.pkimessage.RecipientNonce;
-import jp.co.soliton.keymanager.scep.pkimessage.SenderNonce;
-import jp.co.soliton.keymanager.scep.pkimessage.TransactionId;
-import jp.co.soliton.keymanager.scep.request.Request;
-import jp.co.soliton.keymanager.scep.transaction.Transaction;
 
 public class CertRepReponseHandler implements ResponseHandler<CertRep> {
 

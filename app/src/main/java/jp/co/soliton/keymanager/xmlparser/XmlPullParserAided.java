@@ -1,7 +1,5 @@
 package jp.co.soliton.keymanager.xmlparser;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -10,7 +8,8 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.Xml;
-
+import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -25,13 +24,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 
 public class XmlPullParserAided /*extends Activity*/{
 	// 変数

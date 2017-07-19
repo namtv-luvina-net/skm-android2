@@ -5,24 +5,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-
-import jp.co.soliton.keymanager.HttpConnectionCtrl;
-import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.InputApplyInfo;
-import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.LogCtrl;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
@@ -32,6 +19,11 @@ import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 

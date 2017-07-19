@@ -1,6 +1,5 @@
 package jp.co.soliton.keymanager.dbalias;
 
-import android.util.Log;
 import jp.co.soliton.keymanager.common.DateUtils;
 
 import java.io.Serializable;

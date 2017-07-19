@@ -1,9 +1,9 @@
 package jp.co.soliton.keymanager.scep.request;
 
+import jp.co.soliton.keymanager.scep.pkimessage.PkiMessage;
+
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import jp.co.soliton.keymanager.scep.pkimessage.PkiMessage;
 
 public abstract class Request {
 	private URL url = null;

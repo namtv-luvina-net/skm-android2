@@ -1,10 +1,10 @@
 package jp.co.soliton.keymanager;
 
-import java.util.List;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
-import android.util.Log;
+
+import java.util.List;
 
 public class ServiceInfo {
 	static public boolean IsRunning(Context context, String serviceName) {

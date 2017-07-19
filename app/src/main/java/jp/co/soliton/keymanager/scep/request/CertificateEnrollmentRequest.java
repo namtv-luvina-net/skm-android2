@@ -1,5 +1,12 @@
 package jp.co.soliton.keymanager.scep.request;
 
+import jp.co.soliton.keymanager.scep.pkimessage.MessageType;
+import jp.co.soliton.keymanager.scep.pkimessage.PkcsPKIEnvelope;
+import jp.co.soliton.keymanager.scep.pkimessage.PkcsPKIEnvelopeGenerator;
+import jp.co.soliton.keymanager.scep.pkimessage.PkiMessageGenerator;
+import org.bouncycastle.jce.PKCS10CertificationRequest;
+import org.bouncycastle.util.encoders.Base64;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -10,14 +17,6 @@ import java.security.cert.CertStoreException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
-
-import jp.co.soliton.keymanager.scep.pkimessage.MessageType;
-import jp.co.soliton.keymanager.scep.pkimessage.PkcsPKIEnvelope;
-import jp.co.soliton.keymanager.scep.pkimessage.PkcsPKIEnvelopeGenerator;
-import jp.co.soliton.keymanager.scep.pkimessage.PkiMessageGenerator;
-
-import org.bouncycastle.jce.PKCS10CertificationRequest;
-import org.bouncycastle.util.encoders.Base64;
 
 public class CertificateEnrollmentRequest extends Request {
 	private PKCS10CertificationRequest certificateSigningRequest;

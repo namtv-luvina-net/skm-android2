@@ -102,7 +102,6 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
 
             if (x < v.getLeft() || x > v.getRight() || y < v.getTop() || y > v.getBottom()) {
 	            SoftKeyboardCtrl.hideKeyboard(this);
-	            ((InputBasePageFragment) adapter.getItem(mViewPager.getCurrentItem())).clearFocusEditText();
             }
         }
         return super.dispatchTouchEvent(ev);

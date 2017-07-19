@@ -2,17 +2,10 @@ package jp.co.soliton.keymanager;
 
 import android.os.Environment;
 import android.util.Log;
-
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.LogFileCtrl;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class LogCtrl {
 
@@ -51,7 +44,7 @@ public class LogCtrl {
 	}
 
 	public void debug(String msg){
-		if (SKMApplication.SKM_DEBUG == true || SKMApplication.SKM_TRACE == true) {
+		if (SKMApplication.SKM_DEBUG || SKMApplication.SKM_TRACE) {
 			Logger(Debug, msg);
 		}
 	}
@@ -60,7 +53,7 @@ public class LogCtrl {
 
 		OutputLogCat(msgtype, msg);
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) == false) {
+		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			// SDカード領域が存在しないときは抜ける
 			return;
 		}
@@ -87,14 +80,14 @@ public class LogCtrl {
 	}
 
 	private static void OutputLogCat(String msgtype, String msg) {
-		if (SKMApplication.SKM_DEBUG == true) {
-			if(msgtype.equalsIgnoreCase(Info) == true) {
+		if (SKMApplication.SKM_DEBUG) {
+			if(msgtype.equalsIgnoreCase(Info)) {
 				Log.i(StringList.m_str_SKMTag, msg);
-			} else if(msgtype.equalsIgnoreCase(Warn) == true) {
+			} else if(msgtype.equalsIgnoreCase(Warn)) {
 				Log.w(StringList.m_str_SKMTag, msg);
-			} else if(msgtype.equalsIgnoreCase(Error) == true) {
+			} else if(msgtype.equalsIgnoreCase(Error)) {
 				Log.e(StringList.m_str_SKMTag, msg);
-			} else if(msgtype.equalsIgnoreCase(Debug) == true) {
+			} else if(msgtype.equalsIgnoreCase(Debug)) {
 				Log.d(StringList.m_str_SKMTag, msg);
 			}
 		}

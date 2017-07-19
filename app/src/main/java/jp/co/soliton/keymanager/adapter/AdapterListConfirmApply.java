@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import java.util.List;
-
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+
+import java.util.List;
 
 /**
  * Created by lexuanvinh on 02/27/2017.

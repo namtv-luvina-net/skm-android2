@@ -2,10 +2,7 @@ package jp.co.soliton.keymanager;
 
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;
-//import android.app.admin.DevicePolicyManager;
 import android.content.Intent;
-//import android.content.ComponentName;
-import android.util.Log;
 import android.widget.Toast;
 
 public class EpsapAdminReceiver extends DeviceAdminReceiver {

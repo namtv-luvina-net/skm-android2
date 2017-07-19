@@ -5,10 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
+import jp.co.soliton.keymanager.StringList;
 
 import java.io.File;
-
-import jp.co.soliton.keymanager.StringList;
 
 /**
  * Created by luongdolong on 11/1/2017.
