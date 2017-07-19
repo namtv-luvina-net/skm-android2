@@ -75,7 +75,7 @@
 						android:maxLength="256"
 						android:singleLine="true"
 						android:paddingLeft="@dimen/text_size_content_item_apid"
-						android:paddingRight="@dimen/margin_right_user_input_tablet"
+						android:paddingRight="@dimen/text_size_content_item_apid"
 						android:gravity="center_vertical"
 						android:inputType="textPassword"
 						android:background="@drawable/round_corner_white_edittext"
