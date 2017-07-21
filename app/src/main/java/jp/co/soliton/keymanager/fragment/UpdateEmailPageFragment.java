@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.ValidateParams;
-import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerUpdateActivity;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 
@@ -23,12 +23,12 @@ import jp.co.soliton.keymanager.customview.AutoResizeTextView;
  * Page input email for apply
  */
 
-public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
+public class UpdateEmailPageFragment extends ReapplyBasePageFragment {
     private EditText txtEmail;
     private Button btnSkipEmail;
     private AutoResizeTextView titleEmail;
     public static Fragment newInstance(Context context) {
-        ReapplyEmailPageFragment f = new ReapplyEmailPageFragment();
+        UpdateEmailPageFragment f = new UpdateEmailPageFragment();
         return f;
     }
 
@@ -50,8 +50,8 @@ public class ReapplyEmailPageFragment extends ReapplyBasePageFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ViewPagerReapplyActivity) {
-            this.pagerReapplyActivity = (ViewPagerReapplyActivity) context;
+        if (context instanceof ViewPagerUpdateActivity) {
+            this.pagerReapplyActivity = (ViewPagerUpdateActivity) context;
         }
     }
 

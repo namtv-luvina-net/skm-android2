@@ -303,6 +303,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 	private class CertificateEnrollTask extends AsyncTask<Requester, Integer, Boolean> {
 
+		String strError = "";
 		@Override
 		protected Boolean doInBackground(Requester... params) {
 			try {
@@ -457,21 +458,19 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					return false;
 				}
 			} catch (RequesterException e) {
-				LogCtrl.getInstance().error("CertificateEnrollTask RequesterException: " + e
-						.toString());
-				//	e.printStackTrace();
+				if (e.toString().contains("No CA Certificcate")) {
+					strError = activity.getString(R.string.failed_to_get_ca);
+				}
+				LogCtrl.getInstance().error("CertificateEnrollTask RequesterException: " + e.toString());
 				return false;
 			} catch (NoSuchAlgorithmException e) {
 				LogCtrl.getInstance().error("CertificateEnrollTask NoSuchAlgorithmException: " + e.toString());
-				//	e.printStackTrace();
 				return false;
 			} catch (NoSuchProviderException e) {
 				LogCtrl.getInstance().error("CertificateEnrollTask NoSuchProviderException: " + e.toString());
-				//	e.printStackTrace();
 				return false;
 			} catch (Exception e) {
 				LogCtrl.getInstance().error("CertificateEnrollTask Exception :" + e.toString());
-				//	e.printStackTrace();
 				return false;
 			}
 			return true;
@@ -485,7 +484,14 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		@Override
 		// メインスレッドに反映させる処理
 		protected void onPostExecute(Boolean result) {
+			if (!result) {
+				if (strError.length() == 0) {
+					strError = activity.getString(R.string.EnrollErrorMessage);
+				}
+				showMessage(strError);
+			}
 		}
+
 		public String bytesToHex(byte[] in) {
 			final StringBuilder builder = new StringBuilder();
 			for(byte b : in) {

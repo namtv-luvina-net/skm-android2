@@ -85,7 +85,7 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 			}
 			getInputApplyInfo().setUserId(detail.getUserId());
 			getInputApplyInfo().setEmail(detail.getEmail());
-			getInputApplyInfo().setReason(detail.getReason());
+			getInputApplyInfo().setReason("");
 			getInputApplyInfo().savePref(getActivity());
 			viewPager.setCurrentItem(3);
 		}

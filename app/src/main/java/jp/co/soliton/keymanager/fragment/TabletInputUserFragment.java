@@ -40,18 +40,20 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	private boolean isSubmitted;
 	TabletAbtractInputFragment tabletAbtractInputFragment;
 	private String id_update;
-	private String lastUserId;
+	private boolean firstTime;
 
 	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment, String id) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
 		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
 		f.id_update = id;
+		f.firstTime = true;
 		return f;
 	}
 
 	public static Fragment newInstance(Context context, TabletAbtractInputFragment tabletAbtractInputFragment) {
 		TabletInputUserFragment f = new TabletInputUserFragment();
 		f.tabletAbtractInputFragment = tabletAbtractInputFragment;
+		f.firstTime = true;
 		return f;
 	}
 
@@ -197,13 +199,8 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			tabletAbtractInputFragment.showMessage(getString(R.string.user_id_is_invalid));
 			return;
 		}
-		lastUserId = tabletAbtractInputFragment.getInputApplyInfo().getUserId();
-		if (lastUserId == null) {
-			lastUserId = "";
-		}
 		String userId = txtUserId.getText().toString().trim();
 		String password = txtPassword.getText().toString();
-		tabletAbtractInputFragment.getInputApplyInfo().setUserId(userId);
 		tabletAbtractInputFragment.getInputApplyInfo().setPassword(password);
 		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 		//make parameter|
@@ -417,14 +414,20 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						challenge = (6 == p_data.GetType());
 					}
 					if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
-						if (!lastUserId.equals(tabletAbtractInputFragment.getInputApplyInfo().getUserId())) {
+						String currentUserId = txtUserId.getText().toString().trim();
+						String userIdInApplyInfo = tabletAbtractInputFragment.getInputApplyInfo().getUserId();
+						if (!userIdInApplyInfo.equals(currentUserId) || firstTime) {
 							if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
 								tabletAbtractInputFragment.getInputApplyInfo().setEmail(p_data.GetData());
 							} else {
 								tabletAbtractInputFragment.getInputApplyInfo().setEmail("");
 							}
 							tabletAbtractInputFragment.getInputApplyInfo().setReason("");
+							tabletAbtractInputFragment.getInputApplyInfo().setUserId(currentUserId);
 							tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+							if (firstTime) {
+								firstTime = false;
+							}
 						}
 					}
 				}

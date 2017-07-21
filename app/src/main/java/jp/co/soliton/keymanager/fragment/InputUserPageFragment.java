@@ -8,10 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.*;
@@ -44,10 +41,11 @@ public class InputUserPageFragment extends InputBasePageFragment {
     private boolean challenge;
     private ElementApplyManager elementMgr;
     private boolean isSubmitted;
-	private String lastUserId;
+	private boolean firstTime;
 
     public static Fragment newInstance(Context context) {
         InputUserPageFragment f = new InputUserPageFragment();
+	    f.firstTime = true;
         return f;
     }
 
@@ -129,11 +127,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 return false;
             }
         });
-        if (!nullOrEmpty(pagerInputActivity.getInputApplyInfo().getUserId())) {
-            txtPassword.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-        }
     }
 
     @Override
@@ -166,11 +159,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
             showMessage(getString(R.string.user_id_is_invalid));
             return;
         }
-	    lastUserId = pagerInputActivity.getInputApplyInfo().getUserId();
-	    if (lastUserId == null) {
-		    lastUserId = "";
-	    }
-	    pagerInputActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
 	    pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         //make parameter
@@ -277,12 +265,13 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 String str_err = getString(R.string.ERR);
                 showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_err.length()));
             } else if (m_nErroType == ERR_LOGIN_FAIL) {
-                showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
+	            showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
                     @Override
                     public void onOkDismissMessage() {
-                        txtPassword.setText("");
-                        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+	                    txtPassword.setText("");
+	                    txtPassword.requestFocus();
+			            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                     }
                 });
             } else {
@@ -427,14 +416,20 @@ public class InputUserPageFragment extends InputBasePageFragment {
                         challenge = (6 == p_data.GetType());
                     }
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
-	                    if (!lastUserId.equals(pagerInputActivity.getInputApplyInfo().getUserId())) {
+	                    String currentUserId = txtUserId.getText().toString().trim();
+	                    String userIdInApplyInfo = pagerInputActivity.getInputApplyInfo().getUserId();
+	                    if (!userIdInApplyInfo.equals(currentUserId) || firstTime) {
 		                    if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
 			                    pagerInputActivity.getInputApplyInfo().setEmail(p_data.GetData());
 		                    } else {
 			                    pagerInputActivity.getInputApplyInfo().setEmail("");
 		                    }
 		                    pagerInputActivity.getInputApplyInfo().setReason("");
+		                    pagerInputActivity.getInputApplyInfo().setUserId(currentUserId);
 		                    pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+		                    if (firstTime) {
+			                    firstTime = false;
+		                    }
 	                    }
                     }
                 }

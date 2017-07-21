@@ -10,7 +10,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 4;
     // All Static variables
     // Database Name
-    private static final String DATABASE_NAME = "applyManager.db";
+    public static final String DATABASE_NAME = "applyManager.db";
     private static final String TABLE_ELEMENT_APPLY = "elementApply";
 
     /**

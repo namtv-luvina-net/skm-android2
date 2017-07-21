@@ -18,7 +18,7 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
-import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerUpdateActivity;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
@@ -39,17 +39,18 @@ import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
  * Page input account and execute logon to server
  */
 
-public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
+public class UpdateUserPageFragment extends ReapplyBasePageFragment {
     private EditText txtPassword;
     private TextView txtUserId;
     private boolean isEnroll;
     private boolean challenge;
     private ElementApplyManager elementMgr;
     private boolean isSubmitted;
-	private String lastUserId;
+    private boolean firstTime;
 
     public static Fragment newInstance(Context context) {
-        ReapplyUserPageFragment f = new ReapplyUserPageFragment();
+        UpdateUserPageFragment f = new UpdateUserPageFragment();
+	    f.firstTime = true;
         return f;
     }
 
@@ -65,8 +66,8 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ViewPagerReapplyActivity) {
-            this.pagerReapplyActivity = (ViewPagerReapplyActivity) context;
+        if (context instanceof ViewPagerUpdateActivity) {
+            this.pagerReapplyActivity = (ViewPagerUpdateActivity) context;
             if (progressDialog == null) {
                 progressDialog = new DialogApplyProgressBar(pagerReapplyActivity);
             }
@@ -120,11 +121,6 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                 return false;
             }
         });
-        if (!nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getUserId())) {
-            //txtPassword.requestFocus();
-            //InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-        }
     }
 
     @Override
@@ -155,11 +151,6 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
      */
     @Override
     public void nextAction() {
-	    lastUserId = pagerReapplyActivity.getInputApplyInfo().getUserId();
-	    if (lastUserId == null) {
-		    lastUserId = "";
-	    }
-	    pagerReapplyActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString());
 	    pagerReapplyActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
 	    pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
         //make parameter
@@ -204,7 +195,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                     "&" + StringList.m_strPassword + URLEncoder.encode(strPasswd, "UTF-8") +
                     "&" + StringList.m_strSerial + rtnserial;
         } catch (Exception ex) {
-	        LogCtrl.getInstance().error("ReapplyUserPageFragment:makeParameterLogon: " + ex.toString());
+	        LogCtrl.getInstance().error("UpdateUserPageFragment:makeParameterLogon: " + ex.toString());
             return false;
         }
         // 入力データを情報管理クラスへセットする
@@ -271,6 +262,7 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                     @Override
                     public void onOkDismissMessage() {
                         txtPassword.setText("");
+	                    txtPassword.requestFocus();
                         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
                     }
@@ -420,15 +412,18 @@ public class ReapplyUserPageFragment extends ReapplyBasePageFragment {
                         challenge = (6 == p_data.GetType());
                     }
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
-	                    if (!lastUserId.equals(pagerReapplyActivity.getInputApplyInfo().getUserId())) {
-		                    if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
-			                    pagerReapplyActivity.getInputApplyInfo().setEmail(p_data.GetData());
-		                    } else {
-			                    pagerReapplyActivity.getInputApplyInfo().setEmail("");
+	                    String currentUserId = txtUserId.getText().toString().trim();
+	                    String userIdInApplyInfo = pagerReapplyActivity.getInputApplyInfo().getUserId();
+	                    if (!userIdInApplyInfo.equals(currentUserId) || firstTime) {
+			                    if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+				                    pagerReapplyActivity.getInputApplyInfo().setEmail(p_data.GetData());
+			                    } else {
+				                    pagerReapplyActivity.getInputApplyInfo().setEmail("");
+			                    }
+			                    pagerReapplyActivity.getInputApplyInfo().setReason("");
+			                    pagerReapplyActivity.getInputApplyInfo().setUserId(currentUserId);
+			                    pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
 		                    }
-		                    pagerReapplyActivity.getInputApplyInfo().setReason("");
-		                    pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
-	                    }
                     }
                 }
             }

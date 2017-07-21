@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import jp.co.soliton.keymanager.*;
-import jp.co.soliton.keymanager.adapter.ViewPagerReaaplyAdapter;
+import jp.co.soliton.keymanager.adapter.ViewPagerUpdateAdapter;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -28,11 +28,11 @@ import java.util.ArrayList;
  * Activity for input screen apply
  */
 
-public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKeyboardCtrl.DetectsListenner {
+public class ViewPagerUpdateActivity extends FragmentActivity implements SoftKeyboardCtrl.DetectsListenner {
     public static int REQUEST_CODE_APPLY_COMPLETE = 4953;
 
     private InputApplyViewPager mViewPager;
-    private ViewPagerReaaplyAdapter adapter;
+    private ViewPagerUpdateAdapter adapter;
     private ArrayList<Button> listButtonCircle = new ArrayList<>();
     private Button backButton;
     private Button nextButton;
@@ -84,7 +84,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKe
         int current;
         current = mViewPager.getCurrentItem() - 1;
         if (current < 0) {
-            InputApplyInfo.deletePref(ViewPagerReapplyActivity.this);
+            InputApplyInfo.deletePref(ViewPagerUpdateActivity.this);
             finish();
         } else {
             mViewPager.setCurrentItem(current, true);
@@ -129,7 +129,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKe
         backButton = (Button) findViewById(R.id.btnInputBack);
         nextButton = (Button) findViewById(R.id.btnInputNext);
         groupCircle = (RelativeLayout) findViewById(R.id.groupCircle);
-        adapter = new ViewPagerReaaplyAdapter(getApplicationContext(),getSupportFragmentManager());
+        adapter = new ViewPagerUpdateAdapter(getApplicationContext(),getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);
         mViewPager.setCurrentItem(0);
@@ -164,7 +164,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKe
                 int current;
                 current = mViewPager.getCurrentItem() - 1;
                 if (current < 0) {
-                    InputApplyInfo.deletePref(ViewPagerReapplyActivity.this);
+                    InputApplyInfo.deletePref(ViewPagerUpdateActivity.this);
                     finish();
                 } else {
                     mViewPager.setCurrentItem(current, true);
@@ -253,7 +253,7 @@ public class ViewPagerReapplyActivity extends FragmentActivity implements SoftKe
      * Go to confirm apply screen
      */
     public void gotoConfirmApply() {
-        Intent intent = new Intent(ViewPagerReapplyActivity.this, ConfirmApplyActivity.class);
+        Intent intent = new Intent(ViewPagerUpdateActivity.this, ConfirmApplyActivity.class);
         // ビューのリストを新しいintentに引き渡す.HTTP通信もそちらで行う。
         intent.putExtra(StringList.m_str_InformCtrl, m_InformCtrl);
         intent.putExtra(StringList.UPDATE_APPLY, idConfirmApply);
