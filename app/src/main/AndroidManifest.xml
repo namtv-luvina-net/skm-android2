@@ -123,7 +123,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity
-            android:name=".activity.ViewPagerReapplyActivity"
+            android:name=".activity.ViewPagerUpdateActivity"
             android:configChanges="orientation"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

@@ -25,7 +25,7 @@ public class AlarmReapplyActivity extends Activity {
 
     public void clickStart(View v) {
         InputApplyInfo.deletePref(this);
-        Intent intent = new Intent(this, ViewPagerReapplyActivity.class);
+        Intent intent = new Intent(this, ViewPagerUpdateActivity.class);
         intent.putExtra(StringList.ELEMENT_APPLY_ID, id);
         this.startActivity(intent);
     }

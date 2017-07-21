@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
-import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerUpdateActivity;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
@@ -19,7 +19,7 @@ public class ReapplyBasePageFragment extends Fragment {
     public final static String TARGET_VPN  = "0";
     public final static String TARGET_WiFi = "1";
 
-    protected ViewPagerReapplyActivity pagerReapplyActivity;
+    protected ViewPagerUpdateActivity pagerReapplyActivity;
     protected DialogApplyProgressBar progressDialog;
     protected InformCtrl m_InformCtrl;
     protected int m_nErroType;

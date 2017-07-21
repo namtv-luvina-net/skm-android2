@@ -11,7 +11,7 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerUpdateActivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.text.SimpleDateFormat;
@@ -138,7 +138,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
                 @Override
                 public void onClick(View v) {
                     InputApplyInfo.deletePref(getContext());
-	                Intent intent = new Intent(getContext(), ViewPagerReapplyActivity.class);
+	                Intent intent = new Intent(getContext(), ViewPagerUpdateActivity.class);
 	                intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(id));
 	                getContext().startActivity(intent);
                 }

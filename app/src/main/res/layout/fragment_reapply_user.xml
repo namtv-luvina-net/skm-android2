@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_underline"
             android:hint="@string/certlogin_password_title"
-            android:inputType="textPassword"
+            android:inputType="textPassword|textNoSuggestions"
             android:layout_weight="1"
             android:textSize="@dimen/text_size_value"
             android:maxLines="1"

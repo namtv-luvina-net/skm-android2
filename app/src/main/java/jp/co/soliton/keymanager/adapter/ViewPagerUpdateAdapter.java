@@ -4,26 +4,26 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import jp.co.soliton.keymanager.fragment.ReapplyEmailPageFragment;
-import jp.co.soliton.keymanager.fragment.ReapplyReasonPageFragment;
-import jp.co.soliton.keymanager.fragment.ReapplyUserPageFragment;
+import jp.co.soliton.keymanager.fragment.UpdateEmailPageFragment;
+import jp.co.soliton.keymanager.fragment.UpdateReasonPageFragment;
+import jp.co.soliton.keymanager.fragment.UpdateUserPageFragment;
 
 /**
  * Created by luongdolong on 2/3/2017.
  */
 
-public class ViewPagerReaaplyAdapter extends FragmentPagerAdapter {
+public class ViewPagerUpdateAdapter extends FragmentPagerAdapter {
     public static int totalPage = 3;
 
     private Context context;
     private Fragment [] listFragment = new Fragment[3];
 
-    public ViewPagerReaaplyAdapter(Context context, FragmentManager fm) {
+    public ViewPagerUpdateAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
-        listFragment[0] = ReapplyUserPageFragment.newInstance(context);
-        listFragment[1] = ReapplyEmailPageFragment.newInstance(context);
-        listFragment[2] = ReapplyReasonPageFragment.newInstance(context);
+        listFragment[0] = UpdateUserPageFragment.newInstance(context);
+        listFragment[1] = UpdateEmailPageFragment.newInstance(context);
+        listFragment[2] = UpdateReasonPageFragment.newInstance(context);
     }
 
     @Override

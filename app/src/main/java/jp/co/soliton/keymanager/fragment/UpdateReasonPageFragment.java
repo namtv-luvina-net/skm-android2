@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.R;
-import jp.co.soliton.keymanager.activity.ViewPagerReapplyActivity;
+import jp.co.soliton.keymanager.activity.ViewPagerUpdateActivity;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
 /**
@@ -21,12 +21,12 @@ import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
  * Page input reason for apply
  */
 
-public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
+public class UpdateReasonPageFragment extends ReapplyBasePageFragment {
     private EditText txtReason;
     private Button btnSkipReason;
 
     public static Fragment newInstance(Context context) {
-        ReapplyReasonPageFragment f = new ReapplyReasonPageFragment();
+        UpdateReasonPageFragment f = new UpdateReasonPageFragment();
         return f;
     }
 
@@ -42,8 +42,8 @@ public class ReapplyReasonPageFragment extends ReapplyBasePageFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ViewPagerReapplyActivity) {
-            this.pagerReapplyActivity = (ViewPagerReapplyActivity) context;
+        if (context instanceof ViewPagerUpdateActivity) {
+            this.pagerReapplyActivity = (ViewPagerUpdateActivity) context;
         }
     }
 
