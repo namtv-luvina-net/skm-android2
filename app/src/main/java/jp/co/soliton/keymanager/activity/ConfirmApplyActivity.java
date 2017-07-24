@@ -267,12 +267,17 @@ public class ConfirmApplyActivity extends Activity {
      * @return
      */
     private void makeParameterApply() {
+        String storeString;
         String rtnserial;
         if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+            storeString = "Wi-Fi";
             rtnserial = XmlPullParserAided.GetUDID(this);
         } else {
+            storeString = "VPN and apps";
             rtnserial = XmlPullParserAided.GetVpnApid(this);
         }
+        LogCtrl.getInstance().info("Apply: Store=" + storeString + " (" + rtnserial + ")");
+
         // ログインメッセージ
         String message = "";
         String message_ma = "&" + "MailAddress=";	// #26556

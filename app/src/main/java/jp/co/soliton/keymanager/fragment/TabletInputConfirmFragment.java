@@ -155,12 +155,17 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 * @return
 	 */
 	private void makeParameterApply() {
+		String storeString;
 		String rtnserial;
 		if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+			storeString = "Wi-Fi";
 			rtnserial = XmlPullParserAided.GetUDID(getActivity());
 		} else {
+			storeString = "VPN and apps";
 			rtnserial = XmlPullParserAided.GetVpnApid(getActivity());
 		}
+		LogCtrl.getInstance().info("Apply: Store=" + storeString + " (" + rtnserial + ")");
+		
 		// ログインメッセージ
 		String message = "";
 		String message_ma = "&" + "MailAddress=";	// #26556
