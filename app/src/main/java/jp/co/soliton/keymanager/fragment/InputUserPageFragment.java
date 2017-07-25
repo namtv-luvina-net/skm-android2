@@ -159,8 +159,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
             showMessage(getString(R.string.user_id_is_invalid));
             return;
         }
-	    pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString());
-        pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
@@ -427,9 +425,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
 		                    pagerInputActivity.getInputApplyInfo().setReason("");
 		                    pagerInputActivity.getInputApplyInfo().setUserId(currentUserId);
 		                    pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
-		                    if (firstTime) {
-			                    firstTime = false;
-		                    }
 	                    }
                     }
                 }
@@ -444,7 +439,15 @@ public class InputUserPageFragment extends InputBasePageFragment {
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
-            endConnection(result);
+	        if (result) {
+		        if (firstTime) {
+			        firstTime = false;
+		        }
+		        pagerInputActivity.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
+		        pagerInputActivity.getInputApplyInfo().setPassword(txtPassword.getText().toString().trim());
+		        pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+	        }
+	        endConnection(result);
         }
     }
 }

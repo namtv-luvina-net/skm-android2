@@ -402,6 +402,7 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	private void completeUsingProceduresFragment(ElementApply elementApply) {
+		currentStatus = COMPLETE_STATUS;
 		hideFragmentLeft();
 		fragmentContent = ContentCompleteUsingProceduresFragment.newInstance(elementApply);
 		changeFragmentContent(SCROLL_TO_LEFT);

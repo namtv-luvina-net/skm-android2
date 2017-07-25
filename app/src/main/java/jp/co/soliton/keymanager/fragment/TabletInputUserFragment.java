@@ -199,11 +199,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			tabletAbtractInputFragment.showMessage(getString(R.string.user_id_is_invalid));
 			return;
 		}
+		//make parameter|
 		String userId = txtUserId.getText().toString().trim();
 		String password = txtPassword.getText().toString();
-		tabletAbtractInputFragment.getInputApplyInfo().setPassword(password);
-		tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
-		//make parameter|
 		String place = tabletAbtractInputFragment.getInputApplyInfo().getPlace();
 		boolean ret = tabletAbtractInputFragment.controlPagesInput.makeParameterLogon(userId, password, place,
 				tabletAbtractInputFragment.getInformCtrl());
@@ -423,11 +421,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 								tabletAbtractInputFragment.getInputApplyInfo().setEmail("");
 							}
 							tabletAbtractInputFragment.getInputApplyInfo().setReason("");
-							tabletAbtractInputFragment.getInputApplyInfo().setUserId(currentUserId);
 							tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
-							if (firstTime) {
-								firstTime = false;
-							}
 						}
 					}
 				}
@@ -442,6 +436,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
+			if (result) {
+				if (firstTime) {
+					firstTime = false;
+				}
+				tabletAbtractInputFragment.getInputApplyInfo().setUserId(txtUserId.getText().toString().trim());
+				tabletAbtractInputFragment.getInputApplyInfo().setPassword(txtPassword.getText().toString());
+				tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+			}
 			endConnection(result);
 		}
 	}
