@@ -38,6 +38,7 @@
     <string name="label_before_expired_notification">BEFORE EXPIRATION NOTIFICATION</string>
     <string name="label_notification">Notification</string>
 	<string name="label_expired">Expired</string>
+	<string name="label_expired_item">Expired</string>
     <string name="label_day_before">Day before</string>
 	<string name="label_dialog_delete_cert">Delete</string>
     <string name="label_dialog_Cancle">Cancel</string>

@@ -131,7 +131,7 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
 	            viewHolder.txtStatus.setText(getContext().getResources().getString(R.string.expiration_date) + formatter
 			            .format(expirationDate).split(" ")[0]);
             } else {
-	            viewHolder.txtStatus.setText(getContext().getResources().getString(R.string.label_expired));
+	            viewHolder.txtStatus.setText(getContext().getResources().getString(R.string.label_expired_item));
                 viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
             }
             final int id = elementApply.getId();

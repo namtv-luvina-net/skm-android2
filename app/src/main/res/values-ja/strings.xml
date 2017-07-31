@@ -38,6 +38,7 @@
 	<string name="label_before_expired_notification">期限切れ間近通知</string>
 	<string name="label_notification">通知</string>
 	<string name="label_expired">期限切れ</string>
+	<string name="label_expired_item">有効期限切れ</string>
 	<string name="label_day_before">日前</string>
 	<string name="label_dialog_delete_cert">削除</string>
 	<string name="label_dialog_Cancle">キャンセル</string>

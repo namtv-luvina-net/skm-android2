@@ -127,7 +127,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
 	            viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_inactive));
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_inactive);
             } else {
-	            viewHolder.txtStatus.setText(context.getResources().getString(R.string.label_expired));
+	            viewHolder.txtStatus.setText(context.getResources().getString(R.string.label_expired_item));
                 viewHolder.btnUpdate.setTextColor(getContext().getResources().getColor(R.color.text_color_active));
                 viewHolder.btnUpdate.setBackgroundResource(R.drawable.border_button_active);
                 viewHolder.icCertificate.setImageResource(R.drawable.ic_expired);
