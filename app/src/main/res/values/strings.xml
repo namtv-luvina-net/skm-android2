@@ -176,8 +176,8 @@
 	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Destination Email Address :</string>
 	<string name="title_expiration_date">Expiration :</string>
-	<string name="title_place">Storage destination :\u0020</string>
-	<string name="place">Storage destination</string>
+	<string name="title_place">Store :\u0020</string>
+	<string name="place">Store</string>
 	<string name="title_host_name">Host name :</string>
 	<string name="title_http_port_number">HTTP port number :</string>
 	<string name="title_https_port_number">HTTPS port number :</string>
