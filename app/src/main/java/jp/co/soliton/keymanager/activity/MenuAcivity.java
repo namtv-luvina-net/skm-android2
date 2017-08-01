@@ -493,6 +493,14 @@ public class MenuAcivity extends FragmentActivity {
 		} else if (requestCode == ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT) {
 			if (resultCode == Activity.RESULT_OK) {
 				StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
+			} else {
+				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
+				if (getListElementApply().size() == 1) {
+					StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
+					startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+				} else {
+					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
+				}
 			}
 		}
 	}
