@@ -8,13 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
-import android.view.inputmethod.InputMethodManager;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -261,15 +264,21 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_unauth.length()));
             } else if (m_nErroType == ERR_COLON) {
                 String str_err = getString(R.string.ERR);
-                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_err.length()));
+                showMessage(pagerInputActivity.getInformCtrl().GetRtn().substring(str_err.length()), new DialogApplyMessage.OnOkDismissMessageListener() {
+	                @Override
+	                public void onOkDismissMessage() {
+		                txtPassword.setText("");
+		                txtUserId.requestFocus();
+		                SoftKeyboardCtrl.showKeyboard(getActivity());
+	                }
+                });
             } else if (m_nErroType == ERR_LOGIN_FAIL) {
 	            showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
                     @Override
                     public void onOkDismissMessage() {
 	                    txtPassword.setText("");
 	                    txtPassword.requestFocus();
-			            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-			            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+	                    SoftKeyboardCtrl.showKeyboard(getActivity());
                     }
                 });
             } else {

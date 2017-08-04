@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -469,8 +468,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 					public void onOkDismissMessage() {
 						txtPassword.setText("");
 						txtPassword.requestFocus();
-						InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+						SoftKeyboardCtrl.showKeyboard(getActivity());
 					}
 				});
 			} else {

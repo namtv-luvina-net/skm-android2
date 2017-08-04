@@ -11,10 +11,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -282,7 +282,14 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						.length()));
 			} else if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
-				tabletAbtractInputFragment.showMessage(strRtn.substring(str_err.length()));
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_err.length()), new DialogMessageTablet.OnOkDismissMessageListener() {
+					@Override
+					public void onOkDismissMessage() {
+						txtPassword.setText("");
+						txtUserId.requestFocus();
+						SoftKeyboardCtrl.showKeyboard(getActivity());
+					}
+				});
 			} else if (m_nErroType == ERR_LOGIN_FAIL) {
 				tabletAbtractInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet
 						.OnOkDismissMessageListener() {
@@ -290,9 +297,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					public void onOkDismissMessage() {
 						txtPassword.setText("");
 						txtPassword.requestFocus();
-						InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context
-								.INPUT_METHOD_SERVICE);
-						imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+						SoftKeyboardCtrl.showKeyboard(getActivity());
 					}
 				});
 			} else {
