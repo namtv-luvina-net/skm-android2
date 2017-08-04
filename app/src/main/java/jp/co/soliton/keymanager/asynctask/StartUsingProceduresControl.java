@@ -346,13 +346,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 						rSAKeyPair.getPrivate(),
 						cACertificateStore);
 				if (certRep.getPkiStatus().getStatus() == PkiStatus.Status.SUCCESS) {
-					CertificateUtility.keyPairToKeyChain(
-							activity,
-							rSAKeyPair);
-					CertificateUtility.certificateToKeyChain(
-							activity,
-							certRep.getCertificate(),
-							m_InformCtrl.GetUserID()/*"epsap"m_strCertArias*/, m_nEnrollRtnCode/*0*/);
+					CertificateUtility.keyPairToKeyChain(activity, rSAKeyPair);
 
 					element.setsNValue(certRep.getCertificate().getSerialNumber().toString());
 					String str = certRep.getCertificate().getSubjectDN().toString();
@@ -362,6 +356,11 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 							element.setcNValue(arr[i].toString().replace("CN=","").trim());
 						}
 					}
+					CertificateUtility.certificateToKeyChain(
+							activity,
+							certRep.getCertificate(),
+							element.getcNValue(),
+							m_nEnrollRtnCode/*0*/);
 					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
 					element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
 					//retrieve data certificate
