@@ -42,27 +42,38 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
 		expandableListView = (ExpandableListView) findViewById(R.id.expand_detail_cert);
 	    adapterSettingDetailCertificate = new AdapterSettingDetailCertificate(this, false);
 	    expandableListView.setAdapter(adapterSettingDetailCertificate);
-	    prepareData();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
-	    textViewBack.setText(getString(R.string.list_cert));
-	    if (elementApply.getcNValue() != null) {
-		    tvTitleHeader.setText(elementApply.getcNValue());
-	    }else {
-		    tvTitleHeader.setText("");
-	    }
-	    btnMenuDetailSetting.setVisibility(View.VISIBLE);
-	    btnMenuDetailSetting.setOnClickListener(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-			    onMenuSettingClick(v);
-		    }
-	    });
+	    super.onResume();
 	    prepareData();
     }
+
+	@Override
+	protected void initBtnMenuDetailSetting() {
+		btnMenuDetailSetting.setVisibility(View.VISIBLE);
+		btnMenuDetailSetting.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onMenuSettingClick(v);
+			}
+		});
+	}
+
+	@Override
+	protected void setTextBtnBack() {
+		textViewBack.setText(getString(R.string.list_cert));
+	}
+
+	@Override
+	protected void setTextTitle() {
+		if (elementApply.getcNValue() != null) {
+			tvTitleHeader.setText(elementApply.getcNValue());
+		}else {
+			tvTitleHeader.setText("");
+		}
+	}
 
 	private void onMenuSettingClick(View v) {
 		final CharSequence[] items = {getResources().getString(R.string.label_dialog_delete_cert),

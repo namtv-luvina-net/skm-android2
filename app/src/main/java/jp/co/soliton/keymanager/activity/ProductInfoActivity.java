@@ -31,12 +31,15 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
     @Override
     protected void onResume() {
         super.onResume();
-	    tvTitleHeader.setText(getString(R.string.label_product_setting));
-	    textViewBack.setText(getString(R.string.label_setting));
         setupControl();
     }
 
-    public void setupControl() {
+	@Override
+	protected void setTextTitle() {
+		tvTitleHeader.setText(getString(R.string.label_product_setting));
+	}
+
+	public void setupControl() {
 	    String nameApp = getString(R.string.app_name);
 	    String version = getString(R.string.version);
 	    String verApp = BuildConfig.VERSION_NAME;

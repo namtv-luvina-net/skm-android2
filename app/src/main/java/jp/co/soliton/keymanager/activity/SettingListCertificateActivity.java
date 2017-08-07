@@ -40,8 +40,6 @@ public class SettingListCertificateActivity extends BaseSettingPhoneActivity {
     @Override
     protected void onResume() {
         super.onResume();
-	    tvTitleHeader.setText(getString(R.string.list_cert));
-	    textViewBack.setText(getString(R.string.label_setting));
         listCertificate = elementMgr.getAllCertificate();
         if (listCertificate == null || listCertificate.isEmpty()) {
             tvNoCertInstalled.setVisibility(View.VISIBLE);
@@ -51,4 +49,9 @@ public class SettingListCertificateActivity extends BaseSettingPhoneActivity {
 	    adapterListCertificate.setListElementApply(listCertificate);
 	    adapterListCertificate.notifyDataSetChanged();
     }
+
+	@Override
+	protected void setTextTitle() {
+		tvTitleHeader.setText(getString(R.string.list_cert));
+	}
 }

@@ -52,9 +52,12 @@ public class MDMActivity extends BaseSettingPhoneActivity {
         setupControl();
     }
 
+	@Override
+	protected void setTextTitle() {
+		tvTitleHeader.setText(getString(R.string.profile));
+	}
+
 	public void setupControl() {
-	    textViewBack.setText(getString(R.string.label_setting));
-        tvTitleHeader.setText(getString(R.string.profile));
 		btnDeleteMDM.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

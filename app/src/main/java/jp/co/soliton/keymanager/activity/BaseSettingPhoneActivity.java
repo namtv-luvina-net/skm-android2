@@ -33,8 +33,20 @@ public class BaseSettingPhoneActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		setTextBtnBack();
+		setTextTitle();
+		initBtnMenuDetailSetting();
 		updateHeader();
 	}
+
+	protected void setTextBtnBack() {
+		textViewBack.setText(getString(R.string.label_setting));
+	}
+
+	protected void setTextTitle() {
+	}
+
+	protected void initBtnMenuDetailSetting() {	}
 
 	private void updateHeader() {
 		tvTitleHeader.measure(0, 0);
@@ -42,14 +54,13 @@ public class BaseSettingPhoneActivity extends Activity {
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 		int width = displayMetrics.widthPixels;
-
 		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
 			textViewBack.setText("");
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+			textViewBack.measure(0, 0);
+			int tmp = textViewBack.getMeasuredWidth() * 2;
+			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvTitleHeader.getLayoutParams();
 			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-			params.addRule(RelativeLayout.RIGHT_OF, textViewBack.getId());
-			params.addRule(RelativeLayout.LEFT_OF, btnMenuDetailSetting.getId());
+			params.setMargins(tmp, params.topMargin, tmp, params.bottomMargin);
 			tvTitleHeader.setLayoutParams(params);
 		}
 	}

@@ -16,9 +16,12 @@ public class LibraryInfoActivity extends BaseSettingPhoneActivity {
     }
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-		tvTitleHeader.setText(getString(R.string.label_library_setting));
+	protected void setTextBtnBack() {
 		textViewBack.setText(getString(R.string.label_setting));
+	}
+
+	@Override
+	protected void setTextTitle() {
+		tvTitleHeader.setText(getString(R.string.label_library_setting));
 	}
 }

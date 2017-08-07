@@ -46,9 +46,17 @@ public class SettingActivity  extends BaseSettingPhoneActivity {
 	    }
     }
 
-    public void setupControl() {
-	    textViewBack.setText(getString(R.string.back));
-        tvTitleHeader.setText(getString(R.string.label_setting));
+	@Override
+	protected void setTextBtnBack() {
+		textViewBack.setText(getString(R.string.back));
+	}
+
+	@Override
+	protected void setTextTitle() {
+		tvTitleHeader.setText(getString(R.string.label_setting));
+	}
+
+	public void setupControl() {
         menuSettingCertList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -83,13 +83,26 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
     @Override
     protected void onResume() {
         super.onResume();
-	    tvTitleHeader.setText(getString(R.string.notif_setting));
         setupControl();
 	    swNotifFlag.setOnCheckedChangeListener(this);
 	    swNotifBeforeFlag.setOnCheckedChangeListener(this);
     }
 
-    public void btnSaveNotifClick() {
+	@Override
+	protected void setTextBtnBack() {
+		if (NotifModeEnum.ONE == mode) {
+			textViewBack.setText(R.string.back);
+		} else {
+			textViewBack.setText(R.string.label_setting);
+		}
+	}
+
+	@Override
+	protected void setTextTitle() {
+		tvTitleHeader.setText(getString(R.string.notif_setting));
+	}
+
+	public void btnSaveNotifClick() {
         if (!isValidateInput()) {
             return;
         }
@@ -111,11 +124,10 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
         alarm.setupNotification(getApplicationContext());
     }
 
-    public void setupControl() {
 
+	public void setupControl() {
         if (NotifModeEnum.ONE == mode) {
             ElementApply element = elementMgr.getElementApply(idCert);
-            textViewBack.setText(R.string.back);
             swNotifFlag.setChecked(element.isNotiEnableFlag());
             swNotifBeforeFlag.setChecked(element.isNotiEnableBeforeFlag());
             tvNotifBefore.setText(String.valueOf(element.getNotiEnableBefore()));
@@ -136,7 +148,6 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
 		        LogCtrl.getInstance().error(ex.toString());
             }
         } else {
-            textViewBack.setText(R.string.label_setting);
             swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_FLAG));
             swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
             tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefIntegerWithDefaultValue(getApplicationContext(), StringList
