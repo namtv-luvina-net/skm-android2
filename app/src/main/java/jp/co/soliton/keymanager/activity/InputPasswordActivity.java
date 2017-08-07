@@ -1,7 +1,6 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -432,8 +430,8 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
                     @Override
                     public void onOkDismissMessage() {
                         txtPassword.setText("");
-                        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+	                    txtPassword.requestFocus();
+                        SoftKeyboardCtrl.showKeyboard(InputPasswordActivity.this);
                     }
                 });
             } else {

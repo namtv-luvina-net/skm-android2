@@ -263,8 +263,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
                     public void onOkDismissMessage() {
                         txtPassword.setText("");
 	                    txtPassword.requestFocus();
-                        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                        SoftKeyboardCtrl.showKeyboard(getActivity());
                     }
                 });
             } else {
