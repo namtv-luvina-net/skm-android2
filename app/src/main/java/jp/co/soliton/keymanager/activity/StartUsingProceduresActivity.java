@@ -51,10 +51,7 @@ public class StartUsingProceduresActivity extends Activity {
 			    startActivity(intent);
 		    } else {
 				LogCtrl.getInstance().warn("Proc: Certificate Installation Cancelled");
-			    StringList.GO_TO_LIST_APPLY = "1";
-			    Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-			    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			    startActivity(intent);
+			    goToListApply();
 		    }
 	    } else if (requestCode == StartUsingProceduresControl.m_nMDM_RequestCode) {
 		    if (resultCode == RESULT_OK) {
@@ -69,11 +66,15 @@ public class StartUsingProceduresActivity extends Activity {
 		    }
 		    else {
 				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
-				StringList.GO_TO_LIST_APPLY = "1";
-				Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
+			    goToListApply();
 			}
 	    }
     }
+
+	private void goToListApply() {
+		StringList.GO_TO_LIST_APPLY = "1";
+		Intent intent = new Intent(getApplicationContext(), MenuAcivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
 }

@@ -215,6 +215,7 @@
 	<string name="network_info">ネットワーク情報</string>
 	<string name="app_info">アプリケーション情報</string>
 	<string name="content_delete_mdm_profile_dialog">MDMプロファイルを削除します。\nよろしいですか？</string>
-	<string name="failed_to_get_ca">CA証明書の取得に失敗しました。</string>
+	<string name="failed_to_get_ca">証明書要求に失敗しました。再度申請を行ってください。問題が解決しない場合は管理者にお問い合わせください。</string>
 	<string name="EnrollErrorMessage">Enroll Error</string>
+	<string name="failure">失敗</string>
 </resources>

@@ -116,9 +116,10 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 			status = getActivity().getString(R.string.stt_waiting_approval);
 		} else if (element.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
 			status = getActivity().getString(R.string.stt_rejected);
+		} else if (element.getStatus() == ElementApply.STATUS_APPLY_FAILURE) {
+			status = getActivity().getString(R.string.failure);
 		}
 		listData[3] = status;
-
 	}
 
 	public void updateUserId(String userId) {

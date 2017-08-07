@@ -82,6 +82,8 @@ public class DetailConfirmActivity extends FragmentActivity {
 			tvStatus.setText(getText(R.string.stt_waiting_approval));
 		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
 			tvStatus.setText(getText(R.string.stt_rejected));
+		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_FAILURE) {
+			tvStatus.setText(getText(R.string.failure));
 		}
 
 		if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {

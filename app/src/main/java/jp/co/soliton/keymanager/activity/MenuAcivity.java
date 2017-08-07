@@ -112,12 +112,7 @@ public class MenuAcivity extends FragmentActivity {
 			}else if (currentStatus == CONFIRM_APPLY_STATUS || currentStatus == WITHDRAW_APPLY_STATUS) {
 				startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 			}else if (currentStatus == START_USING_PROCEDURES_STATUS) {
-				if (getListElementApply().size() == 1) {
-					StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
-					startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
-				} else {
-					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
-				}
+				goBackElementApply();
 			}else if (currentStatus == NOTIF_UPDATE_STATUS) {
 				finish();
 			} else {
@@ -477,12 +472,7 @@ public class MenuAcivity extends FragmentActivity {
 				alarm.setupNotification(getApplicationContext());
 				completeUsingProceduresFragment(StartUsingProceduresControl.getInstance(this).getElement());
 			} else {
-				if (getListElementApply().size() == 1) {
-					StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
-					startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
-				} else {
-					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
-				}
+				goBackElementApply();
 			}
 		} else if (requestCode == StartUsingProceduresControl.m_nMDM_RequestCode) {
 			if (resultCode == RESULT_OK) {
@@ -495,13 +485,17 @@ public class MenuAcivity extends FragmentActivity {
 				StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
 			} else {
 				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
-				if (getListElementApply().size() == 1) {
-					StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
-					startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
-				} else {
-					startListConfirmApplyFragment(SCROLL_TO_RIGHT);
-				}
+				goBackElementApply();
 			}
+		}
+	}
+
+	private void goBackElementApply() {
+		if (getListElementApply().size() == 1) {
+			StringList.ID_DETAIL_CURRENT = String.valueOf(listElementApply.get(0).getId());
+			startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
+		} else {
+			startListConfirmApplyFragment(SCROLL_TO_RIGHT);
 		}
 	}
 }

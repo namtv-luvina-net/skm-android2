@@ -103,7 +103,9 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
             String stt = getContext().getText(R.string.stt_waiting_approval).toString();
             viewHolder.tvStatus.setText(stt.replace(" ", "\n"));
         } else if (listElementApply.get(position).getStatus() == ElementApply.STATUS_APPLY_REJECT) {
-            viewHolder.tvStatus.setText(getContext().getText(R.string.stt_rejected));
+	        viewHolder.tvStatus.setText(getContext().getText(R.string.stt_rejected));
+        } else if (listElementApply.get(position).getStatus() == ElementApply.STATUS_APPLY_FAILURE) {
+	        viewHolder.tvStatus.setText(getContext().getText(R.string.failure));
         }
         return convertView;
 

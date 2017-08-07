@@ -55,12 +55,13 @@ public class ListConfirmActivity extends FragmentActivity {
         super.onResume();
         listElementApply = elementMgr.getAllElementApply();
 	    ElementApply.sortListConfirmApply(listElementApply);
-        if(listElementApply.size() == 1) {
+	    int sizeList = listElementApply.size();
+	    if(sizeList == 1) {
             Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
             intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
             finish();
             startActivity(intent);
-        } else if(listElementApply.size() == 0) {
+        } else if(sizeList == 0) {
             finish();
         }
 		adapterListConfirmApply.setListElementApply(listElementApply);

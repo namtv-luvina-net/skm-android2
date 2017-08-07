@@ -81,6 +81,9 @@ public class ContentDetailConfirmFragment extends Fragment {
 		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_REJECT) {
 			status = getString(R.string.stt_rejected);
 			desLeftSideTablet = getString(R.string.des_leftside_detail_confirm_tablet_rejected);
+		} else if (detail.getStatus() == ElementApply.STATUS_APPLY_FAILURE) {
+			status = getString(R.string.failure);
+			desLeftSideTablet = getString(R.string.failed_to_get_ca);
 		}
 		tvStatus.setText(status);
 		listData[3] = status;

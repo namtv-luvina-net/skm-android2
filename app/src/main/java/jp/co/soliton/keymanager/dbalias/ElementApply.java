@@ -16,6 +16,7 @@ public class ElementApply implements Serializable {
     public static int STATUS_APPLY_CANCEL  = 0;
     public static int STATUS_APPLY_REJECT  = 1;
     public static int STATUS_APPLY_PENDING = 2;
+    public static int STATUS_APPLY_FAILURE = 3;
     public static int STATUS_APPLY_APPROVED = 99;
     public static int STATUS_APPLY_CLOSED = 100;
 

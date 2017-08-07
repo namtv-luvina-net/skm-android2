@@ -17,6 +17,7 @@ import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.scep.Requester;
@@ -459,6 +460,9 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			} catch (RequesterException e) {
 				if (e.toString().contains("No CA Certificcate")) {
 					strError = activity.getString(R.string.failed_to_get_ca);
+					element.setStatus(ElementApply.STATUS_APPLY_FAILURE);
+					ElementApplyManager mgr = new ElementApplyManager(activity);
+					mgr.updateStatus(ElementApply.STATUS_APPLY_FAILURE, String.valueOf(element.getId()));
 				}
 				LogCtrl.getInstance().error("CertificateEnrollTask RequesterException: " + e.toString());
 				return false;
