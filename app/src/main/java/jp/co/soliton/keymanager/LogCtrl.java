@@ -53,11 +53,6 @@ public class LogCtrl {
 
 		OutputLogCat(msgtype, msg);
 
-		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			// SDカード領域が存在しないときは抜ける
-			return;
-		}
-
 		String logName = LogFileCtrl.getLogName();
 		if (nameLogFile == null || nameLogFile.equalsIgnoreCase(logName) == false) {
 			LogFileCtrl.deleteOldLogFile(SKMApplication.getAppContext());
