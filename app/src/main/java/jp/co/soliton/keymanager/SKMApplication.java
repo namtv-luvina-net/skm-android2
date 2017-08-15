@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import jp.co.soliton.keymanager.common.CommonUtils;
-import jp.co.soliton.keymanager.manager.APIDManager;
 
 /**
  * Created by luongdolong on 4/5/2017.
@@ -38,9 +37,6 @@ public class SKMApplication extends Application {
 				.string.main_versionname) + BuildConfig.VERSION_NAME + "." + BuildConfig.BUILD_NUM + (BuildConfig
 				.BUILD_TYPE.equals("debug") ? "d" : BuildConfig.BUILD_TYPE.equals("trace") ? "t" : "");
 	    LogCtrl.getInstance().info(appVer);
-
-		APIDManager manager = new APIDManager(SKMApplication.context);
-		LogCtrl.getInstance().info("VPN and apps=" + manager.getStrVpnID() + ", Wi-Fi=" + manager.getStrUDID());
 
 	    registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 		    @Override

@@ -31,7 +31,6 @@ public class ContentMenuPhoneFragment extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		elementMgr = new ElementApplyManager(getActivity());
-		apidManager = new APIDManager(getActivity());
 	}
 
 	@Nullable
@@ -91,6 +90,9 @@ public class ContentMenuPhoneFragment extends Fragment {
 		btnMenuAPID.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (apidManager == null) {
+					apidManager = new APIDManager(getActivity());
+				}
 				Intent intent = new Intent(getActivity(), APIDActivity.class);
 				intent.putExtra("m_strAPIDVPN", apidManager.getStrVpnID());
 				intent.putExtra("m_strAPIDWifi", apidManager.getStrUDID());

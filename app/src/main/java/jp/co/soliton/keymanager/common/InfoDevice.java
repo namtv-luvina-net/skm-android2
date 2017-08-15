@@ -10,6 +10,8 @@ import android.view.Display;
 import android.view.WindowManager;
 import jp.co.soliton.keymanager.BuildConfig;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.SKMApplication;
+import jp.co.soliton.keymanager.manager.APIDManager;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -71,6 +73,14 @@ public class InfoDevice {
 				.string.main_versionname) + BuildConfig.VERSION_NAME + "." + BuildConfig.BUILD_NUM + (BuildConfig
 				.BUILD_TYPE.equals("debug") ? "d" : BuildConfig.BUILD_TYPE.equals("trace") ? "t" : "");
 		outputDataBuilder.append(appVer);
+		outputDataBuilder.append(newLine);
+		outputDataBuilder.append(newLine);
+
+		outputDataBuilder.append("APID");
+		outputDataBuilder.append(newLine);
+		APIDManager manager = new APIDManager(SKMApplication.getAppContext());
+		outputDataBuilder.append(makeInfoLine("VPN and apps", manager.getStrVpnID()));
+		outputDataBuilder.append(makeInfoLine("Wi-Fi", manager.getStrUDID()));
 		outputDataBuilder.append(newLine);
 
 		outputDataBuilder.append(makeInfoLine("System time", DateUtils.getCurrentDateSystem()));
@@ -139,7 +149,6 @@ public class InfoDevice {
 		DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
 
-		outputDataBuilder.append(newLine);
 		outputDataBuilder.append(newLine);
 		outputDataBuilder.append("----- Display -----");
 		outputDataBuilder.append(newLine);
