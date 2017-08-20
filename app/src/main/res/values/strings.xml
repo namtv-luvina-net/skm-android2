@@ -9,150 +9,150 @@
 	<string name="Forbidden">Forbidden</string>
     <string name="Unauthorized">Unauthorized</string>
     <string name="ERR">ERR:</string>
+	<string name="main_apid_wifi">Wi-Fi</string>
+	<string name="main_apid_vpn">VPN and apps</string>
 	<string name="main_versionname">Ver.</string>
-    <string name="main_apid_wifi">Wi-Fi</string>
-    <string name="main_apid_vpn">VPN and Apps</string>
     <string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
 	<string name="certlogin_userid_title">User ID</string>
-    <string name="certlogin_password_title">Password</string>
-	<string name="instapp_nosdcard">Unavailable to download application because SD card is required.</string>
-	<string name="admin_receiver_enabled">Device administrator has been enabled.</string>
-    <string name="admin_receiver_disabled">Device administrator has been disabled.</string>
-    <string name="admin_receiver_pwchange">Password of device administrator has been changed.</string>
-    <string name="admin_receiver_disabled_request">Are you sure to disable device administrator for this application?</string>
-    <string name="accept_language">en</string>
+	<string name="certlogin_password_title">Password</string>
+	<string name="instapp_nosdcard">An app cannot be downloaded because of no SD card.</string>
+	<string name="admin_receiver_enabled">The admin receiver has been enabled</string>
+	<string name="admin_receiver_disabled">The admin receiver has been disabled</string>
+	<string name="admin_receiver_pwchange">The admin receiver\'s password has been changed</string>
+	<string name="admin_receiver_disabled_request">Do you want to disable the admin receiver of this app?</string>
+	<string name="accept_language">en</string>
 	<!--SKM V2.x-->
-    <!-- Common-->
-    <string name="label_country_name">Country Name</string>
-    <string name="label_state_or_province_name">State or Province Name</string>
-    <string name="label_locality_name">Locality Name</string>
-    <string name="label_organization_name">Organization Name</string>
-    <string name="label_organizational_unit_name">Organization Unit Name</string>
-    <string name="label_common_name">Common Name</string>
-    <string name="label_email_address">Email Address</string>
+	<!-- Common-->
+	<string name="label_country_name">Country</string>
+	<string name="label_state_or_province_name">State or Province</string>
+	<string name="label_locality_name">Locality</string>
+	<string name="label_organization_name">Organization</string>
+	<string name="label_organizational_unit_name">Organization Unit</string>
+	<string name="label_common_name">Common Name</string>
+	<string name="label_email_address">Email Address</string>
 	<string name="label_uri">URI</string>
 	<string name="label_list_certificate">Certificate</string>
 	<!-- Settings-->
-    <string name="label_setting">Setting</string>
-	<string name="label_expired_notification">EXPIRED NOTIFICATION</string>
-    <string name="label_before_expired_notification">BEFORE EXPIRATION NOTIFICATION</string>
-    <string name="label_notification">Notification</string>
+	<string name="label_setting">Settings</string>
+	<string name="label_expired_notification">Expired Notification</string>
+	<string name="label_before_expired_notification">Before Expired Notification</string>
+	<string name="label_notification">Notification</string>
 	<string name="label_expired">Expired</string>
 	<string name="label_expired_item">Expired</string>
-    <string name="label_day_before">Day before</string>
+	<string name="label_day_before">days before</string>
 	<string name="label_dialog_delete_cert">Delete</string>
     <string name="label_dialog_Cancle">Cancel</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
-    <string name="label_subject_name">Subject Name</string>
-    <!-- Issuer Name-->
-    <string name="label_issuer_name">Issuer Name</string>
-    <string name="label_issuer_version">Version</string>
-    <string name="label_issuer_serial_number">Serial Number</string>
-    <!-- Signature Algorithm-->
-    <string name="label_signature_algorithm">Signature</string>
-    <string name="label_algorithm_label">Algorithm</string>
-    <string name="label_signature_not_valid_before">Not Valid Before</string>
-    <string name="label_signature_not_valid_after">Not Valid After</string>
-    <!-- Public Key Algorithm-->
-    <string name="label_public_key_algorithm">Public Key Algorithm</string>
-    <string name="label_public_key_algorithm_data">Public Key Data</string>
-    <string name="label_public_key_algorithm_signature">Signature</string>
-    <!--Basic Constraints-->
-    <string name="label_basic_constraints">Basic Constraints</string>
-    <string name="label_certificate_authority">Certificate Authority</string>
-    <!--Key Usage-->
-    <string name="label_key_usage">Key Usage</string>
-    <string name="label_usage">Usage</string>
+	<string name="label_subject_name">Subject Name</string>
+	<!-- Issuer Name-->
+	<string name="label_issuer_name">Issuer Name</string>
+	<string name="label_issuer_version">Version</string>
+	<string name="label_issuer_serial_number">Serial Number</string>
+	<!-- Signature Algorithm-->
+	<string name="label_signature_algorithm">Signature</string>
+	<string name="label_algorithm_label">Algorithm</string>
+	<string name="label_signature_not_valid_before">Not Valid Before</string>
+	<string name="label_signature_not_valid_after">Not Valid After</string>
+	<!-- Public Key Algorithm-->
+	<string name="label_public_key_algorithm">Public Key Algorithm</string>
+	<string name="label_public_key_algorithm_data">Public Key Data</string>
+	<string name="label_public_key_algorithm_signature">Signature</string>
+	<!--Basic Constraints-->
+	<string name="label_basic_constraints">Basic Constraints</string>
+	<string name="label_certificate_authority">Certificate Authority</string>
+	<!--Key Usage-->
+	<string name="label_key_usage">Key Usage</string>
+	<string name="label_usage">Usage</string>
 	<!--Subject Key Identitier-->
     <string name="label_subject_key_identifier">Subject Key Identifier</string>
 	<!-- Auuthority Key Identitier-->
-    <string name="label_authority_key_identifier">Authority Key Identifier</string>
-    <!--  CRL Distribution Points-->
-    <string name="label_crl_distribution_points">CRL Distribution Points</string>
-    <!--  Certificate Authority Infomation Access-->
-    <string name="label_certificate_authority_information_access">Certificate Authority Information Access</string>
-    <!--  Extended Key Usage-->
-    <string name="label_extended_key_usage">Extended key Usage</string>
-    <string name="label_purpose">Purpose</string>
+	<string name="label_authority_key_identifier">Certificate Key Identifier</string>
+	<!--  CRL Distribution Points-->
+	<string name="label_crl_distribution_points">CRL Distribution Points</string>
+	<!--  Certificate Authority Infomation Access-->
+	<string name="label_certificate_authority_information_access">Certificate Authority Information Access</string>
+	<!--  Extended Key Usage-->
+	<string name="label_extended_key_usage">Extended Key Usage</string>
+	<string name="label_purpose">Purpose</string>
 	<!-- SKM v2 new design -->
-    <string name="select_item">Select item</string>
-    <string name="apid">APID</string>
-	<string name="start_apply">Start apply</string>
-    <string name="input_host_name">Input host name</string>
-    <string name="input_https_port_number">Https port number</string>
-    <string name="input_http_port_number">Http port number</string>
-    <string name="back">Back</string>
-    <string name="next">Next</string>
-    <string name="input_id_and_password">Input ID/Password</string>
-    <string name="input_user_id_and_password">Input User ID/Password</string>
-    <string name="set_notification_destination_email_address">Set notification destination email address</string>
-    <string name="skip">Skip</string>
-    <string name="reason_for_apply">Reason for apply</string>
-    <string name="download_ca_certificate">Download CA Certificate</string>
-    <string name="download">Download</string>
-    <string name="download_ca_description42">Tap Download to install CA certificate.</string>
-    <string name="download_ca_description43">
-	    <![CDATA[Tap Download to install CA certificate. On the Certificate Dialog, choose <b>「<u>VPN and Apps.</u>」</b>]]>
-    </string>
-    <string name="target_place">Select certificate storage location</string>
-    <string name="confirm_content">Confirm Content</string>
-    <string name="apply">Apply</string>
-    <string name="host_name">Host Name</string>
-    <string name="port_number">Port Number</string>
-    <string name="store">Store</string>
+	<string name="select_item">Select Item</string>
+	<string name="apid">APID</string>
+	<string name="start_apply">Start Apply</string>
+	<string name="input_host_name">Enter the host name</string>
+	<string name="input_https_port_number">Enter the HTTPS port number</string>
+	<string name="input_http_port_number">Enter the HTTP port number</string>
+	<string name="back">Back</string>
+	<string name="next">Next</string>
+	<string name="input_id_and_password">Enter the ID and password</string>
+	<string name="input_user_id_and_password">Enter the user ID and password</string>
+	<string name="set_notification_destination_email_address">Set the destination email address</string>
+	<string name="skip">Skip</string>
+	<string name="reason_for_apply">Reason for Apply</string>
+	<string name="download_ca_certificate">Download CA Certificate</string>
+	<string name="download">Download</string>
+	<string name="download_ca_description42">Tap [Download] to install the CA certificate.</string>
+	<string name="download_ca_description43">
+		<![CDATA[Tap [Download] to install the CA certificate. Select <b>[<u>VPN and App</u>]</b> on the screen for specifying the certificate name.]]>
+	</string>
+	<string name="target_place">Select Certificate Storage</string>
+	<string name="confirm_content">Confirm Contents</string>
+	<string name="apply">Apply</string>
+	<string name="host_name">Host Name</string>
+	<string name="port_number">Port Number</string>
+	<string name="store">Store</string>
 	<string name="error">Error</string>
-	<string name="input">Input</string>
-	<string name="notification_destination_email_address">Notification destination email address</string>
+	<string name="input">Enter</string>
+	<string name="notification_destination_email_address">Destination Email Address</string>
 	<string name="apply_completed">Apply Completed</string>
-    <string name="back_to_top">Back to Top</string>
-    <string name="back_to_top_auto">Start using procedures</string>
-    <string name="not_installed_ca">not installed ca certification</string>
-    <string name="connect_failed">Connection failed.</string>
-    <string name="error_install_certificate">Can not install certificate</string>
-    <string name="apply_mail_error">Destination email address is invalid</string>
-	<string name="login_failed">User ID or Password you entered is incorrect.</string>
-	<string name="session_timeout">Session timed out</string>
-	<string name="connect_not_epsap">Destination address or port number you entered is incorrect.</string>
-	<string name="devicecheck_error">Your APID is not registered on NetAttest EPS-ap.</string>
-	<string name="registration_setting_invalid">Device registration is incorrect</string>
-	<string name="apid_description">Tap APID to display the menu</string>
-	<string name="select_apid">Select the operation</string>
-	<string name="apid_guide_1">Tap Copy to copy to clipboard</string>
-	<string name="apid_guide_2">Tap Mail to start the mailer</string>
+	<string name="back_to_top">Back to Top</string>
+	<string name="back_to_top_auto">Start Using Procedures</string>
+	<string name="not_installed_ca">not installed ca certification</string>
+	<string name="connect_failed">Connection failed.</string>
+	<string name="error_install_certificate">Can not install certificate</string>
+	<string name="apply_mail_error">The destination email address is invalid.</string>
+	<string name="login_failed">The user ID or password is incorrect.</string>
+	<string name="session_timeout">Session Timeout</string>
+	<string name="connect_not_epsap">The destination address or port number is incorrect.</string>
+	<string name="devicecheck_error">APID has not been registered with NetAttest EPS-ap.</string>
+	<string name="registration_setting_invalid">The terminal registration setting is invalid.</string>
+	<string name="apid_description">Tap [APID] to display the menu.</string>
+	<string name="select_apid">Select.</string>
+	<string name="apid_guide_1">Tap [Copy] to copy to the \nclipboard.</string>
+	<string name="apid_guide_2">Tap [Mail] to start the \nmailer.</string>
 	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Approval Completed</string>
 	<string name="approval_confirmation">Approval Confirmation</string>
-	<string name="beginning_to_use_procedures">Beginning to use procedures</string>
-	<string name="btn_add">＋New</string>
+	<string name="beginning_to_use_procedures">Start Using Procedures</string>
+	<string name="btn_add">+ New</string>
 	<string name="btn_update">&#160;&#160;Apply&#160;&#160;</string>
-	<string name="confirm_apply_status">Confirm approval status</string>
+	<string name="confirm_apply_status">Confirm Approval Status</string>
 	<string name="copy">Copy</string>
 	<string name="copy_apid">Copy to Clipboard</string>
 	<string name="creating_diagnostic_infomation">Creating diagnostic information...</string>
-	<string name="delete_apply">Delete application</string>
+	<string name="delete_apply">Delete Application</string>
 	<string name="diagnostics">Diagnostics</string>
 	<string name="dialog_btn_withdraw">Withdrawal</string>
 	<string name="dialog_delete_msg">Delete the selected application.\nIs it OK?</string>
-	<string name="dialog_delete_title">Delete of application</string>
+	<string name="dialog_delete_title">Delete of Application</string>
 	<string name="dialog_withdraw_msg">Withdraw the selected application.\nIs it OK?</string>
-	<string name="dialog_withdraw_title">Withdrawal of application</string>
-	<string name="error_input_before_expiry">The number of days must be between 1 and %d</string>
-	<string name="guide_1">Let\'s start simple setup.</string>
-	<string name="guide_2">Select the item onthe right to start applying.</string>
-	<string name="guide_31">Various information can be seen from the icon </string>
-	<string name="guide_32"> above.</string>
+	<string name="dialog_withdraw_title">Withdrawal of Application</string>
+	<string name="error_input_before_expiry">The number of days must be between one and %d.</string>
 	<string name="hint_email_name" translatable="false">name@example.com</string>
 	<string name="hint_host_name" translatable="false">epsap.example.com</string>
+	<string name="guide_1">Let\'s start simple setup.</string>
+	<string name="guide_2">Select the item on the right to start \napplying.</string>
+	<string name="guide_31">Various information can be seen from the \n</string>
+	<string name="guide_32">icon above.</string>
 	<string name="input_email">Destination Email Address</string>
-	<string name="input_host_name_and_port_number">Host Name/HTTPS Port Number</string>
+	<string name="input_host_name_and_port_number">Host Name/\nHTTPS Port Number</string>
 	<string name="host_name_and_port_number">Host Name/HTTPS Port Number</string>
-	<string name="input_password">Input Password</string>
-	<string name="input_select_store">Certificate storage location</string>
+	<string name="input_password">Enter the password</string>
+	<string name="input_select_store">Certificate Storage</string>
 	<string name="input_user_id_password">User ID/Password</string>
-	<string name="label_library_setting">Library</string>
-	<string name="label_other_setting">Other</string>
-	<string name="label_product_setting">Product Name</string>
+	<string name="label_library_setting">Libraries</string>
+	<string name="label_other_setting">Others</string>
+	<string name="label_product_setting">Product Information</string>
 	<string name="list_application">List Application</string>
 	<string name="list_cert">Certificates</string>
 	<string name="mail">Mail</string>
@@ -160,52 +160,51 @@
 	<string name="message_pending">This application is currently pending approval.</string>
 	<string name="message_reject">This application has been rejected by the administrator.</string>
 	<string name="no_cert_installed">No certificates are currently installed</string>
-	<string name="notif_setting">Notification Settings</string>
+	<string name="notif_setting">Notification Setting</string>
 	<string name="notif_title">Certificate renewal is required.</string>
-	<string name="product_name_version_info">Soliton KeyManager\nVersion 2.0</string>
+	<string name="product_name_version_info">Soliton KeyManager\nversion 2.0</string>
 	<string name="re_apply">Reapply</string>
-	<string name="send_apid">Send APID via Email</string>
-	<string name="send_diagnostics">Send Diagnostics Snapshot</string>
+	<string name="send_apid">Send by Email</string>
+	<string name="send_diagnostics">Send Diagnostics</string>
 	<string name="start_to_use_procedures">Beginning to use procedures...</string>
 	<string name="stt_cancel">Withdrawn</string>
 	<string name="stt_rejected">Rejected</string>
 	<string name="stt_waiting_approval">Waiting Approval</string>
-	<string name="text_start_reapply">Re-applying is necessary\nto continue using</string>
-	<string name="text_start_reapply_tablet">Re-applying is necessary to continue using</string>
-	<string name="title_apply_date">Apply date :</string>
-	<string name="title_cancel">Withdrawal of application</string>
+	<string name="text_start_reapply">\nRe-applying is necessary to continue using.</string>
+	<string name="text_start_reapply_tablet">Re-applying is necessary to continue using.</string>
+	<string name="title_apply_date">Apply Date :</string>
+	<string name="title_cancel">Withdrawal of Application</string>
 	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Destination Email Address :</string>
-	<string name="title_expiration_date">Expiration :</string>
-	<string name="title_place">Storage :\u0020</string>
+	<string name="title_expiration_date">Expires :</string>
+	<string name="title_place">Storage : \u0020</string>
 	<string name="place">Storage</string>
-	<string name="title_host_name">Host name :</string>
-	<string name="title_http_port_number">HTTP port number :</string>
-	<string name="title_https_port_number">HTTPS port number :</string>
-	<string name="title_input_email">Mail Address :</string>
-	<string name="title_input_host_name">Input Host name :</string>
-	<string name="title_list_certificate">Select certificate</string>
-	<string name="title_password">Password :</string>
+	<string name="title_host_name">Host Name :</string>
+	<string name="title_http_port_number">HTTP Port Number :</string>
+	<string name="title_https_port_number">HTTPS Port Number :</string>
+	<string name="title_input_email">"Email Address : "</string>
+	<string name="title_input_host_name">Enter Host Name :</string>
+	<string name="title_list_certificate">Select Certificate</string>
+	<string name="title_password">"Password : "</string>
 	<string name="title_port_number">Port Number :</string>
 	<string name="title_reason_for_apply">Reason for Apply :</string>
 	<string name="title_sn">S/N :</string>
 	<string name="title_status">Status :</string>
 	<string name="title_store">Store :</string>
 	<string name="title_user_id">User ID :</string>
-	<string name="txt_complete_using_procedures">Start using procedure has been completed</string>
-	<string name="user_id_is_invalid">Invalid user ID</string>
+	<string name="txt_complete_using_procedures">Beginning to use procedures has been completed</string>
+	<string name="user_id_is_invalid">The user ID is invalid</string>
 	<string name="validity_period">Validity Period</string>
 	<string name="version">Version</string>
-	<string name="withdrawal_apply">Withdrawn application</string>
+	<string name="withdrawal_apply">Withdrawn Application</string>
 	<string name="title_leftside_list_confirm_tablet">Approval Confirmation</string>
-	<string name="des_leftside_list_confirm_tablet">Let\'s select the application waiting for approval and complete the procedure</string>
-	<string name="des_leftside_detail_confirm_tablet_cofirms_status">Let\'s confirms the approval status and complete the
-		procedure</string>
-	<string name="des_leftside_detail_confirm_tablet_rejected">Your application has been rejected by the administrator</string>
+	<string name="des_leftside_list_confirm_tablet">Let\'s select the application waiting for approval and complete the \nprocedure</string>
+	<string name="des_leftside_detail_confirm_tablet_cofirms_status">Let\'s confirm the approval status and complete the \nprocedure</string>
+	<string name="des_leftside_detail_confirm_tablet_rejected">Your application has been \nrejected by the administrator</string>
 	<string name="des_leftside_detail_confirm_tablet_withdrawn">Your application has been withdrawn</string>
-	<string name="one_day_remaining">1 day remaining</string>
-	<string name="many_days_remaining">%s days remaining</string>
-	<string name="expiration_date">Expiration:\u0020</string>
+	<string name="one_day_remaining">Remaining one day</string>
+	<string name="many_days_remaining">Remaining %s days</string>
+	<string name="expiration_date">Expires :\u0020</string>
 	<string name="close">Close</string>
 	<string name="mdm">MDM</string>
 	<string name="profile">Profile</string>
@@ -214,12 +213,11 @@
 	<string name="disable">Disable</string>
 	<string name="device_lock">Device Lock</string>
 	<string name="remote_wipe">Remote Wipe</string>
-	<string name="device_info">Device Info</string>
-	<string name="network_info">Network Info</string>
-	<string name="app_info">App Info</string>
+	<string name="device_info">Device Information</string>
+	<string name="network_info">Network Information</string>
+	<string name="app_info">Application Information</string>
 	<string name="content_delete_mdm_profile_dialog">Delete the MDM profile.\nIs it OK?</string>
-	<string name="failed_to_get_ca">Certificate request failed. Please apply again. Please contact the administrator
-	if the problem persists.</string>
+	<string name="failed_to_get_ca">Certificate request failed. Please apply again. Please contact the administrator if the problem persists.</string>
 	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Failure</string>
 </resources>
