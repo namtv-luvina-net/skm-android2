@@ -220,4 +220,8 @@
 	<string name="failed_to_get_ca">Certificate request failed. Please apply again. Please contact the administrator if the problem persists.</string>
 	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Failure</string>
+	<string name="confirm">Confirm</string>
+	<string name="content_dialog_ask_delete_cert">Are you sure you want to delete it?</string>
+	<string name="no">No</string>
+	<string name="yes">Yes</string>
 </resources>

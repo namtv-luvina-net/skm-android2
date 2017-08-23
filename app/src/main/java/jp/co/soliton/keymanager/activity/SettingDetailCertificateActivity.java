@@ -105,8 +105,8 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
 
 	private void confirmDeleteCert() {
         final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
-        dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
-                , getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
+        dialog.setTextDisplay(getString(R.string.confirm), getString(R.string.content_dialog_ask_delete_cert)
+                , getString(R.string.no), getString(R.string.yes));
         dialog.setOnClickOK(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -108,8 +108,8 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 
 	private void confirmDeleteCert() {
 		final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
-		dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
-				, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
+		dialog.setTextDisplay(getString(R.string.confirm), getString(R.string.content_dialog_ask_delete_cert)
+				, getString(R.string.no), getString(R.string.yes));
 		dialog.setOnClickOK(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
