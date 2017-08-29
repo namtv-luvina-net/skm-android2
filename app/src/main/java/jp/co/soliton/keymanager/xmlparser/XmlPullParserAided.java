@@ -708,6 +708,13 @@ public class XmlPullParserAided /*extends Activity*/{
 					break;
 				}
 			}
+			List<XmlStringData> listPayloadContent = GetDictionary().GetArrayString();
+			String cacert = listPayloadContent.get(listPayloadContent.size() - 1).GetData();
+			cacert = cacert.replace("\n", "");
+			cacert = cacert.replace(" ", "");
+			cacert = cacert.replaceAll("\\p{C}", ""); // CONTROL CODE
+			cacert = cacert.replaceAll("�", ""); // � = REPLACEMENT CHARACTOR
+			listPayloadContent.get(listPayloadContent.size() - 1).SetData(cacert);
 		} catch (XmlPullParserException e) {
 			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
