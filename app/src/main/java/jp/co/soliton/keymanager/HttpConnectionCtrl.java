@@ -216,7 +216,7 @@ public class HttpConnectionCtrl {
 			http.setRequestProperty("User-Agent", m_str_user_agtpro /*m_ctx.getText(R.string.User_Agentprofile).toString()*/);
 			http.setRequestProperty("Accept-Language",  m_ctx.getString(R.string.accept_language));
 
-			return PostPacket(http, Inf, 512);
+			return GetPacket(http, Inf, 512);
 		} catch (MalformedURLException e) {
 			LogCtrl.getInstance().error("HttpConnectionCtrl::RunHttpEnrollReturnUrlConnection::MalformedURLException: " + e.toString());
 			return false;
@@ -393,10 +393,76 @@ public class HttpConnectionCtrl {
 		header += "}";
 		return header;
 	}
+
+	private boolean GetPacket(HttpURLConnection http, InformCtrl Inf, int i_packetsize) {
+		LogCtrl.getInstance().info("HttpConnectionCtrl: Send Request GET");
+		LogCtrl.getInstance().debug(http.getURL().toString());
+		LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getRequestProperties()));
+
+		try {
+			// 送受信定義
+			http.setDoInput(true);
+
+			// 接続
+			http.connect();
+
+			// 入力ストリーム
+			int input_ret = http.getResponseCode();		// response code を取得
+
+			LogCtrl.getInstance().info("HttpConnectionCtrl: Receive Response " + Integer.toString(input_ret));
+			LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getHeaderFields()));
+
+			Inf.SetResponseCode(input_ret);
+			if(input_ret != StringList.RES_200_OK) {
+				http.disconnect();
+				return false;
+			}
+
+			BufferedInputStream bis = new BufferedInputStream( http.getInputStream() );
+			byte[] buf_solo = new byte[i_packetsize];
+			byte[] buf_all = new byte[65536];
+			int i_size;
+			int i_size_total= 0;
+
+			while ((i_size = bis.read(buf_solo, 0, buf_solo.length)) != -1) {
+				System.arraycopy(buf_solo, 0, buf_all, i_size_total, i_size);
+				i_size_total += i_size;
+			}
+
+			if (i_size_total < 1) {
+				LogCtrl.getInstance().warn("HttpConnectionCtrl: No Content");
+				http.disconnect();
+				return false;
+			}
+
+			String cert = new String(buf_all, "UTF-8");
+//			String retCode = new String(buf_all, 0, i_size_total);
+			Inf.SetRtn(cert);
+
+			LogCtrl.getInstance().debug("\r\n" + new String(buf_all));
+
+			bis.close();
+
+			// Cookie取得
+			String cookieValue = null;
+			cookieValue = http.getHeaderField("Set-Cookie");
+			Inf.SetCookie(cookieValue);
+
+			http.disconnect();
+		} catch (IOException e) {
+			LogCtrl.getInstance().error("HttpConnectionCtrl::GetPacket::IOException: " + e.toString());
+			return false;
+		} catch (Exception e) {
+			LogCtrl.getInstance().error("HttpConnectionCtrl::GetPacket::Other Exception: " + e.toString());
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 	
 	// パケットの送受信
 	private boolean PostPacket(HttpURLConnection http, InformCtrl Inf, int i_packetsize) {
-		LogCtrl.getInstance().info("HttpConnectionCtrl: Send Request");
+		LogCtrl.getInstance().info("HttpConnectionCtrl: Send Request POST");
 		LogCtrl.getInstance().debug(http.getURL().toString());
 		LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getRequestProperties()));
 

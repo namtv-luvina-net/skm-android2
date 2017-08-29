@@ -45,6 +45,10 @@ public class ControlPagesInput {
 		}
 		List<XmlStringData> listPayloadContent = m_p_aided.GetDictionary().GetArrayString();
 		cacert = listPayloadContent.get(listPayloadContent.size() - 1).GetData();
+		cacert = cacert.replace("\n", "");
+		cacert = cacert.replace(" ", "");
+		cacert = cacert.replaceAll("\\p{C}", ""); // CONTROL CODE
+		cacert = cacert.replaceAll("�", ""); // � = REPLACEMENT CHARACTOR
 		cacert = String.format("%s\n%s\n%s", "-----BEGIN CERTIFICATE-----", cacert, "-----END CERTIFICATE-----");
 		//Install certificate
 		Intent intent = KeyChain.createInstallIntent();
