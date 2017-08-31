@@ -20,7 +20,7 @@ public class XmlDictionary {
 	List<XmlStringData> m_stringData;
 	List<XmlDictionary> m_xmlDictionary;	// 子dict配列
 	List<XmlArrayData> m_Arrays;
-	
+
 	private int DepthOfDict;			// dictの階層
 	
 	public XmlDictionary(int depth, String key, String origin_xml) {
@@ -226,5 +226,19 @@ public class XmlDictionary {
 	public String GetPaylodaType() {return m_strPayloadType;}
 	
 	public List<XmlStringData> GetArrayString() { return m_stringData; }
+
+	public String getCacert() {
+		String cacert = "";
+		List<XmlStringData> listPayloadContent = GetArrayString();
+		for (int i = 0; i < listPayloadContent.size(); i++) {
+			XmlStringData xmlStringData = listPayloadContent.get(i);
+			if (xmlStringData.GetKeyName().equals("PayloadContent")) {
+				cacert = xmlStringData.GetData();
+				cacert = String.format("%s\n%s\n%s", "-----BEGIN CERTIFICATE-----", cacert, "-----END CERTIFICATE-----");
+				break;
+			}
+		}
+		return cacert;
+	}
 }
 

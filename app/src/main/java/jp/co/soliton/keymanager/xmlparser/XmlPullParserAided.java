@@ -709,12 +709,18 @@ public class XmlPullParserAided /*extends Activity*/{
 				}
 			}
 			List<XmlStringData> listPayloadContent = GetDictionary().GetArrayString();
-			String cacert = listPayloadContent.get(listPayloadContent.size() - 1).GetData();
-			cacert = cacert.replace("\n", "");
-			cacert = cacert.replace(" ", "");
-			cacert = cacert.replaceAll("\\p{C}", ""); // CONTROL CODE
-			cacert = cacert.replaceAll("�", ""); // � = REPLACEMENT CHARACTOR
-			listPayloadContent.get(listPayloadContent.size() - 1).SetData(cacert);
+			for (int i = 0; i < listPayloadContent.size(); i++) {
+				XmlStringData xmlStringData = listPayloadContent.get(i);
+				if (xmlStringData.GetKeyName().equals("PayloadContent")) {
+					String cacert = xmlStringData.GetData();
+					cacert = cacert.replace("\n", "");
+					cacert = cacert.replace(" ", "");
+					cacert = cacert.replaceAll("\\p{C}", ""); // CONTROL CODE
+					cacert = cacert.replaceAll("�", ""); // � = REPLACEMENT CHARACTOR
+					xmlStringData.SetData(cacert);
+					break;
+				}
+			}
 		} catch (XmlPullParserException e) {
 			LogCtrl.getInstance().error("EnrollActivity::XmlPullParserException: " + e.toString());
 			return false;
@@ -1202,5 +1208,5 @@ public class XmlPullParserAided /*extends Activity*/{
 	public XmlDictionary GetRmvPwdDictionary() { return this.m_xmlRmvPwdDictionary;}
 	public List<String> GetSubjectList() { return this.m_StrListScepSubject;}
 	public XmlKeyWord GetXmlKeyWord() { return this.m_xmlKeyword;}
-
+	public String GetCacert() {return GetDictionary().getCacert();}
 }
