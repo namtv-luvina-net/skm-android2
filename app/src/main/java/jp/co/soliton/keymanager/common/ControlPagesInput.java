@@ -43,9 +43,7 @@ public class ControlPagesInput {
 					.error_install_certificate));
 			return activity.getString(R.string.error_install_certificate);
 		}
-		List<XmlStringData> listPayloadContent = m_p_aided.GetDictionary().GetArrayString();
-		cacert = listPayloadContent.get(listPayloadContent.size() - 1).GetData();
-		cacert = String.format("%s\n%s\n%s", "-----BEGIN CERTIFICATE-----", cacert, "-----END CERTIFICATE-----");
+		cacert = m_p_aided.GetCacert();
 		//Install certificate
 		Intent intent = KeyChain.createInstallIntent();
 		try {
