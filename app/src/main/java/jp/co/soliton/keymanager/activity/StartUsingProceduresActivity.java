@@ -36,6 +36,15 @@ public class StartUsingProceduresActivity extends Activity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == 10) {
+		    if (resultCode == RESULT_OK) {
+			    LogCtrl.getInstance().info("Proc: CA Certificate Installation Successful");
+			    StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
+		    } else {
+			    LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
+			    goToListApply();
+		    }
+	    }
 	    if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {
 		    StartUsingProceduresControl.getInstance(this).afterIntallCert();
 		    // After CertificateEnrollTask
@@ -59,15 +68,6 @@ public class StartUsingProceduresActivity extends Activity {
 		    } else {
 			    finish();
 		    }
-	    } else if (requestCode == ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT) {
-		    if (resultCode == Activity.RESULT_OK) {
-				LogCtrl.getInstance().info("Proc: CA Certificate Installation Successful");
-			    StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
-		    }
-		    else {
-				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
-			    goToListApply();
-			}
 	    }
     }
 

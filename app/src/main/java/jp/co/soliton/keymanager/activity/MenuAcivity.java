@@ -458,6 +458,15 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 10) {
+			if (resultCode == RESULT_OK) {
+				LogCtrl.getInstance().info("Proc: CA Certificate Installation Successful");
+				StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
+			} else {
+				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
+				goBackElementApply();
+			}
+		}
 		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT) {
 			((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
 		}
@@ -479,13 +488,6 @@ public class MenuAcivity extends FragmentActivity {
 				StartUsingProceduresControl.getInstance(this).resultWithRequestCodeMDM();
 			} else {
 				finish();
-			}
-		} else if (requestCode == ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT) {
-			if (resultCode == Activity.RESULT_OK) {
-				StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
-			} else {
-				LogCtrl.getInstance().warn("Proc: CA Certificate Installation Cancelled");
-				goBackElementApply();
 			}
 		}
 	}

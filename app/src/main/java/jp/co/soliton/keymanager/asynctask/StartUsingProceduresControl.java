@@ -680,46 +680,29 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	/**
 	 * Task download certificate
 	 */
-	private class DownloadCACertificateTask extends AsyncTask<Void, Void, Boolean> {
+	private class DownloadCACertificateTask extends AsyncTask<Requester, Void, Boolean> {
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			HttpConnectionCtrl conn = new HttpConnectionCtrl(activity);
-			//send request to server
-			boolean ret = conn.RunHttpDownloadCertificate(m_InformCtrlCA);
-			//parse result return
-			if (ret == false) {
-				LogCtrl.getInstance().error("Download CA Certificate: Connection error");
-				m_nErroType = ERR_NETWORK;
-				return false;
+		protected Boolean doInBackground(Requester... params) {
+			boolean ret;
+			try {
+				Requester requester = params[0];
+				m_InformCtrlCA.SetURL(m_strServerURL);
+				// Get CA Certificate
+				cACertificateStore = requester.getCACertificate(m_strServerURL/*"http://10.30.127.44/ca/NaScepEPSap.cgi"*/);
+				CertificateUtility.certStoreToKeyChain(activity, cACertificateStore,/*"epspCA"*/m_strCertArias);
+				m_nErroType = SUCCESSFUL;
+				ret = true;
+			} catch (RequesterException e) {
+				e.printStackTrace();
+				ret = false;
 			}
-
-			String retStr = m_InformCtrlCA.GetRtn();
-
-			// ログイン結果
-			if (retStr.startsWith(activity.getText(R.string.Forbidden).toString())) {
-				LogCtrl.getInstance().error("Download CA Certificate: Receive " + retStr);
-				m_nErroType = ERR_FORBIDDEN;
-				return false;
-			} else if (retStr.startsWith(activity.getText(R.string.Unauthorized).toString())) {
-				LogCtrl.getInstance().error("Download CA Certificate: Receive " + retStr);
-				m_nErroType = ERR_UNAUTHORIZED;
-				return false;
-			} else if (retStr.startsWith(activity.getText(R.string.ERR).toString())) {
-				LogCtrl.getInstance().error("Download CA Certificate: Receive " + retStr);
-				m_nErroType = ERR_COLON;
-				return false;
-			}
-			m_nErroType = SUCCESSFUL;
-
 			return ret;
 		}
 
 		@Override
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
-			if (result) {
-				installCACert();
-			} else {
+			if (!result) {
 				endConnection(result);
 			}
 		}
@@ -731,41 +714,9 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			String url = String.format("%s:%s", element.getHost(), element.getPort());
 			m_InformCtrlCA.SetURL(url);
 			//Open thread download cert
-			new DownloadCACertificateTask().execute();
+			new DownloadCACertificateTask().execute(scepRequester);
 		} else {
 			new CertificateEnrollTask().execute(scepRequester);
-		}
-	}
-
-	/**
-	 * Download and install certificate
-	 */
-	private void installCACert() {
-		//Extract certificate from .mobileconfig file
-		String cacert = m_InformCtrlCA.GetRtn();
-		cacert = cacert.substring(cacert.indexOf("<?xml"));
-		cacert = cacert.substring(0, cacert.indexOf("</plist>") + 8);
-		XmlPullParserAided m_p_aided = new XmlPullParserAided(activity, cacert, 2);	// 最上位dictの階層は2になる
-		boolean ret = m_p_aided.TakeApartProfileList();
-		if (!ret) {
-			showMessage(activity.getString(R.string.error_install_certificate));
-			return;
-		}
-		cacert = m_p_aided.GetCacert();
-		//Install certificate
-		Intent intent = KeyChain.createInstallIntent();
-		try {
-			LogCtrl.getInstance().info("Proc: Install CA Certificate for Wi-Fi " + Integer.toString(cacert.length()));
-			LogCtrl.getInstance().debug(cacert);
-
-			javax.security.cert.X509Certificate x509 = javax.security.cert.X509Certificate.getInstance(cacert.getBytes());
-			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
-			intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
-			activity.startActivityForResult(intent, ViewPagerInputActivity.REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT);
-		} catch (Exception e) {
-			LogCtrl.getInstance().error("StartUsingProceduresActivity:installCACert:Exception: " + activity.getString(R.string
-					.error_install_certificate));
-			showMessage(activity.getString(R.string.error_install_certificate));
 		}
 	}
 }

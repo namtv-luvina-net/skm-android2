@@ -33,7 +33,6 @@ import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INS
 
 public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyboardCtrl.DetectsListenner{
     public static int REQUEST_CODE_APPLY_COMPLETE        = 4953;
-    public static int REQUEST_CODE_INSTALL_CERTIFICATION_VIEWPAGER_INPUT = 4954;
 
     private InputApplyViewPager mViewPager;
     private ViewPagerAdapter adapter;
