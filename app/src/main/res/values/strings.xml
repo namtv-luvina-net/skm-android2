@@ -224,4 +224,5 @@
 	<string name="content_dialog_ask_delete_cert">Are you sure you want to delete it?</string>
 	<string name="no">No</string>
 	<string name="yes">Yes</string>
+	<string name="handler_failed">Handler failed.</string>
 </resources>

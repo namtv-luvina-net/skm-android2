@@ -8,17 +8,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.scep.Requester;
 import jp.co.soliton.keymanager.scep.RequesterException;
@@ -234,8 +231,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		} else {
 			//show error message
 			if (m_nErroType == ERR_FORBIDDEN) {
-				String str_forbidden = activity.getString(R.string.Forbidden);
-				showMessage(m_InformCtrl.GetRtn().substring(str_forbidden.length()));
+				showMessage(activity.getString(R.string.handler_failed));
 			} else if (m_nErroType == ERR_UNAUTHORIZED) {
 				String str_unauth = activity.getString(R.string.Unauthorized);
 				showMessage(m_InformCtrl.GetRtn().substring(str_unauth.length()));
