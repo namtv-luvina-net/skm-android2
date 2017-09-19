@@ -19,6 +19,7 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 	private TextView tvValueUserId;
 	private TextView tvValueApplyDate;
 	private TextView tvValueStatus;
+	private TextView tvStorage;
 	private String[] listData;
 	private View viewFragment;
 
@@ -37,16 +38,18 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 		tvValueUserId = (TextView) viewFragment.findViewById(R.id.tv_value_user_id);
 		tvValueApplyDate = (TextView) viewFragment.findViewById(R.id.tv_value_apply_date);
 		tvValueStatus = (TextView) viewFragment.findViewById(R.id.tv_value_status);
+		tvStorage = (TextView) viewFragment.findViewById(R.id.tv_storage);
 		updateLeftsideInputPasswordTablet();
 		return viewFragment;
 	}
 
 	private void updateLeftsideInputPasswordTablet() {
-		if (listData == null || listData.length != 4) return;
+		if (listData == null || listData.length != 5) return;
 		setTvValueHost(listData[0]);
 		setTvValueUserId(listData[1]);
-		setTvValueApplyDate(listData[2]);
-		setTvValueStatus(listData[3]);
+		setTvStorage(listData[2]);
+		setTvValueApplyDate(listData[3]);
+		setTvValueStatus(listData[4]);
 	}
 
 	public void setTvValueHost(String str) {
@@ -60,6 +63,9 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 	}
 	public void setTvValueStatus(String str) {
 		tvValueStatus.setText(str);
+	}
+	public void setTvStorage(String str) {
+		tvStorage.setText(str);
 	}
 
 	@Override

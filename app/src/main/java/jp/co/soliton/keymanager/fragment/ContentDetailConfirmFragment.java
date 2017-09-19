@@ -22,11 +22,13 @@ public class ContentDetailConfirmFragment extends Fragment {
 	private ElementApplyManager elementMgr;
 	private TextView tvHostName;
 	private TextView tvUserId;
+	private TextView titleStorage;
+	private TextView contentStorage;
 	private TextView tvDate;
 	private TextView tvStatus;
 	private TextView tvDeleteApply;
 	private TextView tvConfirmApply;
-	private String[] listData = new String[4];
+	private String[] listData = new String[5];
 	private View viewFragment;
 
 	public static Fragment newInstance() {
@@ -41,6 +43,8 @@ public class ContentDetailConfirmFragment extends Fragment {
 		elementMgr = new ElementApplyManager(getActivity());
 		tvHostName = (TextView) viewFragment.findViewById(R.id.tvHostName);
 		tvUserId = (TextView) viewFragment.findViewById(R.id.titleUserId);
+		titleStorage = (TextView) viewFragment.findViewById(R.id.title_storage);
+		contentStorage = (TextView) viewFragment.findViewById(R.id.content_storage);
 		tvDate = (TextView) viewFragment.findViewById(R.id.tvDate);
 		tvStatus = (TextView) viewFragment.findViewById(R.id.tvStatus);
 		tvDeleteApply = (TextView) viewFragment.findViewById(R.id.tvDeleteApply);
@@ -64,11 +68,26 @@ public class ContentDetailConfirmFragment extends Fragment {
 			tvUserId.setText(detail.getUserId());
 			listData[1] = detail.getUserId();
 		}
+		if (detail.getTarger() != null) {
+			titleStorage.setVisibility(View.VISIBLE);
+			contentStorage.setVisibility(View.VISIBLE);
+			String storage;
+			if (detail.getTarger().startsWith("WIFI")) {
+				storage = getString(R.string.main_apid_wifi);
+			} else {
+				storage = getString(R.string.main_apid_vpn);
+			}
+			contentStorage.setText(storage);
+			listData[2] = storage;
+		} else {
+			titleStorage.setVisibility(View.GONE);
+			contentStorage.setVisibility(View.GONE);
+		}
 		if (detail.getUpdateDate() != null) {
 			String updateDate = detail.getUpdateDate().split(" ")[0];
 			updateDate = updateDate.replace("-", "/");
 			tvDate.setText(updateDate);
-			listData[2] = updateDate;
+			listData[3] = updateDate;
 		}
 		String desLeftSideTablet = "";
 		String status = "";
@@ -86,7 +105,7 @@ public class ContentDetailConfirmFragment extends Fragment {
 			desLeftSideTablet = getString(R.string.failed_to_get_ca);
 		}
 		tvStatus.setText(status);
-		listData[3] = status;
+		listData[4] = status;
 		((MenuAcivity) getActivity()).updateDesLeftSideDetailConfirm(desLeftSideTablet);
 
 		if (detail.getStatus() == ElementApply.STATUS_APPLY_PENDING) {

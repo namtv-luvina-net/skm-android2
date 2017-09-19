@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 	android:orientation="vertical">
 	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_item_confirm_apply_tablet"
+			android:layout_height="match_parent"
 			android:orientation="vertical"
 			android:paddingLeft="@dimen/padding_left_content_item_confirm_apply_tablet">
 		<LinearLayout
@@ -19,25 +19,28 @@
 			<ImageView
 					android:id="@+id/thumbnail"
 					android:layout_width="0dp"
-					android:layout_height="match_parent"
+					android:layout_height="100dp"
 					android:layout_weight="90"
 					android:layout_gravity="center"
-					android:paddingLeft="@dimen/pading_left_img_item_confirm_apply_tablet"
-					android:paddingRight="@dimen/pading_right_img_item_confirm_apply_tablet"
-					android:scaleType="centerCrop"
+					android:layout_marginLeft="@dimen/pading_left_img_item_confirm_apply_tablet"
+					android:layout_marginRight="@dimen/pading_right_img_item_confirm_apply_tablet"
+					android:scaleType="centerInside"
 					android:src="@drawable/ic_approval_confirmation"/>
 
 			<LinearLayout
 					android:layout_width="0dp"
-					android:layout_height="match_parent"
+					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
+					android:layout_gravity="center_vertical"
 					android:orientation="horizontal"
-					android:layout_weight="520" >
-				<RelativeLayout
+					android:layout_weight="520">
+
+				<LinearLayout
 						android:layout_width="0dp"
-						android:layout_height="match_parent"
 						android:layout_weight="1"
+						android:layout_height="match_parent"
 						android:gravity="center_vertical"
+						android:orientation="vertical"
 						android:layout_marginRight="@dimen/margin_item_menu">
 
 					<TextView
@@ -47,38 +50,63 @@
 							android:text="@string/title_host_name"
 							android:textColor="@color/text_color"
 							android:textSize="@dimen/text_size_btn_content_tablet"/>
+
 					<TextView
 							android:id="@+id/titleUserId"
-							android:layout_width="fill_parent"
+							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
 							android:layout_below="@id/titleDateInfo"
 							android:textSize="@dimen/text_size_btn_content_tablet"
 							android:ellipsize="end"
 							android:singleLine="true"
 							android:textColor="@color/text_color"
-							android:text="10.0.1.68" />
+							android:text="10.0.1.68"/>
+
 					<TextView
 							android:id="@+id/titleID"
-							android:layout_width="fill_parent"
+							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
 							android:layout_above="@id/tvIdValue"
+							android:layout_marginTop="10dp"
 							android:textSize="@dimen/text_size_btn_content_tablet"
 							android:textColor="@color/text_color"
-							android:text="@string/title_user_id" />
+							android:text="@string/title_user_id"/>
+
 					<TextView
 							android:id="@+id/tvIdValue"
-							android:layout_width="fill_parent"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:ellipsize="end"
+							android:singleLine="true"
+							android:textColor="@color/text_color"
+							android:text="anhvt"/>
+
+					<TextView
+							android:id="@+id/titleStorage"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_above="@id/tvIdValue"
+							android:layout_marginTop="10dp"
+							android:textSize="@dimen/text_size_btn_content_tablet"
+							android:textColor="@color/text_color"
+							android:text="@string/title_storage"/>
+
+					<TextView
+							android:id="@+id/contentStorage"
+							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
 							android:textSize="@dimen/text_size_btn_content_tablet"
 							android:ellipsize="end"
 							android:singleLine="true"
 							android:layout_alignParentBottom="true"
 							android:textColor="@color/text_color"
-							android:text="anhvt" />
-				</RelativeLayout>
+							android:text="anhvt"/>
+				</LinearLayout>
+
 				<RelativeLayout
 						android:layout_width="wrap_content"
-						android:layout_height="match_parent" >
+						android:layout_height="match_parent">
 
 					<TextView
 							android:id="@+id/tvUpdateDate"
@@ -87,6 +115,7 @@
 							android:text="Date: 20/01/2017"
 							android:textColor="@color/text_color"
 							android:textSize="@dimen/text_size_btn_content_tablet"/>
+
 					<TextView
 							android:id="@+id/tvStatus"
 							android:layout_width="wrap_content"
@@ -95,7 +124,6 @@
 							android:text="@string/stt_waiting_approval"
 							android:textColor="@color/text_color_active"
 							android:textSize="@dimen/text_size_btn_content_tablet"/>
-
 				</RelativeLayout>
 			</LinearLayout>
 
@@ -104,13 +132,12 @@
 					android:layout_width="@dimen/width_img_arrow_item_confirm_apply_tablet"
 					android:layout_gravity="center"
 					android:layout_weight="57"
-					android:src="@drawable/ic_arrow"
-					/>
+					android:src="@drawable/ic_arrow"/>
 		</LinearLayout>
+
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="2dp"
 				android:background="#c9caca"/>
 	</LinearLayout>
-
 </LinearLayout>

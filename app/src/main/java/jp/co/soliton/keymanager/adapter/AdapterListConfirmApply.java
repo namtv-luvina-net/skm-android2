@@ -28,6 +28,8 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
         public TextView titleID;
         public TextView tvIdValue;
         public TextView tvStatus;
+        public TextView titleStorage;
+        public TextView contentStorage;
     }
 
     /**
@@ -86,6 +88,8 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
             viewHolder.titleID = (TextView) convertView.findViewById(R.id.titleID);
             viewHolder.tvIdValue = (TextView) convertView.findViewById(R.id.tvIdValue);
             viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
+            viewHolder.titleStorage = (TextView) convertView.findViewById(R.id.titleStorage);
+            viewHolder.contentStorage = (TextView) convertView.findViewById(R.id.contentStorage);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -94,6 +98,18 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
         if (listElementApply.get(position).getHost() != null) {
             viewHolder.tvHostValue.setText(listElementApply.get(position).getHost());
         }
+	    if (listElementApply.get(position).getTarger() != null) {
+		    viewHolder.titleStorage.setVisibility(View.VISIBLE);
+		    viewHolder.contentStorage.setVisibility(View.VISIBLE);
+		    if (listElementApply.get(position).getTarger().startsWith("WIFI")) {
+			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_wifi));
+		    } else {
+			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_vpn));
+		    }
+	    } else {
+		    viewHolder.titleStorage.setVisibility(View.GONE);
+		    viewHolder.contentStorage.setVisibility(View.GONE);
+	    }
         if (listElementApply.get(position).getUserId() != null) {
             viewHolder.tvIdValue.setText(listElementApply.get(position).getUserId());
         }

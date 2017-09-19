@@ -25,6 +25,8 @@ public class DetailConfirmActivity extends FragmentActivity {
 
 	private TextView tvHostName;
 	private TextView tvUserId;
+	private TextView titleStorage;
+	private TextView contentStorage;
 	private TextView tvDate;
 	private TextView tvStatus;
 	private TextView title;
@@ -40,6 +42,8 @@ public class DetailConfirmActivity extends FragmentActivity {
 	    title = (TextView) findViewById(R.id.tvTitleHeader);
 		tvHostName = (TextView) findViewById(R.id.tvHostName);
 		tvUserId = (TextView) findViewById(R.id.titleUserId);
+	    titleStorage = (TextView) findViewById(R.id.title_storage);
+	    contentStorage = (TextView) findViewById(R.id.content_storage);
 		tvDate = (TextView) findViewById(R.id.tvDate);
 		tvStatus = (TextView) findViewById(R.id.tvStatus);
 		tvDeleteApply = (TextView) findViewById(R.id.tvDeleteApply);
@@ -71,6 +75,18 @@ public class DetailConfirmActivity extends FragmentActivity {
 		}
 		if (detail.getUserId() != null) {
 			tvUserId.setText(detail.getUserId());
+		}
+		if (detail.getTarger() != null) {
+			titleStorage.setVisibility(View.VISIBLE);
+			contentStorage.setVisibility(View.VISIBLE);
+			if (detail.getTarger().startsWith("WIFI")) {
+				contentStorage.setText(getString(R.string.main_apid_wifi));
+			} else {
+				contentStorage.setText(getString(R.string.main_apid_vpn));
+			}
+		} else {
+			titleStorage.setVisibility(View.GONE);
+			contentStorage.setVisibility(View.GONE);
 		}
 		if (detail.getUpdateDate() != null) {
 			String updateDate = detail.getUpdateDate().split(" ")[0];
@@ -109,7 +125,6 @@ public class DetailConfirmActivity extends FragmentActivity {
 					clickReApply(v);
 				}
 			});
-
 			tvDeleteApply.setText(getString(R.string.delete_apply));
 			tvDeleteApply.setOnClickListener(new View.OnClickListener() {
 				@Override
