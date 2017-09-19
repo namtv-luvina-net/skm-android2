@@ -190,6 +190,7 @@
 	<string name="title_status">ステータス :</string>
 	<string name="title_store">ストア :</string>
 	<string name="title_user_id">ユーザーID :</string>
+	<string name="title_storage">格納先 :</string>
 	<string name="txt_complete_using_procedures">利用開始手続きが完了しました</string>
 	<string name="user_id_is_invalid">ユーザーIDが無効です</string>
 	<string name="validity_period">有効期間</string>

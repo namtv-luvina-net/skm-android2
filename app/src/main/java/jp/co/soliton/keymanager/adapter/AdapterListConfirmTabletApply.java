@@ -29,6 +29,8 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
         public TextView tvIdValue;
         public TextView tvStatus;
         public TextView tvUpdateDate;
+	    public TextView titleStorage;
+	    public TextView contentStorage;
     }
 
     /**
@@ -88,6 +90,8 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
             viewHolder.tvIdValue = (TextView) convertView.findViewById(R.id.tvIdValue);
             viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
             viewHolder.tvUpdateDate = (TextView) convertView.findViewById(R.id.tvUpdateDate);
+	        viewHolder.titleStorage = (TextView) convertView.findViewById(R.id.titleStorage);
+	        viewHolder.contentStorage = (TextView) convertView.findViewById(R.id.contentStorage);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -100,6 +104,18 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
         if (elementApply.getUserId() != null) {
             viewHolder.tvIdValue.setText(elementApply.getUserId());
         }
+	    if (listElementApply.get(position).getTarger() != null) {
+		    viewHolder.titleStorage.setVisibility(View.VISIBLE);
+		    viewHolder.contentStorage.setVisibility(View.VISIBLE);
+		    if (listElementApply.get(position).getTarger().startsWith("WIFI")) {
+			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_wifi));
+		    } else {
+			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_vpn));
+		    }
+	    } else {
+		    viewHolder.titleStorage.setVisibility(View.GONE);
+		    viewHolder.contentStorage.setVisibility(View.GONE);
+	    }
         if (elementApply.getStatus() == ElementApply.STATUS_APPLY_CANCEL) {
             viewHolder.tvStatus.setText(getContext().getText(R.string.stt_cancel));
         } else if (elementApply.getStatus() == ElementApply.STATUS_APPLY_PENDING) {

@@ -27,16 +27,16 @@
         android:orientation="vertical"
         android:layout_weight="5"
         >
-        <TextView
-            android:id="@+id/titleDateInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thumbnail"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:text="@string/title_host_name"
-            android:textColor="@color/text_color"
-            android:textSize="14dp"/>
-        <TextView
+
+	    <TextView
+			    android:id="@+id/titleDateInfo"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/title_host_name"
+			    android:textColor="@color/text_color"
+			    android:textSize="14dp"/>
+
+	    <TextView
             android:id="@+id/titleUserId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,6 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/text_color"
-            android:layout_toRightOf="@+id/thumbnail"
             android:text="" />
         <TextView
             android:id="@+id/titleID"
@@ -55,7 +54,6 @@
             android:layout_marginTop="10dp"
             android:textSize="14dp"
             android:textColor="@color/text_color"
-            android:layout_toRightOf="@+id/thumbnail"
             android:text="@string/title_user_id" />
         <TextView
             android:id="@+id/tvIdValue"
@@ -66,7 +64,25 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/text_color"
-            android:layout_toRightOf="@+id/thumbnail"
+            android:text="" />
+        <TextView
+            android:id="@+id/titleStorage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleUserId"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="@color/text_color"
+            android:text="@string/title_storage" />
+        <TextView
+            android:id="@+id/contentStorage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleID"
+            android:textSize="14dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text_color"
             android:text="" />
     </LinearLayout>
 
