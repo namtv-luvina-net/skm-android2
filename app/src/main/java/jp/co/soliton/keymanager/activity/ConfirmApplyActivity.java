@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,7 +16,6 @@ import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
  * Created by luongdolong on 2/7/2017.
@@ -95,7 +97,7 @@ public class ConfirmApplyActivity extends Activity {
         Intent intent = getIntent();
         m_InformCtrl = (InformCtrl)intent.getSerializableExtra(StringList.m_str_InformCtrl);
         update_apply = intent.getStringExtra(StringList.UPDATE_APPLY);
-        conn = new HttpConnectionCtrl(this);
+	    conn = new HttpConnectionCtrl(this);
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
         }
@@ -144,7 +146,7 @@ public class ConfirmApplyActivity extends Activity {
     private void initValueControl() {
         txtConfirmHostname.setText(inputApplyInfo.getHost());
         txtConfirmPortnumber.setText(inputApplyInfo.getSecurePort());
-        if (InputBasePageFragment.TARGET_VPN.equals(inputApplyInfo.getPlace())) {
+        if (TARGET_VPN.equals(inputApplyInfo.getPlace())) {
             txtConfirmTargetPlace.setText(getString(R.string.main_apid_vpn));
         } else {
             txtConfirmTargetPlace.setText(getString(R.string.main_apid_wifi));
@@ -187,7 +189,8 @@ public class ConfirmApplyActivity extends Activity {
         progressDialog.dismiss();
         //request with result error
         if (!result) {
-            if (reTry) {
+	        Log.d("ConfirmApplyActivity", "datnd:endConnection: 1");
+	        if (reTry) {
                 new ProcessApplyTask().execute();
                 return;
             }
@@ -223,7 +226,8 @@ public class ConfirmApplyActivity extends Activity {
                 return;
             }
             //parse result for next action
-            parseResult();
+	        Log.d("ConfirmApplyActivity", "datnd:endConnection: 3");
+	        parseResult();
         }
     }
 
@@ -231,7 +235,7 @@ public class ConfirmApplyActivity extends Activity {
      * Parse result from server return
      */
     private void parseResult() {
-        if (mapKey.containsKey(StringList.m_str_isConnected) && !mapKey.get(StringList.m_str_isConnected)) {
+	    if (mapKey.containsKey(StringList.m_str_isConnected) && !mapKey.get(StringList.m_str_isConnected)) {
             btnApply.setEnabled(true);
             showMessage(getString(R.string.login_failed));
             return;
@@ -269,7 +273,7 @@ public class ConfirmApplyActivity extends Activity {
     private void makeParameterApply() {
         String storeString;
         String rtnserial;
-        if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+        if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
             storeString = "Wi-Fi";
             rtnserial = XmlPullParserAided.GetUDID(this);
         } else {
@@ -328,11 +332,11 @@ public class ConfirmApplyActivity extends Activity {
 
     private void saveElementApply() {
 	    if (!ValidateParams.nullOrEmpty(update_apply)) {
-            elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
+		    Log.d("ConfirmApplyActivity", "datnd:saveElementApply: 1  " + update_apply );
+		    elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
         }
-
         String rtnserial;
-        if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+        if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
             rtnserial = "WIFI" + XmlPullParserAided.GetUDID(this);
         } else {
             rtnserial = "APP" + XmlPullParserAided.GetVpnApid(this);
@@ -345,6 +349,7 @@ public class ConfirmApplyActivity extends Activity {
         elementApply.setPassword(inputApplyInfo.getPassword());
         elementApply.setEmail(inputApplyInfo.getEmail());
         elementApply.setReason(inputApplyInfo.getReason());
+        elementApply.setVersionEpsAp(inputApplyInfo.getVersionEpsap());
         elementApply.setTarger(rtnserial);
         elementApply.setStatus(ElementApply.STATUS_APPLY_PENDING);
         if (mapKey.containsKey(StringList.m_str_scep_challenge)) {
@@ -352,7 +357,7 @@ public class ConfirmApplyActivity extends Activity {
         } else {
             elementApply.setChallenge(false);
         }
-        elementMgr.saveElementApply(elementApply);
+	    elementMgr.saveElementApply(elementApply);
     }
 
     /**
@@ -368,7 +373,8 @@ public class ConfirmApplyActivity extends Activity {
             boolean ret;
             //Call to server
             ret = conn.RunHttpApplyCerUrlConnection(m_InformCtrl);
-            //Parse result
+	        Log.d("ProcessApplyTask", "datnd:doInBackground: ConfirmApplyActivity =" + ret);
+	        //Parse result
             if (!ret) {
                 if (errorCount > 10) {
                     m_nErroType = ERR_ESPAP_NOT_CONNECT;
@@ -449,7 +455,7 @@ public class ConfirmApplyActivity extends Activity {
                 for(int i = 0; str_list.size() > i; i++){
                     // config情報に従って、処理を行う.
                     XmlStringData p_data = str_list.get(i);
-                    // 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
+	                // 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
                     if(StringList.m_str_isConnected.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         mapKey.put(StringList.m_str_isConnected, 6 == p_data.GetType());
                     }

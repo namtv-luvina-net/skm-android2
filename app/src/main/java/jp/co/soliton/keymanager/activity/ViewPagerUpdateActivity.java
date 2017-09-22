@@ -23,6 +23,9 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 import java.util.ArrayList;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+
 /**
  * Created by luongdolong on 2/3/2017.
  * Activity for input screen apply
@@ -60,10 +63,10 @@ public class ViewPagerUpdateActivity extends FragmentActivity implements SoftKey
             getInputApplyInfo().setHost(detail.getHost());
             getInputApplyInfo().setPort(detail.getPort());
             getInputApplyInfo().setSecurePort(detail.getPortSSL());
-            if (detail.getTarger().startsWith("WIFI")) {
-                getInputApplyInfo().setPlace(ReapplyBasePageFragment.TARGET_WiFi);
+            if (detail.getTarget().startsWith("WIFI")) {
+                getInputApplyInfo().setPlace(TARGET_WiFi);
             } else {
-                getInputApplyInfo().setPlace(ReapplyBasePageFragment.TARGET_VPN);
+                getInputApplyInfo().setPlace(TARGET_VPN);
             }
             getInputApplyInfo().setUserId(detail.getUserId());
             getInputApplyInfo().savePref(this);

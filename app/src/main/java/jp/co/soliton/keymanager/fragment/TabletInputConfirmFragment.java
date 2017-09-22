@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -120,7 +122,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		inputApplyInfo = InputApplyInfo.getPref(getActivity());
 		txtHostName.setText(inputApplyInfo.getHost());
 		txtPortName.setText(inputApplyInfo.getSecurePort());
-		if (InputBasePageFragment.TARGET_VPN.equals(inputApplyInfo.getPlace())) {
+		if (TARGET_VPN.equals(inputApplyInfo.getPlace())) {
 			txtStore.setText(getString(R.string.main_apid_vpn));
 		} else {
 			txtStore.setText(getString(R.string.main_apid_wifi));
@@ -157,7 +159,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	private void makeParameterApply() {
 		String storeString;
 		String rtnserial;
-		if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+		if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
 			storeString = "Wi-Fi";
 			rtnserial = XmlPullParserAided.GetUDID(getActivity());
 		} else {
@@ -290,7 +292,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		}
 
 		String rtnserial;
-		if (InputBasePageFragment.TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+		if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
 			rtnserial = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
 		} else {
 			rtnserial = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
@@ -304,6 +306,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		elementApply.setEmail(inputApplyInfo.getEmail());
 		elementApply.setReason(inputApplyInfo.getReason());
 		elementApply.setTarger(rtnserial);
+		elementApply.setVersionEpsAp(inputApplyInfo.getVersionEpsap());
 		elementApply.setStatus(ElementApply.STATUS_APPLY_PENDING);
 		if (mapKey.containsKey(StringList.m_str_scep_challenge)) {
 			elementApply.setChallenge(mapKey.get(StringList.m_str_scep_challenge));

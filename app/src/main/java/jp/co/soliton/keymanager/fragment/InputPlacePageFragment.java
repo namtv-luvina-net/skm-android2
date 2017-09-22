@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+
 /**
  * Created by luongdolong on 2/3/2017.
  *
@@ -45,7 +48,7 @@ public class InputPlacePageFragment extends InputBasePageFragment {
         btnTargetVPN = (Button) root.findViewById(R.id.btnTargetVPN);
         btnTargetWiFi = (Button) root.findViewById(R.id.btnTargetWifi);
         if (pagerInputActivity.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
-            pagerInputActivity.getInputApplyInfo().setPlace(InputPlacePageFragment.TARGET_VPN);
+            pagerInputActivity.getInputApplyInfo().setPlace(TARGET_VPN);
             pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
             zoneInputPlace.setVisibility(View.GONE);
         }

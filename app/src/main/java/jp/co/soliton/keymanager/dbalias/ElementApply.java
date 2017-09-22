@@ -29,6 +29,7 @@ public class ElementApply implements Serializable {
     private String email;
     private String reason;
     private String targer;
+    private String versionEpsAp;
     private int status;
     private boolean challenge;
     private String updateDate;
@@ -132,7 +133,7 @@ public class ElementApply implements Serializable {
         this.reason = reason;
     }
 
-    public String getTarger() {
+    public String getTarget() {
         return targer;
     }
 
@@ -428,7 +429,15 @@ public class ElementApply implements Serializable {
         this.certificateAuthorityUri = certificateAuthorityUri;
     }
 
-    public String getPurpose() {
+	public String getVersionEpsAp() {
+		return versionEpsAp;
+	}
+
+	public void setVersionEpsAp(String versionEpsAp) {
+		this.versionEpsAp = versionEpsAp;
+	}
+
+	public String getPurpose() {
         return purpose;
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 import javax.net.ssl.*;
 import java.io.BufferedInputStream;
@@ -554,7 +555,7 @@ public class HttpConnectionCtrl {
 		    
 //		    String retCode = new String(buf, 0, i_size);	// バッファの先頭(0)から最後尾(サイズ=i_size)までStringに変換
 		    String retCode = new String(buf_all, 0, i_size_total);
-		    Inf.SetRtn(retCode);
+			Inf.SetRtn(retCode);
 
 			LogCtrl.getInstance().debug("\r\n" + new String(buf_all));
 			

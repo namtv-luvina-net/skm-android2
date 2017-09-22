@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.common.EpsapVersion;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
@@ -25,6 +26,7 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -242,13 +244,47 @@ public class TabletInputUserFragment extends TabletInputFragment {
 				inputApplyInfo.savePref(getActivity());
 				ElementApply element;
 				if (ValidateParams.nullOrEmpty(id_update)) {
-					String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
-							inputApplyInfo.getUserId()));
+					String id;
+					String versionEpsapServer = inputApplyInfo.getVersionEpsap();
+					if (ValidateParams.nullOrEmpty(versionEpsapServer)) {
+						id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+					} else {
+						if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
+							String target;
+							if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+								target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+							} else {
+								target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+							}
+							id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
+									.getUserId(), target));
+						} else {
+							id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+						}
+					}
 					element = elementMgr.getElementApply(id);
 				} else {
-					String host = (inputApplyInfo.getHost());
-					String userId = (inputApplyInfo.getUserId());
-					id_update = String.valueOf(elementMgr.getIdElementApply(host, userId));
+//					String host = (inputApplyInfo.getHost());
+//					String userId = (inputApplyInfo.getUserId());
+//					id_update = String.valueOf(elementMgr.getIdElementApply(host, userId));
+//					String id;
+					String versionEpsapServer = inputApplyInfo.getVersionEpsap();
+					if (ValidateParams.nullOrEmpty(versionEpsapServer)) {
+						id_update = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+					} else {
+						if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
+							String target;
+							if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+								target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+							} else {
+								target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+							}
+							id_update = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
+									.getUserId(), target));
+						} else {
+							id_update = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+						}
+					}
 					element = elementMgr.getElementApply(id_update);
 				}
 				tabletAbtractInputFragment.gotoCompleteApply(informCtrl, element);
@@ -257,8 +293,26 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					saveElementApply();
 					ElementApply element;
 					if (ValidateParams.nullOrEmpty(id_update)) {
-						String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
-								inputApplyInfo.getUserId()));
+//						String id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(),
+//								inputApplyInfo.getUserId()));
+						String id;
+						String versionEpsapServer = inputApplyInfo.getVersionEpsap();
+						if (ValidateParams.nullOrEmpty(versionEpsapServer)) {
+							id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+						} else {
+							if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
+								String target;
+								if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+									target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+								} else {
+									target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+								}
+								id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
+										.getUserId(), target));
+							} else {
+								id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+							}
+						}
 						element = elementMgr.getElementApply(id);
 					} else {
 						element = elementMgr.getElementApply(id_update);
@@ -314,7 +368,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 			elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, id_update);
 		}
 		String rtnserial;
-		if (InputBasePageFragment.TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace())) {
+		if (TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace())) {
 			rtnserial = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
 		} else {
 			rtnserial = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
@@ -329,6 +383,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		elementApply.setEmail("");
 		elementApply.setReason("");
 		elementApply.setTarger(rtnserial);
+		elementApply.setVersionEpsAp(inputApplyInfo.getVersionEpsap());
 		elementApply.setStatus(ElementApply.STATUS_APPLY_PENDING);
 		elementApply.setChallenge(challenge);
 		elementMgr.saveElementApply(elementApply);
@@ -399,7 +454,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					if (StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName())) {
 						isEnroll = true;
 						String rtnserial = "";
-						if (InputBasePageFragment.TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace()
+						if (TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace()
 						)) {
 							rtnserial = XmlPullParserAided.GetUDID(getActivity());
 						} else {
@@ -429,6 +484,16 @@ public class TabletInputUserFragment extends TabletInputFragment {
 							tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 						}
 					}
+					if (StringList.m_str_ver_epsap.equalsIgnoreCase(p_data.GetKeyName())) {
+						if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+							tabletAbtractInputFragment.getInputApplyInfo().setVersionEpsap(p_data.GetData());
+							tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
+						}
+					}
+				}
+				if (ValidateParams.nullOrEmpty(tabletAbtractInputFragment.getInputApplyInfo().getVersionEpsap())) {
+					tabletAbtractInputFragment.getInputApplyInfo().setVersionEpsap("");
+					tabletAbtractInputFragment.getInputApplyInfo().savePref(getActivity());
 				}
 			}
 			////////////////////////////////////////////////////////////////////////////

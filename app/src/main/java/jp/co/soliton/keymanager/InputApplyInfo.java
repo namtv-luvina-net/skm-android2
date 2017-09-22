@@ -16,6 +16,7 @@ public class InputApplyInfo {
     public final static String INPUT_APPLY_PASSWORD    = "input_apply_password";
     public final static String INPUT_APPLY_EMAIL       = "input_apply_email";
     public final static String INPUT_APPLY_REASON      = "input_apply_reason";
+    public final static String VERSION_EPSAP           = "version_epsap";
 
     private String host;
     private String securePort;
@@ -25,6 +26,7 @@ public class InputApplyInfo {
     private String password;
     private String email;
     private String reason;
+    private String versionEpsap;
 
     public String getHost() {
         return host;
@@ -90,7 +92,15 @@ public class InputApplyInfo {
         this.reason = reason;
     }
 
-    public void savePref(Context context) {
+	public String getVersionEpsap() {
+		return versionEpsap;
+	}
+
+	public void setVersionEpsap(String versionEpsap) {
+		this.versionEpsap = versionEpsap;
+	}
+
+	public void savePref(Context context) {
         SharedPreferences pref = context.getSharedPreferences(StringList.m_str_store_preference,
                 context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -134,6 +144,11 @@ public class InputApplyInfo {
         } else {
             editor.remove(INPUT_APPLY_REASON);
         }
+        if (versionEpsap != null && !versionEpsap.isEmpty()) {
+            editor.putString(VERSION_EPSAP, versionEpsap);
+        } else {
+            editor.remove(VERSION_EPSAP);
+        }
         editor.commit();
     }
 
@@ -149,6 +164,7 @@ public class InputApplyInfo {
         inputApplyInfo.setPassword(pref.getString(INPUT_APPLY_PASSWORD, ""));
         inputApplyInfo.setEmail(pref.getString(INPUT_APPLY_EMAIL, ""));
         inputApplyInfo.setReason(pref.getString(INPUT_APPLY_REASON, ""));
+        inputApplyInfo.setVersionEpsap(pref.getString(VERSION_EPSAP, ""));
         return inputApplyInfo;
     }
 
@@ -179,6 +195,9 @@ public class InputApplyInfo {
         }
         if (!pref.getString(INPUT_APPLY_REASON, "").isEmpty()) {
             editor.remove(INPUT_APPLY_REASON);
+        }
+        if (!pref.getString(VERSION_EPSAP, "").isEmpty()) {
+            editor.remove(VERSION_EPSAP);
         }
         editor.commit();
     }

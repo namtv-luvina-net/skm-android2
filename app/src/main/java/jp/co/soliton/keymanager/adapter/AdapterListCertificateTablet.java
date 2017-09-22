@@ -143,8 +143,8 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
 		    if (strCN != null) {
 			    viewHolder.titleCN.setText(strCN);
 		    }
-		    if (elementApply.getTarger() != null) {
-			    if (elementApply.getTarger().startsWith("WIFI")) {
+		    if (elementApply.getTarget() != null) {
+			    if (elementApply.getTarget().startsWith("WIFI")) {
 				    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
 						    .main_apid_wifi));
 			    } else {

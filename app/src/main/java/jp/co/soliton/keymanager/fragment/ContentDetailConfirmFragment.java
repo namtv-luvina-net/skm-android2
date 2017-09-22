@@ -68,11 +68,11 @@ public class ContentDetailConfirmFragment extends Fragment {
 			tvUserId.setText(detail.getUserId());
 			listData[1] = detail.getUserId();
 		}
-		if (detail.getTarger() != null) {
+		if (detail.getTarget() != null) {
 			titleStorage.setVisibility(View.VISIBLE);
 			contentStorage.setVisibility(View.VISIBLE);
 			String storage;
-			if (detail.getTarger().startsWith("WIFI")) {
+			if (detail.getTarget().startsWith("WIFI")) {
 				storage = getString(R.string.main_apid_wifi);
 			} else {
 				storage = getString(R.string.main_apid_vpn);

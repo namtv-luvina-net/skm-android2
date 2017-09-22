@@ -104,10 +104,10 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
         if (elementApply.getUserId() != null) {
             viewHolder.tvIdValue.setText(elementApply.getUserId());
         }
-	    if (listElementApply.get(position).getTarger() != null) {
+	    if (listElementApply.get(position).getTarget() != null) {
 		    viewHolder.titleStorage.setVisibility(View.VISIBLE);
 		    viewHolder.contentStorage.setVisibility(View.VISIBLE);
-		    if (listElementApply.get(position).getTarger().startsWith("WIFI")) {
+		    if (listElementApply.get(position).getTarget().startsWith("WIFI")) {
 			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_wifi));
 		    } else {
 			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_vpn));

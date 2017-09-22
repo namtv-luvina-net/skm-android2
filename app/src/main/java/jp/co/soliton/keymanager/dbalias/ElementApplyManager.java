@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import jp.co.soliton.keymanager.common.EpsapVersion;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,27 +27,33 @@ public class ElementApplyManager {
     }
 
     public void saveElementApply(ElementApply elementApply) {
-        SQLiteDatabase db = databaseHandler.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("host_name", elementApply.getHost());
-        values.put("port", elementApply.getPort());
-        values.put("port_ssl", elementApply.getPortSSL());
-        values.put("user_id", elementApply.getUserId());
-        if (elementApply.getEmail() != null && elementApply.getEmail() != "") {
-            values.put("email", elementApply.getEmail());
-        }
-        if (elementApply.getReason() != null && elementApply.getReason() != "") {
-            values.put("reason", elementApply.getReason());
-        }
-        values.put("target", elementApply.getTarger());
-        values.put("status", elementApply.getStatus());
+	    SQLiteDatabase db = databaseHandler.getWritableDatabase();
+	    ContentValues values = new ContentValues();
+	    values.put("host_name", elementApply.getHost());
+	    values.put("port", elementApply.getPort());
+	    values.put("port_ssl", elementApply.getPortSSL());
+	    values.put("user_id", elementApply.getUserId());
+	    if (elementApply.getEmail() != null && elementApply.getEmail() != "") {
+		    values.put("email", elementApply.getEmail());
+	    }
+	    if (elementApply.getReason() != null && elementApply.getReason() != "") {
+		    values.put("reason", elementApply.getReason());
+	    }
+	    values.put("target", elementApply.getTarget());
+	    values.put("status", elementApply.getStatus());
+	    values.put("epsap_version", elementApply.getVersionEpsAp());
 	    values.put("challenge", elementApply.isChallenge() ? 1 : 0);
 	    values.put("updated_at", getDateWithFomat("yyyy/MM/dd HH:mm:ss"));
-	    int id = getIdElementApply(elementApply.getHost(), elementApply.getUserId());
+	    int id;
+	    if (EpsapVersion.checkVersionValidUseApid(elementApply.getVersionEpsAp())) {
+		    id = getIdElementApply(elementApply.getHost(), elementApply.getUserId(), elementApply.getTarget());
+	    } else {
+		    id = getIdElementApply(elementApply.getHost(), elementApply.getUserId());
+        }
 	    if (id > 0) {
-		    db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
-        } else {
-            db.insert(TABLE_ELEMENT_APPLY, null, values);// Inserting Row
+		    db.update(TABLE_ELEMENT_APPLY, values, "id=" + id, null);
+	    } else {
+		    db.insert(TABLE_ELEMENT_APPLY, null, values);// Inserting Row
         }
         db.close(); // Closing database connection
     }
@@ -56,6 +64,21 @@ public class ElementApplyManager {
         String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ? "
                 + "AND status NOT IN (?,?)";
         Cursor cursor = db.rawQuery(Query, new String[]{host_name,user_id,
+                String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        return id;
+    }
+
+    public int getIdElementApply(String host_name, String user_id, String target) {
+        int id = 0;
+        SQLiteDatabase db = databaseHandler.getReadableDatabase();
+        String Query = "SELECT id FROM " + TABLE_ELEMENT_APPLY + " where host_name = ? AND user_id = ? AND target = ? "
+                + "AND status NOT IN (?,?)";
+        Cursor cursor = db.rawQuery(Query, new String[]{host_name, user_id, target,
                 String.valueOf(ElementApply.STATUS_APPLY_APPROVED),String.valueOf(ElementApply.STATUS_APPLY_CLOSED)});
         if (cursor.moveToFirst()) {
             do {
@@ -98,6 +121,7 @@ public class ElementApplyManager {
                 elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
                 elementApply.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
                 elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
+	            elementApply.setVersionEpsAp(cursor.getString(cursor.getColumnIndexOrThrow("epsap_version")));
                 elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
                 elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
                 elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
@@ -134,6 +158,7 @@ public class ElementApplyManager {
                 elementApply.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
                 elementApply.setUserId(cursor.getString(cursor.getColumnIndexOrThrow("user_id")));
                 elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+                elementApply.setVersionEpsAp(cursor.getString(cursor.getColumnIndexOrThrow("epsap_version")));
                 elementApply.setNotiEnableFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_flag")));
                 elementApply.setNotiEnableBeforeFlag(1 == cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before_flag")));
                 elementApply.setNotiEnableBefore(cursor.getInt(cursor.getColumnIndexOrThrow("noti_enable_before")));
@@ -195,6 +220,7 @@ public class ElementApplyManager {
         elementApply.setReason(cursor.getString(cursor.getColumnIndexOrThrow("reason")));
         elementApply.setTarger(cursor.getString(cursor.getColumnIndexOrThrow("target")));
         elementApply.setStatus(cursor.getInt(cursor.getColumnIndexOrThrow("status")));
+        elementApply.setVersionEpsAp(cursor.getString(cursor.getColumnIndexOrThrow("epsap_version")));
         elementApply.setChallenge(cursor.getInt(cursor.getColumnIndexOrThrow("challenge")) > 0 ? true : false);
         elementApply.setUpdateDate(cursor.getString(cursor.getColumnIndexOrThrow("updated_at")));
         elementApply.setExpirationDate(cursor.getString(cursor.getColumnIndexOrThrow("expiration_date")));
@@ -251,7 +277,8 @@ public class ElementApplyManager {
         SQLiteDatabase db = databaseHandler.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("status", status);
-        db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
+	    Log.d("ElementApplyManager", "datnd:updateStatus: update id = " + id + " - " + status) ;
+	    db.update(TABLE_ELEMENT_APPLY, values, "id="+id, null);
         db.close(); // Closing database connection
     }
 
@@ -284,6 +311,7 @@ public class ElementApplyManager {
         values.put("cn_value", element.getcNValue());
         values.put("sn_value", element.getsNValue());
         values.put("status", ElementApply.STATUS_APPLY_APPROVED);
+	    values.put("epsap_version", element.getVersionEpsAp());
 
         values.put("noti_enable_flag", element.isNotiEnableFlag() ? 1 : 0);
         values.put("noti_enable_before_flag", element.isNotiEnableBeforeFlag() ? 1 : 0);

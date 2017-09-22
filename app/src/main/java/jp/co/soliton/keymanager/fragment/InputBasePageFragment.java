@@ -16,9 +16,6 @@ import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
 public class InputBasePageFragment extends Fragment {
 
-    public final static String TARGET_VPN  = "0";
-    public final static String TARGET_WiFi = "1";
-
     protected ViewPagerInputActivity pagerInputActivity;
     protected DialogApplyProgressBar progressDialog;
     protected InformCtrl m_InformCtrl;

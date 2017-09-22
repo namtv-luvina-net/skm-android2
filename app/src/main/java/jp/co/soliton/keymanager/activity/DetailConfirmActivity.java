@@ -76,10 +76,10 @@ public class DetailConfirmActivity extends FragmentActivity {
 		if (detail.getUserId() != null) {
 			tvUserId.setText(detail.getUserId());
 		}
-		if (detail.getTarger() != null) {
+		if (detail.getTarget() != null) {
 			titleStorage.setVisibility(View.VISIBLE);
 			contentStorage.setVisibility(View.VISIBLE);
-			if (detail.getTarger().startsWith("WIFI")) {
+			if (detail.getTarget().startsWith("WIFI")) {
 				contentStorage.setText(getString(R.string.main_apid_wifi));
 			} else {
 				contentStorage.setText(getString(R.string.main_apid_vpn));

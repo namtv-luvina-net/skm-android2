@@ -182,6 +182,9 @@ public class StringList {
 	//*---- 申請 -----*/
 	// 申請済み
 	public final static String m_str_issubmitted = "IsSubmitted";
+	//Version EPS-ap
+	public final static String m_str_ver_epsap= "EPS-apVersion";
+
 	// MailAddress
 	public final static String m_str_mailaddress = "MailAddress";
 	public final static String m_str_description = "Description";

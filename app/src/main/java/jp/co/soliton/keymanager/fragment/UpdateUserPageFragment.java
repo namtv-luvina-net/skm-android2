@@ -19,6 +19,7 @@ import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerUpdateActivity;
+import jp.co.soliton.keymanager.common.EpsapVersion;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
@@ -32,6 +33,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -181,7 +183,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
     private boolean makeParameterLogon() {
         String strPasswd = txtPassword.getText().toString();
         String rtnserial = "";
-        if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
+        if (TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
             rtnserial = XmlPullParserAided.GetUDID(pagerReapplyActivity);
         } else {
             rtnserial = XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
@@ -221,9 +223,28 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
 	            InputApplyInfo inputApplyInfo = pagerReapplyActivity.getInputApplyInfo();
 	            inputApplyInfo.setPassword(null);
 	            inputApplyInfo.savePref(pagerReapplyActivity);
-	            String host = (inputApplyInfo.getHost());
-	            String userId = (inputApplyInfo.getUserId());
-	            pagerReapplyActivity.idConfirmApply = String.valueOf(elementMgr.getIdElementApply(host, userId));
+//	            String host = (inputApplyInfo.getHost());
+//	            String userId = (inputApplyInfo.getUserId());
+	            String id;
+	            String versionEpsapServer = inputApplyInfo.getVersionEpsap();
+	            if (ValidateParams.nullOrEmpty(versionEpsapServer)) {
+		            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+	            } else {
+		            if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
+			            String target;
+			            if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+				            target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+			            } else {
+				            target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+			            }
+			            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
+					            .getUserId(), target));
+		            } else {
+			            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+		            }
+	            }
+//	            pagerReapplyActivity.idConfirmApply = String.valueOf(elementMgr.getIdElementApply(host, userId));
+                pagerReapplyActivity.idConfirmApply = id;
 	            Intent intent = new Intent(pagerReapplyActivity, CompleteApplyActivity.class);
 	            intent.putExtra(StringList.BACK_AUTO, true);
 	            intent.putExtra(StringList.m_str_InformCtrl, pagerReapplyActivity.getInformCtrl());
@@ -309,20 +330,22 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
         }
         elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, pagerReapplyActivity.idConfirmApply);
         String rtnserial;
-        if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
+        if (TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
             rtnserial = "WIFI" + XmlPullParserAided.GetUDID(pagerReapplyActivity);
         } else {
             rtnserial = "APP" + XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
         }
         ElementApply elementApply = new ElementApply();
-        elementApply.setHost(pagerReapplyActivity.getInputApplyInfo().getHost());
-        elementApply.setPort(pagerReapplyActivity.getInputApplyInfo().getPort());
-        elementApply.setPortSSL(pagerReapplyActivity.getInputApplyInfo().getSecurePort());
-        elementApply.setUserId(pagerReapplyActivity.getInputApplyInfo().getUserId());
-        elementApply.setPassword(pagerReapplyActivity.getInputApplyInfo().getPassword());
+	    InputApplyInfo inputApplyInfo = pagerReapplyActivity.getInputApplyInfo();
+        elementApply.setHost(inputApplyInfo.getHost());
+        elementApply.setPort(inputApplyInfo.getPort());
+        elementApply.setPortSSL(inputApplyInfo.getSecurePort());
+        elementApply.setUserId(inputApplyInfo.getUserId());
+        elementApply.setPassword(inputApplyInfo.getPassword());
         elementApply.setEmail("");
         elementApply.setReason("");
         elementApply.setTarger(rtnserial);
+        elementApply.setVersionEpsAp(inputApplyInfo.getVersionEpsap());
         elementApply.setStatus(ElementApply.STATUS_APPLY_PENDING);
         elementApply.setChallenge(challenge);
         elementMgr.saveElementApply(elementApply);
@@ -394,7 +417,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
                     if(StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         isEnroll = true;
                         String rtnserial = "";
-                        if (InputBasePageFragment.TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
+                        if (TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
                             rtnserial = XmlPullParserAided.GetUDID(pagerReapplyActivity);
                         } else {
                             rtnserial = XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
@@ -424,7 +447,17 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
 			                    pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
 		                    }
                     }
+	                if (StringList.m_str_ver_epsap.equalsIgnoreCase(p_data.GetKeyName())) {
+		                if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+			                pagerReapplyActivity.getInputApplyInfo().setVersionEpsap(p_data.GetData());
+			                pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+		                }
+	                }
                 }
+	            if (ValidateParams.nullOrEmpty(pagerReapplyActivity.getInputApplyInfo().getVersionEpsap())) {
+		            pagerReapplyActivity.getInputApplyInfo().setVersionEpsap("");
+		            pagerReapplyActivity.getInputApplyInfo().savePref(pagerReapplyActivity);
+	            }
             }
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン終了 =========>

@@ -98,10 +98,10 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
         if (listElementApply.get(position).getHost() != null) {
             viewHolder.tvHostValue.setText(listElementApply.get(position).getHost());
         }
-	    if (listElementApply.get(position).getTarger() != null) {
+	    if (listElementApply.get(position).getTarget() != null) {
 		    viewHolder.titleStorage.setVisibility(View.VISIBLE);
 		    viewHolder.contentStorage.setVisibility(View.VISIBLE);
-		    if (listElementApply.get(position).getTarger().startsWith("WIFI")) {
+		    if (listElementApply.get(position).getTarget().startsWith("WIFI")) {
 			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_wifi));
 		    } else {
 			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_vpn));

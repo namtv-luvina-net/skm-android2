@@ -594,7 +594,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		m_DPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		m_DeviceAdmin = new ComponentName(activity, EpsapAdminReceiver.class);
 		String apid;
-		if (element.getTarger().startsWith("WIFI")) {
+		if (element.getTarget().startsWith("WIFI")) {
 			apid = XmlPullParserAided.GetUDID(activity);
 		} else {
 			apid = XmlPullParserAided.GetVpnApid(activity);
@@ -705,7 +705,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	}
 
 	private void DownloadCACertificate(){
-		if (element.getTarger().startsWith("WIFI")) {
+		if (element.getTarget().startsWith("WIFI")) {
 			m_InformCtrlCA = new InformCtrl();
 			String url = String.format("%s:%s", element.getHost(), element.getPort());
 			m_InformCtrlCA.SetURL(url);

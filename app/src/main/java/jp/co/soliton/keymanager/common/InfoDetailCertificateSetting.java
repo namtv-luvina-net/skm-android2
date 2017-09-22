@@ -37,8 +37,8 @@ public class InfoDetailCertificateSetting {
 		//Add child STORAGE DESTINATION
 		List<ItemChildDetailCertSetting> storageDestination = new ArrayList<>();
 		String strTarget = "";
-		if (elementApply.getTarger() != null) {
-			if (elementApply.getTarger().startsWith("WIFI")) {
+		if (elementApply.getTarget() != null) {
+			if (elementApply.getTarget().startsWith("WIFI")) {
 				strTarget = context.getString(R.string.main_apid_wifi);
 			} else {
 				strTarget = context.getString(R.string.main_apid_vpn);

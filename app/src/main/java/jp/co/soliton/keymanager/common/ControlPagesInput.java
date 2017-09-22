@@ -16,6 +16,8 @@ import javax.security.cert.X509Certificate;
 import java.net.URLEncoder;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+
 /**
  * Created by nguyenducdat on 5/5/2017.
  */
@@ -67,7 +69,7 @@ public class ControlPagesInput {
 	 */
 	public boolean makeParameterLogon(String strUserid, String strPasswd, String place, InformCtrl informCtrl) {
 		String rtnserial = "";
-		if (InputBasePageFragment.TARGET_WiFi.equals(place)) {
+		if (TARGET_WiFi.equals(place)) {
 			rtnserial = XmlPullParserAided.GetUDID(activity);
 		} else {
 			rtnserial = XmlPullParserAided.GetVpnApid(activity);

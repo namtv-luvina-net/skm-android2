@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,13 @@ import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.common.EpsapVersion;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+import jp.co.soliton.keymanager.manager.APIDManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
@@ -30,6 +33,8 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
  * Created by luongdolong on 2/3/2017.
@@ -190,7 +195,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
         String strUserid = txtUserId.getText().toString().trim();
         String strPasswd = txtPassword.getText().toString();
         String rtnserial = "";
-        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
+        if (TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
             rtnserial = XmlPullParserAided.GetUDID(pagerInputActivity);
         } else {
             rtnserial = XmlPullParserAided.GetVpnApid(pagerInputActivity);
@@ -224,15 +229,32 @@ public class InputUserPageFragment extends InputBasePageFragment {
         if (result) {
             //check action next
             if (isEnroll) {
-                //save element apply
+	            //save element apply
                 saveElementApply();
-                pagerInputActivity.getInputApplyInfo().setPassword(null);
-                pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+	            InputApplyInfo inputApplyInfo = pagerInputActivity.getInputApplyInfo();
+	            inputApplyInfo.setPassword(null);
+	            inputApplyInfo.savePref(pagerInputActivity);
                 Intent intent = new Intent(pagerInputActivity, CompleteApplyActivity.class);
                 intent.putExtra(StringList.BACK_AUTO, true);
                 intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
-                String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
-                        pagerInputActivity.getInputApplyInfo().getUserId()));
+	            String id;
+	            String versionEpsapServer = inputApplyInfo.getVersionEpsap();
+	            if (ValidateParams.nullOrEmpty(versionEpsapServer)) {
+		            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+	            } else {
+		            if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
+			            String target;
+			            if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+				            target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+			            } else {
+				            target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+			            }
+			            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
+							            .getUserId(), target));
+		            } else {
+			            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+		            }
+	            }
                 ElementApply element = elementMgr.getElementApply(id);
                 intent.putExtra("ELEMENT_APPLY", element);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -240,18 +262,36 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 pagerInputActivity.finish();
             } else {
                 if (isSubmitted) {
-                    saveElementApply();
+	                Log.d("InputUserPageFragment", "datnd:endConnection: isSubmitted");
+	                saveElementApply();
+	                InputApplyInfo inputApplyInfo = pagerInputActivity.getInputApplyInfo();
                     Intent intent = new Intent(pagerInputActivity, CompleteConfirmApplyActivity.class);
                     pagerInputActivity.finish();
                     intent.putExtra("STATUS_APPLY", ElementApply.STATUS_APPLY_PENDING);
-                    String id = String.valueOf(elementMgr.getIdElementApply(pagerInputActivity.getInputApplyInfo().getHost(),
-                            pagerInputActivity.getInputApplyInfo().getUserId()));
+	                String id;
+	                String versionEpsapServer = inputApplyInfo.getVersionEpsap();
+	                if (ValidateParams.nullOrEmpty(versionEpsapServer)) {
+		                id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+	                } else {
+		                if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
+			                String target;
+			                if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
+				                target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+			                } else {
+				                target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+			                }
+			                id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
+					                .getUserId(), target));
+		                } else {
+			                id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo.getUserId()));
+		                }
+	                }
                     ElementApply element = elementMgr.getElementApply(id);
                     intent.putExtra("ELEMENT_APPLY", element);
                     intent.putExtra(StringList.m_str_InformCtrl, pagerInputActivity.getInformCtrl());
                     startActivity(intent);
                 } else {
-                    pagerInputActivity.gotoPage(4);
+	                pagerInputActivity.gotoPage(4);
                 }
             }
         } else {
@@ -322,7 +362,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
             elementMgr = new ElementApplyManager(pagerInputActivity);
         }
         String rtnserial;
-        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
+        if (TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
             rtnserial = "WIFI" + XmlPullParserAided.GetUDID(pagerInputActivity);
         } else {
             rtnserial = "APP" + XmlPullParserAided.GetVpnApid(pagerInputActivity);
@@ -333,6 +373,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
         elementApply.setPortSSL(pagerInputActivity.getInputApplyInfo().getSecurePort());
         elementApply.setUserId(pagerInputActivity.getInputApplyInfo().getUserId());
         elementApply.setPassword(pagerInputActivity.getInputApplyInfo().getPassword());
+        elementApply.setVersionEpsAp(pagerInputActivity.getInputApplyInfo().getVersionEpsap());
         elementApply.setEmail("");
         elementApply.setReason("");
         elementApply.setTarger(rtnserial);
@@ -406,7 +447,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                     if(StringList.m_str_isEnroll.equalsIgnoreCase(p_data.GetKeyName()) ) {
                         isEnroll = true;
                         String rtnserial = "";
-                        if (InputBasePageFragment.TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
+                        if (TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {
                             rtnserial = XmlPullParserAided.GetUDID(pagerInputActivity);
                         } else {
                             rtnserial = XmlPullParserAided.GetVpnApid(pagerInputActivity);
@@ -419,7 +460,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                             isSubmitted = true;
                         }
                     }
-                    if (StringList.m_str_scep_challenge.equalsIgnoreCase(p_data.GetKeyName())) {
+	                if (StringList.m_str_scep_challenge.equalsIgnoreCase(p_data.GetKeyName())) {
                         challenge = (6 == p_data.GetType());
                     }
                     if (StringList.m_str_mailaddress.equalsIgnoreCase(p_data.GetKeyName())) {
@@ -436,7 +477,17 @@ public class InputUserPageFragment extends InputBasePageFragment {
 		                    pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
 	                    }
                     }
+	                if (StringList.m_str_ver_epsap.equalsIgnoreCase(p_data.GetKeyName())) {
+		                if (!ValidateParams.nullOrEmpty(p_data.GetData())) {
+			                pagerInputActivity.getInputApplyInfo().setVersionEpsap(p_data.GetData());
+			                pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+		                }
+	                }
                 }
+	            if (ValidateParams.nullOrEmpty(pagerInputActivity.getInputApplyInfo().getVersionEpsap())) {
+		            pagerInputActivity.getInputApplyInfo().setVersionEpsap("");
+		            pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
+	            }
             }
             ////////////////////////////////////////////////////////////////////////////
             // 大項目1. ログイン終了 =========>

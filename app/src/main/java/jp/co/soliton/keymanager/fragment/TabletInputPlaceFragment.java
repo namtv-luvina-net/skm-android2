@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
 
-import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.TARGET_VPN;
-import static jp.co.soliton.keymanager.fragment.TabletBaseInputFragment.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
  * Created by nguyenducdat on 4/25/2017.

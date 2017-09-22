@@ -150,8 +150,8 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
         if (elementApply.getUserId() != null) {
             viewHolder.txtCN.setText(elementApply.getcNValue());
         }
-	    if (elementApply.getTarger() != null) {
-		    if (elementApply.getTarger().startsWith("WIFI")) {
+	    if (elementApply.getTarget() != null) {
+		    if (elementApply.getTarget().startsWith("WIFI")) {
 			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
 					    .main_apid_wifi));
 		    } else {

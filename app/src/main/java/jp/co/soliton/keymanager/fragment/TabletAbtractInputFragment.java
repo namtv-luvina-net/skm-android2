@@ -31,9 +31,6 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
 public abstract class TabletAbtractInputFragment extends Fragment implements SoftKeyboardCtrl.DetectsListenner{
 
-	public final static String TARGET_VPN = "0";
-	public final static String TARGET_WiFi = "1";
-
 	protected InputApplyInfo inputApplyInfo;
 	protected Activity activity;
 	protected int sdk_int_version;
