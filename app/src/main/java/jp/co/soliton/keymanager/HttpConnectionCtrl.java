@@ -580,25 +580,22 @@ public class HttpConnectionCtrl {
 
 	private boolean PostProbeCertPacket(HttpURLConnection http, InformCtrl Inf, int i_packetsize) {
 		try {
+			LogCtrl.getInstance().info("HttpConnectionCtrl: Send Request POST Probe");
+			LogCtrl.getInstance().debug(http.getURL().toString());
+			LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getRequestProperties()));
+
 			// 送受信定義
 			http.setDoInput(true);
 			http.setDoOutput(true);
 			// 接続
 			http.connect();
 
-			// 出力ストリーム
-			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-			PrintWriter out = new PrintWriter(byteStream);
-			out.print(Inf.GetMessage());
-
-			out.flush();
-
-			byteStream.writeTo(http.getOutputStream());
-
-			out.close();
-
 			// 入力ストリーム
 			int input_ret = http.getResponseCode();        // response code を取得
+
+			LogCtrl.getInstance().info("HttpConnectionCtrl: Receive Response " + Integer.toString(input_ret));
+			LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getHeaderFields()));
+
 			Inf.SetResponseCode(input_ret);
 			if (input_ret != StringList.RES_200_OK) {
 				http.disconnect();
@@ -624,6 +621,8 @@ public class HttpConnectionCtrl {
 			}
 			String retCode = new String(buf_all, 0, i_size_total);
 			Inf.SetRtn(retCode);
+
+			LogCtrl.getInstance().debug("\r\n" + new String(buf_all));
 
 			bis.close();
 
