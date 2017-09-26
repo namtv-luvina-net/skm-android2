@@ -16,6 +16,7 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
@@ -80,7 +81,7 @@ public class TabletBaseInputFragment extends TabletAbtractInputFragment {
 			getInputApplyInfo().setHost(detail.getHost());
 			getInputApplyInfo().setPort(detail.getPort());
 			getInputApplyInfo().setSecurePort(detail.getPortSSL());
-			if (detail.getTarget().startsWith("WIFI")) {
+			if (detail.getTarget().startsWith(PREFIX_APID_WIFI)) {
 				getInputApplyInfo().setPlace(TARGET_WiFi);
 			} else {
 				getInputApplyInfo().setPlace(TARGET_VPN);

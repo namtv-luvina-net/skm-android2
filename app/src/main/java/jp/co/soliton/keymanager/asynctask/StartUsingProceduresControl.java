@@ -40,6 +40,7 @@ import java.util.Locale;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 
 /**
  * Created by nguyenducdat on 4/28/2017.
@@ -594,7 +595,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		m_DPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		m_DeviceAdmin = new ComponentName(activity, EpsapAdminReceiver.class);
 		String apid;
-		if (element.getTarget().startsWith("WIFI")) {
+		if (element.getTarget().startsWith(PREFIX_APID_WIFI)) {
 			apid = XmlPullParserAided.GetUDID(activity);
 		} else {
 			apid = XmlPullParserAided.GetVpnApid(activity);
@@ -705,7 +706,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	}
 
 	private void DownloadCACertificate(){
-		if (element.getTarget().startsWith("WIFI")) {
+		if (element.getTarget().startsWith(PREFIX_APID_WIFI)) {
 			m_InformCtrlCA = new InformCtrl();
 			String url = String.format("%s:%s", element.getHost(), element.getPort());
 			m_InformCtrlCA.SetURL(url);

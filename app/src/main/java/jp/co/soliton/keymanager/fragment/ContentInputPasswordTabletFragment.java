@@ -30,6 +30,8 @@ import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -220,7 +222,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	private boolean makeParameterLogon() {
 		String strUserid = txtUserId.getText().toString().trim();
 		String strPasswd = txtPassword.getText().toString();
-		String rtnserial = element.getTarget().replace("WIFI", "").replace("APP", "");
+		String rtnserial = element.getTarget().replace(PREFIX_APID_WIFI, "").replace(PREFIX_APID_VPN, "");
 		String str_url = m_InformCtrl.GetURL();
 		// ログインメッセージ
 		// URLEncodeが必須 <http://wada811.blog.fc2.com/?tag=URL%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89>参照
@@ -335,7 +337,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 				}
 			}
 			if (status == ElementApply.STATUS_APPLY_APPROVED) {
-				String sendmsg = m_p_aided.DeviceInfoText(element.getTarget().replace("WIFI", "").replace("APP", ""));
+				String sendmsg = m_p_aided.DeviceInfoText(element.getTarget().replace(PREFIX_APID_WIFI, "").replace
+						(PREFIX_APID_VPN, ""));
 				m_InformCtrl.SetMessage(sendmsg);
 			}
 			////////////////////////////////////////////////////////////////////////////

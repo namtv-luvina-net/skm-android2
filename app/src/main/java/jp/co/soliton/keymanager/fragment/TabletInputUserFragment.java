@@ -26,6 +26,8 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
@@ -252,9 +254,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
 							String target;
 							if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
-								target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+								target = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(getActivity());
 							} else {
-								target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+								target = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(getActivity());
 							}
 							id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
 									.getUserId(), target));
@@ -275,9 +277,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
 							String target;
 							if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
-								target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+								target = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(getActivity());
 							} else {
-								target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+								target = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(getActivity());
 							}
 							id_update = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
 									.getUserId(), target));
@@ -303,9 +305,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 							if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
 								String target;
 								if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
-									target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+									target = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(getActivity());
 								} else {
-									target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+									target = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(getActivity());
 								}
 								id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
 										.getUserId(), target));
@@ -369,9 +371,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		}
 		String rtnserial;
 		if (TARGET_WiFi.equals(tabletAbtractInputFragment.getInputApplyInfo().getPlace())) {
-			rtnserial = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+			rtnserial = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(getActivity());
 		} else {
-			rtnserial = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+			rtnserial = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(getActivity());
 		}
 		ElementApply elementApply = new ElementApply();
 		InputApplyInfo inputApplyInfo = tabletAbtractInputFragment.getInputApplyInfo();

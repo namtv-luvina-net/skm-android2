@@ -11,6 +11,8 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.util.List;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
+
 /**
  * Created by lexuanvinh on 02/27/2017.
  */
@@ -101,7 +103,7 @@ public class AdapterListConfirmApply extends ArrayAdapter<ElementApply> {
 	    if (listElementApply.get(position).getTarget() != null) {
 		    viewHolder.titleStorage.setVisibility(View.VISIBLE);
 		    viewHolder.contentStorage.setVisibility(View.VISIBLE);
-		    if (listElementApply.get(position).getTarget().startsWith("WIFI")) {
+		    if (listElementApply.get(position).getTarget().startsWith(PREFIX_APID_WIFI)) {
 			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_wifi));
 		    } else {
 			    viewHolder.contentStorage.setText(getContext().getString(R.string.main_apid_vpn));

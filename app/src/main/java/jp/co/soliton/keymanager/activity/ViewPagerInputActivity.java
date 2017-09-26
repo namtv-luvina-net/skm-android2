@@ -25,6 +25,7 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 import java.util.ArrayList;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
@@ -60,7 +61,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
-        String idConfirmApply = getIntent().getStringExtra("ELEMENT_APPLY_ID");
+        String idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
 	        ElementApplyManager elementMgr = new ElementApplyManager(this);
@@ -68,7 +69,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
             getInputApplyInfo().setHost(detail.getHost());
             getInputApplyInfo().setPort(detail.getPort());
             getInputApplyInfo().setSecurePort(detail.getPortSSL());
-            if (detail.getTarget().startsWith("WIFI")) {
+            if (detail.getTarget().startsWith(PREFIX_APID_WIFI)) {
                 getInputApplyInfo().setPlace(TARGET_WiFi);
             } else {
                 getInputApplyInfo().setPlace(TARGET_VPN);

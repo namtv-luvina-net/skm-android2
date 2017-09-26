@@ -10,9 +10,12 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 
 /**
  * Created by lexuanvinh on 02/27/2017.
@@ -37,7 +40,7 @@ public class DetailConfirmActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_detail_confirm);
-	    id = getIntent().getStringExtra("ELEMENT_APPLY_ID");
+	    id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 	    elementMgr = new ElementApplyManager(getApplicationContext());
 	    title = (TextView) findViewById(R.id.tvTitleHeader);
 		tvHostName = (TextView) findViewById(R.id.tvHostName);
@@ -79,7 +82,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 		if (detail.getTarget() != null) {
 			titleStorage.setVisibility(View.VISIBLE);
 			contentStorage.setVisibility(View.VISIBLE);
-			if (detail.getTarget().startsWith("WIFI")) {
+			if (detail.getTarget().startsWith(PREFIX_APID_WIFI)) {
 				contentStorage.setText(getString(R.string.main_apid_wifi));
 			} else {
 				contentStorage.setText(getString(R.string.main_apid_vpn));
@@ -138,14 +141,14 @@ public class DetailConfirmActivity extends FragmentActivity {
 	public void clickConfirmApply(View v) {
 		Intent intent;
 		intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
-		intent.putExtra("ELEMENT_APPLY_ID", id);
+		intent.putExtra(StringList.ELEMENT_APPLY_ID, id);
 		startActivity(intent);
 	}
 
 	public void clickReApply(View v) {
 		InputApplyInfo.deletePref(DetailConfirmActivity.this);
 		Intent intent = new Intent(DetailConfirmActivity.this, ViewPagerInputActivity.class);
-		intent.putExtra("ELEMENT_APPLY_ID", id);
+		intent.putExtra(StringList.ELEMENT_APPLY_ID, id);
 		startActivity(intent);
 	}
 
@@ -174,8 +177,8 @@ public class DetailConfirmActivity extends FragmentActivity {
 
 	public void clickWithdrawApply(View v) {
 		Intent intent = new Intent(DetailConfirmActivity.this, InputPasswordActivity.class);
-		intent.putExtra("ELEMENT_APPLY_ID", id);
-		intent.putExtra("CANCEL_APPLY", "1");
+		intent.putExtra(StringList.ELEMENT_APPLY_ID, id);
+		intent.putExtra(StringList.CANCEL_APPLY, "1");
 		startActivity(intent);
 	}
 

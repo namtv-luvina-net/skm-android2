@@ -33,6 +33,8 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_VPN;
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
 /**
@@ -233,9 +235,9 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
 		            if (EpsapVersion.checkVersionValidUseApid(versionEpsapServer)) {
 			            String target;
 			            if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
-				            target = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+				            target = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(getActivity());
 			            } else {
-				            target = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+				            target = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(getActivity());
 			            }
 			            id = String.valueOf(elementMgr.getIdElementApply(inputApplyInfo.getHost(), inputApplyInfo
 					            .getUserId(), target));
@@ -331,9 +333,9 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
         elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, pagerReapplyActivity.idConfirmApply);
         String rtnserial;
         if (TARGET_WiFi.equals(pagerReapplyActivity.getInputApplyInfo().getPlace())) {
-            rtnserial = "WIFI" + XmlPullParserAided.GetUDID(pagerReapplyActivity);
+            rtnserial = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(pagerReapplyActivity);
         } else {
-            rtnserial = "APP" + XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
+            rtnserial = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(pagerReapplyActivity);
         }
         ElementApply elementApply = new ElementApply();
 	    InputApplyInfo inputApplyInfo = pagerReapplyActivity.getInputApplyInfo();

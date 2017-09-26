@@ -23,8 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.
@@ -293,9 +292,9 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 
 		String rtnserial;
 		if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
-			rtnserial = "WIFI" + XmlPullParserAided.GetUDID(getActivity());
+			rtnserial = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(getActivity());
 		} else {
-			rtnserial = "APP" + XmlPullParserAided.GetVpnApid(getActivity());
+			rtnserial = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(getActivity());
 		}
 		ElementApply elementApply = new ElementApply();
 		elementApply.setHost(inputApplyInfo.getHost());
