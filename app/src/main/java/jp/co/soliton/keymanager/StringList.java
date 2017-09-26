@@ -352,6 +352,7 @@ public class StringList {
 	public static final String BACK_AUTO = "backAuto";
 	public static String GO_TO_LIST_APPLY = "0";
 	public static String ELEMENT_APPLY_ID = "ELEMENT_APPLY_ID";
+	public static String CANCEL_APPLY = "CANCEL_APPLY";
 	public static String UPDATE_APPLY = "UPDATE_APPLY";
 	public static String KEY_OPENED_APP = "OPENED_APP";
 	public static String KEY_NOTIF_ENABLE_FLAG = "KEY_NOTIF_ENABLE_FLAG";

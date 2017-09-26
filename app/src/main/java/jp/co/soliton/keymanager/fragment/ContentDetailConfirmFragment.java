@@ -13,6 +13,8 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
+
 /**
  * Created by nguyenducdat on 4/25/2017.
  */
@@ -72,7 +74,7 @@ public class ContentDetailConfirmFragment extends Fragment {
 			titleStorage.setVisibility(View.VISIBLE);
 			contentStorage.setVisibility(View.VISIBLE);
 			String storage;
-			if (detail.getTarget().startsWith("WIFI")) {
+			if (detail.getTarget().startsWith(PREFIX_APID_WIFI)) {
 				storage = getString(R.string.main_apid_wifi);
 			} else {
 				storage = getString(R.string.main_apid_vpn);

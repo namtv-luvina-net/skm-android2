@@ -8,6 +8,8 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
+
 /**
  * Created by nguyenducdat on 6/8/2017.
  */
@@ -38,7 +40,7 @@ public class InfoDetailCertificateSetting {
 		List<ItemChildDetailCertSetting> storageDestination = new ArrayList<>();
 		String strTarget = "";
 		if (elementApply.getTarget() != null) {
-			if (elementApply.getTarget().startsWith("WIFI")) {
+			if (elementApply.getTarget().startsWith(PREFIX_APID_WIFI)) {
 				strTarget = context.getString(R.string.main_apid_wifi);
 			} else {
 				strTarget = context.getString(R.string.main_apid_vpn);

@@ -18,6 +18,9 @@ import java.util.List;
 public class APIDManager {
 	public final static String TARGET_VPN  = "0";
 	public final static String TARGET_WiFi = "1";
+	public final static String PREFIX_APID_WIFI = "WIFI";
+	public final static String PREFIX_APID_VPN = "APP";
+
 
 	String strUDID;
 	private String strVpnID;

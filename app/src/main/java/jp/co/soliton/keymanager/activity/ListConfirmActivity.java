@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.adapter.AdapterListConfirmApply;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
@@ -58,7 +59,7 @@ public class ListConfirmActivity extends FragmentActivity {
 	    int sizeList = listElementApply.size();
 	    if(sizeList == 1) {
             Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
-            intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
+            intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(listElementApply.get(0).getId()));
             finish();
             startActivity(intent);
         } else if(sizeList == 0) {
@@ -70,7 +71,7 @@ public class ListConfirmActivity extends FragmentActivity {
 		    @Override
 		    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		    Intent intent = new Intent(ListConfirmActivity.this, DetailConfirmActivity.class);
-		    intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(position).getId()));
+		    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(listElementApply.get(position).getId()));
 		    startActivity(intent);
 	    }
     });

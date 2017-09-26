@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
+
 /**
  * Created by lexuanvinh on 02/27/2017.
  */
@@ -151,7 +153,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
             viewHolder.txtCN.setText(elementApply.getcNValue());
         }
 	    if (elementApply.getTarget() != null) {
-		    if (elementApply.getTarget().startsWith("WIFI")) {
+		    if (elementApply.getTarget().startsWith(PREFIX_APID_WIFI)) {
 			    viewHolder.txtStore.setText(getContext().getString(R.string.title_place) + getContext().getString(R.string
 					    .main_apid_wifi));
 		    } else {

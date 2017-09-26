@@ -178,7 +178,7 @@ public class MenuAcivity extends FragmentActivity {
 	    if (listElementApply.size() == 1) {
 		    if (!isTablet) {
 			    Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
-			    intent.putExtra("ELEMENT_APPLY_ID", String.valueOf(listElementApply.get(0).getId()));
+			    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(listElementApply.get(0).getId()));
 			    startActivity(intent);
 		    } else {
 			    startDetailConfirmApplyFragment(SCROLL_TO_LEFT);

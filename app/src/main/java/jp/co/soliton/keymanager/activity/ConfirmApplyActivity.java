@@ -26,8 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 /**
  * Created by luongdolong on 2/7/2017.
@@ -337,9 +336,9 @@ public class ConfirmApplyActivity extends Activity {
         }
         String rtnserial;
         if (TARGET_WiFi.equals(inputApplyInfo.getPlace())) {
-            rtnserial = "WIFI" + XmlPullParserAided.GetUDID(this);
+            rtnserial = PREFIX_APID_WIFI + XmlPullParserAided.GetUDID(this);
         } else {
-            rtnserial = "APP" + XmlPullParserAided.GetVpnApid(this);
+            rtnserial = PREFIX_APID_VPN + XmlPullParserAided.GetVpnApid(this);
         }
         ElementApply elementApply = new ElementApply();
         elementApply.setHost(inputApplyInfo.getHost());
