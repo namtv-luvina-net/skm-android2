@@ -10,7 +10,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_reason_item_input_tablet"
 				android:background="@drawable/round_corner_white_edittext"
-				android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
+				android:inputType="text|textNoSuggestions|textMultiLine"
 				android:textSize="@dimen/text_size_input_tablet"
 				android:layout_marginLeft="@dimen/margin_content_input_tablet"
 				android:layout_marginRight="@dimen/margin_content_input_tablet"

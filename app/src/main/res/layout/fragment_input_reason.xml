@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner_white_edittext"
-            android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
+            android:inputType="text|textNoSuggestions|textMultiLine"
             android:hint="@string/input"
             android:layout_weight="1"
             android:maxLines="4"
