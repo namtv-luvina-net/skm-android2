@@ -4,7 +4,7 @@ android {
     def buildNum = '12'
     def versionStr = '200'
     compileSdkVersion 24
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "jp.co.soliton.keymanager"
         minSdkVersion 14
@@ -58,15 +58,12 @@ android {
     android.applicationVariants.all { variant ->
         variant.buildConfigField 'String', 'BUILD_NUM', "\"${buildNum}\""
         variant.buildConfigField 'String', 'VERSION_STR', "\"${versionStr}\""
-        variant.outputs.each { output ->
-            def file = output.outputFile
-            def newName
+        variant.outputs.all {
             if (variant.buildType.name.equals('release')) {
-                newName = "SolitonKeyManagerV${versionStr}_Android.apk"
+                outputFileName = "SolitonKeyManagerV${versionStr}_Android.apk"
             } else {
-                newName = "SolitonKeyManagerV${versionStr}${buildNum}_${variant.buildType.name}_Android.apk"
+                outputFileName = "SolitonKeyManagerV${versionStr}${buildNum}_${variant.buildType.name}_Android.apk"
             }
-            output.outputFile = new File(file.parent, newName)
         }
     }}
 
