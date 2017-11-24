@@ -56,7 +56,7 @@ public class ViewPagerUpdateActivity extends FragmentActivity implements SoftKey
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
         m_InformCtrl = new InformCtrl();
-        elementMgr = new ElementApplyManager(this);
+        elementMgr = ElementApplyManager.getInstance(this);
         idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {

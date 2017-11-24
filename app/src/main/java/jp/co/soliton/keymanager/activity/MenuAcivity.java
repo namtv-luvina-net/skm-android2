@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.*;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
@@ -47,7 +49,7 @@ public class MenuAcivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 	    isTablet = getResources().getBoolean(R.bool.isTablet);
 	    setContentView(R.layout.activity_menu);
-	    elementMgr = new ElementApplyManager(this);
+	    elementMgr = ElementApplyManager.getInstance(this);
 	    fragmentManager = getSupportFragmentManager();
 	    String id_update = getIdUpdate();
 	    checkGoToConfirmIfNeed();
@@ -141,8 +143,8 @@ public class MenuAcivity extends FragmentActivity {
         super.onResume();
 		checkGoToConfirmIfNeed();
 		updateListElementApply();
-		if(android.os.Build.VERSION.SDK_INT >= 23) {
-            NewPermissionSet();
+		if(android.os.Build.VERSION.SDK_INT >= 23 && needRequirePermission) {
+			NewPermissionSet();
         }
     }
 
@@ -194,11 +196,27 @@ public class MenuAcivity extends FragmentActivity {
     }
 
     private void NewPermissionSet() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE},
-                    PERMISSIONS_REQUEST_READ_PHONE_STATE);
-        }
+	    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager
+			    .PERMISSION_GRANTED) {
+		    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE},
+				    PERMISSIONS_REQUEST_READ_PHONE_STATE);
+	    } else {
+		    needRequirePermission = false;
+	    }
     }
+
+    boolean needRequirePermission = true;
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		for(String permission: permissions){
+			if(ActivityCompat.shouldShowRequestPermissionRationale(this, permission)){
+				needRequirePermission = true;
+			}else{
+				needRequirePermission = false;
+			}
+		}
+	}
 
 	public void gotoMenuTablet() {
 		StringList.ID_DETAIL_CURRENT = "";
@@ -475,7 +493,7 @@ public class MenuAcivity extends FragmentActivity {
 			// After CertificateEnrollTask
 			StartUsingProceduresControl.getInstance(this).afterIntallCert();
 			if (resultCode != 0) {
-				ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
+				ElementApplyManager mgr = ElementApplyManager.getInstance(getApplicationContext());
 				mgr.updateElementCertificate(StartUsingProceduresControl.getInstance(this).getElement());
 				AlarmReceiver alarm = new AlarmReceiver();
 				alarm.setupNotification(getApplicationContext());

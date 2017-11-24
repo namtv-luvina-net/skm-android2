@@ -60,7 +60,7 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
         txtUserId = (TextView) findViewById(R.id.txtUserId);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         btnInputNext = (Button) findViewById(R.id.btnInputNext);
-        elementMgr = new ElementApplyManager(this);
+        elementMgr = ElementApplyManager.getInstance(this);
         m_InformCtrl = new InformCtrl();
         if (progressDialog == null) {
             progressDialog = new DialogApplyProgressBar(this);
@@ -83,7 +83,7 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
         }
         progressDialog.show();
         m_InformCtrl.SetCookie(null);
-        //open thread logon to server
+        //openDatabase thread logon to server
         new LogonApplyTask().execute();
     }
 
@@ -393,7 +393,7 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
                             return;
                         }
                         progressDialog.show();
-                        //open thread logon to server
+                        //openDatabase thread logon to server
                         new DropApplyTask().execute();
                     }
                 });

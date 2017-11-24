@@ -36,7 +36,7 @@ public class ListConfirmActivity extends FragmentActivity {
 	    list = (ListView) findViewById(R.id.listConfirm);
 	    adapterListConfirmApply = new AdapterListConfirmApply(this, listElementApply);
 	    list.setAdapter(adapterListConfirmApply);
-	    elementMgr = new ElementApplyManager(getApplicationContext());
+	    elementMgr = ElementApplyManager.getInstance(getApplicationContext());
     }
 
 	@Override

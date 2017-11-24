@@ -64,7 +64,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		elementMgr = new ElementApplyManager(getActivity());
+		elementMgr = ElementApplyManager.getInstance(getActivity());
 		m_InformCtrl = new InformCtrl();
 		if (progressDialog == null) {
 			progressDialog = new DialogApplyProgressBar(getActivity());
@@ -211,7 +211,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 		}
 		progressDialog.show();
 		m_InformCtrl.SetCookie(null);
-		//open thread logon to server
+		//openDatabase thread logon to server
 		new LogonApplyTask().execute();
 	}
 
@@ -437,7 +437,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 							return;
 						}
 						progressDialog.show();
-						//open thread logon to server
+						//openDatabase thread logon to server
 						new DropApplyTask().execute();
 					}
 				});

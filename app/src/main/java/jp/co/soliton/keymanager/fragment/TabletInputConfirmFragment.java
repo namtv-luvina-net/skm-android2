@@ -88,7 +88,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		inputApplyInfo = InputApplyInfo.getPref(getActivity());
 		m_InformCtrl = tabletAbtractInputFragment.getInformCtrl();
 		if (elementMgr == null) {
-			elementMgr = new ElementApplyManager(getActivity());
+			elementMgr = ElementApplyManager.getInstance(getActivity());
 		}
 		conn = new HttpConnectionCtrl(getActivity());
 	}
@@ -145,7 +145,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 		tabletAbtractInputFragment.setErroType(SUCCESSFUL);
 		errorCount = 0;
 		reTry = false;
-		//open thread processing apply
+		//openDatabase thread processing apply
 		makeParameterApply();
 		new ProcessApplyTask().execute();
 	}

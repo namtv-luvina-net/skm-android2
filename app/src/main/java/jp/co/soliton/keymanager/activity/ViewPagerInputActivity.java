@@ -64,7 +64,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
         String idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
         if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
-	        ElementApplyManager elementMgr = new ElementApplyManager(this);
+	        ElementApplyManager elementMgr = ElementApplyManager.getInstance(this);
             ElementApply detail = elementMgr.getElementApply(idConfirmApply);
             getInputApplyInfo().setHost(detail.getHost());
             getInputApplyInfo().setPort(detail.getPort());

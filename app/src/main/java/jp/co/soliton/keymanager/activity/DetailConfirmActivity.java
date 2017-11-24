@@ -41,7 +41,7 @@ public class DetailConfirmActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_detail_confirm);
 	    id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
-	    elementMgr = new ElementApplyManager(getApplicationContext());
+	    elementMgr = ElementApplyManager.getInstance(getApplicationContext());
 	    title = (TextView) findViewById(R.id.tvTitleHeader);
 		tvHostName = (TextView) findViewById(R.id.tvHostName);
 		tvUserId = (TextView) findViewById(R.id.titleUserId);

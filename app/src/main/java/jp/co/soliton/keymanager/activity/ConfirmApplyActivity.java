@@ -101,7 +101,7 @@ public class ConfirmApplyActivity extends Activity {
             progressDialog = new DialogApplyProgressBar(this);
         }
         if (elementMgr == null) {
-            elementMgr = new ElementApplyManager(this);
+            elementMgr = ElementApplyManager.getInstance(this);
         }
     }
 
@@ -163,7 +163,7 @@ public class ConfirmApplyActivity extends Activity {
         m_nErroType = SUCCESSFUL;
         errorCount = 0;
         reTry = false;
-        //open thread processing apply
+        //openDatabase thread processing apply
         makeParameterApply();
         new ProcessApplyTask().execute();
     }
@@ -188,7 +188,6 @@ public class ConfirmApplyActivity extends Activity {
         progressDialog.dismiss();
         //request with result error
         if (!result) {
-	        Log.d("ConfirmApplyActivity", "datnd:endConnection: 1");
 	        if (reTry) {
                 new ProcessApplyTask().execute();
                 return;
@@ -225,7 +224,6 @@ public class ConfirmApplyActivity extends Activity {
                 return;
             }
             //parse result for next action
-	        Log.d("ConfirmApplyActivity", "datnd:endConnection: 3");
 	        parseResult();
         }
     }
@@ -331,7 +329,6 @@ public class ConfirmApplyActivity extends Activity {
 
     private void saveElementApply() {
 	    if (!ValidateParams.nullOrEmpty(update_apply)) {
-		    Log.d("ConfirmApplyActivity", "datnd:saveElementApply: 1  " + update_apply );
 		    elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, update_apply);
         }
         String rtnserial;
@@ -372,7 +369,6 @@ public class ConfirmApplyActivity extends Activity {
             boolean ret;
             //Call to server
             ret = conn.RunHttpApplyCerUrlConnection(m_InformCtrl);
-	        Log.d("ProcessApplyTask", "datnd:doInBackground: ConfirmApplyActivity =" + ret);
 	        //Parse result
             if (!ret) {
                 if (errorCount > 10) {

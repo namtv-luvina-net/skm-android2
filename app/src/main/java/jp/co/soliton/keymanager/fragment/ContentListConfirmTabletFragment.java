@@ -45,7 +45,7 @@ public class ContentListConfirmTabletFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		elementMgr = new ElementApplyManager(activity);
+		elementMgr = ElementApplyManager.getInstance(activity);
 		setListShown(true);
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);

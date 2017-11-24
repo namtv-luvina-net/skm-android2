@@ -91,7 +91,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		if (elementMgr == null) {
-			elementMgr = new ElementApplyManager(getActivity());
+			elementMgr = ElementApplyManager.getInstance(getActivity());
 		}
 	}
 
@@ -224,7 +224,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		tabletAbtractInputFragment.getInformCtrl().SetCookie(null);
 		isEnroll = false;
 		challenge = false;
-		//open thread logon to server
+		//openDatabase thread logon to server
 		new LogonApplyTask().execute();
 	}
 
@@ -364,7 +364,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 
 	private void saveElementApply() {
 		if (elementMgr == null) {
-			elementMgr = new ElementApplyManager(getActivity());
+			elementMgr = ElementApplyManager.getInstance(getActivity());
 		}
 		if (!ValidateParams.nullOrEmpty(id_update)) {
 			elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, id_update);

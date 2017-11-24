@@ -42,7 +42,7 @@ public class ContentDetailConfirmFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_detail_confirm_apply_tablet, container, false);
-		elementMgr = new ElementApplyManager(getActivity());
+		elementMgr = ElementApplyManager.getInstance(getActivity());
 		tvHostName = (TextView) viewFragment.findViewById(R.id.tvHostName);
 		tvUserId = (TextView) viewFragment.findViewById(R.id.titleUserId);
 		titleStorage = (TextView) viewFragment.findViewById(R.id.title_storage);

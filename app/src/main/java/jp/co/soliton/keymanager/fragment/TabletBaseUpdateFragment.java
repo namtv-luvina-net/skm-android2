@@ -41,7 +41,7 @@ public class TabletBaseUpdateFragment extends TabletAbtractInputFragment {
 
 	private void getIdApply() {
 		if(!ValidateParams.nullOrEmpty(idConfirmApply)) {
-			ElementApplyManager elementMgr = new ElementApplyManager(getActivity());
+			ElementApplyManager elementMgr = ElementApplyManager.getInstance(getActivity());
 			ElementApply detail = elementMgr.getElementApply(idConfirmApply);
 			getInputApplyInfo().setHost(detail.getHost());
 			getInputApplyInfo().setPort(detail.getPort());

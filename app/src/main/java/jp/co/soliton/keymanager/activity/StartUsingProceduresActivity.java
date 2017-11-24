@@ -50,7 +50,7 @@ public class StartUsingProceduresActivity extends Activity {
 		    // After CertificateEnrollTask
 		    if (resultCode != 0) {
 				LogCtrl.getInstance().info("Proc: Certificate Installation Successful");
-			    ElementApplyManager mgr = new ElementApplyManager(getApplicationContext());
+			    ElementApplyManager mgr = ElementApplyManager.getInstance(getApplicationContext());
 			    mgr.updateElementCertificate(StartUsingProceduresControl.getInstance(this).getElement());
 			    AlarmReceiver alarm = new AlarmReceiver();
 			    alarm.setupNotification(getApplicationContext());

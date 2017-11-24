@@ -76,7 +76,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
                 progressDialog = new DialogApplyProgressBar(pagerReapplyActivity);
             }
             if (elementMgr == null) {
-                elementMgr = new ElementApplyManager(pagerReapplyActivity);
+                elementMgr = ElementApplyManager.getInstance(pagerReapplyActivity);
             }
         }
     }
@@ -174,7 +174,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
         pagerReapplyActivity.getInformCtrl().SetCookie(null);
         isEnroll = false;
         challenge = false;
-        //open thread logon to server
+        //openDatabase thread logon to server
         new LogonApplyTask().execute();
     }
 
@@ -328,7 +328,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
 
     private void saveElementApply() {
         if (elementMgr == null) {
-            elementMgr = new ElementApplyManager(pagerReapplyActivity);
+            elementMgr = ElementApplyManager.getInstance(pagerReapplyActivity);
         }
         elementMgr.updateStatus(ElementApply.STATUS_APPLY_CLOSED, pagerReapplyActivity.idConfirmApply);
         String rtnserial;
