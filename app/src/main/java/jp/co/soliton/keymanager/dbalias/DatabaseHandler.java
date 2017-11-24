@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
     // All Static variables
     // Database Name
     public static final String DATABASE_NAME = "applyManager.db";
@@ -137,5 +137,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	    if (oldVersion < 4) {
+		    // Drop older table if existed
+		    db.execSQL("DROP TABLE IF EXISTS " + TABLE_ELEMENT_APPLY);
+		    // Create tables again
+		    onCreate(db);
+	    } else if (oldVersion == 4 && newVersion == 5) {
+		    String addVeresionEpsapServer = "ALTER TABLE " + TABLE_ELEMENT_APPLY + " ADD COLUMN " + EPSAP_VERSION_COLUMN + " TEXT";
+		    db.execSQL(addVeresionEpsapServer);
+	    }
     }
 }
