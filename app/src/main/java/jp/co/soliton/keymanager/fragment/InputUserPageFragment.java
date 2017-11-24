@@ -73,7 +73,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 progressDialog = new DialogApplyProgressBar(pagerInputActivity);
             }
             if (elementMgr == null) {
-                elementMgr = new ElementApplyManager(pagerInputActivity);
+                elementMgr = ElementApplyManager.getInstance(pagerInputActivity);
             }
         }
     }
@@ -181,7 +181,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
         pagerInputActivity.getInformCtrl().SetCookie(null);
         isEnroll = false;
         challenge = false;
-        //open thread logon to server
+        //openDatabase thread logon to server
         new LogonApplyTask().execute();
     }
 
@@ -260,7 +260,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
                 pagerInputActivity.finish();
             } else {
                 if (isSubmitted) {
-	                Log.d("InputUserPageFragment", "datnd:endConnection: isSubmitted");
 	                saveElementApply();
 	                InputApplyInfo inputApplyInfo = pagerInputActivity.getInputApplyInfo();
                     Intent intent = new Intent(pagerInputActivity, CompleteConfirmApplyActivity.class);
@@ -357,7 +356,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
 
     private void saveElementApply() {
         if (elementMgr == null) {
-            elementMgr = new ElementApplyManager(pagerInputActivity);
+            elementMgr = ElementApplyManager.getInstance(pagerInputActivity);
         }
         String rtnserial;
         if (TARGET_WiFi.equals(pagerInputActivity.getInputApplyInfo().getPlace())) {

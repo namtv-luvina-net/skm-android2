@@ -261,8 +261,6 @@ public class XmlPullParserAided /*extends Activity*/{
 							LogCtrl.getInstance().info("XML Parser: Response contained an mail address");
 							LogCtrl.getInstance().debug(strdata);
 						} else if (keyName.equalsIgnoreCase(StringList.m_str_ver_epsap)) {
-							Log.d("XmlPullParserAided", "datnd:TakeApartUserAuthenticationResponse: = " + keyName + " - "
-									+ tagName + " - " + strdata);
 							m_xmlDictionary.setParam(keyName, typeName, strdata);
 						} else if (keyName.equalsIgnoreCase(StringList.m_str_description)) {
 							bDescription = false;

@@ -36,7 +36,7 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_detail_certificate);
-	    elementMgr = new ElementApplyManager(this);
+	    elementMgr = ElementApplyManager.getInstance(this);
 	    id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 	    elementApply = elementMgr.getElementApply(id);
 		expandableListView = (ExpandableListView) findViewById(R.id.expand_detail_cert);

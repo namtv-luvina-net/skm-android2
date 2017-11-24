@@ -35,7 +35,7 @@ public class ContentListCertificateSettingFragment extends TabletBaseSettingFrag
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		elementMgr = new ElementApplyManager(getActivity());
+		elementMgr = ElementApplyManager.getInstance(getActivity());
 		listCertificate = elementMgr.getAllCertificate();
 		adapterListCertificate = new AdapterSettingListCertificate(getActivity(), listCertificate, true);
 		list.setAdapter(adapterListCertificate);

@@ -58,7 +58,7 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
         tvNotifBefore = (TextView) findViewById(R.id.tvNotifBefore);
         btnDayBeforeMinus = (Button) findViewById(R.id.btnDayBeforeMinus);
         btnDayBeforePlus = (Button) findViewById(R.id.btnDayBeforePlus);
-        elementMgr = new ElementApplyManager(this);
+        elementMgr = ElementApplyManager.getInstance(this);
     }
 
 	@Override

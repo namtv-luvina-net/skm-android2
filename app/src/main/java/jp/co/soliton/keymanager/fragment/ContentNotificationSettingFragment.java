@@ -85,7 +85,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 		tvNotifBefore = (DaysBeforeNotifEditText) viewFragment.findViewById(R.id.tvNotifBefore);
 		btnDayBeforeMinus = (Button) viewFragment.findViewById(R.id.btnDayBeforeMinus);
 		btnDayBeforePlus = (Button) viewFragment.findViewById(R.id.btnDayBeforePlus);
-		elementMgr = new ElementApplyManager(getActivity());
+		elementMgr = ElementApplyManager.getInstance(getActivity());
 		viewFragment.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {

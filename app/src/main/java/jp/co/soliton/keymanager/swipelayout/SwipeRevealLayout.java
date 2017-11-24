@@ -416,7 +416,7 @@ public class SwipeRevealLayout extends ViewGroup {
 
     /**
      * Open the panel to show the secondary view
-     * @param animation true to animate the open motion. {@link SwipeListener} won't be
+     * @param animation true to animate the openDatabase motion. {@link SwipeListener} won't be
      *                  called if is animation is false.
      */
     public void open(boolean animation) {
@@ -454,7 +454,7 @@ public class SwipeRevealLayout extends ViewGroup {
 
     /**
      * Close the panel to hide the secondary view
-     * @param animation true to animate the close motion. {@link SwipeListener} won't be
+     * @param animation true to animate the closeDatabase motion. {@link SwipeListener} won't be
      *                  called if is animation is false.
      */
     public void close(boolean animation) {
@@ -492,7 +492,7 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * Set the minimum fling velocity to cause the layout to open/close.
+     * Set the minimum fling velocity to cause the layout to openDatabase/closeDatabase.
      * @param velocity dp per second
      */
     public void setMinFlingVelocity(int velocity) {
@@ -500,7 +500,7 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * Get the minimum fling velocity to cause the layout to open/close.
+     * Get the minimum fling velocity to cause the layout to openDatabase/closeDatabase.
      * @return dp per second
      */
     public int getMinFlingVelocity() {
@@ -651,7 +651,7 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     private void initRects() {
-        // close position of main view
+        // closeDatabase position of main view
         mRectMainClose.set(
                 mMainView.getLeft(),
                 mMainView.getTop(),
@@ -659,7 +659,7 @@ public class SwipeRevealLayout extends ViewGroup {
                 mMainView.getBottom()
         );
 
-        // close position of secondary view
+        // closeDatabase position of secondary view
         mRectSecClose.set(
                 mSecondaryView.getLeft(),
                 mSecondaryView.getTop(),
@@ -667,7 +667,7 @@ public class SwipeRevealLayout extends ViewGroup {
                 mSecondaryView.getBottom()
         );
 
-        // open position of the main view
+        // openDatabase position of the main view
         mRectMainOpen.set(
                 getMainOpenLeft(),
                 getMainOpenTop(),
@@ -675,7 +675,7 @@ public class SwipeRevealLayout extends ViewGroup {
                 getMainOpenTop() + mMainView.getHeight()
         );
 
-        // open position of the secondary view
+        // openDatabase position of the secondary view
         mRectSecOpen.set(
                 getSecOpenLeft(),
                 getSecOpenTop(),
@@ -713,7 +713,7 @@ public class SwipeRevealLayout extends ViewGroup {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             /*if (mClickToClose && isTouchOnSurface(e)) {
-                close();
+                closeDatabase();
             }*/
             return super.onSingleTapUp(e);
         }

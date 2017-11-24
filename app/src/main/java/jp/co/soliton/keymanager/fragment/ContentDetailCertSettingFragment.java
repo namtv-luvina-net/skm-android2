@@ -49,7 +49,7 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		elementMgr = new ElementApplyManager(getActivity());
+		elementMgr = ElementApplyManager.getInstance(getActivity());
 		elementApply = elementMgr.getElementApply(id);
 		viewFragment = inflater.inflate(R.layout.fragment_setting_detail_certificate, container, false);
 		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);

@@ -40,7 +40,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
 
         String id = extras.getString(StringList.ELEMENT_APPLY_ID, "");
-	    ElementApplyManager mgr = new ElementApplyManager(context);
+	    ElementApplyManager mgr = ElementApplyManager.getInstance(context);
         ElementApply element = mgr.getElementApply(id);
 	    Bitmap bmLarge = getLargeIcon(context);
         NotificationCompat.Builder mBuilder =
@@ -93,7 +93,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             intent.putExtra(StringList.ELEMENT_APPLY_ID, elementId);
             final int _id = (int) System.currentTimeMillis();
             PendingIntent pi = PendingIntent.getBroadcast(context, _id, intent, PendingIntent.FLAG_ONE_SHOT);
-            ElementApplyManager mgr = new ElementApplyManager(context);
+            ElementApplyManager mgr = ElementApplyManager.getInstance(context);
             ElementApply element = mgr.getElementApply(elementId);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date expirationDate = formatter.parse(element.getExpirationDate());
@@ -112,7 +112,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public void setupNotification(Context context) {
         cancelNotification(context);
-        ElementApplyManager elementMgr = new ElementApplyManager(context);
+        ElementApplyManager elementMgr = ElementApplyManager.getInstance(context);
         List<ElementApply> lsElement = elementMgr.getAllCertificate();
         Calendar cal = Calendar.getInstance();
         int index = 0;

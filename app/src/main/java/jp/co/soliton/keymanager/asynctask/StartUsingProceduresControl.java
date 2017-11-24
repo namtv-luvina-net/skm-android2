@@ -458,7 +458,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				if (e.toString().contains("No CA Certificcate")) {
 					strError = activity.getString(R.string.failed_to_get_ca);
 					element.setStatus(ElementApply.STATUS_APPLY_FAILURE);
-					ElementApplyManager mgr = new ElementApplyManager(activity);
+					ElementApplyManager mgr = ElementApplyManager.getInstance(activity);
 					mgr.updateStatus(ElementApply.STATUS_APPLY_FAILURE, String.valueOf(element.getId()));
 				}
 				LogCtrl.getInstance().error("CertificateEnrollTask RequesterException: " + e.toString());
