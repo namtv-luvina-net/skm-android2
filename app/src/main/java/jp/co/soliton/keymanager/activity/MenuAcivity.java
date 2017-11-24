@@ -1,13 +1,16 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.Manifest;
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.*;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import jp.co.soliton.keymanager.*;
@@ -33,7 +36,14 @@ import static jp.co.soliton.keymanager.common.TypeScrollFragment.*;
 
 public class MenuAcivity extends FragmentActivity {
 
-    private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
+	private static final int REQUEST_PERMISSION_SETTING = 100;
+
+	public static final int GRANTED = 0;
+	public static final int DENIED = 1;
+	public static final int BLOCKED_OR_NEVER_ASKED = 2;
+	private int statusPermission = DENIED;
+
+	private int PERMISSIONS_REQUEST_READ_PHONE_STATE = 10;
 	private boolean isTablet;
 	private boolean isFocusMenuTablet;
 	private ElementApplyManager elementMgr;
@@ -44,42 +54,42 @@ public class MenuAcivity extends FragmentActivity {
 	private List<ElementApply> listElementApply = new ArrayList<>();
 	private List<ElementApply> listCertificate = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-	    isTablet = getResources().getBoolean(R.bool.isTablet);
-	    setContentView(R.layout.activity_menu);
-	    elementMgr = ElementApplyManager.getInstance(this);
-	    fragmentManager = getSupportFragmentManager();
-	    String id_update = getIdUpdate();
-	    checkGoToConfirmIfNeed();
-	    if (!ValidateParams.nullOrEmpty(id_update)) {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		isTablet = getResources().getBoolean(R.bool.isTablet);
+		setContentView(R.layout.activity_menu);
+		elementMgr = ElementApplyManager.getInstance(this);
+		fragmentManager = getSupportFragmentManager();
+		String id_update = getIdUpdate();
+		checkGoToConfirmIfNeed();
+		if (!ValidateParams.nullOrEmpty(id_update)) {
 			startNotifUpdateFragment(id_update, NOT_SCROLL);
-	    }else {
-		    if (isTablet) {
-			    if (savedInstanceState == null) {
-				    gotoMenuTablet();
-			    } else {
-				    fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
-				    if (savedInstanceState.containsKey("fragmentLeft")) {
-					    fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
-				    }
-				    currentStatus = savedInstanceState.getInt("currentStatus");
-			    }
-		    }
-	    }
-    }
+		} else {
+			if (isTablet) {
+				if (savedInstanceState == null) {
+					gotoMenuTablet();
+				} else {
+					fragmentContent = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentContent");
+					if (savedInstanceState.containsKey("fragmentLeft")) {
+						fragmentLeft = getSupportFragmentManager().getFragment(savedInstanceState, "fragmentLeft");
+					}
+					currentStatus = savedInstanceState.getInt("currentStatus");
+				}
+			}
+		}
+	}
 
-    private String getIdUpdate() {
-	    try{
-		    if (isTablet) {
-			    return getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
-		    }
-	    }catch (Exception e) {
-		    e.printStackTrace();
-	    }
-	    return "";
-    }
+	private String getIdUpdate() {
+		try {
+			if (isTablet) {
+				return getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 
 	public ElementApplyManager getElementMgr() {
 		return elementMgr;
@@ -103,19 +113,19 @@ public class MenuAcivity extends FragmentActivity {
 			if (currentStatus == COMPLETE_STATUS) {
 				InputApplyInfo.deletePref(this);
 				gotoMenuTablet();
-			}else if (currentStatus == START_APPLY_STATUS) {
-				((TabletBaseInputFragment)fragmentContent).clickBackButton();
-			}else if (currentStatus == START_UPDATE_STATUS) {
-				((TabletBaseUpdateFragment)fragmentContent).clickBackButton();
-			}else if (currentStatus == REAPPLY_STATUS) {
-				((TabletBaseInputFragment)fragmentContent).clickBackButton();
-			}else if (currentStatus == DETAIL_CONFIRM_APPLY_STATUS) {
+			} else if (currentStatus == START_APPLY_STATUS) {
+				((TabletBaseInputFragment) fragmentContent).clickBackButton();
+			} else if (currentStatus == START_UPDATE_STATUS) {
+				((TabletBaseUpdateFragment) fragmentContent).clickBackButton();
+			} else if (currentStatus == REAPPLY_STATUS) {
+				((TabletBaseInputFragment) fragmentContent).clickBackButton();
+			} else if (currentStatus == DETAIL_CONFIRM_APPLY_STATUS) {
 				onBackPressedFromDetailCetificate();
-			}else if (currentStatus == CONFIRM_APPLY_STATUS || currentStatus == WITHDRAW_APPLY_STATUS) {
+			} else if (currentStatus == CONFIRM_APPLY_STATUS || currentStatus == WITHDRAW_APPLY_STATUS) {
 				startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
-			}else if (currentStatus == START_USING_PROCEDURES_STATUS) {
+			} else if (currentStatus == START_USING_PROCEDURES_STATUS) {
 				goBackElementApply();
-			}else if (currentStatus == NOTIF_UPDATE_STATUS) {
+			} else if (currentStatus == NOTIF_UPDATE_STATUS) {
 				finish();
 			} else {
 				gotoMenuTablet();
@@ -139,24 +149,54 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	@Override
-    protected void onResume() {
-        super.onResume();
-		checkGoToConfirmIfNeed();
-		updateListElementApply();
-		if(android.os.Build.VERSION.SDK_INT >= 23 && needRequirePermission) {
-			NewPermissionSet();
-        }
-    }
+	protected void onResume() {
+		super.onResume();
+		if (statusPermission == BLOCKED_OR_NEVER_ASKED) {
+			showDialogAskPermision();
+			return;
+		}
+		boolean isPermissionGranted = isPermissionGranted();
+		if (android.os.Build.VERSION.SDK_INT >= 23 && !isPermissionGranted) {
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE},
+					PERMISSIONS_REQUEST_READ_PHONE_STATE);
+		} else {
+			statusPermission = GRANTED;
+			checkGoToConfirmIfNeed();
+			updateListElementApply();
+		}
+	}
 
-    private void updateListElementApply() {
-	    listElementApply = elementMgr.getAllElementApply();
-	    ElementApply.sortListConfirmApply(listElementApply);
-    }
+	private boolean isPermissionGranted() {
+		boolean isPermissionGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) ==
+				PackageManager.PERMISSION_GRANTED;
+		return isPermissionGranted;
+	}
 
-    private void updateListCertificate() {
-	    listCertificate = elementMgr.getAllCertificate();
-	    ElementApply.sortListApplyUpdate(listCertificate);
-    }
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		for (String permission : permissions) {
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+				statusPermission = GRANTED;
+			} else {
+				if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+					statusPermission = DENIED;
+				} else {
+					statusPermission = BLOCKED_OR_NEVER_ASKED;
+				}
+			}
+		}
+	}
+
+	private void updateListElementApply() {
+		listElementApply = elementMgr.getAllElementApply();
+		ElementApply.sortListConfirmApply(listElementApply);
+	}
+
+	private void updateListCertificate() {
+		listCertificate = elementMgr.getAllCertificate();
+		ElementApply.sortListApplyUpdate(listCertificate);
+	}
 
 	public List<ElementApply> getListElementApply() {
 		updateListElementApply();
@@ -170,52 +210,60 @@ public class MenuAcivity extends FragmentActivity {
 
 	private void checkGoToConfirmIfNeed() {
 		if (StringList.GO_TO_LIST_APPLY.equals("1")) {
-		    StringList.GO_TO_LIST_APPLY = "0";
-		    gotoConfirmActivity();
+			StringList.GO_TO_LIST_APPLY = "0";
+			gotoConfirmActivity();
 		}
 	}
 
 	public void gotoConfirmActivity() {
 		updateListElementApply();
-	    if (listElementApply.size() == 1) {
-		    if (!isTablet) {
-			    Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
-			    intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(listElementApply.get(0).getId()));
-			    startActivity(intent);
-		    } else {
-			    startDetailConfirmApplyFragment(SCROLL_TO_LEFT);
-		    }
-	    } else {
-		    if (!isTablet) {
-			    Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
-			    startActivity(intent);
-		    } else {
-			    startListConfirmApplyFragment(SCROLL_TO_LEFT);
-		    }
-	    }
-    }
-
-    private void NewPermissionSet() {
-	    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager
-			    .PERMISSION_GRANTED) {
-		    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE},
-				    PERMISSIONS_REQUEST_READ_PHONE_STATE);
-	    } else {
-		    needRequirePermission = false;
-	    }
-    }
-
-    boolean needRequirePermission = true;
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		for(String permission: permissions){
-			if(ActivityCompat.shouldShowRequestPermissionRationale(this, permission)){
-				needRequirePermission = true;
-			}else{
-				needRequirePermission = false;
+		if (listElementApply.size() == 1) {
+			if (!isTablet) {
+				Intent intent = new Intent(MenuAcivity.this, DetailConfirmActivity.class);
+				intent.putExtra(StringList.ELEMENT_APPLY_ID, String.valueOf(listElementApply.get(0).getId()));
+				startActivity(intent);
+			} else {
+				startDetailConfirmApplyFragment(SCROLL_TO_LEFT);
+			}
+		} else {
+			if (!isTablet) {
+				Intent intent = new Intent(MenuAcivity.this, ListConfirmActivity.class);
+				startActivity(intent);
+			} else {
+				startListConfirmApplyFragment(SCROLL_TO_LEFT);
 			}
 		}
+	}
+
+	private void showDialogAskPermision() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		// khởi tạo dialog
+		alertDialogBuilder.setMessage(getString(R.string.message_go_setting_allow_permission));
+		// thiết lập nội dung cho dialog
+		alertDialogBuilder.setPositiveButton(getString(R.string.go_to_setting), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				dialog.dismiss();
+				gotoSettingDevice();
+			}
+		});
+
+		alertDialogBuilder.setNegativeButton(getString(R.string.label_dialog_Cancle), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				finish();
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	private void gotoSettingDevice() {
+		Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+		Uri uri = Uri.fromParts("package", getPackageName(), null);
+		intent.setData(uri);
+		startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
 	}
 
 	public void gotoMenuTablet() {
@@ -233,7 +281,7 @@ public class MenuAcivity extends FragmentActivity {
 		isFocusMenuTablet = false;
 		currentStatus = NOTIF_UPDATE_STATUS;
 		hideFragmentLeft();
-		fragmentContent= ContentUpdateFromNotificationFragment.newInstance(id);
+		fragmentContent = ContentUpdateFromNotificationFragment.newInstance(id);
 		changeFragmentContent(typeScroll);
 	}
 
@@ -243,7 +291,7 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentLeft = new LeftSideAPIDTabletFragment();
 		changeFragmentLeftTablet();
 
-		fragmentContent= new ContentAPIDTabletFragment();
+		fragmentContent = new ContentAPIDTabletFragment();
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
@@ -253,17 +301,17 @@ public class MenuAcivity extends FragmentActivity {
 		currentStatus = START_APPLY_STATUS;
 		fragmentLeft = LeftSideInputTabletFragment.newInstance(startFrom);
 		changeFragmentLeftTablet();
-		fragmentContent= TabletBaseInputFragment.newInstanceStartApply(startFrom);
+		fragmentContent = TabletBaseInputFragment.newInstanceStartApply(startFrom);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
-	public void startUpdateFragmentFromListCertificate(String idConfirmApply){
-		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply, false);
+	public void startUpdateFragmentFromListCertificate(String idConfirmApply) {
+		fragmentContent = TabletBaseUpdateFragment.newInstance(idConfirmApply, false);
 		startUpdateFragment();
 	}
 
-	public void startUpdateFragmentFromNotification(String idConfirmApply){
-		fragmentContent= TabletBaseUpdateFragment.newInstance(idConfirmApply, true);
+	public void startUpdateFragmentFromNotification(String idConfirmApply) {
+		fragmentContent = TabletBaseUpdateFragment.newInstance(idConfirmApply, true);
 		startUpdateFragment();
 	}
 
@@ -271,7 +319,8 @@ public class MenuAcivity extends FragmentActivity {
 		InputApplyInfo.deletePref(this);
 		isFocusMenuTablet = false;
 		currentStatus = START_UPDATE_STATUS;
-		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment) || !fragmentLeft.isVisible()) {
+		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment) || !fragmentLeft
+				.isVisible()) {
 			fragmentLeft = new LeftSideListCertAndReapplyTabletFragment();
 			changeFragmentLeftTablet();
 		}
@@ -282,27 +331,27 @@ public class MenuAcivity extends FragmentActivity {
 		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideListCertAndReapplyTabletFragment)) {
 			return;
 		}
-		((LeftSideListCertAndReapplyTabletFragment)fragmentLeft).highlightItem(possition);
+		((LeftSideListCertAndReapplyTabletFragment) fragmentLeft).highlightItem(possition);
 	}
 
 	public void updateLeftSideInput(int possition, int startFrom) {
 		if (fragmentLeft == null || !(fragmentLeft instanceof LeftSideInputTabletFragment)) {
 			return;
 		}
-		((LeftSideInputTabletFragment)fragmentLeft).highlightItem(possition, startFrom);
+		((LeftSideInputTabletFragment) fragmentLeft).highlightItem(possition, startFrom);
 	}
 
-	public void goApplyCompleted(){
+	public void goApplyCompleted() {
 		fragmentContent = TabletInputSuccessFragment.newInstance();
 		gotoApplyCompleteFragment();
 	}
 
-	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element){
+	public void goApplyCompleted(InformCtrl m_InformCtrl, ElementApply element) {
 		fragmentContent = TabletInputSuccessFragment.newInstance(m_InformCtrl, element);
 		gotoApplyCompleteFragment();
 	}
 
-	private void gotoApplyCompleteFragment(){
+	private void gotoApplyCompleteFragment() {
 		currentStatus = APPLY_SUCCESS_STATUS;
 		hideFragmentLeft();
 		changeFragmentContent(SCROLL_TO_LEFT);
@@ -315,7 +364,7 @@ public class MenuAcivity extends FragmentActivity {
 			fragmentLeft = new LeftSideListCertAndReapplyTabletFragment();
 			changeFragmentLeftTablet();
 		}
-		fragmentContent= ContentListCertificateTabletFragment.newInstance(listCertificate);
+		fragmentContent = ContentListCertificateTabletFragment.newInstance(listCertificate);
 		changeFragmentContent(typeScroll);
 	}
 
@@ -326,7 +375,7 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentLeft = new LeftSideListConfirmTabletFragment();
 		changeFragmentLeftTablet();
 
-		fragmentContent= ContentListConfirmTabletFragment.newInstance(listElementApply);
+		fragmentContent = ContentListConfirmTabletFragment.newInstance(listElementApply);
 		changeFragmentContent(typeScroll);
 	}
 
@@ -344,14 +393,14 @@ public class MenuAcivity extends FragmentActivity {
 		if (fragmentLeft == null || currentStatus != DETAIL_CONFIRM_APPLY_STATUS) {
 			return;
 		}
-		((LeftSideDetailConfirmTabletFragment)fragmentLeft).setTextDes(newDes);
+		((LeftSideDetailConfirmTabletFragment) fragmentLeft).setTextDes(newDes);
 	}
 
 	public void clickConfirmApply(String[] listData) {
 		currentStatus = CONFIRM_APPLY_STATUS;
 		fragmentLeft = LeftSideInputPasswordTabletFragment.newInstance(listData);
 		changeFragmentLeftTablet();
-		fragmentContent= ContentInputPasswordTabletFragment.newInstance(false);
+		fragmentContent = ContentInputPasswordTabletFragment.newInstance(false);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
@@ -360,7 +409,7 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentLeft = LeftSideInputPasswordTabletFragment.newInstance(listData);
 		changeFragmentLeftTablet();
 
-		fragmentContent= ContentInputPasswordTabletFragment.newInstance(true);
+		fragmentContent = ContentInputPasswordTabletFragment.newInstance(true);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
@@ -370,33 +419,33 @@ public class MenuAcivity extends FragmentActivity {
 		currentStatus = REAPPLY_STATUS;
 		fragmentLeft = LeftSideInputTabletFragment.newInstance(TabletBaseInputFragment.START_FROM_MENU);
 		changeFragmentLeftTablet();
-		fragmentContent= TabletBaseInputFragment.newInstanceReApply(StringList.ID_DETAIL_CURRENT);
+		fragmentContent = TabletBaseInputFragment.newInstanceReApply(StringList.ID_DETAIL_CURRENT);
 		changeFragmentContent(SCROLL_TO_LEFT);
 	}
 
 	public void clickDeleteApplyTablet() {
-	    final DialogConfirmTablet dialog = new DialogConfirmTablet(this);
-	    dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
-			    , getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
-	    dialog.setOnClickOK(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-			    dialog.dismiss();
-			    elementMgr.deleteElementApply(StringList.ID_DETAIL_CURRENT);
-			    gotoMenuTablet();
-		    }
-	    });
-	    dialog.show();
+		final DialogConfirmTablet dialog = new DialogConfirmTablet(this);
+		dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
+				, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
+		dialog.setOnClickOK(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				elementMgr.deleteElementApply(StringList.ID_DETAIL_CURRENT);
+				gotoMenuTablet();
+			}
+		});
+		dialog.show();
 	}
 
 	public void gotoCompleteConfirmApplyFragment(int status, ElementApply element, InformCtrl m_InformCtrl) {
 		hideFragmentLeft();
-		currentStatus  = COMPLETE_CONFIRM_STATUS;
-		fragmentContent= ContentCompleteConfirmApplyFragment.newInstance(status, element, m_InformCtrl);
-		if (status == ElementApply.STATUS_APPLY_PENDING || status == ElementApply.STATUS_APPLY_REJECT  || status
-				== ElementApply.STATUS_APPLY_CANCEL ) {
+		currentStatus = COMPLETE_CONFIRM_STATUS;
+		fragmentContent = ContentCompleteConfirmApplyFragment.newInstance(status, element, m_InformCtrl);
+		if (status == ElementApply.STATUS_APPLY_PENDING || status == ElementApply.STATUS_APPLY_REJECT || status
+				== ElementApply.STATUS_APPLY_CANCEL) {
 			changeFragmentContent(NOT_SCROLL);
-		} else if (status == ElementApply.STATUS_APPLY_APPROVED){
+		} else if (status == ElementApply.STATUS_APPLY_APPROVED) {
 			changeFragmentContent(SCROLL_TO_LEFT);
 		} else {
 			changeFragmentContent(SCROLL_TO_RIGHT);
@@ -430,7 +479,7 @@ public class MenuAcivity extends FragmentActivity {
 		fragmentTransaction.commit();
 	}
 
-	private void changeFragmentLeftTablet(){
+	private void changeFragmentLeftTablet() {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.fragment_leftside_tablet, fragmentLeft);
 		fragmentTransaction.commit();
@@ -453,20 +502,20 @@ public class MenuAcivity extends FragmentActivity {
 		}
 	}
 
-	private void changeFragmentContentTabletGoToLeft(){
+	private void changeFragmentContentTabletGoToLeft() {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
 		fragmentTransaction.replace(R.id.fragment_content_tablet, fragmentContent);
 		fragmentTransaction.commit();
 	}
 
-	private void changeFragmentContentTabletNotScroll(){
+	private void changeFragmentContentTabletNotScroll() {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.fragment_content_tablet, fragmentContent);
 		fragmentTransaction.commit();
 	}
 
-	private void changeFragmentContentTabletGoToRight(){
+	private void changeFragmentContentTabletGoToRight() {
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction.setCustomAnimations(R.anim.pop_enter, R.anim.pop_exit, R.anim.enter, R.anim.exit);
 		fragmentTransaction.replace(R.id.fragment_content_tablet, fragmentContent);
@@ -476,6 +525,11 @@ public class MenuAcivity extends FragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_PERMISSION_SETTING) {
+			if (isPermissionGranted()) {
+				statusPermission = GRANTED;
+			}
+		}
 		if (requestCode == 10) {
 			if (resultCode == RESULT_OK) {
 				LogCtrl.getInstance().info("Proc: CA Certificate Installation Successful");
@@ -486,7 +540,7 @@ public class MenuAcivity extends FragmentActivity {
 			}
 		}
 		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT) {
-			((TabletBaseInputFragment)fragmentContent).finishInstallCertificate(resultCode);
+			((TabletBaseInputFragment) fragmentContent).finishInstallCertificate(resultCode);
 		}
 
 		if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {

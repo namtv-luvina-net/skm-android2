@@ -224,4 +224,6 @@
 	<string name="no">いいえ</string>
 	<string name="yes">はい</string>
 	<string name="handler_failed">処理に失敗しました。</string>
+	<string name="go_to_setting">設定へ</string>
+	<string name="message_go_setting_allow_permission">アクセス権限がありません。アプリの設定で権限を設定ください。</string>
 </resources>
