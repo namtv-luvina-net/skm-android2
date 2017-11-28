@@ -236,10 +236,11 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	private void showDialogAskPermision() {
+		if (this.isFinishing()) {
+			return;
+		}
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		// khởi tạo dialog
 		alertDialogBuilder.setMessage(getString(R.string.message_go_setting_allow_permission));
-		// thiết lập nội dung cho dialog
 		alertDialogBuilder.setPositiveButton(getString(R.string.go_to_setting), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int arg1) {
@@ -253,6 +254,13 @@ public class MenuAcivity extends FragmentActivity {
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
 				finish();
+			}
+		});
+		alertDialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				dialog.dismiss();
+				showDialogAskPermision();
 			}
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
