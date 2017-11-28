@@ -16,9 +16,7 @@ import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
-import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 /**
  * Created by nguyenducdat on 5/4/2017.

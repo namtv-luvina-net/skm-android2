@@ -5,11 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.EpsapVersion;
-import jp.co.soliton.keymanager.customview.DialogMenuCertDetail;
 
 import java.util.ArrayList;
 import java.util.List;

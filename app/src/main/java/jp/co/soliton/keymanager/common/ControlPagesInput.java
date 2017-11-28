@@ -7,14 +7,11 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.fragment.InputBasePageFragment;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
-import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 
 import javax.security.cert.X509Certificate;
 import java.net.URLEncoder;
-import java.util.List;
 
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 

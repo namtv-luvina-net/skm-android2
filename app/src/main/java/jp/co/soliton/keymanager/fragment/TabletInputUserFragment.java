@@ -26,9 +26,7 @@ import jp.co.soliton.keymanager.xmlparser.XmlStringData;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
-import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_VPN;
-import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 /**
  * Created by nguyenducdat on 4/25/2017.

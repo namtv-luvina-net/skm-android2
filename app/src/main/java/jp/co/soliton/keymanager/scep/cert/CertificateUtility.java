@@ -22,6 +22,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
+import static jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl.CERT_STORE_TO_KEY_CHAIN;
+import static jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl.KEY_PAIR_TO_KEY_CHAIN;
+
 @SuppressWarnings("deprecation")
 public class CertificateUtility {
 	public static void certStoreToKeyChain(
@@ -34,7 +37,7 @@ public class CertificateUtility {
 			int i = cACertificateCollection.size();
 			while (iterator.hasNext() == true) {
 				X509Certificate certificate = (X509Certificate) iterator.next();
-				CertificateUtility.certificateToKeyChain(context, certificate, alias, i + 9);
+				CertificateUtility.certificateToKeyChain(context, certificate, alias, i + CERT_STORE_TO_KEY_CHAIN);
 				i--;
 			}
 		} catch (CertStoreException e) {
@@ -68,7 +71,7 @@ public class CertificateUtility {
 		Intent intent = KeyChain.createInstallIntent();
 		intent.putExtra("PKEY", keyPair.getPrivate().getEncoded());
 		intent.putExtra("KEY", keyPair.getPublic().getEncoded());
-		context.startActivity(intent);
+		context.startActivityForResult(intent, KEY_PAIR_TO_KEY_CHAIN);
 	}
 
 	public static X509Certificate generateSelfSignedCertificate(

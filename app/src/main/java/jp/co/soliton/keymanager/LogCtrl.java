@@ -1,6 +1,5 @@
 package jp.co.soliton.keymanager;
 
-import android.os.Environment;
 import android.util.Log;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.LogFileCtrl;

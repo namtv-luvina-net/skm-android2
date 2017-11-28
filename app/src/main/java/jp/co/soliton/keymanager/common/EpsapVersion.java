@@ -1,6 +1,5 @@
 package jp.co.soliton.keymanager.common;
 
-import android.util.Log;
 import jp.co.soliton.keymanager.ValidateParams;
 
 /**

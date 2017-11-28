@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.*;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
@@ -24,6 +23,8 @@ import jp.co.soliton.keymanager.fragment.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl.CERT_STORE_TO_KEY_CHAIN;
+import static jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl.KEY_PAIR_TO_KEY_CHAIN;
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT;
 import static jp.co.soliton.keymanager.common.StatusFragmentTablet.*;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.*;
@@ -249,7 +250,8 @@ public class MenuAcivity extends FragmentActivity {
 			}
 		});
 
-		alertDialogBuilder.setNegativeButton(getString(R.string.label_dialog_Cancle), new DialogInterface.OnClickListener() {
+		alertDialogBuilder.setNegativeButton(getString(R.string.label_dialog_Cancle), new DialogInterface.OnClickListener
+				() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -538,7 +540,11 @@ public class MenuAcivity extends FragmentActivity {
 				statusPermission = GRANTED;
 			}
 		}
-		if (requestCode == 10) {
+		if (requestCode == KEY_PAIR_TO_KEY_CHAIN) {
+			LogCtrl.getInstance().info("onActivityResult KEY_PAIR_TO_KEY_CHAIN");
+			StartUsingProceduresControl.getInstance(this).startCertToKeyChainTask();
+		}
+		if (requestCode == CERT_STORE_TO_KEY_CHAIN + 1) {
 			if (resultCode == RESULT_OK) {
 				LogCtrl.getInstance().info("Proc: CA Certificate Installation Successful");
 				StartUsingProceduresControl.getInstance(this).startCertificateEnrollTask();
@@ -550,7 +556,6 @@ public class MenuAcivity extends FragmentActivity {
 		if (requestCode == REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT) {
 			((TabletBaseInputFragment) fragmentContent).finishInstallCertificate(resultCode);
 		}
-
 		if (requestCode == StartUsingProceduresControl.m_nEnrollRtnCode) {
 			// After CertificateEnrollTask
 			StartUsingProceduresControl.getInstance(this).afterIntallCert();

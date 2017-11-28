@@ -25,9 +25,7 @@ import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 import java.util.ArrayList;
 
 import static jp.co.soliton.keymanager.common.ControlPagesInput.REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT;
-import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_VPN;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 /**
  * Created by luongdolong on 2/3/2017.

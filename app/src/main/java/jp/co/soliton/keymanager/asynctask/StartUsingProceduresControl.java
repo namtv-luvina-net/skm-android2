@@ -32,6 +32,7 @@ import org.bouncycastle.jce.PKCS10CertificationRequest;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.CertStore;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,6 +52,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private Activity activity;
 	public static int m_nMDM_RequestCode = 70;
 	public static int m_nEnrollRtnCode = 55;
+	public static final int KEY_PAIR_TO_KEY_CHAIN = 123;
+	public static final int CERT_STORE_TO_KEY_CHAIN = 9;
 
 	private String m_strKeyType = "";
 	private String m_strSubject = "";
@@ -71,13 +74,15 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private ComponentName m_DeviceAdmin;
 	private static StartUsingProceduresControl instance;
 	private boolean isTablet;
+	private CertRep certRep;
 
-	public static StartUsingProceduresControl newInstance(Activity activity, InformCtrl m_InformCtrl, ElementApply element){
+	public static StartUsingProceduresControl newInstance(Activity activity, InformCtrl m_InformCtrl, ElementApply
+			element) {
 		instance = new StartUsingProceduresControl(activity, m_InformCtrl, element);
 		return instance;
 	}
 
-	public static StartUsingProceduresControl getInstance(Activity activity){
+	public static StartUsingProceduresControl getInstance(Activity activity) {
 		if (instance != null) {
 			return instance;
 		} else {
@@ -92,12 +97,17 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		this.element = element;
 		scepRequester = getScepRequester();
 	}
+
 	public ElementApply getElement() {
 		return element;
 	}
 
-	public void startDeviceCertTask(){
+	public void startDeviceCertTask() {
 		new GetDeviceCertTask().execute();
+	}
+
+	public void startCertToKeyChainTask() {
+		new CertToKeyChainTask().execute();
 	}
 
 	public Requester getScepRequester() {
@@ -124,10 +134,10 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			// プログレスダイアログ終了
-			try{
+			try {
 				mdmctrl.startService();
 				//progressDialog.dismiss();
-			}catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -252,7 +262,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	 *
 	 * @param message
 	 */
-	protected void showMessage(String message) {
+	public void showMessage(String message) {
 		if (!isTablet) {
 			DialogApplyMessage dlgMessage = new DialogApplyMessage(activity, message);
 			dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
@@ -271,7 +281,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				@Override
 				public void onOkDismissMessage() {
 					if (activity instanceof MenuAcivity) {
-						int sizeListElementApply = ((MenuAcivity)activity).getListElementApply().size();
+						int sizeListElementApply = ((MenuAcivity) activity).getListElementApply().size();
 						if (sizeListElementApply == 1) {
 							((MenuAcivity) activity).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
 						} else {
@@ -295,7 +305,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	public void alias(String alias) {
 	}
 
-	public void startCertificateEnrollTask(){
+	public void startCertificateEnrollTask() {
 		new CertificateEnrollTask().execute(scepRequester);
 	}
 
@@ -319,7 +329,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 
 				selfSignedCertificate =
 						CertificateUtility.generateSelfSignedCertificate(
-								m_strSubject,//"CN=NetAttest EPS Root CA,OU=RDD,O=Soliton Systems K.K.,L=Shinjuku,ST=Tokyo,C=JP",
+								m_strSubject,//"CN=NetAttest EPS Root CA,OU=RDD,O=Soliton Systems K.K.,L=Shinjuku,ST=Tokyo,
+								// C=JP",
 								serial,
 								notBefore,
 								notAfter,
@@ -330,14 +341,15 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				PKCS10CertificationRequest certificateSigningRequest;
 				certificateSigningRequest =
 						CertificateUtility.generateCertificateSigningRequest(
-								m_strSubject,//"CN=NetAttest EPS Root CA,OU=RDD,O=Soliton Systems K.K.,L=Shinjuku,ST=Tokyo,C=JP",
+								m_strSubject,//"CN=NetAttest EPS Root CA,OU=RDD,O=Soliton Systems K.K.,L=Shinjuku,ST=Tokyo,
+								// C=JP",
 								m_strChallenge,//"Challenge",
 								rSAKeyPair,
 								"SHA1WithRSA",
 								m_strSubjectAltName);
 				cACertificateStore =
 						requester.getCACertificate(m_strServerURL/*"http://10.30.127.44/ca/NaScepEPSap.cgi"*/);
-				CertRep certRep = requester.certificateEnrollment(
+				certRep = requester.certificateEnrollment(
 						m_strServerURL/*"https://10.30.127.44/ca/NaScepEPSap.cgi"*/,
 						certificateSigningRequest,
 						selfSignedCertificate,
@@ -345,112 +357,6 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 						cACertificateStore);
 				if (certRep.getPkiStatus().getStatus() == PkiStatus.Status.SUCCESS) {
 					CertificateUtility.keyPairToKeyChain(activity, rSAKeyPair);
-
-					element.setsNValue(certRep.getCertificate().getSerialNumber().toString());
-					String str = certRep.getCertificate().getSubjectDN().toString();
-					String[] arr = str.split(",");
-					for(int i = 0; i < arr.length; i++) {
-						if(arr[i].toString().startsWith("CN=")) {
-							element.setcNValue(arr[i].toString().replace("CN=","").trim());
-						}
-					}
-					CertificateUtility.certificateToKeyChain(
-							activity,
-							certRep.getCertificate(),
-							element.getcNValue(),
-							m_nEnrollRtnCode/*0*/);
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
-					element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
-					//retrieve data certificate
-					for (int i = 0; i < arr.length; i++) {
-						if (arr[i] == null || arr[i].length() <= 0) {
-							continue;
-						}
-						if(arr[i].toString().startsWith("C=")) {
-							element.setSubjectCountryName(arr[i].toString().replace("C=","").trim());
-						}
-						if(arr[i].toString().startsWith("ST=")) {
-							element.setSubjectStateOrProvinceName(arr[i].toString().replace("ST=","").trim());
-						}
-						if(arr[i].toString().startsWith("L=")) {
-							element.setSubjectLocalityName(arr[i].toString().replace("L=","").trim());
-						}
-						if(arr[i].toString().startsWith("O=")) {
-							element.setSubjectOrganizationName(arr[i].toString().replace("O=","").trim());
-						}
-						if(arr[i].toString().startsWith("CN=")) {
-							element.setSubjectCommonName(arr[i].toString().replace("CN=","").trim());
-						}
-						if(arr[i].toString().startsWith("E=")) {
-							element.setSubjectEmailAddress (arr[i].toString().replace("E=","").trim());
-						}
-					}
-					str = certRep.getCertificate().getIssuerDN().toString();
-					String [] arrIssuer = str.split(",");
-					for (int i = 0; i < arrIssuer.length; i++) {
-						if (arrIssuer[i] == null || arrIssuer[i].length() <= 0) {
-							continue;
-						}
-						if(arrIssuer[i].toString().startsWith("C=")) {
-							element.setIssuerCountryName(arrIssuer[i].toString().replace("C=","").trim());
-						}
-						if(arrIssuer[i].toString().startsWith("ST=")) {
-							element.setIssuerStateOrProvinceName(arrIssuer[i].toString().replace("ST=","").trim());
-						}
-						if(arrIssuer[i].toString().startsWith("L=")) {
-							element.setIssuerLocalityName(arrIssuer[i].toString().replace("L=","").trim());
-						}
-						if(arrIssuer[i].toString().startsWith("O=")) {
-							element.setIssuerOrganizationName(arrIssuer[i].toString().replace("O=","").trim());
-						}
-						if(arrIssuer[i].toString().startsWith("CN=")) {
-							element.setIssuerCommonName(arrIssuer[i].toString().replace("CN=","").trim());
-						}
-						if(arrIssuer[i].toString().startsWith("E=")) {
-							element.setIssuerEmailAdress(arrIssuer[i].toString().replace("E=","").trim());
-						}
-						if(arrIssuer[i].toString().startsWith("OU=")) {
-							element.setIssuerOrganizationUnitName(arrIssuer[i].toString().replace("OU=","").trim());
-						}
-					}
-					element.setVersion(String.valueOf(certRep.getCertificate().getVersion()));
-					element.setSerialNumber(certRep.getCertificate().getSerialNumber().toString());
-					element.setSignatureAlogrithm(certRep.getCertificate().getSigAlgName());
-					if (certRep.getCertificate().getNotBefore() != null) {
-						element.setNotValidBefore(dateFormat.format(certRep.getCertificate().getNotBefore()));
-					}
-					if (certRep.getCertificate().getNotAfter() != null) {
-						element.setNotValidAfter(dateFormat.format(certRep.getCertificate().getNotAfter()));
-					}
-					element.setPublicKeyAlogrithm(certRep.getCertificate().getPublicKey().getAlgorithm());
-					element.setPublicKeyData(bytesToHex(certRep.getCertificate().getPublicKey().getEncoded()));
-					element.setPublicSignature(bytesToHex(certRep.getCertificate().getSignature()));
-					element.setCertificateAuthority(String.valueOf(certRep.getCertificate().getBasicConstraints()));
-					StringBuilder builder = new StringBuilder();
-					String [] keyUsage = {"digitalSignature", "nonRepudiation", "keyEncipherment", "dataEncipherment", "keyAgreement", "keyCertSign", "cRLSign", "encipherOnly", "decipherOnly"};
-					int maxLength = Math.min(keyUsage.length, certRep.getCertificate().getKeyUsage().length);
-					for (int i = 0; i < maxLength; i++) {
-						if (!certRep.getCertificate().getKeyUsage()[i]) {
-							continue;
-						}
-						if (builder.length() <= 0) {
-							builder.append(keyUsage[i]);
-						} else {
-							builder.append("," + keyUsage[i]);
-						}
-					}
-					element.setUsage(builder.toString());
-					element.setSubjectKeyIdentifier(bytesToHex(X509Utils.getSubjectKeyIdentifier(certRep.getCertificate())));
-					element.setAuthorityKeyIdentifier(bytesToHex(X509Utils.getAuthorityKeyIdentifier(certRep.getCertificate())));
-					element.setClrDistributionPointUri(X509Utils.getCRLURL(certRep.getCertificate()));
-					List<String> ocspUrlList = X509Utils.getAIALocations(certRep.getCertificate());
-					if (ocspUrlList != null && !ocspUrlList.isEmpty()) {
-						element.setCertificateAuthorityUri(ocspUrlList.get(0));
-					}
-					element.setPurpose(X509Utils.getPurpose(certRep.getCertificate()));
-					element.setNotiEnableFlag(CommonUtils.getPrefBoolean(activity, StringList.KEY_NOTIF_ENABLE_FLAG));
-					element.setNotiEnableBeforeFlag(CommonUtils.getPrefBoolean(activity, StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
-					element.setNotiEnableBefore(CommonUtils.getPrefInteger(activity, StringList.KEY_NOTIF_ENABLE_BEFORE));
 				} else {
 					return false;
 				}
@@ -491,10 +397,143 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				showMessage(strError);
 			}
 		}
+	}
+
+	private class CertToKeyChainTask extends AsyncTask<Void, Void, Boolean> {
+
+		String strError = "";
+		@Override
+		protected Boolean doInBackground(Void... voids) {
+			element.setsNValue(certRep.getCertificate().getSerialNumber().toString());
+			String str = certRep.getCertificate().getSubjectDN().toString();
+			String[] arr = str.split(",");
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i].toString().startsWith("CN=")) {
+					element.setcNValue(arr[i].toString().replace("CN=", "").trim());
+				}
+			}
+			CertificateUtility.certificateToKeyChain(
+					activity,
+					certRep.getCertificate(),
+					element.getcNValue(),
+					m_nEnrollRtnCode/*0*/);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+			element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
+			//retrieve data certificate
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i] == null || arr[i].length() <= 0) {
+					continue;
+				}
+				if (arr[i].toString().startsWith("C=")) {
+					element.setSubjectCountryName(arr[i].toString().replace("C=", "").trim());
+				}
+				if (arr[i].toString().startsWith("ST=")) {
+					element.setSubjectStateOrProvinceName(arr[i].toString().replace("ST=", "").trim());
+				}
+				if (arr[i].toString().startsWith("L=")) {
+					element.setSubjectLocalityName(arr[i].toString().replace("L=", "").trim());
+				}
+				if (arr[i].toString().startsWith("O=")) {
+					element.setSubjectOrganizationName(arr[i].toString().replace("O=", "").trim());
+				}
+				if (arr[i].toString().startsWith("CN=")) {
+					element.setSubjectCommonName(arr[i].toString().replace("CN=", "").trim());
+				}
+				if (arr[i].toString().startsWith("E=")) {
+					element.setSubjectEmailAddress(arr[i].toString().replace("E=", "").trim());
+				}
+			}
+			str = certRep.getCertificate().getIssuerDN().toString();
+			String[] arrIssuer = str.split(",");
+			for (int i = 0; i < arrIssuer.length; i++) {
+				if (arrIssuer[i] == null || arrIssuer[i].length() <= 0) {
+					continue;
+				}
+				if (arrIssuer[i].toString().startsWith("C=")) {
+					element.setIssuerCountryName(arrIssuer[i].toString().replace("C=", "").trim());
+				}
+				if (arrIssuer[i].toString().startsWith("ST=")) {
+					element.setIssuerStateOrProvinceName(arrIssuer[i].toString().replace("ST=", "").trim());
+				}
+				if (arrIssuer[i].toString().startsWith("L=")) {
+					element.setIssuerLocalityName(arrIssuer[i].toString().replace("L=", "").trim());
+				}
+				if (arrIssuer[i].toString().startsWith("O=")) {
+					element.setIssuerOrganizationName(arrIssuer[i].toString().replace("O=", "").trim());
+				}
+				if (arrIssuer[i].toString().startsWith("CN=")) {
+					element.setIssuerCommonName(arrIssuer[i].toString().replace("CN=", "").trim());
+				}
+				if (arrIssuer[i].toString().startsWith("E=")) {
+					element.setIssuerEmailAdress(arrIssuer[i].toString().replace("E=", "").trim());
+				}
+				if (arrIssuer[i].toString().startsWith("OU=")) {
+					element.setIssuerOrganizationUnitName(arrIssuer[i].toString().replace("OU=", "").trim());
+				}
+			}
+			element.setVersion(String.valueOf(certRep.getCertificate().getVersion()));
+			element.setSerialNumber(certRep.getCertificate().getSerialNumber().toString());
+			element.setSignatureAlogrithm(certRep.getCertificate().getSigAlgName());
+			if (certRep.getCertificate().getNotBefore() != null) {
+				element.setNotValidBefore(dateFormat.format(certRep.getCertificate().getNotBefore()));
+			}
+			if (certRep.getCertificate().getNotAfter() != null) {
+				element.setNotValidAfter(dateFormat.format(certRep.getCertificate().getNotAfter()));
+			}
+			element.setPublicKeyAlogrithm(certRep.getCertificate().getPublicKey().getAlgorithm());
+			element.setPublicKeyData(bytesToHex(certRep.getCertificate().getPublicKey().getEncoded()));
+			element.setPublicSignature(bytesToHex(certRep.getCertificate().getSignature()));
+			element.setCertificateAuthority(String.valueOf(certRep.getCertificate().getBasicConstraints()));
+			StringBuilder builder = new StringBuilder();
+			String[] keyUsage = {"digitalSignature", "nonRepudiation", "keyEncipherment", "dataEncipherment",
+					"keyAgreement", "keyCertSign", "cRLSign", "encipherOnly", "decipherOnly"};
+			int maxLength = Math.min(keyUsage.length, certRep.getCertificate().getKeyUsage().length);
+			for (int i = 0; i < maxLength; i++) {
+				if (!certRep.getCertificate().getKeyUsage()[i]) {
+					continue;
+				}
+				if (builder.length() <= 0) {
+					builder.append(keyUsage[i]);
+				} else {
+					builder.append("," + keyUsage[i]);
+				}
+			}
+			element.setUsage(builder.toString());
+			try {
+				element.setSubjectKeyIdentifier(bytesToHex(X509Utils.getSubjectKeyIdentifier(certRep.getCertificate())));
+				element.setAuthorityKeyIdentifier(bytesToHex(X509Utils.getAuthorityKeyIdentifier(certRep.getCertificate()
+				)));
+				element.setClrDistributionPointUri(X509Utils.getCRLURL(certRep.getCertificate()));
+				List<String> ocspUrlList = X509Utils.getAIALocations(certRep.getCertificate());
+				if (ocspUrlList != null && !ocspUrlList.isEmpty()) {
+					element.setCertificateAuthorityUri(ocspUrlList.get(0));
+				}
+				element.setPurpose(X509Utils.getPurpose(certRep.getCertificate()));
+				element.setNotiEnableFlag(CommonUtils.getPrefBoolean(activity, StringList.KEY_NOTIF_ENABLE_FLAG));
+				element.setNotiEnableBeforeFlag(CommonUtils.getPrefBoolean(activity, StringList
+						.KEY_NOTIF_ENABLE_BEFORE_FLAG));
+				element.setNotiEnableBefore(CommonUtils.getPrefInteger(activity, StringList.KEY_NOTIF_ENABLE_BEFORE));
+			} catch (CertificateException e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			if (!result) {
+				if (strError.length() == 0) {
+					strError = activity.getString(R.string.EnrollErrorMessage);
+				}
+				showMessage(strError);
+			}
+		}
 
 		public String bytesToHex(byte[] in) {
 			final StringBuilder builder = new StringBuilder();
-			for(byte b : in) {
+			for (byte b : in) {
 				if (builder.length() > 0) {
 					builder.append(String.format(":%02x", b));
 				} else {
@@ -512,15 +551,15 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		// Subject
 		List<String> list = m_p_aided.GetSubjectList();
 		String subject_string = "";
-		for(int n = 0; list.size() > n; n++) {
-			if(subject_string.length() == 0) {
+		for (int n = 0; list.size() > n; n++) {
+			if (subject_string.length() == 0) {
 				subject_string = list.get(n);
 				subject_string += "=";
-			} else if ((n%2) == 0) {
+			} else if ((n % 2) == 0) {
 				subject_string += ", ";
 				subject_string += list.get(n);
 				subject_string += "=";
-			} else if ((n%2) == 1) {
+			} else if ((n % 2) == 1) {
 				subject_string += "\"";
 				subject_string += list.get(n);
 				subject_string += "\"";
@@ -532,9 +571,9 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		// Challenge, Name, KeyType
 		XmlDictionary dict = m_p_aided.GetDictionary();
 		List<XmlStringData> str_list;
-		if(dict != null) {
+		if (dict != null) {
 			str_list = dict.GetArrayString();
-			for(int i = 0; str_list.size() > i; i++){
+			for (int i = 0; str_list.size() > i; i++) {
 				// config情報に従って、処理を行う.
 				XmlStringData p_data = str_list.get(i);
 				SetEditMemberChild(p_data);
@@ -546,18 +585,18 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	}
 
 	private void SetEditMemberChild(XmlStringData data) {
-		String strKeyName = data.GetKeyName();	// キー名
-		int    i_type = data.GetType();		// 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
-		String strData = data.GetData();		// 要素
+		String strKeyName = data.GetKeyName();    // キー名
+		int i_type = data.GetType();        // 要素タイプ(string:1, data=2, date=3, real=4, integer=5, true=6, false=7)
+		String strData = data.GetData();        // 要素
 
 		// Chalenge
-		if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_challenge)) {	// Challenge
+		if (strKeyName.equalsIgnoreCase(StringList.m_str_scep_challenge)) {    // Challenge
 			m_strChallenge = strData;
-		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_CaIdent)) {	// Name(Arias)
+		} else if (strKeyName.equalsIgnoreCase(StringList.m_str_CaIdent)) {    // Name(Arias)
 			m_strCertArias = strData;
-		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_keytype)) {	// Key Type
+		} else if (strKeyName.equalsIgnoreCase(StringList.m_str_scep_keytype)) {    // Key Type
 			m_strKeyType = strData;
-		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_scep_rfc822Name)) {	// rfc822Name
+		} else if (strKeyName.equalsIgnoreCase(StringList.m_str_scep_rfc822Name)) {    // rfc822Name
 			// チケット #8907 メールアドレスをSubjectAltNameとして設定しておく
 			m_strSubjectAltName = strData;
 		}
@@ -571,8 +610,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		List<XmlDictionary> wifi_list = m_p_aided_profile.GetWifiDictList();
 
 		// 3. ループしてWifiControl::SetWifiListを実行
-		if(!wifi_list.isEmpty()) {
-			for(int i = 0; wifi_list.size() > i; i++){
+		if (!wifi_list.isEmpty()) {
+			for (int i = 0; wifi_list.size() > i; i++) {
 				XmlDictionary one_piece = wifi_list.get(i);
 				wifi.SetWifiList(one_piece);
 			}
@@ -583,7 +622,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		wifi.SetUserCert(m_InformCtrl.GetUserID());
 
 		// 4. WifiControl::PublicConnect(WifiControl.SCEP_WIFI)を実行
-		if(wifi.PublicConnect(WifiControl.SCEP_WIFI) == false) {
+		if (wifi.PublicConnect(WifiControl.SCEP_WIFI) == false) {
 			return;
 		}
 	}
@@ -603,7 +642,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		m_InformCtrl.SetAPID(apid);
 		mdmctrl = new MDMControl(activity, m_InformCtrl.GetAPID());
 		// 古い情報をチェックアウト (この段階では設定ファイルは古い情報のまま)
-		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(activity, new MDMControl.CheckOutListener() {
+		MDMControl.CheckOutMdmTask checkOutMdmTask = new MDMControl.CheckOutMdmTask(activity, new MDMControl
+				.CheckOutListener() {
 			@Override
 			public void checkOutComplete() {
 				if (isDeviceAdmin() == false) {
@@ -642,14 +682,14 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				boolean bret = mdmctrl.CheckIn(true);
 
 				// 5. OKならスレッド起動...定期通信
-				if(bret == false) {
+				if (bret == false) {
 					//	mdmctrl.startService();
 					LogCtrl.getInstance().error("Proc: Check-in failed");
 					return;
 				}
 
 				bret = mdmctrl.TokenUpdate();
-				if(bret == false) {
+				if (bret == false) {
 					//	mdmctrl.startService();
 					LogCtrl.getInstance().error("Proc: Token udpate failed");
 					return;
@@ -705,7 +745,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 		}
 	}
 
-	private void DownloadCACertificate(){
+	private void DownloadCACertificate() {
 		if (element.getTarget().startsWith(PREFIX_APID_WIFI)) {
 			m_InformCtrlCA = new InformCtrl();
 			String url = String.format("%s:%s", element.getHost(), element.getPort());

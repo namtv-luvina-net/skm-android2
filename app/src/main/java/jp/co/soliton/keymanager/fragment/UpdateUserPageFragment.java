@@ -33,9 +33,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
-import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_VPN;
-import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
-import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
+import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 /**
  * Created by luongdolong on 2/3/2017.
