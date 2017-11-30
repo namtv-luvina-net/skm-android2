@@ -1066,9 +1066,9 @@ public class XmlPullParserAided /*extends Activity*/{
 		}
 		if(rtnstr == null) {
 			String macaddress = GetMacAddress();
-			if(android.os.Build.VERSION.SDK_INT < 23)	// #25238 Android6.0未満はMacアドレスから生成、それ以上はAndroidID～
+//			if(android.os.Build.VERSION.SDK_INT < 23)	// #25238 Android6.0未満はMacアドレスから生成、それ以上はAndroidID～
 				rtnstr = SetMacToUdid(/*wifiInfo.getMacAddress()*/macaddress);
-			else rtnstr = GetAndroididToApid(ctx);
+//			else rtnstr = GetAndroididToApid(ctx);
 		} else {
 			rtnstr += rtnstr;
 			rtnstr += rtnstr;

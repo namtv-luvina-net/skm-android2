@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    def buildNum = '2'
+    def buildNum = '3'
     def versionStr = '201'
     compileSdkVersion 24
     buildToolsVersion '26.0.2'
