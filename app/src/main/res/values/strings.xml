@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-    <string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-    <string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-	<string name="Forbidden">Forbidden</string>
-    <string name="Unauthorized">Unauthorized</string>
-    <string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
+	<string name="app_name" translatable="false">Soliton KeyManager</string>
+    <string name="app_name_icon" translatable="false">KeyManager</string>
+	<string name="Property_key" translatable="false">key</string>
+    <string name="Property_array" translatable="false">array</string>
+	<string name="Property_dict" translatable="false">dict</string>
+	<string name="User_Agentprofile" translatable="false">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
+	<string name="Forbidden" translatable="false">Forbidden</string>
+    <string name="Unauthorized" translatable="false">Unauthorized</string>
+    <string name="ERR" translatable="false">ERR:</string>
+	<string name="main_apid_wifi" translatable="false">Wi-Fi</string>
+	<string name="EnrollErrorMessage" translatable="false">Enroll Error</string>
+	<string name="not_installed_ca" translatable="false">not installed ca certification</string>
+	<string name="apid_subject_email" translatable="false">Soliton KeyManager APID</string>
+	<string name="title_cn" translatable="false">CN :</string>
+	<string name="title_sn" translatable="false">S/N :</string>
 	<string name="main_apid_vpn">VPN and apps</string>
 	<string name="main_versionname">Ver.</string>
     <string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
 	<string name="certlogin_userid_title">User ID</string>
 	<string name="certlogin_password_title">Password</string>
-	<string name="instapp_nosdcard">An app cannot be downloaded because of no SD card.</string>
 	<string name="admin_receiver_enabled">The admin receiver has been enabled</string>
 	<string name="admin_receiver_disabled">The admin receiver has been disabled</string>
 	<string name="admin_receiver_pwchange">The admin receiver\'s password has been changed</string>
@@ -107,7 +111,6 @@
 	<string name="apply_completed">Apply Completed</string>
 	<string name="back_to_top">Back to Top</string>
 	<string name="back_to_top_auto">Start Using Procedures</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">Connection failed.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">The destination email address is invalid.</string>
@@ -120,7 +123,6 @@
 	<string name="select_apid">Select.</string>
 	<string name="apid_guide_1">Tap [Copy] to copy to the \nclipboard.</string>
 	<string name="apid_guide_2">Tap [Mail] to start the \nmailer.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Approval Completed</string>
 	<string name="approval_confirmation">Approval Confirmation</string>
 	<string name="beginning_to_use_procedures">Start Using Procedures</string>
@@ -174,7 +176,6 @@
 	<string name="text_start_reapply_tablet">Re-applying is necessary to continue using.</string>
 	<string name="title_apply_date">Apply Date :</string>
 	<string name="title_cancel">Withdrawal of Application</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Destination Email Address :</string>
 	<string name="title_expiration_date">Expires :</string>
 	<string name="title_place">Storage : \u0020</string>
@@ -188,7 +189,6 @@
 	<string name="title_password">"Password : "</string>
 	<string name="title_port_number">Port Number :</string>
 	<string name="title_reason_for_apply">Reason for Apply :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Status :</string>
 	<string name="title_store">Store :</string>
 	<string name="title_user_id">User ID :</string>
@@ -219,7 +219,6 @@
 	<string name="app_info">Application Information</string>
 	<string name="content_delete_mdm_profile_dialog">Delete the MDM profile.\nIs it OK?</string>
 	<string name="failed_to_get_ca">Certificate request failed. Please apply again. Please contact the administrator if the problem persists.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Failure</string>
 	<string name="confirm">Confirm</string>
 	<string name="content_dialog_ask_delete_cert">Are you sure you want to delete it?</string>

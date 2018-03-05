@@ -62,7 +62,7 @@
 			android:layout_height="match_parent"
 			android:gravity="center"
 			android:layout_weight="3" >
-		<TextView
+		<jp.co.soliton.keymanager.customview.AutoResizeTextView
 				android:id="@+id/btnUpdate"
 				android:layout_width="wrap_content"
 				android:layout_height="28dp"
@@ -70,10 +70,27 @@
 				android:paddingLeft="5dp"
 				android:paddingRight="5dp"
 				android:text="@string/btn_update"
+				android:singleLine="true"
+				android:maxLines="1"
 				android:textSize="15dp"
 				android:background="@drawable/border_button_inactive"
 				android:scaleType="centerInside"
 				android:layout_marginRight="15dp"
 				android:textColor="@color/text_color_inactive" />
+		<!--<TextView-->
+				<!--android:id="@+id/btnUpdate"-->
+				<!--android:layout_width="wrap_content"-->
+				<!--android:layout_height="28dp"-->
+				<!--android:gravity="center"-->
+				<!--android:paddingLeft="5dp"-->
+				<!--android:paddingRight="5dp"-->
+				<!--android:text="@string/btn_update"-->
+				<!--android:singleLine="true"-->
+				<!--android:maxLines="1"-->
+				<!--android:textSize="15dp"-->
+				<!--android:background="@drawable/border_button_inactive"-->
+				<!--android:scaleType="centerInside"-->
+				<!--android:layout_marginRight="15dp"-->
+				<!--android:textColor="@color/text_color_inactive" />-->
 	</LinearLayout>
 </LinearLayout>

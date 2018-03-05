@@ -37,7 +37,7 @@
 						android:paddingRight="@dimen/margin_item_menu"
 						android:maxLength="256"
 						android:gravity="left|center_vertical"
-						android:inputType="text|textVisiblePassword|textNoSuggestions"
+						android:inputType="text|textNoSuggestions"
 						android:background="@drawable/round_corner_white_edittext"
 						android:hint="@string/hint_email_name"
 						android:textColor="@color/text_color"
