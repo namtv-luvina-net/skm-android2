@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="main_apid_vpn">VPN and apps</string>
+	<string name="main_versionname">Ver.</string>
+	<string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
+	<string name="certlogin_userid_title">User ID</string>
+	<string name="certlogin_password_title">Mật khẩu</string>
+	<string name="admin_receiver_enabled">Quản trị viên thiết bị đã được bật</string>
+	<string name="admin_receiver_disabled">Quản trị viên thiết bị đã tắt</string>
+	<string name="admin_receiver_pwchange">Đã thay đổi mật khẩu của người quản lý thiết bị</string>
+	<string name="admin_receiver_disabled_request">Bạn có muốn tắt quản trị viên thiết bị của ứng dụng này?</string>
+	<string name="accept_language">en</string>
+	<!--SKM V2.x-->
+	<!-- Common-->
+	<string name="label_country_name">Quốc gia</string>
+	<string name="label_state_or_province_name">Bang hoặc địa phương</string>
+	<string name="label_locality_name">Địa phương</string>
+	<string name="label_organization_name">Cơ quan</string>
+	<string name="label_organizational_unit_name">Đơn vị tổ chức</string>
+	<string name="label_common_name">Tên gọi chung</string>
+	<string name="label_email_address">Địa chỉ Email</string>
+	<string name="label_uri">URI</string>
+	<string name="label_list_certificate">Chứng chỉ</string>
+	<!-- Settings-->
+	<string name="label_setting">Cài đặt</string>
+	<string name="label_expired_notification">Thông báo hết hạn</string>
+	<string name="label_before_expired_notification">Thông báo trước khi hết hạn</string>
+	<string name="label_notification">Thông báo</string>
+	<string name="label_expired">Đã hết hạn</string>
+	<string name="label_expired_item">Đã hết hạn hiệu lực</string>
+	<string name="label_day_before">Ngày trước đó</string>
+	<string name="label_dialog_delete_cert">Xóa</string>
+	<string name="label_dialog_Cancle">Hủy</string>
+	<!-- SKMNotification-->
+	<!-- Subject Name-->
+	<string name="label_subject_name">Tên chủ đề</string>
+	<!-- Issuer Name-->
+	<string name="label_issuer_name">Tên nhà phát hành</string>
+	<string name="label_issuer_version">Phiên bản</string>
+	<string name="label_issuer_serial_number">Số sê ri</string>
+	<!-- Signature Algorithm-->
+	<string name="label_signature_algorithm">Chữ ký</string>
+	<string name="label_algorithm_label">Thuật toán</string>
+	<string name="label_signature_not_valid_before">Ngày có hiệu lực</string>
+	<string name="label_signature_not_valid_after">Ngày hết hiệu lực</string>
+	<!-- Public Key Algorithm-->
+	<string name="label_public_key_algorithm">Thuật toán khóa công khai</string>
+	<string name="label_public_key_algorithm_data">Dữ liệu khóa công khai</string>
+	<string name="label_public_key_algorithm_signature">Chữ ký</string>
+	<!--Basic Constraints-->
+	<string name="label_basic_constraints">Quy định cơ bản</string>
+	<string name="label_certificate_authority">Cơ quan Chứng nhận</string>
+	<!--Key Usage-->
+	<string name="label_key_usage">Sử dụng khóa</string>
+	<string name="label_usage">Phương pháp sử dụng</string>
+	<!--Subject Key Identitier-->
+	<string name="label_subject_key_identifier">Subject Key Identifier</string>
+	<!-- Auuthority Key Identitier-->
+	<string name="label_authority_key_identifier">Yếu tố nhận biết khóa giấy chứng nhận</string>
+	<!--  CRL Distribution Points-->
+	<string name="label_crl_distribution_points">Điểm phân bố CRL</string>
+	<!--  Certificate Authority Infomation Access-->
+	<string name="label_certificate_authority_information_access">Truy cập thông tin cơ quan chứng nhận</string>
+	<!--  Extended Key Usage-->
+	<string name="label_extended_key_usage">Sử dụng khóa mở rộng</string>
+	<string name="label_purpose">Mục đích</string>
+	<!-- SKM v2 new design -->
+	<string name="select_item">Chọn hạng mục</string>
+	<string name="apid">APID</string>
+	<string name="start_apply">Bắt đầu đăng ký</string>
+	<string name="input_host_name">Nhập tên host</string>
+	<string name="input_https_port_number">Nhập mã cổng HTTPS</string>
+	<string name="input_http_port_number">Nhập mã cổng HTTP</string>
+	<string name="back">Trở lại</string>
+	<string name="next">Tiếp</string>
+	<string name="input_id_and_password">Nhập ID và mật khẩu</string>
+	<string name="input_user_id_and_password">Nhập ID người dùng và mật khẩu</string>
+	<string name="set_notification_destination_email_address">Thiết định địa chỉ mail nơi thông báo</string>
+	<string name="skip">Bỏ qua</string>
+	<string name="reason_for_apply">Lý do đăng ký</string>
+	<string name="download_ca_certificate">Tải về CA giấy chứng nhận</string>
+	<string name="download">Tải về</string>
+	<string name="download_ca_description42">Hãy chọn  [Tải về] để cài đặt CA giấy chứng nhận</string>
+	<string name="download_ca_description43">
+		<![CDATA[Hãy chọn  [Tải về] để cài đặt CA giấy chứng nhận. Chọn  <b>[<u>VPN and App</u>]</b> trên màn hình chỉ định tên giấy chứng nhận.]]>
+	</string>
+	<string name="target_place">Chọn nơi lưu giấy chứng nhận</string>
+	<string name="confirm_content">Xác nhận nội dung</string>
+	<string name="apply">Đăng ký</string>
+	<string name="host_name">Tên host</string>
+	<string name="port_number">Mã port</string>
+	<string name="store">Nơi lưu</string>
+	<string name="error">Lỗi</string>
+	<string name="input">Nhập</string>
+	<string name="notification_destination_email_address">Địa chỉ mail thông báo</string>
+	<string name="apply_completed">Hoàn thành đăng ký</string>
+	<string name="back_to_top">Trở lại đầu trang</string>
+	<string name="back_to_top_auto">Bắt đầu thủ tục đăng ký sử dụng</string>
+	<string name="connect_failed">Kết nối thất bại.</string>
+	<string name="error_install_certificate">Không thể cài đặt chứng chỉ</string>
+	<string name="apply_mail_error">Địa chỉ email không hợp lệ.</string>
+	<string name="login_failed">ID người dùng hoặc mật khẩu không hợp lệ.</string>
+	<string name="session_timeout">Phiên hết hạn</string>
+	<string name="connect_not_epsap">Địa chỉ kết nối hoặc mã port không chính xác.</string>
+	<string name="devicecheck_error">APID chưa được đăng ký với NetAttest EPS-ap.</string>
+	<string name="registration_setting_invalid">Cài đặt đăng ký thiết bị đầu cuối không hợp lệ.</string>
+	<string name="apid_description">Nếu chọn [APID]  thì sẽ hiển thị Menu.</string>
+	<string name="select_apid">Hãy chọn</string>
+	<string name="apid_guide_1">Chọn [Sao chép] để sao chép vào\n clipboard.</string>
+	<string name="apid_guide_2">Chọn [Mail] để khởi động \n mailer.</string>
+	<string name="approval_completed">Hoàn thành phê chuẩn</string>
+	<string name="approval_confirmation">Xác nhận phê chuẩn</string>
+	<string name="beginning_to_use_procedures">Bắt đầu thủ tục đăng ký sử dụng</string>
+	<string name="btn_add">+ Tạo mới</string>
+	<string name="btn_update">&#160;&#160;Cập nhật&#160;&#160;</string>
+	<string name="confirm_apply_status">Xác nhận tình trạng phê chuẩn</string>
+	<string name="copy">Sao chép</string>
+	<string name="copy_apid">Sao chép vào Clipboard</string>
+	<string name="creating_diagnostic_infomation">Đang tạo thông tin chẩn đoán...</string>
+	<string name="delete_apply">Xóa đăng ký</string>
+	<string name="diagnostics">Thông tin chẩn đoán</string>
+	<string name="dialog_btn_withdraw">Hủy bỏ</string>
+	<string name="dialog_delete_msg">Xóa đăng ký đã chọn\nBạn có muốn không?</string>
+	<string name="dialog_delete_title">Xóa đăng ký</string>
+	<string name="dialog_withdraw_msg">Hủy bỏ đăng ký đã chọn.\nBạn có muốn không?</string>
+	<string name="dialog_withdraw_title">Hủy bỏ đăng ký</string>
+	<string name="error_input_before_expiry">Số ngày phải từ một đến %d.</string>
+	<string name="guide_1">Hãy bắt đầu thiết định đơn giản.</string>
+	<string name="guide_2">Chọn hạng mục bên phải để bắt đầu đăng ký\n</string>
+	<string name="guide_31">Các loại thông tin\n</string>
+	<string name="guide_32">có thể xem từ icon bên trên</string>
+	<string name="input_email">Địa chỉ mail nơi thông báo</string>
+	<string name="input_host_name_and_port_number">Tên host/\n mã port HTTPS</string>
+	<string name="host_name_and_port_number">Tên host/Mã port HTTPS</string>
+	<string name="input_password">Nhập mật khẩu</string>
+	<string name="input_select_store">Nơi lưu giấy chứng nhận</string>
+	<string name="input_user_id_password">User ID/Mật khẩu</string>
+	<string name="label_library_setting">Thư viện</string>
+	<string name="label_other_setting">Khác</string>
+	<string name="label_product_setting">Thông tin sản phẩm</string>
+	<string name="list_application">Danh sách đăng ký</string>
+	<string name="list_cert">Danh sách giấy chứng nhận</string>
+	<string name="mail">Mail</string>
+	<string name="message_cancel">Đã hủy bỏ đăng ký</string>
+	<string name="message_pending">Đăng ký này hiện tại đang chờ phê chuẩn</string>
+	<string name="message_reject">Đăng ký này đã được hủy bỏ bởi người quản lý</string>
+	<string name="no_cert_installed">Hiện tại không có giấy chứng nhận nào đang được cài đặt</string>
+	<string name="notif_setting">Thiết định thông báo</string>
+	<string name="notif_title">Cần cập nhật giấy chứng nhận</string>
+	<string name="product_name_version_info">Soliton KeyManager\n phiên bản 2.0</string>
+	<string name="re_apply">Đăng ký lại</string>
+	<string name="send_apid">Gửi bằng Email</string>
+	<string name="send_diagnostics">Gửi thông tin chẩn đoán</string>
+	<string name="start_to_use_procedures">Bắt đầu thủ tục đăng ký sử dụng...</string>
+	<string name="stt_cancel">Đã hủy bỏ</string>
+	<string name="stt_rejected">Từ chối</string>
+	<string name="stt_waiting_approval">Chờ phê duyệt</string>
+	<string name="text_start_reapply">\nCần đăng ký lại để tiếp tục sử dụng</string>
+	<string name="text_start_reapply_tablet">Cần đăng ký lại để tiếp tục sử dụng</string>
+	<string name="title_apply_date">Ngày đăng ký:</string>
+	<string name="title_cancel">Hủy bỏ đăng ký</string>
+	<string name="title_destination_email_address">Địa chỉ Email :</string>
+	<string name="title_expiration_date">Kỳ hạn hiệu lực:</string>
+	<string name="title_place">Nơi lưu : \u0020</string>
+	<string name="place">Nơi lưu</string>
+	<string name="title_host_name">Tên host :</string>
+	<string name="title_http_port_number">Mã port HTTP :</string>
+	<string name="title_https_port_number">Mã port HTTPS :</string>
+	<string name="title_input_email">"Địa chỉ Email : "</string>
+	<string name="title_input_host_name">Nhập tên host :</string>
+	<string name="title_list_certificate">Chọn giấy chứng nhận</string>
+	<string name="title_password">"Mật khẩu : "</string>
+	<string name="title_port_number">Mã port :</string>
+	<string name="title_reason_for_apply">Lý do đăng ký :</string>
+	<string name="title_status">Trạng thái :</string>
+	<string name="title_store">Nơi lưu trữ :</string>
+	<string name="title_user_id">ID người dùng:</string>
+	<string name="title_storage">Nơi lưu :</string>
+	<string name="txt_complete_using_procedures">Đã hoàn thành thủ tục bắt đầu sử dụng</string>
+	<string name="user_id_is_invalid">ID người dùng không hợp lệ</string>
+	<string name="validity_period">Thời gian hiệu lực</string>
+	<string name="version">Phiên bản</string>
+	<string name="withdrawal_apply">Hủy bỏ đăng ký</string>
+	<string name="title_leftside_list_confirm_tablet">Xác nhận phê chuẩn</string>
+	<string name="des_leftside_list_confirm_tablet">Chọn giấy đăng ký chờ phê chuẩn \n để hoàn thành thủ tục</string>
+	<string name="des_leftside_detail_confirm_tablet_cofirms_status">Thực hiện xác nhận tình trạng phê chuẩn \n để hoàn
+		thành thủ tục</string>
+	<string name="des_leftside_detail_confirm_tablet_rejected">Đăng ký của bạn đã được hủy bỏ \n bởi người quản lý</string>
+	<string name="des_leftside_detail_confirm_tablet_withdrawn">Đăng ký của bạn đã được hủy bỏ</string>
+	<string name="one_day_remaining">Còn một ngày</string>
+	<string name="many_days_remaining">Còn %s ngày</string>
+	<string name="expiration_date">Kỳ hạn hiệu lực :\u0020</string>
+	<string name="close">Đóng</string>
+	<string name="mdm">MDM</string>
+	<string name="profile">Profile</string>
+	<string name="delete">Xóa</string>
+	<string name="enable">Hữu hiệu</string>
+	<string name="disable">Vô hiệu</string>
+	<string name="device_lock">Khóa thiết bị</string>
+	<string name="remote_wipe">Loại bỏ từ xa</string>
+	<string name="device_info">Thông Tin Thiết Bị</string>
+	<string name="network_info">Thông Tin Mạng</string>
+	<string name="app_info">Thông Tin Ứng Dụng</string>
+	<string name="content_delete_mdm_profile_dialog">Xóa MDM profile.\nBạn có muốn không?</string>
+	<string name="failed_to_get_ca">Yêu cầu chứng chỉ không thành công. Vui lòng đăng ký lại. Vui lòng liên hệ với quản trị viên nếu sự cố vẫn còn.</string>
+	<string name="failure">Thất bại</string>
+	<string name="confirm">Xác nhận</string>
+	<string name="content_dialog_ask_delete_cert">Bạn có muốn xóa không?</string>
+	<string name="no">Không</string>
+	<string name="yes">Có</string>
+	<string name="handler_failed">Xử lý thất bại</string>
+	<string name="go_to_setting">ĐI TỚI CÀI ĐẶT</string>
+	<string name="message_go_setting_allow_permission">Bạn không có quyền truy cập. Vui lòng cài đặt quyền tại thiết định trong ứng dụng</string>
+</resources>

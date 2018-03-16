@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPNとアプリ</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager 診断情報</string>
 	<string name="certlogin_userid_title">ユーザーID</string>
 	<string name="certlogin_password_title">パスワード</string>
-	<string name="instapp_nosdcard">SDカードが無いため、アプリのダウンロードができません。</string>
 	<string name="admin_receiver_enabled">デバイス管理者を有効にしました</string>
 	<string name="admin_receiver_disabled">デバイス管理者を無効にしました</string>
 	<string name="admin_receiver_pwchange">デバイス管理者のパスワードを変更しました</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">申請が完了しました</string>
 	<string name="back_to_top">トップへ戻る</string>
 	<string name="back_to_top_auto">利用開始手続きを始める</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">接続に失敗しました。</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">通知先メールアドレスが不正です。</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">選択してください。</string>
 	<string name="apid_guide_1">コピーをタップすると\nクリップボードにコピーされます。</string>
 	<string name="apid_guide_2">メールをタップすると\nメーラーが起動します。</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">承認が完了しました</string>
 	<string name="approval_confirmation">承認確認</string>
 	<string name="beginning_to_use_procedures">利用開始手続きを始める</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">利用を継続するには再申請が必要です。</string>
 	<string name="title_apply_date">申請日 :</string>
 	<string name="title_cancel">申請の取り下げ</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">通知先メールアドレス:</string>
 	<string name="title_expiration_date">有効期限 :</string>
 	<string name="title_place">格納先 :\u0020</string>
@@ -186,7 +172,6 @@
 	<string name="title_password">"パスワード :"</string>
 	<string name="title_port_number">ポート番号 :</string>
 	<string name="title_reason_for_apply">申請理由 :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">ステータス :</string>
 	<string name="title_store">ストア :</string>
 	<string name="title_user_id">ユーザーID :</string>
@@ -217,7 +202,6 @@
 	<string name="app_info">アプリケーション情報</string>
 	<string name="content_delete_mdm_profile_dialog">MDMプロファイルを削除します。\nよろしいですか？</string>
 	<string name="failed_to_get_ca">証明書要求に失敗しました。再度申請を行ってください。問題が解決しない場合は管理者にお問い合わせください。</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">失敗</string>
 	<string name="confirm">確認</string>
 	<string name="content_dialog_ask_delete_cert">削除してもよろしいですか？</string>

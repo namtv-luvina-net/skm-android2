@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import jp.co.soliton.keymanager.tls.TLSSocketFactory;
 
 import javax.net.ssl.*;
 import java.io.BufferedInputStream;
@@ -13,6 +14,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
@@ -159,6 +162,8 @@ public class HttpConnectionCtrl {
 			if (url.getProtocol().toLowerCase().equals("https")) {
 				HttpsURLConnection urlconn = (HttpsURLConnection)url.openConnection();
 				http = urlconn;
+				TLSSocketFactory socketFactory = new TLSSocketFactory();
+				((HttpsURLConnection)http).setSSLSocketFactory(socketFactory);
 			} else {
 				http = (HttpURLConnection)url.openConnection();
 			}
@@ -173,11 +178,9 @@ public class HttpConnectionCtrl {
 			http.setRequestProperty("Accept-Language",  m_ctx.getString(R.string.accept_language));
 
 			return PostProbeCertPacket(http, Inf, 512);
-		} catch (MalformedURLException e) {
-			LogCtrl.getInstance().error("HttpConnectionCtrl::RunHttpProbeHostCerConnection::MalformedURLException: " + e.toString());
-			return false;
-		} catch (IOException e) {
-			LogCtrl.getInstance().error("HttpConnectionCtrl::RunHttpProbeHostCerConnection::IOException: " + e.toString());
+		} catch (Exception e) {
+			LogCtrl.getInstance().error("HttpConnectionCtrl::RunHttpProbeHostCerConnection::Exception: " + e.toString());
+			e.printStackTrace();
 			return false;
 		}
 	}
