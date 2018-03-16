@@ -46,7 +46,7 @@
 	<!-- Subject Name-->
 	<string name="label_subject_name">Nombre del tema</string>
 	<!-- Issuer Name-->
-	<string name="label_issuer_name">Nombre del Emisor</string>
+	<string name="label_issuer_name">Nombre del emisor</string>
 	<string name="label_issuer_version">Versión</string>
 	<string name="label_issuer_serial_number">Número de serie</string>
 	<!-- Signature Algorithm-->
@@ -59,7 +59,7 @@
 	<string name="label_public_key_algorithm_data">Datos de clave pública</string>
 	<string name="label_public_key_algorithm_signature">Firma</string>
 	<!--Basic Constraints-->
-	<string name="label_basic_constraints">Restricciones Básicas</string>
+	<string name="label_basic_constraints">Restricciones básicas</string>
 	<string name="label_certificate_authority">Autoridad certificada</string>
 	<!--Key Usage-->
 	<string name="label_key_usage">Uso de claves</string>
@@ -170,27 +170,27 @@
 	<string name="stt_waiting_approval">Esperando aprobación</string>
 	<string name="text_start_reapply">\nEs necesario volver a aplicar para continuar usándolo.</string>
 	<string name="text_start_reapply_tablet">Es necesario volver a aplicar para continuar usándolo.</string>
-	<string name="title_apply_date">Fecha de aplicación:</string>
+	<string name="title_apply_date">Fecha de aplicación :</string>
 	<string name="title_cancel">Retirada de la aplicación</string>
-	<string name="title_cn">CN:</string>
-	<string name="title_destination_email_address">Dirección de correo electrónico de destino:</string>
-	<string name="title_expiration_date">Caducar:</string>
-	<string name="title_place">Almacenamiento: \u0020</string>
+	<string name="title_cn">CN :</string>
+	<string name="title_destination_email_address">Dirección de correo electrónico de destino :</string>
+	<string name="title_expiration_date">Caducar :</string>
+	<string name="title_place">Almacenamiento : \u0020</string>
 	<string name="place">Almacenamiento</string>
-	<string name="title_host_name">Nombre del alojamiento:</string>
-	<string name="title_http_port_number">Número de puerto HTTP:</string>
-	<string name="title_https_port_number">Número de puerto HTTPS:</string>
-	<string name="title_input_email">Dirección de correo electrónico: </string>
-	<string name="title_input_host_name">Introduzca el nombre del alojamiento:</string>
+	<string name="title_host_name">Nombre del alojamiento :</string>
+	<string name="title_http_port_number">Número de puerto HTTP :</string>
+	<string name="title_https_port_number">Número de puerto HTTPS :</string>
+	<string name="title_input_email">Dirección de correo electrónico :</string>
+	<string name="title_input_host_name">Introduzca el nombre del alojamiento :</string>
 	<string name="title_list_certificate">Seleccionar certificado</string>
-	<string name="title_password">Contraseña: </string>
-	<string name="title_port_number">Número de puerto:</string>
-	<string name="title_reason_for_apply">Motivo de la aplicación:</string>
-	<string name="title_sn">S/N:</string>
-	<string name="title_status">Estado:</string>
-	<string name="title_store">Almacenamiento:</string>
-	<string name="title_user_id">ID de usuario:</string>
-	<string name="title_storage">Almacenamiento:</string>
+	<string name="title_password">Contraseña : </string>
+	<string name="title_port_number">Número de puerto :</string>
+	<string name="title_reason_for_apply">Motivo de la aplicación :</string>
+	<string name="title_sn">S/N :</string>
+	<string name="title_status">Estado :</string>
+	<string name="title_store">Almacenamiento :</string>
+	<string name="title_user_id">ID de usuario :</string>
+	<string name="title_storage">Almacenamiento :</string>
 	<string name="txt_complete_using_procedures">Se ha finalizado el uso de los procedimientos</string>
 	<string name="user_id_is_invalid">El ID de usuario no es válido</string>
 	<string name="validity_period">Periodo de validez</string>
@@ -203,7 +203,7 @@
 	<string name="des_leftside_detail_confirm_tablet_withdrawn">Su aplicación ha sido retirada</string>
 	<string name="one_day_remaining">Un día restante</string>
 	<string name="many_days_remaining">Quedan %s días</string>
-	<string name="expiration_date">Caducar: \u0020</string>
+	<string name="expiration_date">Caducar :\u0020</string>
 	<string name="close">Cerrar</string>
 	<string name="mdm">MDM</string>
 	<string name="profile">Perfil</string>

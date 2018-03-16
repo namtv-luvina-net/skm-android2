@@ -11,7 +11,7 @@
 	<string name="ERR">ERR:</string>
 	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN og apps</string>
-	<string name="main_versionname">Version.</string>
+	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager Diagnostik</string>
 	<string name="certlogin_userid_title">Bruger-ID</string>
 	<string name="certlogin_password_title">Adgangskode</string>
@@ -25,7 +25,7 @@
 	<!-- Common-->
 	<string name="label_country_name">Land</string>
 	<string name="label_state_or_province_name">Delstat eller landsdel</string>
-	<string name="label_locality_name">Lokationen</string>
+	<string name="label_locality_name">Lokation</string>
 	<string name="label_organization_name">Organisation</string>
 	<string name="label_organizational_unit_name">Organisationsmæssige enhed</string>
 	<string name="label_common_name">Almindeligt navn</string>
@@ -190,7 +190,7 @@
 	<string name="title_status">Status :</string>
 	<string name="title_store">Lagring :</string>
 	<string name="title_user_id">Bruger-ID :</string>
-	<string name="title_storage">Lagring:</string>
+	<string name="title_storage">Lagring　:</string>
 	<string name="txt_complete_using_procedures">Begynder at anvende procedurer er blevet fuldført</string>
 	<string name="user_id_is_invalid">Bruger-ID er ugyldig</string>
 	<string name="validity_period">Gyldighedsperiode</string>
