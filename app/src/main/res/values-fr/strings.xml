@@ -147,7 +147,7 @@
 	<string name="host_name_and_port_number">Nom d\'hôte/Numéro de port HTTPS</string>
 	<string name="input_password">Entrer le mot de passe</string>
 	<string name="input_select_store">Stockage de certificats</string>
-	<string name="input_user_id_password">ID utilisateur / mot de passe</string>
+	<string name="input_user_id_password">ID utilisateur/mot de passe</string>
 	<string name="label_library_setting">Bibliothèques</string>
 	<string name="label_other_setting">Autres</string>
 	<string name="label_product_setting">Information produit</string>
