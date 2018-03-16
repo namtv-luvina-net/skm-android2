@@ -197,10 +197,6 @@ public class TabletInputUserFragment extends TabletInputFragment {
 
 	@Override
 	public void nextAction() {
-		if (!ValidateParams.isValidUserID(txtUserId.getText().toString().trim())) {
-			tabletAbtractInputFragment.showMessage(getString(R.string.user_id_is_invalid));
-			return;
-		}
 		//make parameter|
 		String userId = txtUserId.getText().toString().trim();
 		String password = txtPassword.getText().toString();

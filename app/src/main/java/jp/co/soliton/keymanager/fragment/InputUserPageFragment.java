@@ -160,10 +160,6 @@ public class InputUserPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
-        if (!ValidateParams.isValidUserID(txtUserId.getText().toString().trim())) {
-            showMessage(getString(R.string.user_id_is_invalid));
-            return;
-        }
         //make parameter
         boolean ret = makeParameterLogon();
         if (!ret) {
