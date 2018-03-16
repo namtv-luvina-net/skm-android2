@@ -100,7 +100,7 @@
 	<string name="apply">申请</string>
 	<string name="host_name">主机名</string>
 	<string name="port_number">端口号</string>
-	<string name="store">商店</string>
+	<string name="store">保存地址</string>
 	<string name="error">错误</string>
 	<string name="input">输入</string>
 	<string name="notification_destination_email_address">通知对象邮件地址</string>

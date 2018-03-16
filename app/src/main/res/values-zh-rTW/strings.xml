@@ -100,7 +100,7 @@
 	<string name="apply">申請</string>
 	<string name="host_name">主機名稱</string>
 	<string name="port_number">端口號</string>
-	<string name="store">商店</string>
+	<string name="store">存儲位置</string>
 	<string name="error">錯誤</string>
 	<string name="input">輸入</string>
 	<string name="notification_destination_email_address">通知對象郵件地址</string>

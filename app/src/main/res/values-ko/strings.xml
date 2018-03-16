@@ -100,7 +100,7 @@
 	<string name="apply">신청</string>
 	<string name="host_name">호스트명</string>
 	<string name="port_number">포트 번호</string>
-	<string name="store">스토어</string>
+	<string name="store">저장 위치</string>
 	<string name="error">에러</string>
 	<string name="input">입력하기</string>
 	<string name="notification_destination_email_address">알림 이메일 주소</string>
