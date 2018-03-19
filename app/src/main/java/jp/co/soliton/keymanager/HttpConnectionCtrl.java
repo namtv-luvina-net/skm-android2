@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
@@ -26,7 +24,7 @@ import java.util.Map;
 // サーバとの通信周りを行う
 //////////////////////////////////
 public class HttpConnectionCtrl {
-	
+	private static final int TIME_OUT = 30000;
 	private Context m_ctx;
 	private String m_str_user_agtpro = "";
 
@@ -79,7 +77,7 @@ public class HttpConnectionCtrl {
 			}
 			
 			// コネクションタイムアウトを設定 
-            http.setConnectTimeout(15000); 
+            http.setConnectTimeout(TIME_OUT);
             
          // HTTPメソッド定義
 			http.setRequestMethod("POST");
@@ -121,7 +119,7 @@ public class HttpConnectionCtrl {
 			}
 			
 			// コネクションタイムアウトを設定 
-            http.setConnectTimeout(15000); 
+            http.setConnectTimeout(TIME_OUT);
             
          // HTTPメソッド定義
 			http.setRequestMethod("POST");
@@ -169,7 +167,7 @@ public class HttpConnectionCtrl {
 			}
 
 			// コネクションタイムアウトを設定
-			http.setConnectTimeout(15000);
+			http.setConnectTimeout(TIME_OUT);
 
 			// HTTPメソッド定義
 			http.setRequestMethod("POST");
@@ -212,7 +210,7 @@ public class HttpConnectionCtrl {
 			}
 
 			// コネクションタイムアウトを設定
-			http.setConnectTimeout(15000);
+			http.setConnectTimeout(TIME_OUT);
 
 			// HTTPメソッド定義
 			http.setRequestMethod("GET");
@@ -258,7 +256,7 @@ public class HttpConnectionCtrl {
 			}
 
 			// コネクションタイムアウトを設定
-			http.setConnectTimeout(15000);
+			http.setConnectTimeout(TIME_OUT);
 
 			// HTTPメソッド定義
 			http.setRequestMethod("POST");
@@ -307,7 +305,7 @@ public class HttpConnectionCtrl {
 			}
 
 			// コネクションタイムアウトを設定
-			http.setConnectTimeout(15000);
+			http.setConnectTimeout(TIME_OUT);
 
 			// HTTPメソッド定義
 			http.setRequestMethod("POST");
@@ -357,7 +355,7 @@ public class HttpConnectionCtrl {
 			}
 
 			// コネクションタイムアウトを設定
-			http.setConnectTimeout(15000);
+			http.setConnectTimeout(TIME_OUT);
 
 			// HTTPメソッド定義
 			http.setRequestMethod("POST");
