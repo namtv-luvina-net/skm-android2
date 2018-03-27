@@ -13,11 +13,11 @@
 	<!--SKM V2.x-->
 	<!-- Common-->
 	<string name="label_country_name">Quốc gia</string>
-	<string name="label_state_or_province_name">Bang hoặc địa phương</string>
-	<string name="label_locality_name">Địa phương</string>
-	<string name="label_organization_name">Cơ quan</string>
-	<string name="label_organizational_unit_name">Đơn vị tổ chức</string>
-	<string name="label_common_name">Tên gọi chung</string>
+	<string name="label_state_or_province_name">Bang/Tỉnh</string>
+	<string name="label_locality_name">Vị trí</string>
+	<string name="label_organization_name">Tổ chức</string>
+	<string name="label_organizational_unit_name">Đơn vị thuộc Tổ chức</string>
+	<string name="label_common_name">Tên Chung</string>
 	<string name="label_email_address">Địa chỉ Email</string>
 	<string name="label_uri">URI</string>
 	<string name="label_list_certificate">Chứng chỉ</string>
@@ -35,9 +35,9 @@
 	<!-- Subject Name-->
 	<string name="label_subject_name">Tên chủ đề</string>
 	<!-- Issuer Name-->
-	<string name="label_issuer_name">Tên nhà phát hành</string>
+	<string name="label_issuer_name">Tên nơi cấp</string>
 	<string name="label_issuer_version">Phiên bản</string>
-	<string name="label_issuer_serial_number">Số sê ri</string>
+	<string name="label_issuer_serial_number">Số Sê ri</string>
 	<!-- Signature Algorithm-->
 	<string name="label_signature_algorithm">Chữ ký</string>
 	<string name="label_algorithm_label">Thuật toán</string>
@@ -48,20 +48,20 @@
 	<string name="label_public_key_algorithm_data">Dữ liệu khóa công khai</string>
 	<string name="label_public_key_algorithm_signature">Chữ ký</string>
 	<!--Basic Constraints-->
-	<string name="label_basic_constraints">Quy định cơ bản</string>
-	<string name="label_certificate_authority">Cơ quan Chứng nhận</string>
+	<string name="label_basic_constraints">Những hạn chế cơ bản</string>
+	<string name="label_certificate_authority">Quyền Chứng nhận</string>
 	<!--Key Usage-->
 	<string name="label_key_usage">Sử dụng khóa</string>
-	<string name="label_usage">Phương pháp sử dụng</string>
+	<string name="label_usage">Sử dụng</string>
 	<!--Subject Key Identitier-->
-	<string name="label_subject_key_identifier">Subject Key Identifier</string>
+	<string name="label_subject_key_identifier">Mã định danh khóa chủ đề</string>
 	<!-- Auuthority Key Identitier-->
-	<string name="label_authority_key_identifier">Yếu tố nhận biết khóa giấy chứng nhận</string>
-	<!--  CRL Distribution Points-->
-	<string name="label_crl_distribution_points">Điểm phân bố CRL</string>
-	<!--  Certificate Authority Infomation Access-->
-	<string name="label_certificate_authority_information_access">Truy cập thông tin cơ quan chứng nhận</string>
-	<!--  Extended Key Usage-->
+	<string name="label_authority_key_identifier">Mã định danh khóa quyền</string>
+	<!-- CRL Distribution Points-->
+	<string name="label_crl_distribution_points">Điểm phân phối CRL</string>
+	<!-- Certificate Authority Infomation Access-->
+	<string name="label_certificate_authority_information_access">Truy cập thông tin quyền chứng nhận</string>
+	<!-- Extended Key Usage-->
 	<string name="label_extended_key_usage">Sử dụng khóa mở rộng</string>
 	<string name="label_purpose">Mục đích</string>
 	<!-- SKM v2 new design -->
@@ -80,9 +80,9 @@
 	<string name="reason_for_apply">Lý do đăng ký</string>
 	<string name="download_ca_certificate">Tải về CA giấy chứng nhận</string>
 	<string name="download">Tải về</string>
-	<string name="download_ca_description42">Hãy chọn  [Tải về] để cài đặt CA giấy chứng nhận</string>
+	<string name="download_ca_description42">Hãy chọn [Tải về] để cài đặt CA giấy chứng nhận</string>
 	<string name="download_ca_description43">
-		<![CDATA[Hãy chọn  [Tải về] để cài đặt CA giấy chứng nhận. Chọn  <b>[<u>VPN and App</u>]</b> trên màn hình chỉ định tên giấy chứng nhận.]]>
+		<![CDATA[Hãy chọn [Tải về] để cài đặt CA giấy chứng nhận. Chọn <b>[<u>VPN and App</u>]</b> trên màn hình chỉ định tên giấy chứng nhận.]]>
 	</string>
 	<string name="target_place">Chọn nơi lưu giấy chứng nhận</string>
 	<string name="confirm_content">Xác nhận nội dung</string>
@@ -104,7 +104,7 @@
 	<string name="connect_not_epsap">Địa chỉ kết nối hoặc mã port không chính xác.</string>
 	<string name="devicecheck_error">APID chưa được đăng ký với NetAttest EPS-ap.</string>
 	<string name="registration_setting_invalid">Cài đặt đăng ký thiết bị đầu cuối không hợp lệ.</string>
-	<string name="apid_description">Nếu chọn [APID]  thì sẽ hiển thị Menu.</string>
+	<string name="apid_description">Nếu chọn [APID] thì sẽ hiển thị Menu.</string>
 	<string name="select_apid">Hãy chọn</string>
 	<string name="apid_guide_1">Chọn [Sao chép] để sao chép vào\n clipboard.</string>
 	<string name="apid_guide_2">Chọn [Mail] để khởi động \n mailer.</string>
@@ -178,7 +178,7 @@
 	<string name="title_storage">Nơi lưu :</string>
 	<string name="txt_complete_using_procedures">Đã hoàn thành thủ tục bắt đầu sử dụng</string>
 	<string name="user_id_is_invalid">ID người dùng không hợp lệ</string>
-	<string name="validity_period">Thời gian hiệu lực</string>
+	<string name="validity_period">Thời gian hợp lệ</string>
 	<string name="version">Phiên bản</string>
 	<string name="withdrawal_apply">Hủy bỏ đăng ký</string>
 	<string name="title_leftside_list_confirm_tablet">Xác nhận phê chuẩn</string>
