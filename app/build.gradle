@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    def buildNum = '3'
-    def versionStr = '201'
+    def buildNum = '0'
+    def versionStr = '210'
     compileSdkVersion 24
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "jp.co.soliton.keymanager"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 3
-        versionName '2.0.1'
+        versionCode 4
+        versionName '2.1.0'
     }
     signingConfigs {
         beta {
