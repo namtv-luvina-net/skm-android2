@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN 和應用程式</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager 診斷資訊</string>
 	<string name="certlogin_userid_title">使用者ID</string>
 	<string name="certlogin_password_title">密碼</string>
-	<string name="instapp_nosdcard">無SD記憶卡，因此無法下載App。</string>
 	<string name="admin_receiver_enabled">裝置管理員設為有效</string>
 	<string name="admin_receiver_disabled">裝置管理員設為無效</string>
 	<string name="admin_receiver_pwchange">裝置管理員密碼已更改</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">申請完成</string>
 	<string name="back_to_top">返回頁首</string>
 	<string name="back_to_top_auto">進入使用開始手續</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">連結失敗。</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">通知對象郵件地址不正確。</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">請選擇。</string>
 	<string name="apid_guide_1">點擊[複製]，\n複製到剪貼板。</string>
 	<string name="apid_guide_2">點擊[郵件]，\n啟動郵件程式。</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">批准完成</string>
 	<string name="approval_confirmation">確認批准</string>
 	<string name="beginning_to_use_procedures">進入使用開始手續</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">若要繼續使用，必須重新申請。</string>
 	<string name="title_apply_date">申請日期：</string>
 	<string name="title_cancel">申請的回收</string>
-	<string name="title_cn">CN：</string>
 	<string name="title_destination_email_address">通知對象郵件地址：</string>
 	<string name="title_expiration_date">有效期：</string>
 	<string name="title_place">存儲位置 :\u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">「密碼：」</string>
 	<string name="title_port_number">端口號：</string>
 	<string name="title_reason_for_apply">申請理由：</string>
-	<string name="title_sn">S/N：</string>
 	<string name="title_status">狀態：</string>
 	<string name="title_store">存儲位置：</string>
 	<string name="title_user_id">使用者ID：</string>
 	<string name="title_storage">存儲位置 :</string>
 	<string name="txt_complete_using_procedures">使用開始手續已完成</string>
-	<string name="user_id_is_invalid">使用者ID無效</string>
 	<string name="validity_period">有效期</string>
 	<string name="version">版本</string>
 	<string name="withdrawal_apply">回收申請</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">應用程式資訊</string>
 	<string name="content_delete_mdm_profile_dialog">刪除MDM數據圖表。\n確定嗎？</string>
 	<string name="failed_to_get_ca">證書請求失敗。請再度進行申請。若問題沒有解決，請詢問管理者。</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">失敗</string>
 	<string name="confirm">確認</string>
 	<string name="content_dialog_ask_delete_cert">確定刪除嗎？</string>

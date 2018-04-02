@@ -177,7 +177,6 @@
 	<string name="title_user_id">ID người dùng:</string>
 	<string name="title_storage">Nơi lưu :</string>
 	<string name="txt_complete_using_procedures">Đã hoàn thành thủ tục bắt đầu sử dụng</string>
-	<string name="user_id_is_invalid">ID người dùng không hợp lệ</string>
 	<string name="validity_period">Thời gian hợp lệ</string>
 	<string name="version">Phiên bản</string>
 	<string name="withdrawal_apply">Hủy bỏ đăng ký</string>

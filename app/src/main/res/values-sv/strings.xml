@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN och appar</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Diagnostik för Soliton KeyManager</string>
 	<string name="certlogin_userid_title">Användar-ID</string>
 	<string name="certlogin_password_title">Lösenord</string>
-	<string name="instapp_nosdcard">En app kan inte hämtas för att det finns inget SD-kort.</string>
 	<string name="admin_receiver_enabled">Adminmottagaren har aktiverats</string>
 	<string name="admin_receiver_disabled">Adminmottagaren har inaktiverats</string>
 	<string name="admin_receiver_pwchange">Adminmottagarens lösenord har ändrats</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Tillämpning slutförd</string>
 	<string name="back_to_top">Tillbaka till toppen</string>
 	<string name="back_to_top_auto">Börja använda procedurer</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">Anslutning misslyckades.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">Destinationens e-postadress är ogiltig.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Välj.</string>
 	<string name="apid_guide_1">Tryck på [Kopiera] för att kopiera till \nUrklipp.</string>
 	<string name="apid_guide_2">Tryck på [E-post] för att starta \nadresshuvudet.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Godkännande slutförd</string>
 	<string name="approval_confirmation">Bekräftelse av godkännande</string>
 	<string name="beginning_to_use_procedures">Börja använda procedurer</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">Återapplicering är nödvändig för fortsatt användning.</string>
 	<string name="title_apply_date">Appliceringsdatum :</string>
 	<string name="title_cancel">Återkallning av applikation</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Destinationens e-postadress :</string>
 	<string name="title_expiration_date">Upphört :</string>
 	<string name="title_place">Lagring : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Lösenord : </string>
 	<string name="title_port_number">Portnummer :</string>
 	<string name="title_reason_for_apply">Anledning till tillämpning :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Status :</string>
 	<string name="title_store">Lagring :</string>
 	<string name="title_user_id">Användar-ID :</string>
 	<string name="title_storage">Lagring :</string>
 	<string name="txt_complete_using_procedures">Början av användning av procedurer har slutförts</string>
-	<string name="user_id_is_invalid">Användar-ID är felaktigt</string>
 	<string name="validity_period">Validitetsperiod</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Återkallad applikation</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Applikationsinformation</string>
 	<string name="content_delete_mdm_profile_dialog">Är det okej?</string>
 	<string name="failed_to_get_ca">Det gick inte att begära certifikatet. Försök igen. Om problemet kvarstår, kontakta din administratör.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Misslyckades</string>
 	<string name="confirm">Bekräfta</string>
 	<string name="content_dialog_ask_delete_cert">Är du säker på att du vill ta bort den?</string>

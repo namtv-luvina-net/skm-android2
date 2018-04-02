@@ -194,7 +194,6 @@
 	<string name="title_user_id">User ID :</string>
 	<string name="title_storage">Storage :</string>
 	<string name="txt_complete_using_procedures">Beginning to use procedures has been completed</string>
-	<string name="user_id_is_invalid">The user ID is invalid</string>
 	<string name="validity_period">Validity Period</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Withdrawn Application</string>

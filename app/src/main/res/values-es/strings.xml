@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN y aplicaciones</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Diagnósticos Soliton KeyManager</string>
 	<string name="certlogin_userid_title">ID de usuario</string>
 	<string name="certlogin_password_title">Contraseña</string>
-	<string name="instapp_nosdcard">No se puede descargar una aplicación porque no hay tarjeta SD.</string>
 	<string name="admin_receiver_enabled">El receptor del administrador ha sido habilitado</string>
 	<string name="admin_receiver_disabled">El receptor del administrador ha sido deshabilitado</string>
 	<string name="admin_receiver_pwchange">Se ha cambiado la contraseña del receptor del administrador</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Aplicación completada</string>
 	<string name="back_to_top">Volver arriba</string>
 	<string name="back_to_top_auto">Comenzar a usar los procedimientos</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">La conexión falló.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">La dirección de correo electrónico de destino no es válida.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Seleccionar.</string>
 	<string name="apid_guide_1">Pulse en [Copiar] para copiar en el \nportapapeles.</string>
 	<string name="apid_guide_2">Pulse en [Correo] para iniciar \nel destinatario.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Aprobación completada</string>
 	<string name="approval_confirmation">Confirmación de aprobación</string>
 	<string name="beginning_to_use_procedures">Comenzar a usar los procedimientos</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">Es necesario volver a aplicar para continuar usándolo.</string>
 	<string name="title_apply_date">Fecha de aplicación :</string>
 	<string name="title_cancel">Retirada de la aplicación</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Dirección de correo electrónico de destino :</string>
 	<string name="title_expiration_date">Caducar :</string>
 	<string name="title_place">Almacenamiento : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Contraseña : </string>
 	<string name="title_port_number">Número de puerto :</string>
 	<string name="title_reason_for_apply">Motivo de la aplicación :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Estado :</string>
 	<string name="title_store">Almacenamiento :</string>
 	<string name="title_user_id">ID de usuario :</string>
 	<string name="title_storage">Almacenamiento :</string>
 	<string name="txt_complete_using_procedures">Se ha finalizado el uso de los procedimientos</string>
-	<string name="user_id_is_invalid">El ID de usuario no es válido</string>
 	<string name="validity_period">Periodo de validez</string>
 	<string name="version">Versión</string>
 	<string name="withdrawal_apply">Aplicación retirada</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Información de la solicitud</string>
 	<string name="content_delete_mdm_profile_dialog">¿Está bien?</string>
 	<string name="failed_to_get_ca">Error al solicitar el certificado. Por favor, vuelva a aplicarlo. Si el problema persiste, contacte con su administrador.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Falló</string>
 	<string name="confirm">Confirmar</string>
 	<string name="content_dialog_ask_delete_cert">¿Está seguro de que quiere eliminarlo?</string>

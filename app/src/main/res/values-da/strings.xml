@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN og apps</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager Diagnostik</string>
 	<string name="certlogin_userid_title">Bruger-ID</string>
 	<string name="certlogin_password_title">Adgangskode</string>
-	<string name="instapp_nosdcard">En app kan ikke blevet downloadet pga. manglede SD kort.</string>
 	<string name="admin_receiver_enabled">Administratorens modtager er blevet aktiveret.</string>
 	<string name="admin_receiver_disabled">Administratorens modtager er blevet deaktiveret.</string>
 	<string name="admin_receiver_pwchange">Administratorens adgangskode til modtageren er blevet ændret.</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Ansøgning fuldendt</string>
 	<string name="back_to_top">Tilbage til toppen</string>
 	<string name="back_to_top_auto">Start med at anvende procedurer</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">Forbindelse mislykket.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">Destinationens e-mailadresse er ugyldig.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Vælg.</string>
 	<string name="apid_guide_1">Klik [Kopiér] for at kopiere til \nudklipsholderen.</string>
 	<string name="apid_guide_2">Klik [E-mail] for at starte \ne-mail.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Godkendelse fuldført</string>
 	<string name="approval_confirmation">Bekræftelse af godkendelse</string>
 	<string name="beginning_to_use_procedures">Start med at anvende procedurer</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">Genansøgning er nødvendig for at fortsætte brug.</string>
 	<string name="title_apply_date">Ansøgningsdato :</string>
 	<string name="title_cancel">Tilbagetrækning af applikation</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Destinationens e-mailadresse :</string>
 	<string name="title_expiration_date">Udløber :</string>
 	<string name="title_place">Lagring : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Adgangskode : </string>
 	<string name="title_port_number">Portnummer :</string>
 	<string name="title_reason_for_apply">Årsag til ansøgning :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Status :</string>
 	<string name="title_store">Lagring :</string>
 	<string name="title_user_id">Bruger-ID :</string>
 	<string name="title_storage">Lagring　:</string>
 	<string name="txt_complete_using_procedures">Begynder at anvende procedurer er blevet fuldført</string>
-	<string name="user_id_is_invalid">Bruger-ID er ugyldig</string>
 	<string name="validity_period">Gyldighedsperiode</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Tilbagetrukket applikation</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Information for applikation</string>
 	<string name="content_delete_mdm_profile_dialog">Er det ok?</string>
 	<string name="failed_to_get_ca">Kunne ikke anmode om certifikatet. Anmod venligst igen. Hvis problemet fortsætter, bedes du kontakte din administrator.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Mislykkedes</string>
 	<string name="confirm">Bekræft</string>
 	<string name="content_dialog_ask_delete_cert">Er du sikker på, at du vil slette den?</string>
