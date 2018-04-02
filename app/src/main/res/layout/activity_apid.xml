@@ -13,8 +13,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/tvAPIDTitle"
-            android:layout_width="match_parent"
+	        android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/apid"
             android:gravity="center"
@@ -38,8 +37,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left">
                 <TextView
-                    android:id="@+id/tvVPNTitle"
-                    android:layout_width="wrap_content"
+	                android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_apid_vpn"
                     android:textAllCaps="false"
@@ -57,8 +55,7 @@
                     android:textColor="@color/add_cert"
                     />
                 <TextView
-                    android:id="@+id/tvWIFITitle"
-                    android:layout_width="wrap_content"
+	                android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_apid_wifi"
                     android:textAllCaps="false"
@@ -80,8 +77,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvAPIDDes"
-            android:layout_width="match_parent"
+	        android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="@string/apid_description"

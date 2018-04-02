@@ -35,7 +35,6 @@
 					android:layout_height="@dimen/height_item_input_host_tablet"/>
 
 			<TextView
-					android:id="@+id/txtTitlePort"
 					android:layout_below="@id/txtTitleHost"
 					android:layout_width="match_parent"
 					android:textSize="@dimen/text_size_input_tablet"

@@ -32,8 +32,7 @@
         android:clickable="true"
         android:background="@color/background_color_white">
         <Button
-            android:id="@+id/btnSettingListCert"
-            android:layout_width="match_parent"
+	        android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
             android:background="@android:color/transparent"
@@ -69,8 +68,7 @@
         android:clickable="true"
         android:background="@color/background_color_white">
         <Button
-            android:id="@+id/btnSettingNotification"
-            android:layout_width="match_parent"
+	        android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
             android:background="@android:color/transparent"
@@ -125,7 +123,6 @@
 				android:clickable="true"
 				android:background="@color/background_color_white">
 			<Button
-					android:id="@+id/btnSettingMDM"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:clickable="false"
@@ -218,8 +215,7 @@
         android:clickable="true"
         android:background="@color/background_color_white">
         <Button
-            android:id="@+id/btnSettingLibrary"
-            android:layout_width="match_parent"
+	        android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
             android:background="@android:color/transparent"

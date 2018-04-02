@@ -12,7 +12,6 @@
 			android:layout_marginLeft="@dimen/margin_content_input_tablet"
 			android:layout_marginRight="@dimen/margin_content_input_tablet">
 		<RelativeLayout
-				android:id="@+id/rl_on_line"
 				android:layout_marginTop="@dimen/margin_right_user_input_tablet"
 				android:layout_marginBottom="@dimen/margin_bottom_with_line_input_confirm_tablet"
 				android:layout_width="match_parent"
@@ -82,7 +81,6 @@
 					android:layout_height="match_parent">
 
 				<LinearLayout
-						android:id="@+id/host"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginBottom="@dimen/margin_item_menu"
@@ -109,7 +107,6 @@
 				</LinearLayout>
 
 				<LinearLayout
-						android:id="@+id/ll_port"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:orientation="horizontal" >
@@ -135,14 +132,12 @@
 			</LinearLayout>
 		</RelativeLayout>
 		<FrameLayout
-				android:id="@+id/line_center"
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:layout_marginLeft="@dimen/margin_item_menu"
 				android:layout_marginRight="@dimen/margin_item_menu"
 				android:background="@color/text_color" />
 		<RelativeLayout
-				android:id="@+id/rl_under_line"
 				android:layout_marginTop="@dimen/margin_top_with_line_input_confirm_tablet"
 				android:layout_marginBottom="@dimen/margin_right_user_input_tablet"
 				android:layout_width="match_parent"
@@ -173,7 +168,6 @@
 						android:layout_height="match_parent"/>
 			</LinearLayout>
 			<LinearLayout
-					android:id="@+id/ll_reason"
 					android:layout_below="@id/ll_email"
 					android:layout_width="match_parent"
 					android:layout_marginTop="@dimen/margin_item_menu"

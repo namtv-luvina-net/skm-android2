@@ -7,8 +7,7 @@
                 android:focusableInTouchMode="true">
 		<include layout="@layout/fragment_title_input" />
 		<LinearLayout
-					android:id="@+id/rl_email"
-					android:layout_width="match_parent"
+				android:layout_width="match_parent"
 					android:layout_marginLeft="@dimen/margin_content_input_tablet"
 					android:layout_height="@dimen/height_item_input_host_tablet"
 					android:layout_marginTop="@dimen/margin_top_content_input_host_tablet"
@@ -17,7 +16,6 @@
 					android:focusable="true"
 					android:focusableInTouchMode="true" >
 				<TextView
-						android:id="@+id/txtTitleEmail"
 						android:layout_width="wrap_content"
 						android:textSize="@dimen/text_size_input_tablet"
 						android:text="@string/title_input_email"

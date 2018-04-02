@@ -3,7 +3,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/rootViewContent"
                 android:background="@drawable/left_panel_background" >
 
 		<TextView
@@ -22,7 +21,6 @@
 				android:textColor="@drawable/text_selector"/>
 
 		<LinearLayout
-				android:id="@+id/rl_left_side_guide_input"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical"

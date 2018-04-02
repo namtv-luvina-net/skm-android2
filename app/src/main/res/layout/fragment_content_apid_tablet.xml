@@ -9,7 +9,6 @@
                 android:layout_marginRight="@dimen/margin_content_apid">
 
 	<RelativeLayout
-			android:id="@+id/rl_vpn"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_item_content_apid"
 			android:layout_above="@+id/rl_wifi">
@@ -81,7 +80,6 @@
 	</RelativeLayout>
 
 	<RelativeLayout
-			android:id="@+id/rl_btn_ctrl"
 			android:layout_below="@id/rl_wifi"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_item_content_apid"
