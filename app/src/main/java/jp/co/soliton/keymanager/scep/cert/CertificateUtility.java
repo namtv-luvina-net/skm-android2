@@ -132,7 +132,7 @@ public class CertificateUtility {
 		if (challenge != null) {
 			// <== debug
 			// create the extension value
-			GeneralNames subjectAltName = new GeneralNames( 
+			GeneralNames subjectAltName = new GeneralNames(
 					new GeneralName(GeneralName.rfc822Name, sbjectAltName/*"soliton@example.local"*/));
 			// create the extensions object and add it as an attribute
 			Vector oids = new Vector();
@@ -153,7 +153,9 @@ public class CertificateUtility {
 			DERObjectIdentifier attrType = PKCSObjectIdentifiers.pkcs_9_at_challengePassword;
 			ASN1Set attrValues = new DERSet(new DERPrintableString(challenge));
 			DEREncodable password = new Attribute(attrType, attrValues);
-			attributes = new DERSet(password/*attribute*/);
+			ASN1Encodable[] listAttributes = new ASN1Encodable[]{(ASN1Encodable) password, (ASN1Encodable)attribute};
+			//attributes = new DERSet(password/*attribute*/);
+			attributes = new DERSet(listAttributes);
 		}
 
 		try {

@@ -209,4 +209,5 @@
 	<string name="handler_failed">Behandlingen mislykkedes.</string>
 	<string name="go_to_setting">Til Indstillinger</string>
 	<string name="message_go_setting_allow_permission">Du har ikke adgangsrettigheder. Indstil rettighederne i programindstillingerne.</string>
+	<string name="subject_alternative_names">Alternativ Emnenavn</string>
 </resources>

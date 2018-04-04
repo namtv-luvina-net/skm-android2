@@ -209,4 +209,5 @@
 	<string name="handler_failed">처리에 실패하였습니다.</string>
 	<string name="go_to_setting">설정으로</string>
 	<string name="message_go_setting_allow_permission">액세스 권한이 없습니다. 앱 설정에서 권한을 설정하십시오.</string>
+	<string name="subject_alternative_names">서브젝트 대체명</string>
 </resources>

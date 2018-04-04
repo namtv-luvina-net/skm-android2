@@ -16,7 +16,7 @@ import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
 
 public class InfoDetailCertificateSetting {
 
-	public static List<String>  prepareHeader(Context context) {
+	public static List<String>  prepareHeader(Context context, ElementApply elementApply) {
 		List<String> listDataHeader = new ArrayList<>();
 		listDataHeader.add("");
 		listDataHeader.add(context.getString(R.string.label_subject_name));
@@ -30,6 +30,9 @@ public class InfoDetailCertificateSetting {
 		listDataHeader.add(context.getString(R.string.label_authority_key_identifier));
 		listDataHeader.add(context.getString(R.string.label_crl_distribution_points));
 		listDataHeader.add(context.getString(R.string.label_certificate_authority_information_access));
+		if (elementApply.getRfc822Name() != null) {
+			listDataHeader.add(context.getString(R.string.subject_alternative_names));
+		}
 		listDataHeader.add(context.getString(R.string.label_extended_key_usage));
 		return listDataHeader;
 	}
@@ -166,6 +169,14 @@ public class InfoDetailCertificateSetting {
 		certificateAuthority.add(new ItemChildDetailCertSetting(context.getString(R.string.label_uri),
 				elementApply.getCertificateAuthorityUri()));
 
+		// Add child SUBJECT ALTERNATIVE NAME
+		List<ItemChildDetailCertSetting> subjectAlternativeName = null;
+		if (elementApply.getRfc822Name() != null) {
+			subjectAlternativeName = new ArrayList<>();
+			subjectAlternativeName.add(new ItemChildDetailCertSetting(context.getString(R.string.label_email_address),
+					elementApply.getRfc822Name()));
+		}
+
 		// Add child EXTENDED KEY USAGE
 		List<ItemChildDetailCertSetting> extendedKeyUsage = new ArrayList<>();
 		extendedKeyUsage.add(new ItemChildDetailCertSetting(context.getString(R.string.label_purpose),
@@ -183,6 +194,9 @@ public class InfoDetailCertificateSetting {
 		listDataChild.add(authorityKeyIdentifier);
 		listDataChild.add(crlDistributionPoints);
 		listDataChild.add(certificateAuthority);
+		if (subjectAlternativeName != null) {
+			listDataChild.add(subjectAlternativeName);
+		}
 		listDataChild.add(extendedKeyUsage);
 		return listDataChild;
 	}

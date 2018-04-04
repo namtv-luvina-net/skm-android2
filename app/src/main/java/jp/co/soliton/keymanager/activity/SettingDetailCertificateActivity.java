@@ -123,7 +123,7 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
     }
 
 	private void prepareData() {
-		listDataHeader  = InfoDetailCertificateSetting.prepareHeader(this);
+		listDataHeader  = InfoDetailCertificateSetting.prepareHeader(this, elementApply);
 		listDataChild = InfoDetailCertificateSetting.prepareChild(this, elementApply);
 		adapterSettingDetailCertificate.setListDataHeader(listDataHeader);
 		adapterSettingDetailCertificate.setListDataChild(listDataChild);

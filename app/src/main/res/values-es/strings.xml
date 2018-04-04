@@ -209,4 +209,5 @@
 	<string name="handler_failed">Procesamiento fallido.</string>
 	<string name="go_to_setting">A la configuración</string>
 	<string name="message_go_setting_allow_permission">Usted no tiene derechos de acceso. Establezca los derechos en la configuración de la aplicación.</string>
+	<string name="subject_alternative_names">Nombre Alternativo Del Sujeto</string>
 </resources>

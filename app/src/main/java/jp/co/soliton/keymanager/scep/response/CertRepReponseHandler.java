@@ -80,7 +80,7 @@ public class CertRepReponseHandler implements ResponseHandler<CertRep> {
 			certRep.setPkiStatus(PkiStatus.Status.FAILURE);
 			return certRep;
 		}
-		
+
 		
 		// pkcsPKIEnvelope
 		try {

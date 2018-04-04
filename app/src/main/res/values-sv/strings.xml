@@ -209,4 +209,5 @@
 	<string name="handler_failed">Bearbetningen misslyckades.</string>
 	<string name="go_to_setting">Till Inställningar</string>
 	<string name="message_go_setting_allow_permission">Du har inga åtkomsträttigheter. Ange rättigheter i inställningar för programmet.</string>
+	<string name="subject_alternative_names">Alternativt Namn För Ämne</string>
 </resources>

@@ -209,4 +209,5 @@
 	<string name="handler_failed">Verwerken mislukt.</string>
 	<string name="go_to_setting">Naar instellingen</string>
 	<string name="message_go_setting_allow_permission">U heeft geen toegangsrechten. Stel de rechten in de appinstellingen in.</string>
+	<string name="subject_alternative_names">Alternatieve Onderwerpnaam</string>
 </resources>

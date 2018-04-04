@@ -9,8 +9,8 @@ android {
         applicationId "jp.co.soliton.keymanager"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 3
-        versionName '2.0.1'
+        versionCode 0
+        versionName '2.1.0'
     }
     signingConfigs {
         beta {

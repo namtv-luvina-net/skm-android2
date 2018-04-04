@@ -209,4 +209,5 @@
 	<string name="handler_failed">處理失敗。</string>
 	<string name="go_to_setting">前往設定</string>
 	<string name="message_go_setting_allow_permission">無存取權限。請透過應用程式的設定，設定權限。</string>
+	<string name="subject_alternative_names">主題替代名稱</string>
 </resources>

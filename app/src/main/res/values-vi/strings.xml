@@ -210,4 +210,5 @@
 	<string name="handler_failed">Xử lý thất bại</string>
 	<string name="go_to_setting">ĐI TỚI CÀI ĐẶT</string>
 	<string name="message_go_setting_allow_permission">Bạn không có quyền truy cập. Vui lòng cài đặt quyền tại thiết định trong ứng dụng</string>
+	<string name="subject_alternative_names">Tên chủ đề thay thế</string>
 </resources>

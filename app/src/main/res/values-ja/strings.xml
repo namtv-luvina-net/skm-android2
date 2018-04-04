@@ -209,4 +209,5 @@
 	<string name="handler_failed">処理に失敗しました。</string>
 	<string name="go_to_setting">設定へ</string>
 	<string name="message_go_setting_allow_permission">アクセス権限がありません。アプリの設定で権限を設定ください。</string>
+	<string name="subject_alternative_names">サブジェクト代替名</string>
 </resources>

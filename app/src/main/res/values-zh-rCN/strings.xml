@@ -209,4 +209,5 @@
 	<string name="handler_failed">处理失败。</string>
 	<string name="go_to_setting">进入设置</string>
 	<string name="message_go_setting_allow_permission">没有访问权限。请在应用设置中设置权限。</string>
+	<string name="subject_alternative_names">主题备用名称</string>
 </resources>
