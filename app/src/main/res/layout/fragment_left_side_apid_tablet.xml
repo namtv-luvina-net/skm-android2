@@ -5,7 +5,6 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/left_panel_background">
 	<RelativeLayout
-			android:id="@+id/header_left_side"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/high_header_left_side_tablet">
 		<TextView
@@ -42,7 +41,6 @@
 	</RelativeLayout>
 
 	<RelativeLayout
-			android:id="@+id/content_left_size"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerInParent="true"

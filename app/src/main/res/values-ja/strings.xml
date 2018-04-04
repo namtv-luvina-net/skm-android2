@@ -177,7 +177,6 @@
 	<string name="title_user_id">ユーザーID :</string>
 	<string name="title_storage">格納先 :</string>
 	<string name="txt_complete_using_procedures">利用開始手続きが完了しました</string>
-	<string name="user_id_is_invalid">ユーザーIDが無効です</string>
 	<string name="validity_period">有効期間</string>
 	<string name="version">バージョン</string>
 	<string name="withdrawal_apply">申請を取り下げる</string>
@@ -210,4 +209,5 @@
 	<string name="handler_failed">処理に失敗しました。</string>
 	<string name="go_to_setting">設定へ</string>
 	<string name="message_go_setting_allow_permission">アクセス権限がありません。アプリの設定で権限を設定ください。</string>
+	<string name="subject_alternative_names">サブジェクト代替名</string>
 </resources>

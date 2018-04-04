@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN en apps</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager-diagnostiek</string>
 	<string name="certlogin_userid_title">Gebruikersnaam</string>
 	<string name="certlogin_password_title">Wachtwoord</string>
-	<string name="instapp_nosdcard">App kan niet worden gedownload omdat er geen SD-kaart is.</string>
 	<string name="admin_receiver_enabled">De beheerder-ontvanger is ingeschakeld</string>
 	<string name="admin_receiver_disabled">De beheerder-ontvanger is uitgeschakeld</string>
 	<string name="admin_receiver_pwchange">Het wachtwoord van de beheerder-ontvanger is gewijzigd</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Toepassing voltooid</string>
 	<string name="back_to_top">Terug naar boven</string>
 	<string name="back_to_top_auto">Beginnen met procedures</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">Verbinding mislukt.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">Het e-mailadres van de bestemming is ongeldig.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Selecteren.</string>
 	<string name="apid_guide_1">Tik op [Kopiëren] om naar het \nclipboard te kopiëren.</string>
 	<string name="apid_guide_2">Tik op [E-mail] om de \nmailer te starten.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Goedkeuring voltooid</string>
 	<string name="approval_confirmation">Goedkeuringsbevestiging</string>
 	<string name="beginning_to_use_procedures">Beginnen met procedures</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">Opnieuw toepassen van applicatie is nodig om door te gaan met gebruik.</string>
 	<string name="title_apply_date">Datum toepassing :</string>
 	<string name="title_cancel">Intrekking van de applicatie</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">E-mailadres van de bestemming :</string>
 	<string name="title_expiration_date">Verloopt :</string>
 	<string name="title_place">Opslag : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Wachtwoord : </string>
 	<string name="title_port_number">Poortnummer :</string>
 	<string name="title_reason_for_apply">Reden voor toepassing :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Status :</string>
 	<string name="title_store">Opslag :</string>
 	<string name="title_user_id">Gebruikersnaam :</string>
 	<string name="title_storage">Opslag :</string>
 	<string name="txt_complete_using_procedures">Begin met het gebruik van procedures is voltooid</string>
-	<string name="user_id_is_invalid">De gebruikersnaam is ongeldig</string>
 	<string name="validity_period">Geldigheidsduur</string>
 	<string name="version">Versie</string>
 	<string name="withdrawal_apply">Ingetrokken applicatie</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Applicatie-informatie</string>
 	<string name="content_delete_mdm_profile_dialog">Is dat OK?</string>
 	<string name="failed_to_get_ca">Kan certificaat niet opvragen. Pas het opnieuw toe. Neem contact op met de beheerder als het probleem blijft.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Mislukt</string>
 	<string name="confirm">Bevestigen</string>
 	<string name="content_dialog_ask_delete_cert">Weet u zeker dat u het wilt verwijderen?</string>
@@ -226,4 +209,5 @@
 	<string name="handler_failed">Verwerken mislukt.</string>
 	<string name="go_to_setting">Naar instellingen</string>
 	<string name="message_go_setting_allow_permission">U heeft geen toegangsrechten. Stel de rechten in de appinstellingen in.</string>
+	<string name="subject_alternative_names">Alternatieve Onderwerpnaam</string>
 </resources>

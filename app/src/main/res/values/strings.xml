@@ -194,7 +194,6 @@
 	<string name="title_user_id">User ID :</string>
 	<string name="title_storage">Storage :</string>
 	<string name="txt_complete_using_procedures">Beginning to use procedures has been completed</string>
-	<string name="user_id_is_invalid">The user ID is invalid</string>
 	<string name="validity_period">Validity Period</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Withdrawn Application</string>
@@ -227,4 +226,5 @@
 	<string name="handler_failed">Handler failed.</string>
 	<string name="go_to_setting">GO TO SETTINGS</string>
 	<string name="message_go_setting_allow_permission">You have denied the pemission. Please go to app settings and allow permission</string>
+	<string name="subject_alternative_names">Subject Alternative Name</string>
 </resources>

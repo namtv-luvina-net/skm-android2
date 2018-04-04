@@ -35,9 +35,7 @@ import java.security.cert.CertStore;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
@@ -513,11 +511,30 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				element.setNotiEnableBeforeFlag(CommonUtils.getPrefBoolean(activity, StringList
 						.KEY_NOTIF_ENABLE_BEFORE_FLAG));
 				element.setNotiEnableBefore(CommonUtils.getPrefInteger(activity, StringList.KEY_NOTIF_ENABLE_BEFORE));
+				element.setRfc822Name(getRfc822NameFromCert());
 			} catch (CertificateException e) {
 				e.printStackTrace();
 				return false;
 			}
 			return true;
+		}
+
+		private String getRfc822NameFromCert() {
+			try {
+				Collection<List<?>> subjectAlternativeNames = certRep.getCertificate().getSubjectAlternativeNames();
+				if (subjectAlternativeNames != null) {
+					for (List item : subjectAlternativeNames) {
+						Integer type = (Integer) item.get(0);
+						String name = item.get(1).toString();
+						if (type == 1) {
+							return name;
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 
 		@Override

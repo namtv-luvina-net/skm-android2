@@ -323,6 +323,7 @@ public class ElementApplyManager {
 			elementApply.setClrDistributionPointUri(getColumnStringWithCursor(cursor, CLR_DISTRIBUTION_POINT_URI_COLUMN));
 			elementApply.setCertificateAuthorityUri(getColumnStringWithCursor(cursor, CERTIFICATE_AUTHORITY_URI_COLUMN));
 			elementApply.setPurpose(getColumnStringWithCursor(cursor, PURPOSE_COLUMN));
+			elementApply.setRfc822Name(getColumnStringWithCursor(cursor, RFC822_NAME));
 		} finally {
 			cursor.close();
 			closeDatabase();
@@ -409,6 +410,7 @@ public class ElementApplyManager {
 		values.put(CLR_DISTRIBUTION_POINT_URI_COLUMN, element.getClrDistributionPointUri());
 		values.put(CERTIFICATE_AUTHORITY_URI_COLUMN, element.getCertificateAuthorityUri());
 		values.put(PURPOSE_COLUMN, element.getPurpose());
+		values.put(RFC822_NAME, element.getRfc822Name());
 		try {
 			openDatabase();
 			sqLiteDB.update(TABLE_ELEMENT_APPLY, values, "id=" + element.getId(), null);

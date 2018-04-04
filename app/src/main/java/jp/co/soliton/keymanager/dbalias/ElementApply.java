@@ -68,6 +68,7 @@ public class ElementApply implements Serializable {
     private String clrDistributionPointUri;
     private String certificateAuthorityUri;
     private String purpose;
+    private String rfc822Name;
 
     public int getId() {
         return id;
@@ -444,6 +445,14 @@ public class ElementApply implements Serializable {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
+
+	public String getRfc822Name() {
+		return rfc822Name;
+	}
+
+	public void setRfc822Name(String rfc822Name) {
+		this.rfc822Name = rfc822Name;
+	}
 
 	public static void sortListConfirmApply(List<ElementApply> listElementApply) {
 		Collections.sort(listElementApply, new Comparator<ElementApply>() {

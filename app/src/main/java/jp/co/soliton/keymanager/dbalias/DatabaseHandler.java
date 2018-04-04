@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     // All Static variables
     // Database Name
     public static final String DATABASE_NAME = "applyManager.db";
@@ -60,6 +60,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public static final String CLR_DISTRIBUTION_POINT_URI_COLUMN = "clr_distribution_point_uri";
 	public static final String CERTIFICATE_AUTHORITY_URI_COLUMN = "certificate_authority_uri";
 	public static final String PURPOSE_COLUMN = "purpose";
+	public static final String RFC822_NAME = "rfc822_name";
 
     /**
      * @param context
@@ -123,7 +124,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + AUTHORITY_KEY_IDENTIFIER_COLUMN + " TEXT,"
                 + CLR_DISTRIBUTION_POINT_URI_COLUMN + " TEXT,"
                 + CERTIFICATE_AUTHORITY_URI_COLUMN + " TEXT,"
-                + PURPOSE_COLUMN + " TEXT"
+                + PURPOSE_COLUMN + " TEXT,"
+                + RFC822_NAME + " TEXT"
                 + ")";
         db.execSQL(CREATE_ELEMENT_TABLE);
     }
@@ -142,8 +144,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		    db.execSQL("DROP TABLE IF EXISTS " + TABLE_ELEMENT_APPLY);
 		    // Create tables again
 		    onCreate(db);
-	    } else if (oldVersion == 4 && newVersion == 5) {
+	    } else if (oldVersion == 4) {
 		    String addVeresionEpsapServer = "ALTER TABLE " + TABLE_ELEMENT_APPLY + " ADD COLUMN " + EPSAP_VERSION_COLUMN + " TEXT";
+		    db.execSQL(addVeresionEpsapServer);
+	    }
+	    if (oldVersion < 6) {
+		    String addVeresionEpsapServer = "ALTER TABLE " + TABLE_ELEMENT_APPLY + " ADD COLUMN " + RFC822_NAME + " TEXT";
 		    db.execSQL(addVeresionEpsapServer);
 	    }
     }

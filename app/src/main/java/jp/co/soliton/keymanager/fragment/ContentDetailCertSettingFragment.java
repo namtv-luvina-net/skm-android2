@@ -126,7 +126,7 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 	}
 
 	private void prepareData() {
-		listDataHeader  = InfoDetailCertificateSetting.prepareHeader(getActivity());
+		listDataHeader  = InfoDetailCertificateSetting.prepareHeader(getActivity(), elementApply);
 		listDataChild = InfoDetailCertificateSetting.prepareChild(getActivity(), elementApply);
 		adapterSettingDetailCertificate.setListDataHeader(listDataHeader);
 		adapterSettingDetailCertificate.setListDataChild(listDataChild);

@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN и приложения</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Диагностика Soliton KeyManager</string>
 	<string name="certlogin_userid_title">Идентификатор пользователя</string>
 	<string name="certlogin_password_title">Пароль</string>
-	<string name="instapp_nosdcard">Приложение не может быть загружено из-за отсутствия SD-карты.</string>
 	<string name="admin_receiver_enabled">Предоставлены права администратора устройства</string>
 	<string name="admin_receiver_disabled">Права администратора устройства отключены</string>
 	<string name="admin_receiver_pwchange">Пароль для получения прав администратора устройства изменен</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Применение завершено</string>
 	<string name="back_to_top">К началу</string>
 	<string name="back_to_top_auto">Начать использование процедур</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">Сбой подключения.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">Недопустимый адрес электронной почты получателя.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Выберите.</string>
 	<string name="apid_guide_1">Коснитесь кнопки [Копировать], чтобы скопировать в \nбуфер.</string>
 	<string name="apid_guide_2">Коснитесь кнопки [Почта], чтобы запустить \nприложение электронной почты.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Подтверждение завершено</string>
 	<string name="approval_confirmation">Подтверждение утверждения</string>
 	<string name="beginning_to_use_procedures">Начать использование процедур</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">Для продолжения использования необходимо повторное применение.</string>
 	<string name="title_apply_date">Дата применения :</string>
 	<string name="title_cancel">Изъятие приложения</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Адрес электронной почты получателя :</string>
 	<string name="title_expiration_date">Истекает :</string>
 	<string name="title_place">Хранилище : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Пароль : </string>
 	<string name="title_port_number">Номер порта :</string>
 	<string name="title_reason_for_apply">Причина применения :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Состояние :</string>
 	<string name="title_store">Хранение данных :</string>
 	<string name="title_user_id">Идентификатор пользователя :</string>
 	<string name="title_storage">Хранение данных :</string>
 	<string name="txt_complete_using_procedures">Выполнены начальные действия для использования процедур</string>
-	<string name="user_id_is_invalid">Недопустимый идентификатор пользователя</string>
 	<string name="validity_period">Срок действия</string>
 	<string name="version">Версия</string>
 	<string name="withdrawal_apply">Изъятое приложение</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Сведения о приложении</string>
 	<string name="content_delete_mdm_profile_dialog">Вы согласны?</string>
 	<string name="failed_to_get_ca">Не удалось запросить сертификат. Примените его повторно. При повторении ошибки обратитесь к администратору.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Не выполнено</string>
 	<string name="confirm">Подтвердить</string>
 	<string name="content_dialog_ask_delete_cert">Действительно удалить?</string>
@@ -226,4 +209,5 @@
 	<string name="handler_failed">Ошибка обработки.</string>
 	<string name="go_to_setting">В настройки</string>
 	<string name="message_go_setting_allow_permission">У вас отсутствуют права доступа. Установите права в настройках приложения.</string>
+	<string name="subject_alternative_names">Альтернативное Имя Получателя</string>
 </resources>

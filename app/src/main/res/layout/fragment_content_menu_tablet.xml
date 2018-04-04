@@ -94,7 +94,6 @@
 				</RelativeLayout>
 
 				<RelativeLayout
-						android:id="@+id/rl_vpn"
 						android:layout_above="@id/space_apid"
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/height_item_apid">

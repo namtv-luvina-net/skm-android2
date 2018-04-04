@@ -34,8 +34,7 @@
 				android:layout_weight="1"
 				android:textSize="17sp"
 				android:textColor="@color/color_black"
-				android:text="@string/label_notification"
-				android:id="@+id/textView2"/>
+				android:text="@string/label_notification"/>
 
 		<Switch
 				android:theme="@style/Theme.AppCompat.Light.NoActionBar"

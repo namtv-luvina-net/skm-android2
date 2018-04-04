@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">WLAN</string>
 	<string name="main_apid_vpn">VPN und Apps</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager Diagnose</string>
 	<string name="certlogin_userid_title">Benutzer-ID</string>
 	<string name="certlogin_password_title">Passwort</string>
-	<string name="instapp_nosdcard">Eine App kann nicht heruntergeladen werden, weil keine SD-Karte vorhanden ist.</string>
 	<string name="admin_receiver_enabled">Der Admin-Empfänger wurde aktiviert</string>
 	<string name="admin_receiver_disabled">Der Admin-Empfänger wurde deaktiviert</string>
 	<string name="admin_receiver_pwchange">Das Passwort des Admin-Empfängers wurde geändert</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Antrag abgeschlossen</string>
 	<string name="back_to_top">Zurück nach oben</string>
 	<string name="back_to_top_auto">Verfahren verwenden</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">Verbindung fehlgeschlagen.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">Die Ziel-E-Mail-Adresse ist ungültig.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Auswählen.</string>
 	<string name="apid_guide_1">Auf [Kopieren] tippen, um in die \nZwischenablage zu kopieren.</string>
 	<string name="apid_guide_2">Auf [Mail] tippen, um den \nMailer zu starten.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Genehmigung abgeschlossen.</string>
 	<string name="approval_confirmation">Genehmigungsbestätigung</string>
 	<string name="beginning_to_use_procedures">Verfahren verwenden</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">Erneuter Antrag zur weiteren Verwendung notwendig.</string>
 	<string name="title_apply_date">Antragsdatum :</string>
 	<string name="title_cancel">Antrag zurückziehen</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Ziel-E-Mail-Adresse :</string>
 	<string name="title_expiration_date">Läuft ab :</string>
 	<string name="title_place">Speichern : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Passwort : </string>
 	<string name="title_port_number">Portnummer :</string>
 	<string name="title_reason_for_apply">Grund für den Antrag :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Status :</string>
 	<string name="title_store">Speicher :</string>
 	<string name="title_user_id">Benutzer-ID :</string>
 	<string name="title_storage">Speicher :</string>
 	<string name="txt_complete_using_procedures">Die Verwendung der Verfahren wurde abgeschlossen.</string>
-	<string name="user_id_is_invalid">Die Benutzer-ID ist ungültig</string>
 	<string name="validity_period">Gültigkeitsdauer</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Zurückgezogener Antrag</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Anwendungsinformationen</string>
 	<string name="content_delete_mdm_profile_dialog">OK?</string>
 	<string name="failed_to_get_ca">Anforderung des Zertifikats fehlgeschlagen. Bitte erneut anwenden. Sollte das Problem fortbestehen, wenden Sie sich an Ihren Administrator.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Fehlgeschlagen</string>
 	<string name="confirm">Bestätigen</string>
 	<string name="content_dialog_ask_delete_cert">Sind Sie sicher, dass Sie es löschen wollen?</string>
@@ -226,4 +209,5 @@
 	<string name="handler_failed">Verarbeitung fehlgeschlagen.</string>
 	<string name="go_to_setting">Zu den Einstellungen</string>
 	<string name="message_go_setting_allow_permission">Sie haben keine Zugriffsrechte. Legen Sie die Rechte in den App-Einstellungen fest.</string>
+	<string name="subject_alternative_names">Alternativer Betreff</string>
 </resources>

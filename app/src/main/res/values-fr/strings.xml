@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Soliton KeyManager</string>
-	<string name="app_name_icon">KeyManager</string>
-	<string name="Property_key">key</string>
-	<string name="Property_array">array</string>
-	<string name="Property_dict">dict</string>
-	<string name="User_Agentprofile">EPS-apProfileReader Android/%1$s KeyManager/%2$s</string>
-    <string name="Forbidden">Forbidden</string>
-	<string name="Unauthorized">Unauthorized</string>
-	<string name="ERR">ERR:</string>
-	<string name="main_apid_wifi">Wi-Fi</string>
 	<string name="main_apid_vpn">VPN et applications</string>
 	<string name="main_versionname">Ver.</string>
 	<string name="main_log_mailtitle">Soliton KeyManager Diagnostique</string>
 	<string name="certlogin_userid_title">Identifiant d\'utilisateur</string>
 	<string name="certlogin_password_title">Mot de passe</string>
-	<string name="instapp_nosdcard">Une application ne peut pas être téléchargée car il n\'y a aucune carte SD.</string>
 	<string name="admin_receiver_enabled">L\'administrateur récepteur a été activé</string>
 	<string name="admin_receiver_disabled">L\'administrateur récepteur a été désactivé</string>
 	<string name="admin_receiver_pwchange">Le mot de passe de l\'administrateur récepteur a été modifié</string>
@@ -107,7 +96,6 @@
 	<string name="apply_completed">Action Appliquer terminée</string>
 	<string name="back_to_top">Retour en haut</string>
 	<string name="back_to_top_auto">Commencer à utiliser les procédures</string>
-	<string name="not_installed_ca">not installed ca certification</string>
 	<string name="connect_failed">La connexion a échoué.</string>
 	<string name="error_install_certificate">Can not install certificate</string>
 	<string name="apply_mail_error">L\'adresse e-mail de destination n\'est pas valide.</string>
@@ -120,7 +108,6 @@
 	<string name="select_apid">Sélectionner.</string>
 	<string name="apid_guide_1">Appuyez sur [Copier] pour copier vers le \npresse-papier.</string>
 	<string name="apid_guide_2">Tapez [Mail] pour lancer \nmailer.</string>
-	<string name="apid_subject_email">Soliton KeyManager APID</string>
 	<string name="approval_completed">Approbation terminée</string>
 	<string name="approval_confirmation">Approbation confirmée</string>
 	<string name="beginning_to_use_procedures">Commencer à utiliser les procédures</string>
@@ -172,7 +159,6 @@
 	<string name="text_start_reapply_tablet">La réapplication est nécessaire pour continuer l\'utilisation.</string>
 	<string name="title_apply_date">Date d\'application :</string>
 	<string name="title_cancel">Retrait de la demande</string>
-	<string name="title_cn">CN :</string>
 	<string name="title_destination_email_address">Adresse e-mail de destination :</string>
 	<string name="title_expiration_date">Expire :</string>
 	<string name="title_place">Stockage : \u0020</string>
@@ -186,13 +172,11 @@
 	<string name="title_password">Mot de passe : </string>
 	<string name="title_port_number">Numéro de port :</string>
 	<string name="title_reason_for_apply">Motif de la demande :</string>
-	<string name="title_sn">S/N :</string>
 	<string name="title_status">Statut :</string>
 	<string name="title_store">Stockage :</string>
 	<string name="title_user_id">Identifiant d\'utilisateur :</string>
 	<string name="title_storage">Stockage :</string>
 	<string name="txt_complete_using_procedures">Le début de l\'utilisation des procédures a été achevé</string>
-	<string name="user_id_is_invalid">L\'ID utilisateur n\'est pas valide</string>
 	<string name="validity_period">Période de validité</string>
 	<string name="version">Version</string>
 	<string name="withdrawal_apply">Demande retirée</string>
@@ -217,7 +201,6 @@
 	<string name="app_info">Informations sur l\'application</string>
 	<string name="content_delete_mdm_profile_dialog">Est-ce OK?</string>
 	<string name="failed_to_get_ca">Impossible de demander le certificat. Envoyez un autre formulaire. Si le problème persiste, veuillez contacter votre administrateur.</string>
-	<string name="EnrollErrorMessage">Enroll Error</string>
 	<string name="failure">Échec</string>
 	<string name="confirm">Confirmer</string>
 	<string name="content_dialog_ask_delete_cert">Êtes-vous sûr de vouloir le supprimer ?</string>
@@ -226,4 +209,5 @@
 	<string name="handler_failed">Le traitement a échoué.</string>
 	<string name="go_to_setting">Vers Paramètres</string>
 	<string name="message_go_setting_allow_permission">Vous n&apos;avez aucun droit d&apos;accès. Définissez les droits dans les paramètres de l&apos;application.</string>
+	<string name="subject_alternative_names">Nom Alternatif Du Sujet</string>
 </resources>
