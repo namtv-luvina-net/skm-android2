@@ -15,6 +15,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
@@ -148,7 +149,8 @@ public class InputHostPageFragment extends InputBasePageFragment {
         }
 	    pagerInputActivity.setHostName(txtHostname.getText().toString().trim());
 	    pagerInputActivity.setPortName(txtSecurePort.getText().toString().trim());
-	    String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
+	    String host = CommonUtils.removeHttp(pagerInputActivity.getHostName());
+	    String url = String.format("%s:%s", host, pagerInputActivity.getPortName());
         m_InformCtrl.SetURL(url);
 	    new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
 		    @Override

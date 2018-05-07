@@ -20,6 +20,7 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
@@ -169,7 +170,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 			if (tabletAbtractInputFragment.getInformCtrl() == null) {
 				tabletAbtractInputFragment.setInformCtrl(new InformCtrl());
 			}
-			String url = String.format("%s:%s", tabletAbtractInputFragment.getInputApplyInfo().getHost(), edtPort.getText()
+			String url = String.format("%s:%s", CommonUtils.removeHttp(tabletAbtractInputFragment.getInputApplyInfo().getHost()), edtPort.getText()
 					.toString().trim());
 
 			tabletAbtractInputFragment.getInformCtrl().SetURL(url);

@@ -22,6 +22,7 @@ import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
@@ -148,7 +149,8 @@ public class InputPortPageFragment extends InputBasePageFragment {
         if (m_InformCtrl == null) {
             m_InformCtrl = new InformCtrl();
         }
-        String url = String.format("%s:%s", pagerInputActivity.getInputApplyInfo().getHost(), txtPort.getText().toString().trim());
+	    String host = CommonUtils.removeHttp(pagerInputActivity.getInputApplyInfo().getHost());
+        String url = String.format("%s:%s", host, txtPort.getText().toString().trim());
         m_InformCtrl.SetURL(url);
         //Open thread download cert
         new DownloadCertificateTask(getActivity(), m_InformCtrl, m_nErroType, new DownloadCertificateTask.EndConnection() {

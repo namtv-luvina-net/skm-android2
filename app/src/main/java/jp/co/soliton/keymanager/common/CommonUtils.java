@@ -13,6 +13,18 @@ import java.io.File;
  * Created by luongdolong on 11/1/2017.
  */
 public class CommonUtils {
+
+	public static String removeHttp(String host) {
+		host = host.toLowerCase();
+		String[] strDisallowed = new String[]{"http://", "https://"};
+		for (int i = 0 ; i < strDisallowed.length; i++) {
+			if (host.startsWith(strDisallowed[i])) {
+				return host.replace(strDisallowed[i], "");
+			}
+		}
+		return host;
+	}
+
     // Sharedpref file name
 
     /**

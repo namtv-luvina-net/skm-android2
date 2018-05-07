@@ -17,6 +17,7 @@ import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.CompleteApplyActivity;
 import jp.co.soliton.keymanager.activity.CompleteConfirmApplyActivity;
 import jp.co.soliton.keymanager.activity.ViewPagerInputActivity;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.EpsapVersion;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
@@ -170,7 +171,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
         // グレーアウト
         setButtonRunnable(false);
         if (nullOrEmpty(pagerInputActivity.getInformCtrl().GetURL())) {
-            String url = String.format("%s:%s", pagerInputActivity.getInputApplyInfo().getHost(), pagerInputActivity.getInputApplyInfo().getSecurePort());
+            String url = String.format("%s:%s", CommonUtils.removeHttp(pagerInputActivity.getInputApplyInfo().getHost()), pagerInputActivity.getInputApplyInfo().getSecurePort());
             pagerInputActivity.getInformCtrl().SetURL(url);
         }
         pagerInputActivity.getInformCtrl().SetCookie(null);
