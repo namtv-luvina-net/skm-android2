@@ -24,50 +24,54 @@ public class DialogApplyConfirm extends Dialog {
     private RelativeLayout zoneDlgApplyMsg;
     private Context context;
 
-    public DialogApplyConfirm(Context context) {
-        super(context);
-        this.context = context;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_apply_confirm);
-        btnOK = (TextView) findViewById(R.id.btnDlgApplyOK);
-        btnCancel = (TextView) findViewById(R.id.btnDlgApplyCancel);
-        txtDlgApplyMsg = (TextView) findViewById(R.id.txtDlgApplyMsg);
-        txtDlgApplyTitle = (TextView) findViewById(R.id.txtDlgApplyTitle);
-        zoneDlgApplyMsg = (RelativeLayout)findViewById(R.id.zoneDlgApplyMsg);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        setCancelable(false);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(getWindow().getAttributes());
-        lp.width = (int)(context.getResources().getDisplayMetrics().widthPixels*0.8f);
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
+	public DialogApplyConfirm(Context context) {
+		super(context);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.dialog_apply_confirm);
+		btnOK = findViewById(R.id.btnDlgApplyOK);
+		btnCancel = findViewById(R.id.btnDlgApplyCancel);
+		txtDlgApplyMsg = findViewById(R.id.txtDlgApplyMsg);
+		txtDlgApplyTitle = findViewById(R.id.txtDlgApplyTitle);
+		btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dismiss();
+			}
+		});
+		setCancelable(false);
+		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		lp.copyFrom(getWindow().getAttributes());
+		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		lp.gravity = Gravity.CENTER;
 
-        getWindow().setAttributes(lp);
-    }
+		getWindow().setAttributes(lp);
+	}
 
-    public void setTextDisplay(String title, String message, String btnCancel, String btnOK) {
-	    if (title == null || title.length() == 0) {
-		    txtDlgApplyTitle.setVisibility(View.GONE);
-	    } else {
-		    txtDlgApplyTitle.setText(title);
-	    }
-        txtDlgApplyMsg.setText(message);
-        this.btnOK.setText(btnOK);
-        this.btnCancel.setText(btnCancel);
-    }
+	public void setTextDisplay(String title, String message, String btnCancel, String btnOK) {
+		if (title == null || title.length() == 0) {
+			txtDlgApplyTitle.setVisibility(View.GONE);
+		} else {
+			txtDlgApplyTitle.setVisibility(View.VISIBLE);
+			txtDlgApplyTitle.setText(title);
+		}
+		txtDlgApplyMsg.setText(message);
+		if (btnOK != null && btnOK.length() > 0) {
+			this.btnOK.setText(btnOK);
+		}
+		if (btnCancel != null && btnCancel.length() > 0) {
+			this.btnCancel.setText(btnCancel);
+		}
+	}
 
     public void setOnClickOK(View.OnClickListener listener) {
         btnOK.setOnClickListener(listener);
+        this.dismiss();
     }
 
     public void setOnClickCancel(View.OnClickListener listener) {
         btnCancel.setOnClickListener(listener);
+	    this.dismiss();
     }
 
 }

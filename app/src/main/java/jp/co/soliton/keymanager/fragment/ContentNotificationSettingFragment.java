@@ -18,7 +18,7 @@ import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.DaysBeforeNotifEditText;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
+import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
@@ -235,7 +235,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			return true;
 		}
 		if (CommonUtils.isEmpty(getTextNotifBefore()) || !CommonUtils.isNumber(getTextNotifBefore())) {
-			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogMessageTablet.OnOkDismissMessageListener() {
+			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					tvNotifBefore.setText(numDateNotifBefore);
@@ -245,7 +245,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			return false;
 		}
 		if (CommonUtils.toInt(getTextNotifBefore()) <= 0) {
-			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogMessageTablet.OnOkDismissMessageListener() {
+			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					tvNotifBefore.setText(String.valueOf(MIN_BEFORE_DATE));
@@ -255,7 +255,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			return false;
 		}
 		if (CommonUtils.toInt(getTextNotifBefore()) > MAX_BEFORE_DATE) {
-			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogMessageTablet.OnOkDismissMessageListener() {
+			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					tvNotifBefore.setText(String.valueOf(MAX_BEFORE_DATE));
@@ -276,8 +276,8 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	 *
 	 * @param message
 	 */
-	private void showMessage(String message, String titleDialog, DialogMessageTablet.OnOkDismissMessageListener listener) {
-		DialogMessageTablet dlgMessage = new DialogMessageTablet(getActivity(), message);
+	private void showMessage(String message, String titleDialog, DialogApplyMessage.OnOkDismissMessageListener listener) {
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(getActivity(), message);
 		dlgMessage.setOnOkDismissMessageListener(listener);
 		dlgMessage.setTitleDialog(titleDialog);
 		dlgMessage.show();

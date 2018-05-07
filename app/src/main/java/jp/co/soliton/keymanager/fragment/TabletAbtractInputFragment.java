@@ -20,8 +20,8 @@ import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
+import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.swipelayout.InputApplyViewPager;
 
@@ -132,7 +132,7 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 	 * @param message
 	 */
 	protected void showMessage(String message) {
-		DialogMessageTablet dlgMessage = new DialogMessageTablet(getContext(), message);
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(getContext(), message);
 		dlgMessage.show();
 	}
 
@@ -141,8 +141,8 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 	 *
 	 * @param message
 	 */
-	protected void showMessage(String message, DialogMessageTablet.OnOkDismissMessageListener listener) {
-		DialogMessageTablet dlgMessage = new DialogMessageTablet(getContext(), message);
+	protected void showMessage(String message, DialogApplyMessage.OnOkDismissMessageListener listener) {
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(getContext(), message);
 		dlgMessage.setOnOkDismissMessageListener(listener);
 		dlgMessage.show();
 	}

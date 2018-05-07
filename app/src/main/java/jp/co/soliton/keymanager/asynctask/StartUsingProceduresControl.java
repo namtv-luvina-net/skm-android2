@@ -13,7 +13,6 @@ import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.mdm.MDMControl;
@@ -35,7 +34,10 @@ import java.security.cert.CertStore;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
@@ -274,8 +276,8 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			});
 			dlgMessage.show();
 		} else {
-			DialogMessageTablet dlgMessage = new DialogMessageTablet(activity, message);
-			dlgMessage.setOnOkDismissMessageListener(new DialogMessageTablet.OnOkDismissMessageListener() {
+			DialogApplyMessage dlgMessage = new DialogApplyMessage(activity, message);
+			dlgMessage.setOnOkDismissMessageListener(new DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					if (activity instanceof MenuAcivity) {

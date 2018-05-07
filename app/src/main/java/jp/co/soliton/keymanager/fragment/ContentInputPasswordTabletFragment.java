@@ -15,9 +15,9 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
+import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
+import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
-import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -418,9 +418,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	private void endConnection(boolean result) {
 		progressDialog.dismiss();
 		if (result) {
-//			String cancelApply = ((InputPasswordTabletActivity)getActivity()).getCancelApply();
 			if (isCancelApply && status != ElementApply.STATUS_APPLY_REJECT) {
-				final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
+				final DialogApplyConfirm dialog = new DialogApplyConfirm(getActivity());
 				dialog.setTextDisplay(getString(R.string.dialog_withdraw_title), getString(R.string.dialog_withdraw_msg)
 						, getString(R.string.label_dialog_Cancle), getString(R.string.dialog_btn_withdraw));
 				dialog.setOnClickOK(new View.OnClickListener() {
@@ -467,7 +466,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 				String str_err = getString(R.string.ERR);
 				showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
 			} else if (m_nErroType == ERR_LOGIN_FAIL) {
-				showMessage(getString(R.string.login_failed), new DialogMessageTablet.OnOkDismissMessageListener() {
+				showMessage(getString(R.string.login_failed), new DialogApplyMessage.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
 						txtPassword.setText("");
@@ -487,7 +486,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	 * @param message
 	 */
 	protected void showMessage(String message) {
-		DialogMessageTablet dlgMessage = new DialogMessageTablet(getActivity(), message);
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(getActivity(), message);
 		dlgMessage.show();
 	}
 
@@ -496,8 +495,8 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	 *
 	 * @param message
 	 */
-	protected void showMessage(String message, DialogMessageTablet.OnOkDismissMessageListener listener) {
-		DialogMessageTablet dlgMessage = new DialogMessageTablet(getActivity(), message);
+	protected void showMessage(String message, DialogApplyMessage.OnOkDismissMessageListener listener) {
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(getActivity(), message);
 		dlgMessage.setOnOkDismissMessageListener(listener);
 		dlgMessage.show();
 	}

@@ -17,7 +17,7 @@ import jp.co.soliton.keymanager.EpsapAdminReceiver;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterMDM;
-import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
+import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.mdm.MDMControl;
 import jp.co.soliton.keymanager.mdm.MDMFlgs;
 
@@ -72,7 +72,7 @@ public class ContentMDMSettingFragment extends TabletBaseSettingFragment {
 		btnDeleteMDM.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
+				final DialogApplyConfirm dialog = new DialogApplyConfirm(getActivity());
 				dialog.setTextDisplay(null, getString(R.string.content_delete_mdm_profile_dialog)
 						, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
 				dialog.setOnClickOK(new View.OnClickListener() {

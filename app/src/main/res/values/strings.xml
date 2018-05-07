@@ -15,6 +15,8 @@
 	<string name="apid_subject_email" translatable="false">Soliton KeyManager APID</string>
 	<string name="title_cn" translatable="false">CN :</string>
 	<string name="title_sn" translatable="false">S/N :</string>
+	<string name="ok" translatable="false">OK</string>
+	<string name="url_privacy_policy" translatable="false">https://www.soliton.co.jp/privacy.html</string>
 	<string name="main_apid_vpn">VPN and apps</string>
 	<string name="main_versionname">Ver.</string>
     <string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
@@ -227,4 +229,8 @@
 	<string name="go_to_setting">GO TO SETTINGS</string>
 	<string name="message_go_setting_allow_permission">You have denied the pemission. Please go to app settings and allow permission</string>
 	<string name="subject_alternative_names">Subject Alternative Name</string>
+	<string name="privacy_policy">Privacy Policy</string>
+	<string name="browse_is_not_installed">Browser app not installed.</string>
+	<string name="txt_cancel">Cancel</string>
+	<string name="content_privacy_policy">Diagnostic information that you send includes information of your devices and usage situation of the application. We do not use those information for identifying users. We use the diagnostic information to improve stability of our applications and the quality of our services. All of the information is used on the basis of our Privacy Policy.</string>
 </resources>

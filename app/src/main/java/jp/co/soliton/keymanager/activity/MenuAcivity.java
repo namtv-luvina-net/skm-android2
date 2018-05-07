@@ -15,7 +15,7 @@ import android.view.View;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.asynctask.StartUsingProceduresControl;
-import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
+import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.fragment.*;
@@ -434,7 +434,7 @@ public class MenuAcivity extends FragmentActivity {
 	}
 
 	public void clickDeleteApplyTablet() {
-		final DialogConfirmTablet dialog = new DialogConfirmTablet(this);
+		final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
 		dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
 				, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
 		dialog.setOnClickOK(new View.OnClickListener() {

@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/zoneDlgApplyMsg"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="@drawable/round_corner_white">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_above="@+id/zoneDlgMsgFooter"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="@color/text_color_inactive"
-            android:text="@string/error"
-            android:gravity="center"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/txtTitle" />
-        <TextView
-            android:id="@+id/txtDlgApplyMsg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:textColor="@color/text_color_inactive"
-            android:text="This is message"
-            android:layout_gravity="center"
-            android:gravity="center"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/zoneDlgMsgFooter"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#bbc3d1"/>
-        <Button
-            android:id="@+id/btnDlgApplyOK"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/transparent"
-            android:textSize="20dp"
-            android:textColor="@color/text_color_active"
-            android:text="OK"
-            android:gravity="center"/>
-    </LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="280dp"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:background="@drawable/round_corner_white">
 
-</RelativeLayout>
+<TextView
+		android:id="@+id/txtTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:textSize="20dp"
+		android:textColor="@color/text_color_inactive"
+		android:text="@string/error"
+		android:textStyle="bold"
+		android:layout_marginTop="10dp"
+		android:gravity="center"/>
+
+<ScrollView
+		android:id="@+id/scrollView"
+		android:layout_below="@id/txtDlgApplyTitle"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:layout_marginTop="20dp"
+		android:layout_marginBottom="20dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:fillViewport="true">
+
+	<TextView
+			android:id="@+id/txtDlgApplyMsg"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:textSize="14dp"
+			android:textColor="@color/text_color_inactive"
+			android:text="This is message"
+			android:layout_gravity="top|center"
+			android:gravity="center"/>
+</ScrollView>
+
+<TextView
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#bbc3d1"/>
+
+<Button
+		android:id="@+id/btnDlgApplyOK"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		android:textSize="20dp"
+		android:textColor="@color/text_color_active"
+		android:text="OK"
+		android:gravity="center"/>
+</LinearLayout>

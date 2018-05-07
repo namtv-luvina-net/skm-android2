@@ -69,4 +69,21 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/line_cert"/>
+    <Button
+        android:id="@+id/btnPrivacyPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color_white"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textSize="17sp"
+        android:textColor="@color/text_color_active"
+        android:gravity="center"
+        android:text="@string/privacy_policy"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_cert"/>
 </LinearLayout>

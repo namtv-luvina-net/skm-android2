@@ -210,4 +210,8 @@
 	<string name="go_to_setting">設定へ</string>
 	<string name="message_go_setting_allow_permission">アクセス権限がありません。アプリの設定で権限を設定ください。</string>
 	<string name="subject_alternative_names">サブジェクト代替名</string>
+	<string name="privacy_policy">プライバシーポリシー</string>
+	<string name="browse_is_not_installed">ブラウザが見つかれません。</string>
+	<string name="txt_cancel">キャンセル</string>
+	<string name="content_privacy_policy">送信していただく診断情報には、端末に関する情報とアプリの使用状況が含まれます。これらの情報がユーザーの特定に使用されることはありません。ソリトンシステムズでは、診断情報をアプリの安定性の向上や、サービスの品質改善のために利用いたします。すべての情報は、ソリトンシステムズのプライバシーポリシーに基づいて使用されます。</string>
 </resources>

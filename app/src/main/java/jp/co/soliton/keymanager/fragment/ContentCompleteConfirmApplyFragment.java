@@ -12,7 +12,7 @@ import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
+import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 			LogCtrl.getInstance().info("Apply: Application is still pending");
 			layoutComplete.setVisibility(View.GONE);
 			showMessageTablet(getString(R.string.message_pending), getString(R.string.approval_confirmation), new
-					DialogMessageTablet.OnOkDismissMessageListener() {
+					DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					final List<ElementApply> listElementApply = ((MenuAcivity)getActivity()).getListElementApply();
@@ -74,7 +74,7 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 			LogCtrl.getInstance().info("Apply: Application has rejected");
 			layoutComplete.setVisibility(View.GONE);
 			showMessageTablet(getString(R.string.message_reject), getString(R.string.approval_confirmation), new
-					DialogMessageTablet.OnOkDismissMessageListener() {
+					DialogApplyMessage.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
@@ -84,7 +84,7 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 			LogCtrl.getInstance().info("Apply: Application has withdrawn");
 			layoutComplete.setVisibility(View.GONE);
 			showMessageTablet(getString(R.string.message_cancel), getString(R.string.title_cancel), new
-					DialogMessageTablet.OnOkDismissMessageListener() {
+					DialogApplyMessage.OnOkDismissMessageListener() {
 						@Override
 						public void onOkDismissMessage() {
 							((MenuAcivity)getActivity()).startDetailConfirmApplyFragment(SCROLL_TO_RIGHT);
@@ -95,9 +95,9 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 		}
 	}
 
-	private void showMessageTablet(String message, String titleDialog, DialogMessageTablet.OnOkDismissMessageListener
+	private void showMessageTablet(String message, String titleDialog, DialogApplyMessage.OnOkDismissMessageListener
 			listener) {
-		DialogMessageTablet dlgMessage = new DialogMessageTablet(getActivity(), message);
+		DialogApplyMessage dlgMessage = new DialogApplyMessage(getActivity(), message);
 		dlgMessage.setOnOkDismissMessageListener(listener);
 		dlgMessage.setTitleDialog(titleDialog);
 		dlgMessage.show();

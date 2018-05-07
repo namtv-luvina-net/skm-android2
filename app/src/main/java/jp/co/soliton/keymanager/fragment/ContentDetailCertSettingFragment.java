@@ -18,7 +18,7 @@ import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 import jp.co.soliton.keymanager.adapter.AdapterSettingDetailCertificate;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.InfoDetailCertificateSetting;
-import jp.co.soliton.keymanager.customview.DialogConfirmTablet;
+import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
@@ -107,7 +107,7 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 	}
 
 	private void confirmDeleteCert() {
-		final DialogConfirmTablet dialog = new DialogConfirmTablet(getActivity());
+		final DialogApplyConfirm dialog = new DialogApplyConfirm(getActivity());
 		dialog.setTextDisplay(getString(R.string.confirm), getString(R.string.content_dialog_ask_delete_cert)
 				, getString(R.string.no), getString(R.string.yes));
 		dialog.setOnClickOK(new View.OnClickListener() {

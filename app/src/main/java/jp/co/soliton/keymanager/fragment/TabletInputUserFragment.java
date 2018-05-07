@@ -17,7 +17,7 @@ import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.EpsapVersion;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
-import jp.co.soliton.keymanager.customview.DialogMessageTablet;
+import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
@@ -333,7 +333,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 						.length()));
 			} else if (m_nErroType == ERR_COLON) {
 				String str_err = getString(R.string.ERR);
-				tabletAbtractInputFragment.showMessage(strRtn.substring(str_err.length()), new DialogMessageTablet.OnOkDismissMessageListener() {
+				tabletAbtractInputFragment.showMessage(strRtn.substring(str_err.length()), new DialogApplyMessage.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
 						txtPassword.setText("");
@@ -342,7 +342,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					}
 				});
 			} else if (m_nErroType == ERR_LOGIN_FAIL) {
-				tabletAbtractInputFragment.showMessage(getString(R.string.login_failed), new DialogMessageTablet
+				tabletAbtractInputFragment.showMessage(getString(R.string.login_failed), new DialogApplyMessage
 						.OnOkDismissMessageListener() {
 					@Override
 					public void onOkDismissMessage() {
