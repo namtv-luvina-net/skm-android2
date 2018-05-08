@@ -226,7 +226,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 				tabletAbtractInputFragment.getProgressDialog().show();
 				String host = tabletAbtractInputFragment.getHostName();
 				String port = tabletAbtractInputFragment.getPortName();
-				String url = String.format("%s:%s", host, port);
+				String url = String.format("%s:%s", CommonUtils.removeHttp(host), port);
 				tabletAbtractInputFragment.getInformCtrl().SetURL(url);
 				new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment
 						.getErroType(), new ConnectApplyTask.EndConnection() {

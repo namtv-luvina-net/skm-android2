@@ -15,6 +15,7 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
+import jp.co.soliton.keymanager.common.CommonUtils;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 
@@ -178,7 +179,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 
 		tabletAbtractInputFragment.setHostName(host);
 		tabletAbtractInputFragment.setPortName(port);
-		String url = String.format("%s:%s", host, port);
+		String url = String.format("%s:%s", CommonUtils.removeHttp(host), port);
 		tabletAbtractInputFragment.getInformCtrl().SetURL(url);
 		new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment.getErroType()
 				, new ConnectApplyTask.EndConnection() {
