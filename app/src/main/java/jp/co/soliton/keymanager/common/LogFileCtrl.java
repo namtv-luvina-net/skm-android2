@@ -14,7 +14,7 @@ public class LogFileCtrl {
 
 	public static final String PREFIX_LOG = "skm_";
 	public static final String SUFFIX_LOG = ".log";
-	public static final Integer MAXIMUM_LOG_FILES = 3;
+	public static final Integer MAXIMUM_LOG_FILES = 7;
 
 	public static void deleteOldLogFile(Context context) {
 		getListLogFile(context);
