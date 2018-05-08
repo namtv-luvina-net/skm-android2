@@ -378,7 +378,7 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
             if (!ValidateParams.nullOrEmpty(cancelApply) && cancelApply.equals("1") && status != ElementApply.STATUS_APPLY_REJECT) {
                 final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
                 dialog.setTextDisplay(getString(R.string.dialog_withdraw_title), getString(R.string.dialog_withdraw_msg)
-                        , getString(R.string.label_dialog_Cancle), getString(R.string.dialog_btn_withdraw));
+                        , getString(R.string.label_dialog_cancel), getString(R.string.dialog_btn_withdraw));
                 dialog.setOnClickOK(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

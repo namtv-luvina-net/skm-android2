@@ -30,7 +30,7 @@
 	<string name="label_expired_item">기한 만료</string>
 	<string name="label_day_before">일 전</string>
 	<string name="label_dialog_delete_cert">삭제</string>
-	<string name="label_dialog_Cancle">취소</string>
+	<string name="label_dialog_cancel">취소</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
 	<string name="label_subject_name">서브젝트명</string>

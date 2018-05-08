@@ -60,7 +60,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/text_color_active"
-        android:text="@string/label_dialog_Cancle"
+        android:text="@string/label_dialog_cancel"
         android:gravity="center"/>
     <TextView
         android:layout_width="match_parent"

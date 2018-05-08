@@ -30,7 +30,7 @@
 	<string name="label_expired_item">Upphört</string>
 	<string name="label_day_before">dagar innan</string>
 	<string name="label_dialog_delete_cert">Ta bort</string>
-	<string name="label_dialog_Cancle">Avbryt</string>
+	<string name="label_dialog_cancel">Avbryt</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
 	<string name="label_subject_name">Ämnesnamn</string>

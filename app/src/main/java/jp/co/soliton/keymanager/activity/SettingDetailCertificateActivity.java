@@ -78,7 +78,7 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
 	private void onMenuSettingClick(View v) {
 		final CharSequence[] items = {getResources().getString(R.string.label_dialog_delete_cert),
 				getResources().getString(R.string.notif_setting),
-				getResources().getString(R.string.label_dialog_Cancle)};
+				getResources().getString(R.string.label_dialog_cancel)};
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getResources().getString(R.string.select_apid));

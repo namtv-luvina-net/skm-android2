@@ -155,7 +155,7 @@ public class DetailConfirmActivity extends FragmentActivity {
 	public void clickDeleteApply(View v) {
 		final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
 		dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
-				, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
+				, getString(R.string.label_dialog_cancel), getString(R.string.label_dialog_delete_cert));
 		dialog.setOnClickOK(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

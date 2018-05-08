@@ -30,7 +30,7 @@
 	<string name="label_expired_item">Caducado</string>
 	<string name="label_day_before">días antes</string>
 	<string name="label_dialog_delete_cert">Eliminar</string>
-	<string name="label_dialog_Cancle">Cancelar</string>
+	<string name="label_dialog_cancel">Cancelar</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
 	<string name="label_subject_name">Nombre del tema</string>

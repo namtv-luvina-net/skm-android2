@@ -30,7 +30,7 @@
 	<string name="label_expired_item">Đã hết hạn hiệu lực</string>
 	<string name="label_day_before">Ngày trước đó</string>
 	<string name="label_dialog_delete_cert">Xóa</string>
-	<string name="label_dialog_Cancle">Hủy</string>
+	<string name="label_dialog_cancel">Hủy</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
 	<string name="label_subject_name">Tên chủ đề</string>

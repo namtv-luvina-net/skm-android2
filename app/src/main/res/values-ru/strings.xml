@@ -30,7 +30,7 @@
 	<string name="label_expired_item">Срок действия истек</string>
 	<string name="label_day_before">дней до</string>
 	<string name="label_dialog_delete_cert">Удалить</string>
-	<string name="label_dialog_Cancle">Отмена</string>
+	<string name="label_dialog_cancel">Отмена</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
 	<string name="label_subject_name">Имя субъекта</string>

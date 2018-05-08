@@ -250,7 +250,7 @@ public class MenuAcivity extends FragmentActivity {
 			}
 		});
 
-		alertDialogBuilder.setNegativeButton(getString(R.string.label_dialog_Cancle), new DialogInterface.OnClickListener
+		alertDialogBuilder.setNegativeButton(getString(R.string.label_dialog_cancel), new DialogInterface.OnClickListener
 				() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -436,7 +436,7 @@ public class MenuAcivity extends FragmentActivity {
 	public void clickDeleteApplyTablet() {
 		final DialogApplyConfirm dialog = new DialogApplyConfirm(this);
 		dialog.setTextDisplay(getString(R.string.dialog_delete_title), getString(R.string.dialog_delete_msg)
-				, getString(R.string.label_dialog_Cancle), getString(R.string.label_dialog_delete_cert));
+				, getString(R.string.label_dialog_cancel), getString(R.string.label_dialog_delete_cert));
 		dialog.setOnClickOK(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

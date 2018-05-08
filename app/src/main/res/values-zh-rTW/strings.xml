@@ -30,7 +30,7 @@
 	<string name="label_expired_item">過期</string>
 	<string name="label_day_before">日前</string>
 	<string name="label_dialog_delete_cert">刪除</string>
-	<string name="label_dialog_Cancle">取消</string>
+	<string name="label_dialog_cancel">取消</string>
 	<!-- SKMNotification-->
 	<!-- Subject Name-->
 	<string name="label_subject_name">主題名稱</string>

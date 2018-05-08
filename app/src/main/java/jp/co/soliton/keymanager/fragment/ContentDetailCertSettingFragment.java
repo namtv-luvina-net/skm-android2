@@ -80,7 +80,7 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 			public void onClick(View v) {
 				final CharSequence[] items = {getResources().getString(R.string.label_dialog_delete_cert),
 						getResources().getString(R.string.notif_setting),
-						getResources().getString(R.string.label_dialog_Cancle)};
+						getResources().getString(R.string.label_dialog_cancel)};
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.Theme_AppCompat_Light_Dialog_Alert);
 				builder.setTitle(getResources().getString(R.string.select_apid));
