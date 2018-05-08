@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     def buildNum = '0'
-    def versionStr = '201'
+    def versionStr = '202'
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
@@ -10,7 +10,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 0
-        versionName '2.1.0'
+        versionName '2.0.2'
     }
     signingConfigs {
         beta {
