@@ -17,6 +17,8 @@
 	<string name="title_sn" translatable="false">S/N :</string>
 	<string name="ok" translatable="false">OK</string>
 	<string name="url_privacy_policy" translatable="false">https://www.soliton.co.jp/privacy.html</string>
+	<string name="apid" translatable="false">APID</string>
+
 	<string name="main_apid_vpn">VPN and apps</string>
 	<string name="main_versionname">Ver.</string>
     <string name="main_log_mailtitle">Soliton KeyManager Diagnostics</string>
@@ -83,7 +85,6 @@
 	<string name="label_purpose">Purpose</string>
 	<!-- SKM v2 new design -->
 	<string name="select_item">Select Item</string>
-	<string name="apid">APID</string>
 	<string name="start_apply">Start Apply</string>
 	<string name="input_host_name">Enter the host name</string>
 	<string name="input_https_port_number">Enter the HTTPS port number</string>

@@ -6,7 +6,7 @@
 	<dimen name="height_content_detail_confirm_apply_tablet">100.00dp</dimen>
 	<dimen name="height_img_arrow_item_confirm_apply_tablet">18.00dp</dimen>
 	<dimen name="height_img_complete_confirm_apply_tablet">170.00dp</dimen>
-	<dimen name="height_img_item_menu">165.00dp</dimen>
+	<dimen name="height_img_item_menu">145.00dp</dimen>
 	<dimen name="height_img_left_side_input_tablet">65.00dp</dimen>
 	<dimen name="height_img_notif_update_tablet">190.00dp</dimen>
 	<dimen name="height_img_succes_tablet">70.00dp</dimen>
@@ -60,7 +60,7 @@
 	<dimen name="pading_right_img_item_confirm_apply_tablet">20.00dp</dimen>
 	<dimen name="size_icon_setting">22.00dp</dimen>
 	<dimen name="size_progress_bar_start_using_procedures">80.00dp</dimen>
-	<dimen name="text_size_title_item_apid">11.00dp</dimen>
+	<dimen name="text_size_title_item_apid">13.00dp</dimen>
 	<dimen name="title_item_menu">23.00dp</dimen>
 	<dimen name="tv_back_left_side">18.00dp</dimen>
 	<dimen name="tv_content_left_side">18.00dp</dimen>

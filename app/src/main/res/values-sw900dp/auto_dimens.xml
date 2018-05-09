@@ -60,7 +60,7 @@
 	<dimen name="pading_right_img_item_confirm_apply_tablet">23.44dp</dimen>
 	<dimen name="size_icon_setting">25.78dp</dimen>
 	<dimen name="size_progress_bar_start_using_procedures">93.75dp</dimen>
-	<dimen name="text_size_title_item_apid">12.89dp</dimen>
+	<dimen name="text_size_title_item_apid">15.23dp</dimen>
 	<dimen name="title_item_menu">26.95dp</dimen>
 	<dimen name="tv_back_left_side">21.09dp</dimen>
 	<dimen name="tv_content_left_side">21.09dp</dimen>

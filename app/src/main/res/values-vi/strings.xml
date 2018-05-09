@@ -66,7 +66,6 @@
 	<string name="label_purpose">Mục đích</string>
 	<!-- SKM v2 new design -->
 	<string name="select_item">Chọn hạng mục</string>
-	<string name="apid">APID</string>
 	<string name="start_apply">Bắt đầu đăng ký</string>
 	<string name="input_host_name">Nhập tên host</string>
 	<string name="input_https_port_number">Nhập mã cổng HTTPS</string>

@@ -52,13 +52,13 @@ public class ContentMenuTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_content_menu_tablet, container, false);
-		rlMenuStart = (RelativeLayout) viewFragment.findViewById(R.id.rl_menu_start);
-		rlMenuAPID = (RelativeLayout) viewFragment.findViewById(R.id.rl_menu_apid);
-		rlMenuConfirmApply = (RelativeLayout) viewFragment.findViewById(R.id.rl_menu_confirm_apply);
-		contentVPN = (TextView) viewFragment.findViewById(R.id.content_vpn);
-		contentWifi = (TextView) viewFragment.findViewById(R.id.content_wifi);
-		titleWifi = (TextView) viewFragment.findViewById(R.id.title_wifi);
-		titleVPN = (TextView) viewFragment.findViewById(R.id.title_vpn);
+		rlMenuStart = viewFragment.findViewById(R.id.rl_menu_start);
+		rlMenuAPID = viewFragment.findViewById(R.id.rl_menu_apid);
+		rlMenuConfirmApply = viewFragment.findViewById(R.id.rl_menu_confirm_apply);
+		contentVPN = viewFragment.findViewById(R.id.content_vpn);
+		contentWifi = viewFragment.findViewById(R.id.content_wifi);
+		titleWifi = viewFragment.findViewById(R.id.title_wifi);
+		titleVPN = viewFragment.findViewById(R.id.title_vpn);
 		apidManager = new APIDManager(activity);
 		return viewFragment;
 	}
@@ -66,29 +66,12 @@ public class ContentMenuTabletFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateViewTitle();
 		updateMenuConfirm();
 		setupControl();
 		String strVpnID = apidManager.getStrVpnID();
 		String strUDID = apidManager.getStrUDID();
 		contentVPN.setText(strVpnID);
 		contentWifi.setText(strUDID);
-	}
-
-	private void updateViewTitle() {
-		titleWifi.measure(0, 0);
-		titleVPN.measure(0, 0);
-		int widthWifi = titleWifi.getMeasuredWidth();
-		int widthVpn = titleVPN.getMeasuredWidth();
-		if (widthWifi < widthVpn) {
-			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) titleWifi.getLayoutParams();
-			params.width = widthVpn;
-			titleWifi.setLayoutParams(params);
-		} else {
-			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) titleVPN.getLayoutParams();
-			params.width = widthWifi;
-			titleVPN.setLayoutParams(params);
-		}
 	}
 
 	private void setupControl() {

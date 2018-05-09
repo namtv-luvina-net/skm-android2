@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import jp.co.soliton.keymanager.LogCtrl;
@@ -56,7 +55,6 @@ public class ContentAPIDTabletFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateViewTitle();
 		String strVpnID = apidManager.getStrVpnID();
 		String strUDID = apidManager.getStrUDID();
 		builderAPID = new StringBuilder();
@@ -80,22 +78,6 @@ public class ContentAPIDTabletFragment extends Fragment {
 				sendMail();
 			}
 		});
-	}
-
-	private void updateViewTitle() {
-		titleWifi.measure(0, 0);
-		titleVPN.measure(0, 0);
-		int widthWifi = titleWifi.getMeasuredWidth();
-		int widthVpn = titleVPN.getMeasuredWidth();
-		if (widthWifi < widthVpn) {
-			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) titleWifi.getLayoutParams();
-			params.width = widthVpn;
-			titleWifi.setLayoutParams(params);
-		} else {
-			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) titleVPN.getLayoutParams();
-			params.width = widthWifi;
-			titleVPN.setLayoutParams(params);
-		}
 	}
 
 	private void setClipboard() {

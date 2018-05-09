@@ -1,94 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:layout_marginLeft="@dimen/margin_content_apid"
-                android:layout_marginRight="@dimen/margin_content_apid">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:layout_centerInParent="true"
+              android:gravity="center"
+              android:layout_marginLeft="@dimen/margin_content_apid"
+              android:layout_marginRight="@dimen/margin_content_apid">
 
-	<RelativeLayout
+	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_item_content_apid"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
 			android:layout_above="@+id/rl_wifi">
+
 		<TextView
 				android:id="@+id/title_vpn"
 				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="4dp"
 				android:layout_centerVertical="true"
 				android:gravity="center"
-				android:textColor="@color/background_color_white"
+				android:textColor="@color/text_color"
 				android:textSize="@dimen/text_size_btn_content_tablet"
-				android:background="@drawable/background_apid_left"
 				android:paddingLeft="@dimen/margin_left_side"
-				android:paddingRight="@dimen/margin_left_side"
-				android:text="@string/main_apid_vpn"/>
+				android:text="@string/main_apid_vpn"
+				android:textStyle="bold"/>
 
 		<jp.co.soliton.keymanager.customview.AutoResizeTextView
 				android:id="@+id/content_vpn"
-				android:layout_toRightOf="@id/title_vpn"
 				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_item_content_apid"
 				android:paddingLeft="@dimen/margin_item_menu"
 				android:paddingRight="@dimen/margin_item_menu"
 				android:maxLines="1"
 				android:gravity="center"
+				android:layout_gravity="center"
 				android:text="b41bb724fe334a8c1f99bd8ed6cfe3a121a18f6a"
 				android:textSize="@dimen/text_size_btn_content_tablet"
 				android:textColor="#b5b5b6"
-				android:background="@drawable/background_apid_right"
-				android:layout_height="match_parent"/>
-	</RelativeLayout>
+				android:background="@drawable/background_apid"/>
+	</LinearLayout>
 
 	<android.support.v4.widget.Space
 			android:id="@+id/space_apid"
 			android:layout_width="match_parent"
 			android:layout_centerVertical="true"
-			android:layout_height="@dimen/margin_item_menu"/>
+			android:layout_height="@dimen/margin_item_menu"
+			android:layout_margin="4dp"/>
 
-	<RelativeLayout
+	<LinearLayout
 			android:id="@+id/rl_wifi"
 			android:layout_below="@id/space_apid"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/height_item_content_apid">
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
 		<TextView
 				android:id="@+id/title_wifi"
 				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
+				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:gravity="center"
-				android:textColor="@color/background_color_white"
+				android:textColor="@color/text_color"
 				android:textSize="@dimen/text_size_btn_content_tablet"
-				android:background="@drawable/background_apid_left"
+				android:layout_marginBottom="4dp"
 				android:paddingLeft="@dimen/margin_left_side"
-				android:paddingRight="@dimen/margin_left_side"
-				android:text="@string/main_apid_wifi"/>
+				android:text="@string/main_apid_wifi"
+				android:textStyle="bold"/>
 
 		<jp.co.soliton.keymanager.customview.AutoResizeTextView
 				android:id="@+id/content_wifi"
-				android:layout_toRightOf="@id/title_wifi"
 				android:layout_width="match_parent"
+				android:layout_height="@dimen/height_item_content_apid"
 				android:maxLines="1"
 				android:paddingLeft="@dimen/margin_item_menu"
 				android:paddingRight="@dimen/margin_item_menu"
 				android:gravity="center"
+				android:layout_gravity="center"
 				android:text="b41bb724fe334a8c1f99bd8ed6cfe3a121a18f6a"
 				android:textSize="@dimen/text_size_btn_content_tablet"
 				android:textColor="#b5b5b6"
-				android:background="@drawable/background_apid_right"
-				android:layout_height="match_parent"/>
-	</RelativeLayout>
+				android:background="@drawable/background_apid"/>
+	</LinearLayout>
 
 	<RelativeLayout
 			android:layout_below="@id/rl_wifi"
 			android:layout_width="match_parent"
 			android:layout_height="@dimen/height_item_content_apid"
 			android:layout_marginTop="@dimen/margin_left_side">
+
 		<android.support.v4.widget.Space
 				android:id="@+id/space_between_button_ctrl"
 				android:layout_centerInParent="true"
 				android:layout_width="@dimen/margin_left_side"
 				android:layout_height="match_parent"/>
+
 		<Button
 				android:id="@+id/btnCopy"
 				android:layout_width="match_parent"

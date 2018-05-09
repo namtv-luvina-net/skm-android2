@@ -66,7 +66,6 @@
 	<string name="label_purpose">Propósito</string>
 	<!-- SKM v2 new design -->
 	<string name="select_item">Seleccionar artículo</string>
-	<string name="apid">APID</string>
 	<string name="start_apply">Comenzar a aplicar</string>
 	<string name="input_host_name">Introduzca el nombre del alojamiento</string>
 	<string name="input_https_port_number">Introduzca el número de puerto HTTPS</string>
