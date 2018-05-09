@@ -157,6 +157,7 @@
 	<string name="text_start_reapply">\nOpnieuw toepassen van applicatie is nodig om door te gaan met gebruik.</string>
 	<string name="text_start_reapply_tablet">Opnieuw toepassen van applicatie is nodig om door te gaan met gebruik.</string>
 	<string name="title_apply_date">Datum toepassing :</string>
+	<string name="apply_date">Datum toepassing</string>
 	<string name="title_cancel">Intrekking van de applicatie</string>
 	<string name="title_destination_email_address">E-mailadres van de bestemming :</string>
 	<string name="title_expiration_date">Verloopt :</string>
@@ -172,6 +173,7 @@
 	<string name="title_port_number">Poortnummer :</string>
 	<string name="title_reason_for_apply">Reden voor toepassing :</string>
 	<string name="title_status">Status :</string>
+	<string name="status">Status</string>
 	<string name="title_store">Opslag :</string>
 	<string name="title_user_id">Gebruikersnaam :</string>
 	<string name="title_storage">Opslag :</string>

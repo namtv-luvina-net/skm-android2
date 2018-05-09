@@ -157,6 +157,7 @@
 	<string name="text_start_reapply">계속해서 이용하려면\n다시 신청해야 합니다.</string>
 	<string name="text_start_reapply_tablet">계속해서 이용하려면 다시 신청해야 합니다.</string>
 	<string name="title_apply_date">신청일:</string>
+	<string name="apply_date">신청일</string>
 	<string name="title_cancel">신청 취소</string>
 	<string name="title_destination_email_address">알림 이메일 주소:</string>
 	<string name="title_expiration_date">유효기한:</string>
@@ -172,6 +173,7 @@
 	<string name="title_port_number">포트 번호:</string>
 	<string name="title_reason_for_apply">신청 이유:</string>
 	<string name="title_status">상태:</string>
+	<string name="status">상태</string>
 	<string name="title_store">저장 위치:</string>
 	<string name="title_user_id">사용자 ID:</string>
 	<string name="title_storage">저장 위치:</string>

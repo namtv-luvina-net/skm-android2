@@ -157,6 +157,7 @@
 	<string name="text_start_reapply">利用を継続するには\n再申請が必要です。</string>
 	<string name="text_start_reapply_tablet">利用を継続するには再申請が必要です。</string>
 	<string name="title_apply_date">申請日 :</string>
+	<string name="apply_date">申請日</string>
 	<string name="title_cancel">申請の取り下げ</string>
 	<string name="title_destination_email_address">通知先メールアドレス:</string>
 	<string name="title_expiration_date">有効期限 :</string>
@@ -172,6 +173,7 @@
 	<string name="title_port_number">ポート番号 :</string>
 	<string name="title_reason_for_apply">申請理由 :</string>
 	<string name="title_status">ステータス :</string>
+	<string name="status">ステータス</string>
 	<string name="title_store">ストア :</string>
 	<string name="title_user_id">ユーザーID :</string>
 	<string name="title_storage">格納先 :</string>

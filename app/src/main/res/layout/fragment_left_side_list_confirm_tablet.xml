@@ -4,9 +4,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/left_panel_background">
-	<RelativeLayout
+
+	<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/high_header_left_side_tablet">
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
 		<TextView
 				android:id="@+id/tvBack"
 				android:layout_width="wrap_content"
@@ -21,15 +24,20 @@
 				android:textSize="@dimen/tv_back_left_side"
 				android:textColor="@drawable/text_selector"/>
 
-		<TextView
+		<jp.co.soliton.keymanager.customview.AutoResizeTextView
 				android:id="@+id/tvTitle"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_below="@+id/tvBack"
 				android:text="@string/title_leftside_list_confirm_tablet"
 				android:textColor="@color/color_title_menu"
 				android:textSize="@dimen/tv_title_left_side"
+				android:layout_marginLeft="@dimen/margin_left_side"
+				android:layout_marginRight="@dimen/margin_left_side"
+				android:maxLines="1"
 				android:layout_centerHorizontal="true"
-				android:layout_alignParentBottom="true"
+				android:layout_gravity="center"
+				android:layout_marginTop="@dimen/margin_left_side"
 				android:layout_marginBottom="@dimen/margin_left_side"/>
 
 		<TextView
@@ -39,15 +47,24 @@
 				android:layout_marginLeft="@dimen/margin_left_side"
 				android:layout_marginRight="@dimen/margin_left_side"
 				android:layout_alignParentBottom="true"/>
-	</RelativeLayout>
+	</LinearLayout>
 
-	<RelativeLayout
+	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_centerInParent="true"
 			android:layout_marginLeft="@dimen/margin_left_side"
 			android:layout_marginRight="@dimen/margin_left_side"
-			>
+			android:gravity="center_horizontal"
+			android:orientation="vertical">
+
+		<ImageView
+				android:layout_width="@dimen/width_img_detail_confirm_apply_tablet"
+				android:layout_height="@dimen/width_img_detail_confirm_apply_tablet"
+				android:gravity="center_horizontal"
+				android:src="@drawable/ic_approval_confirmation"
+				android:layout_marginBottom="20dp"/>
+
 		<TextView
 				android:id="@+id/tv_description"
 				android:layout_width="match_parent"
@@ -56,8 +73,6 @@
 				android:textSize="@dimen/tv_content_left_side"
 				android:textColor="@color/color_desc_menu_70"
 				android:gravity="center_horizontal"
-				android:lineSpacingMultiplier="1.5"
-				/>
-
-	</RelativeLayout>
+				android:lineSpacingMultiplier="1.5"/>
+	</LinearLayout>
 </RelativeLayout>

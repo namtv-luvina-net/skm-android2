@@ -3,7 +3,6 @@
 	<dimen name="height_btn_back_left_side_tablet">58.33dp</dimen>
 	<dimen name="height_btn_confirm_apply_tablet">91.67dp</dimen>
 	<dimen name="height_btn_footer_input_tablet">83.33dp</dimen>
-	<dimen name="height_content_detail_confirm_apply_tablet">166.67dp</dimen>
 	<dimen name="height_img_arrow_item_confirm_apply_tablet">30.00dp</dimen>
 	<dimen name="height_img_complete_confirm_apply_tablet">283.33dp</dimen>
 	<dimen name="height_img_item_menu">275.00dp</dimen>
@@ -38,7 +37,6 @@
 	<dimen name="margin_items_input_confirm_tablet">50.00dp</dimen>
 	<dimen name="margin_items_input_host_tablet">83.33dp</dimen>
 	<dimen name="margin_left_detail_confirm_apply_tablet">128.33dp</dimen>
-	<dimen name="margin_left_img_detail_confirm_apply_tablet">105.00dp</dimen>
 	<dimen name="margin_left_side">33.33dp</dimen>
 	<dimen name="margin_left_side_menu">8.33dp</dimen>
     <dimen name="margin_right_user_input_tablet">183.33dp</dimen>

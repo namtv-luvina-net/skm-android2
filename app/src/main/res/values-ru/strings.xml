@@ -157,6 +157,7 @@
 	<string name="text_start_reapply">\nДля продолжения использования необходимо повторное применение.</string>
 	<string name="text_start_reapply_tablet">Для продолжения использования необходимо повторное применение.</string>
 	<string name="title_apply_date">Дата применения :</string>
+	<string name="apply_date">Дата применения</string>
 	<string name="title_cancel">Изъятие приложения</string>
 	<string name="title_destination_email_address">Адрес электронной почты получателя :</string>
 	<string name="title_expiration_date">Истекает :</string>
@@ -172,6 +173,7 @@
 	<string name="title_port_number">Номер порта :</string>
 	<string name="title_reason_for_apply">Причина применения :</string>
 	<string name="title_status">Состояние :</string>
+	<string name="status">Состояние</string>
 	<string name="title_store">Хранение данных :</string>
 	<string name="title_user_id">Идентификатор пользователя :</string>
 	<string name="title_storage">Хранение данных :</string>

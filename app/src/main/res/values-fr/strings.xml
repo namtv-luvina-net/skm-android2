@@ -157,6 +157,7 @@
 	<string name="text_start_reapply">\nLa réapplication est nécessaire pour continuer l\'utilisation.</string>
 	<string name="text_start_reapply_tablet">La réapplication est nécessaire pour continuer l\'utilisation.</string>
 	<string name="title_apply_date">Date d\'application :</string>
+	<string name="apply_date">Date d\'application</string>
 	<string name="title_cancel">Retrait de la demande</string>
 	<string name="title_destination_email_address">Adresse e-mail de destination :</string>
 	<string name="title_expiration_date">Expire :</string>
@@ -172,6 +173,7 @@
 	<string name="title_port_number">Numéro de port :</string>
 	<string name="title_reason_for_apply">Motif de la demande :</string>
 	<string name="title_status">Statut :</string>
+	<string name="status">Statut</string>
 	<string name="title_store">Stockage :</string>
 	<string name="title_user_id">Identifiant d\'utilisateur :</string>
 	<string name="title_storage">Stockage :</string>
