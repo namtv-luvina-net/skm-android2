@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="280dp"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:background="@drawable/round_corner_white">
+
+	<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:minHeight="50dp">
+
+		<TextView
+				android:id="@+id/btnDlgApplyCancel"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:text="@string/label_dialog_cancel"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:textSize="17sp"
+				android:layout_margin="5dp"
+				android:textColor="@color/text_color_active"
+				android:textStyle="bold"/>
+
+		<TextView
+				android:id="@+id/btnDlgApplyOK"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:text="@string/apply"
+				android:gravity="center"
+				android:layout_gravity="center"
+				android:textSize="17sp"
+				android:layout_margin="5dp"
+				android:textColor="@color/text_color_active"
+				android:textStyle="bold"/>
+	</LinearLayout>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="#bbc3d1"/>
+
+	<NumberPicker
+			android:id="@+id/number_picker"
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:paddingBottom="10dp"
+			android:descendantFocusability="blocksDescendants"/>
+</LinearLayout>

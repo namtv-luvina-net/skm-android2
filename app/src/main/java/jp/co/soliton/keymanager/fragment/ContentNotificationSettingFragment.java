@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.*;
-import android.widget.Button;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.LogCtrl;
@@ -16,9 +19,9 @@ import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
-import jp.co.soliton.keymanager.common.DaysBeforeNotifEditText;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
+import jp.co.soliton.keymanager.customview.DialogPicker;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
@@ -33,23 +36,25 @@ import static jp.co.soliton.keymanager.activity.SettingTabletActivity.STATUS_NOT
  */
 
 public class ContentNotificationSettingFragment extends TabletBaseSettingFragment implements CompoundButton
-		.OnCheckedChangeListener{
+		.OnCheckedChangeListener {
 
 	public enum NotifModeEnum {
 		ALL, ONE;
 	}
+
 	private static final int MAX_BEFORE_DATE = 120;
 	private static final int MIN_BEFORE_DATE = 1;
 	private Switch swNotifFlag;
 	private Switch swNotifBeforeFlag;
-	private DaysBeforeNotifEditText tvNotifBefore;
-	private Button btnDayBeforeMinus;
-	private Button btnDayBeforePlus;
+	private TextView tvNotifBefore;
 
 	private NotifModeEnum mode;
 	private String idCert;
 	private ElementApplyManager elementMgr;
 	private String numDateNotifBefore = "";
+	int notifyBeforeCurrent = 1;
+	private TextView btnSettingProductInfo;
+	private RelativeLayout rlExpired;
 
 	/**
 	 * For Notification All
@@ -77,14 +82,14 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_notification_setting_tablet, container, false);
-		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		tvTitleHeader = viewFragment.findViewById(R.id.tvTitleHeader);
 		tvTitleHeader.setText(getString(R.string.notif_setting));
-		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
-		swNotifFlag = (Switch) viewFragment.findViewById(R.id.swNotifFlag);
-		swNotifBeforeFlag = (Switch) viewFragment.findViewById(R.id.swNotifBeforeFlag);
-		tvNotifBefore = (DaysBeforeNotifEditText) viewFragment.findViewById(R.id.tvNotifBefore);
-		btnDayBeforeMinus = (Button) viewFragment.findViewById(R.id.btnDayBeforeMinus);
-		btnDayBeforePlus = (Button) viewFragment.findViewById(R.id.btnDayBeforePlus);
+		textViewBack = viewFragment.findViewById(R.id.textViewBack);
+		swNotifFlag = viewFragment.findViewById(R.id.swNotifFlag);
+		swNotifBeforeFlag = viewFragment.findViewById(R.id.swNotifBeforeFlag);
+		tvNotifBefore = viewFragment.findViewById(R.id.tvNotifBefore);
+		rlExpired = viewFragment.findViewById(R.id.rl_expired);
+		btnSettingProductInfo = viewFragment.findViewById(R.id.btnSettingProductInfo);
 		elementMgr = ElementApplyManager.getInstance(getActivity());
 		viewFragment.setOnTouchListener(new View.OnTouchListener() {
 			@Override
@@ -98,6 +103,8 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	@Override
 	public void onResume() {
 		super.onResume();
+		btnSettingProductInfo.setText(getString(R.string.label_expired) + " (" + getString(R.string.label_day_before) +
+				")");
 		setupControl();
 		swNotifFlag.setOnCheckedChangeListener(this);
 		swNotifBeforeFlag.setOnCheckedChangeListener(this);
@@ -107,7 +114,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	protected void setTextBtnBack() {
 		if (NotifModeEnum.ONE == mode) {
 			textViewBack.setText(R.string.back);
-		}else {
+		} else {
 			textViewBack.setText(R.string.label_setting);
 		}
 	}
@@ -117,7 +124,8 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			ElementApply element = elementMgr.getElementApply(idCert);
 			swNotifFlag.setChecked(element.isNotiEnableFlag());
 			swNotifBeforeFlag.setChecked(element.isNotiEnableBeforeFlag());
-			tvNotifBefore.setText(String.valueOf(element.getNotiEnableBefore()));
+			notifyBeforeCurrent = element.getNotiEnableBefore();
+			tvNotifBefore.setText(String.valueOf(notifyBeforeCurrent));
 			try {
 				Calendar cal = Calendar.getInstance();
 				Date expirationDate = DateUtils.convertSringToDateSystemTime(element.getExpirationDate());
@@ -126,7 +134,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 					swNotifFlag.setEnabled(false);
 					swNotifBeforeFlag.setEnabled(false);
 					updateEnableViewExpired(false);
-				}else {
+				} else {
 					swNotifFlag.setEnabled(true);
 					swNotifBeforeFlag.setEnabled(true);
 					updateEnableViewExpired(swNotifBeforeFlag.isChecked());
@@ -136,56 +144,33 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			}
 		} else {
 			swNotifFlag.setChecked(CommonUtils.getPrefBoolean(getActivity(), StringList.KEY_NOTIF_ENABLE_FLAG));
-			swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getActivity(), StringList.KEY_NOTIF_ENABLE_BEFORE_FLAG));
-			tvNotifBefore.setText(String.valueOf(CommonUtils.getPrefIntegerWithDefaultValue(getActivity(), StringList
-					.KEY_NOTIF_ENABLE_BEFORE, 14)));
-
+			swNotifBeforeFlag.setChecked(CommonUtils.getPrefBoolean(getActivity(), StringList
+					.KEY_NOTIF_ENABLE_BEFORE_FLAG));
+			notifyBeforeCurrent = CommonUtils.getPrefIntegerWithDefaultValue(getActivity(), StringList
+					.KEY_NOTIF_ENABLE_BEFORE, 14);
+			tvNotifBefore.setText(String.valueOf(notifyBeforeCurrent));
 			updateEnableViewExpired(swNotifBeforeFlag.isChecked());
 		}
 
-		btnDayBeforePlus.setOnClickListener(new View.OnClickListener() {
+		rlExpired.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				if (Integer.parseInt(getTextNotifBefore()) == MAX_BEFORE_DATE) {
-					return;
-				}
-				tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(getTextNotifBefore()) + 1));
-				btnSaveNotifClick();
+			public void onClick(View view) {
+				showPickerChangeTimeNotify();
 			}
 		});
-		btnDayBeforeMinus.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (Integer.parseInt(getTextNotifBefore()) == MIN_BEFORE_DATE) {
-					return;
-				}
-				tvNotifBefore.setText(String.valueOf(CommonUtils.toInt(getTextNotifBefore()) - 1));
-				btnSaveNotifClick();
-			}
-		});
+	}
 
-		tvNotifBefore.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+	private void showPickerChangeTimeNotify() {
+		DialogPicker dialogPicker = new DialogPicker(getActivity(), notifyBeforeCurrent, new DialogPicker
+				.ClickListener() {
 			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (hasFocus) {
-					numDateNotifBefore = tvNotifBefore.getText().toString();
-				} else {
-					SoftKeyboardCtrl.hideKeyboard(getActivity());
-					if (!numDateNotifBefore.equalsIgnoreCase(tvNotifBefore.getText().toString())) {
-						btnSaveNotifClick();
-					}
-				}
+			public void clickApply(int newValue) {
+				notifyBeforeCurrent = newValue;
+				tvNotifBefore.setText(String.valueOf(newValue));
+				btnSaveNotifClick();
 			}
 		});
-		tvNotifBefore.setOnKeyListener(new View.OnKeyListener() {
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-					tvNotifBefore.clearFocus();
-				}
-				return false;
-			}
-		});
+		dialogPicker.show();
 	}
 
 	@Override
@@ -208,7 +193,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	}
 
 	public void btnSaveNotifClick() {
-		int currentStatus = ((SettingTabletActivity)getActivity()).getCurrentStatus();
+		int currentStatus = ((SettingTabletActivity) getActivity()).getCurrentStatus();
 		if (currentStatus != STATUS_NOTIFICATION_ONE && currentStatus != STATUS_NOTIFICATION_ALL) {
 			return;
 		}
@@ -235,7 +220,8 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			return true;
 		}
 		if (CommonUtils.isEmpty(getTextNotifBefore()) || !CommonUtils.isNumber(getTextNotifBefore())) {
-			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
+			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage
+					.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					tvNotifBefore.setText(numDateNotifBefore);
@@ -245,7 +231,8 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			return false;
 		}
 		if (CommonUtils.toInt(getTextNotifBefore()) <= 0) {
-			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
+			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage
+					.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					tvNotifBefore.setText(String.valueOf(MIN_BEFORE_DATE));
@@ -255,7 +242,8 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 			return false;
 		}
 		if (CommonUtils.toInt(getTextNotifBefore()) > MAX_BEFORE_DATE) {
-			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
+			showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage
+					.OnOkDismissMessageListener() {
 				@Override
 				public void onOkDismissMessage() {
 					tvNotifBefore.setText(String.valueOf(MAX_BEFORE_DATE));
@@ -284,9 +272,15 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 	}
 
 	private void updateEnableViewExpired(boolean isChecked) {
+		rlExpired.setEnabled(isChecked);
 		tvNotifBefore.setEnabled(isChecked);
-		btnDayBeforeMinus.setEnabled(isChecked);
-		btnDayBeforePlus.setEnabled(isChecked);
+		if (isChecked) {
+			btnSettingProductInfo.setTextColor(getResources().getColor(R.color.color_black));
+			tvNotifBefore.setTextColor(getResources().getColor(R.color.color_black));
+		} else {
+			btnSettingProductInfo.setTextColor(getResources().getColor(R.color.color_title_menu_50));
+			tvNotifBefore.setTextColor(getResources().getColor(R.color.color_title_menu_50));
+		}
 	}
 
 	@NonNull
