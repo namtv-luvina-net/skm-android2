@@ -66,7 +66,6 @@
 	<string name="label_purpose">Formål</string>
 	<!-- SKM v2 new design -->
 	<string name="select_item">Vælg element</string>
-	<string name="apid">APID</string>
 	<string name="start_apply">Start anvendelse</string>
 	<string name="input_host_name">Indtast værtsnavn</string>
 	<string name="input_https_port_number">Indtast HTTPS portnummeret</string>
@@ -158,6 +157,7 @@
 	<string name="text_start_reapply">\nGenansøgning er nødvendig for at fortsætte brug.</string>
 	<string name="text_start_reapply_tablet">Genansøgning er nødvendig for at fortsætte brug.</string>
 	<string name="title_apply_date">Ansøgningsdato :</string>
+	<string name="apply_date">Ansøgningsdato</string>
 	<string name="title_cancel">Tilbagetrækning af applikation</string>
 	<string name="title_destination_email_address">Destinationens e-mailadresse :</string>
 	<string name="title_expiration_date">Udløber :</string>
@@ -173,6 +173,7 @@
 	<string name="title_port_number">Portnummer :</string>
 	<string name="title_reason_for_apply">Årsag til ansøgning :</string>
 	<string name="title_status">Status :</string>
+	<string name="status">Status</string>
 	<string name="title_store">Lagring :</string>
 	<string name="title_user_id">Bruger-ID :</string>
 	<string name="title_storage">Lagring　:</string>

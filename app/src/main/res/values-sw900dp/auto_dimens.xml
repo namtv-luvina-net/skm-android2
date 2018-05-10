@@ -3,7 +3,6 @@
 	<dimen name="height_btn_back_left_side_tablet">41.02dp</dimen>
 	<dimen name="height_btn_confirm_apply_tablet">64.45dp</dimen>
 	<dimen name="height_btn_footer_input_tablet">58.59dp</dimen>
-	<dimen name="height_content_detail_confirm_apply_tablet">117.19dp</dimen>
 	<dimen name="height_img_arrow_item_confirm_apply_tablet">21.09dp</dimen>
 	<dimen name="height_img_complete_confirm_apply_tablet">199.22dp</dimen>
 	<dimen name="height_img_item_menu">193.36dp</dimen>
@@ -36,9 +35,8 @@
 	<dimen name="margin_icon_setting">11.72dp</dimen>
 	<dimen name="margin_item_menu">11.72dp</dimen>
 	<dimen name="margin_items_input_confirm_tablet">35.16dp</dimen>
-	<dimen name="margin_items_input_host_tablet">58.59dp</dimen>
+	<dimen name="margin_items_input_host_tablet">35.16dp</dimen>
 	<dimen name="margin_left_detail_confirm_apply_tablet">90.23dp</dimen>
-	<dimen name="margin_left_img_detail_confirm_apply_tablet">73.83dp</dimen>
 	<dimen name="margin_left_side">23.44dp</dimen>
 	<dimen name="margin_left_side_menu">5.86dp</dimen>
     <dimen name="margin_right_user_input_tablet">128.91dp</dimen>
@@ -60,7 +58,7 @@
 	<dimen name="pading_right_img_item_confirm_apply_tablet">23.44dp</dimen>
 	<dimen name="size_icon_setting">25.78dp</dimen>
 	<dimen name="size_progress_bar_start_using_procedures">93.75dp</dimen>
-	<dimen name="text_size_title_item_apid">12.89dp</dimen>
+	<dimen name="text_size_title_item_apid">15.23dp</dimen>
 	<dimen name="title_item_menu">26.95dp</dimen>
 	<dimen name="tv_back_left_side">21.09dp</dimen>
 	<dimen name="tv_content_left_side">21.09dp</dimen>
@@ -79,4 +77,5 @@
 	<dimen name="text_size_input_tablet">25.78sp</dimen>
 	<dimen name="tv_button_input_tablet">23.44sp</dimen>
 	<dimen name="tv_title_left_side">28.13sp</dimen>
+	<dimen name="text_size_title_host_name_leftside_tablet">17.58dp</dimen>
 </resources>

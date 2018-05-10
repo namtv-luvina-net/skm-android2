@@ -66,7 +66,6 @@
 	<string name="label_purpose">Mục đích</string>
 	<!-- SKM v2 new design -->
 	<string name="select_item">Chọn hạng mục</string>
-	<string name="apid">APID</string>
 	<string name="start_apply">Bắt đầu đăng ký</string>
 	<string name="input_host_name">Nhập tên host</string>
 	<string name="input_https_port_number">Nhập mã cổng HTTPS</string>
@@ -158,6 +157,7 @@
 	<string name="text_start_reapply">\nCần đăng ký lại để tiếp tục sử dụng</string>
 	<string name="text_start_reapply_tablet">Cần đăng ký lại để tiếp tục sử dụng</string>
 	<string name="title_apply_date">Ngày đăng ký:</string>
+	<string name="apply_date">Ngày đăng ký</string>
 	<string name="title_cancel">Hủy bỏ đăng ký</string>
 	<string name="title_destination_email_address">Địa chỉ Email :</string>
 	<string name="title_expiration_date">Kỳ hạn hiệu lực:</string>
@@ -173,6 +173,7 @@
 	<string name="title_port_number">Mã port :</string>
 	<string name="title_reason_for_apply">Lý do đăng ký :</string>
 	<string name="title_status">Trạng thái :</string>
+	<string name="status">Trạng thái</string>
 	<string name="title_store">Nơi lưu trữ :</string>
 	<string name="title_user_id">ID người dùng:</string>
 	<string name="title_storage">Nơi lưu :</string>

@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:id="@+id/rootView"
-    android:weightSum="1">
-    <include layout="@layout/layout_header" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="25dp"
-        android:paddingLeft="20dp"
-        android:textSize="17sp"
-        android:textAllCaps="true"
-        android:text="@string/label_expired_notification"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_cert"/>
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/background"
+              android:id="@+id/rootView"
+              android:weightSum="1">
+
+	<include layout="@layout/layout_header"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="10dp"
+			android:paddingTop="25dp"
+			android:paddingLeft="20dp"
+			android:textSize="17sp"
+			android:textAllCaps="true"
+			android:text="@string/label_expired_notification"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
+
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 			android:background="@color/background_color_white"
 			android:paddingLeft="20dp">
+
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -33,6 +38,7 @@
 				android:textSize="17sp"
 				android:textColor="@color/color_black"
 				android:text="@string/label_notification"/>
+
 		<Switch
 				android:id="@+id/swNotifFlag"
 				android:layout_width="wrap_content"
@@ -44,29 +50,34 @@
 				android:textSize="20dp"
 				android:background="@color/background_color_white"/>
 	</LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_cert"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="25dp"
-        android:paddingLeft="20dp"
-        android:textSize="17sp"
-        android:textAllCaps="true"
-        android:text="@string/label_before_expired_notification"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_cert"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="10dp"
+			android:paddingTop="25dp"
+			android:paddingLeft="20dp"
+			android:textSize="17sp"
+			android:textAllCaps="true"
+			android:text="@string/label_before_expired_notification"/>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
+
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 			android:background="@color/background_color_white"
 			android:paddingLeft="20dp">
+
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -74,6 +85,7 @@
 				android:textSize="17sp"
 				android:textColor="@color/color_black"
 				android:text="@string/label_notification"/>
+
 		<Switch
 				android:id="@+id/swNotifBeforeFlag"
 				android:layout_width="wrap_content"
@@ -84,97 +96,83 @@
 				android:paddingRight="20dp"
 				android:background="@color/background_color_white"/>
 	</LinearLayout>
+
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:orientation="horizontal">
+
 		<TextView
 				android:layout_width="20dp"
 				android:layout_height="1dp"
 				android:background="@color/background_color_white"/>
+
 		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
-				android:background="@color/line_cert" />
+				android:background="@color/line_cert"/>
 	</LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:background="@color/background_color_white"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
-        <TextView
-		        android:id="@+id/btnSettingProductInfo"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:background="@color/background_color_white"
-		        android:paddingBottom="10dp"
-		        android:paddingTop="10dp"
-		        android:paddingLeft="20dp"
-		        android:paddingRight="10dp"
-		        android:textSize="17sp"
-		        android:textColor="@color/color_black"
-		        android:gravity="left|center_vertical"
-		        android:text="@string/label_expired"
-		        android:layout_alignParentTop="true"
-		        android:layout_alignParentLeft="true"
-		        android:layout_alignParentStart="true"/>
-        <EditText
-            android:id="@+id/tvNotifBefore"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/tvDayBefore"
-            android:layout_centerVertical="true"
-            android:background="@color/background_color_white"
-            android:maxLines="1"
-            android:maxLength="3"
-            android:singleLine="true"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:textSize="17sp"
-            android:textColor="@color/color_black"
-            android:gravity="right"
-            android:paddingRight="5dp"
-            android:text="14"/>
-        <TextView
-            android:id="@+id/tvDayBefore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/btnDayBeforeMinus"
-            android:layout_centerVertical="true"
-            android:paddingRight="5dp"
-            android:textSize="17sp"
-            android:textColor="@color/color_black"
-            android:text="@string/label_day_before"/>
-        <Button
-            android:id="@+id/btnDayBeforeMinus"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_toLeftOf="@+id/btnDayBeforePlus"
-            android:gravity="center"
-            android:background="@drawable/back_ground_minus_button"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="-1dp"
-            android:textColor="@color/text_color_active"
-            android:textSize="20sp"
-            android:text="-"/>
-        <Button
-            android:id="@+id/btnDayBeforePlus"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/back_ground_plus_button"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/text_color_active"
-            android:textSize="20sp"
-            android:text="+"/>
-    </RelativeLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_cert"/>
+
+	<RelativeLayout
+			android:id="@+id/rl_expired"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:background="@color/background_color_white"
+			android:focusable="true"
+			android:clickable="true"
+			android:focusableInTouchMode="true">
+
+		<TextView
+				android:id="@+id/btnSettingProductInfo"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@color/background_color_white"
+				android:clickable="false"
+				android:paddingBottom="10dp"
+				android:paddingTop="10dp"
+				android:paddingLeft="20dp"
+				android:paddingRight="10dp"
+				android:textSize="17sp"
+				android:textColor="@color/color_black"
+				android:gravity="left|center_vertical"
+				android:text="@string/label_expired"
+				android:layout_alignParentTop="true"
+				android:layout_alignParentLeft="true"
+				android:layout_alignParentStart="true"/>
+
+		<ImageView
+				android:id="@+id/img_ic_arrow"
+				android:layout_width="20dp"
+				android:layout_height="20dp"
+				android:layout_centerVertical="true"
+				android:clickable="false"
+				android:src="@drawable/ic_arrow"
+				android:scaleType="fitCenter"
+				android:layout_marginRight="20dp"
+				android:layout_alignParentRight="true"/>
+
+		<TextView
+				android:id="@+id/tvNotifBefore"
+				android:layout_width="40dp"
+				android:layout_height="wrap_content"
+				android:layout_toLeftOf="@+id/img_ic_arrow"
+				android:layout_centerVertical="true"
+				android:background="@color/background_color_white"
+				android:maxLines="1"
+				android:maxLength="3"
+				android:singleLine="true"
+				android:inputType="number"
+				android:digits="0123456789"
+				android:textSize="17sp"
+				android:textColor="@color/color_black"
+				android:gravity="right"
+				android:paddingRight="5dp"
+				android:text="14"/>
+	</RelativeLayout>
+
+	<TextView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_cert"/>
 </LinearLayout>

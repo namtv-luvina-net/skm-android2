@@ -66,7 +66,6 @@
 	<string name="label_purpose">Syfte</string>
 	<!-- SKM v2 new design -->
 	<string name="select_item">Välj objekt</string>
-	<string name="apid">APID</string>
 	<string name="start_apply">Börja tillämpa</string>
 	<string name="input_host_name">Ange värdnamnet</string>
 	<string name="input_https_port_number">Ange HTTPS-portnummer</string>
@@ -158,6 +157,7 @@
 	<string name="text_start_reapply">\nÅterapplicering är nödvändig för fortsatt användning.</string>
 	<string name="text_start_reapply_tablet">Återapplicering är nödvändig för fortsatt användning.</string>
 	<string name="title_apply_date">Appliceringsdatum :</string>
+	<string name="apply_date">Appliceringsdatum</string>
 	<string name="title_cancel">Återkallning av applikation</string>
 	<string name="title_destination_email_address">Destinationens e-postadress :</string>
 	<string name="title_expiration_date">Upphört :</string>
@@ -173,6 +173,7 @@
 	<string name="title_port_number">Portnummer :</string>
 	<string name="title_reason_for_apply">Anledning till tillämpning :</string>
 	<string name="title_status">Status :</string>
+	<string name="status">Status</string>
 	<string name="title_store">Lagring :</string>
 	<string name="title_user_id">Användar-ID :</string>
 	<string name="title_storage">Lagring :</string>

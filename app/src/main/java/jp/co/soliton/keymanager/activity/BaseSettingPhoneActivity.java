@@ -1,6 +1,6 @@
 package jp.co.soliton.keymanager.activity;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +12,7 @@ import jp.co.soliton.keymanager.R;
  * Created by nguyenducdat on 6/19/2017.
  */
 
-public class BaseSettingPhoneActivity extends Activity {
+public class BaseSettingPhoneActivity extends FragmentActivity {
 
 	protected TextView textViewBack;
 	protected TextView tvTitleHeader;

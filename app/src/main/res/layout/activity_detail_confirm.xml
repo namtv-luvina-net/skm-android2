@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               android:background="@drawable/background"
               android:orientation="vertical">
+
 	<include layout="@layout/layout_header"/>
 
 	<LinearLayout
@@ -19,171 +20,242 @@
 				android:layout_marginTop="-10dp"
 				android:orientation="vertical">
 
+			<ImageView
+					android:layout_width="80dp"
+					android:layout_height="80dp"
+					android:layout_marginBottom="10dp"
+					android:layout_gravity="center"
+					android:src="@drawable/ic_approval_confirmation"/>
+
 			<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginBottom="10dp"
-					android:gravity="center">
+					android:orientation="horizontal">
 
-				<ImageView
-						android:layout_width="80dp"
-						android:layout_height="80dp"
-						android:src="@drawable/ic_approval_confirmation"/>
+				<TextView
+						android:layout_width="0dp"
+						android:layout_weight="5"
+						android:layout_height="wrap_content"
+						android:gravity="right|center_vertical"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:layout_gravity="center"
+						android:text="@string/host_name"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:layout_gravity="center"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:text=":"/>
+
+				<TextView
+						android:id="@+id/tvHostName"
+						android:layout_width="0dp"
+						android:layout_weight="6"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:ellipsize="end"
+						android:textSize="17dp"
+						android:text="10.30.150.203"
+						android:singleLine="true"
+						android:textColor="@color/text_color"/>
 			</LinearLayout>
 
 			<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:paddingLeft="30dp"
-					android:paddingRight="30dp"
-					android:gravity="center">
+					android:orientation="horizontal">
 
-				<LinearLayout
+				<TextView
 						android:layout_width="0dp"
-						android:layout_height="wrap_content"
 						android:layout_weight="5"
-						android:gravity="right"
-						android:orientation="vertical">
-
-					<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:textColor="@color/text_color"
-							android:text="@string/title_host_name"/>
-
-					<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:textColor="@color/text_color"
-							android:text="@string/title_user_id"/>
-
-					<TextView
-							android:id="@+id/title_storage"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:textColor="@color/text_color"
-							android:text="@string/title_storage"/>
-
-					<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:textColor="@color/text_color"
-							android:text="@string/title_apply_date"/>
-
-					<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:textColor="@color/text_color"
-							android:text="@string/title_status"/>
-				</LinearLayout>
-
-				<LinearLayout
-						android:layout_width="0dp"
 						android:layout_height="wrap_content"
+						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:text="@string/certlogin_userid_title"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:text=":"/>
+
+				<TextView
+						android:id="@+id/titleUserId"
+						android:layout_width="0dp"
 						android:layout_weight="6"
-						android:gravity="left"
-						android:paddingLeft="4dp"
-						android:orientation="vertical">
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:ellipsize="end"
+						android:textSize="17dp"
+						android:singleLine="true"
+						android:text="ssgb"
+						android:textColor="@color/text_color"/>
+			</LinearLayout>
 
-					<TextView
-							android:id="@+id/tvHostName"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:ellipsize="end"
-							android:textSize="17dp"
-							android:text="10.30.150.203"
-							android:singleLine="true"
-							android:textColor="@color/text_color"/>
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
 
-					<TextView
-							android:id="@+id/titleUserId"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:ellipsize="end"
-							android:textSize="17dp"
-							android:singleLine="true"
-							android:text="ssgb"
-							android:textColor="@color/text_color"/>
+				<TextView
+						android:id="@+id/title_storage"
+						android:layout_width="0dp"
+						android:layout_weight="5"
+						android:layout_height="wrap_content"
+						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:text="@string/place"/>
 
-					<TextView
-							android:id="@+id/content_storage"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:ellipsize="end"
-							android:textSize="17dp"
-							android:singleLine="true"
-							android:text="VPN or WIFI"
-							android:textColor="@color/text_color"/>
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:text=":"/>
 
-					<TextView
-							android:id="@+id/tvDate"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:text="2017/03/26"
-							android:textColor="@color/text_color"/>
+				<TextView
+						android:id="@+id/content_storage"
+						android:layout_width="0dp"
+						android:layout_weight="6"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:ellipsize="end"
+						android:textSize="17dp"
+						android:singleLine="true"
+						android:text="VPN or WIFI"
+						android:textColor="@color/text_color"/>
+			</LinearLayout>
 
-					<TextView
-							android:id="@+id/tvStatus"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:gravity="center_vertical"
-							android:textSize="17dp"
-							android:text="Waiting Approval"
-							android:textColor="@color/text_color"/>
-				</LinearLayout>
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+				<TextView
+						android:layout_width="0dp"
+						android:layout_weight="5"
+						android:layout_height="wrap_content"
+						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:text="@string/apply_date"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:text=":"/>
+
+				<TextView
+						android:id="@+id/tvDate"
+						android:layout_width="0dp"
+						android:layout_weight="6"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:text="2017/03/26"
+						android:textColor="@color/text_color"/>
+			</LinearLayout>
+
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+				<TextView
+						android:layout_width="0dp"
+						android:layout_weight="5"
+						android:layout_height="wrap_content"
+						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:text="@string/status"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:textColor="@color/text_color"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:text=":"/>
+
+				<TextView
+						android:id="@+id/tvStatus"
+						android:layout_width="0dp"
+						android:layout_weight="6"
+						android:layout_height="wrap_content"
+						android:gravity="center_vertical"
+						android:layout_gravity="center"
+						android:textSize="17dp"
+						android:text="Waiting Approval"
+						android:textColor="@color/text_color"/>
 			</LinearLayout>
 
 			<TextView
 					android:id="@+id/tvConfirmApply"
 					android:layout_width="match_parent"
-					android:layout_height="50dp"
+					android:layout_height="wrap_content"
+					android:minHeight="50dp"
 					android:text="@string/confirm_apply_status"
 					android:textAllCaps="false"
 					android:gravity="center"
+					android:layout_gravity="center"
 					android:layout_marginTop="40dp"
+					android:padding="@dimen/margin_item_menu"
 					android:background="@drawable/border_text"
 					android:clickable="true"
 					android:textSize="@dimen/text_size_value"
 					android:textColor="@color/add_cert"/>
 		</LinearLayout>
 
-		<LinearLayout
+		<Space
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
 				android:layout_weight="1"
-				android:orientation="vertical"></LinearLayout>
+				android:orientation="vertical"/>
 
-		<LinearLayout
-				android:layout_width="match_parent"
+		<TextView
+				android:id="@+id/tvDeleteApply"
+				android:layout_width="wrap_content"
 				android:layout_height="0dp"
 				android:layout_weight="1"
-				android:gravity="center_horizontal"
-				android:orientation="vertical">
-
-			<TextView
-					android:id="@+id/tvDeleteApply"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text=""
-					android:clickable="true"
-					android:textSize="@dimen/text_size_value"
-					android:textColor="@color/text_delete_apply" />
-		</LinearLayout>
+				android:text="Delete Apply"
+				android:clickable="true"
+				android:layout_gravity="center"
+				android:textSize="@dimen/text_size_value"
+				android:textColor="@color/text_delete_apply"/>
 	</LinearLayout>
 </LinearLayout>
