@@ -4,13 +4,16 @@
                 android:layout_height="match_parent"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
-	<include layout="@layout/fragment_title_input" />
+
+	<include layout="@layout/fragment_title_input"/>
+
 	<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:orientation="vertical"
 			android:layout_marginLeft="@dimen/margin_content_input_tablet"
 			android:layout_marginRight="@dimen/margin_content_input_tablet">
+
 		<RelativeLayout
 				android:layout_marginTop="@dimen/margin_right_user_input_tablet"
 				android:layout_marginBottom="@dimen/margin_bottom_with_line_input_confirm_tablet"
@@ -18,62 +21,90 @@
 				android:orientation="vertical"
 				android:layout_height="0dp"
 				android:layout_weight="1">
+
 			<LinearLayout
 					android:id="@+id/ll_store"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal"
-					android:layout_alignParentBottom="true"
-					>
+					android:layout_alignParentBottom="true">
+
 				<TextView
 						android:layout_width="0dp"
 						android:layout_weight="4"
 						android:textSize="@dimen/tv_button_input_tablet"
-						android:text="@string/title_store"
+						android:text="@string/place"
 						android:textColor="@color/text_color"
 						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
 						android:layout_height="match_parent"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"
+						android:textSize="@dimen/tv_button_input_tablet"
+						android:text=":"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:layout_gravity="center"
+						android:textColor="@color/text_color"
+						android:gravity="right|center_vertical"/>
 
 				<TextView
 						android:id="@+id/txtStore"
 						android:layout_width="0dp"
 						android:layout_weight="5"
-						android:paddingLeft="@dimen/margin_item_menu"
 						android:textSize="@dimen/tv_button_input_tablet"
 						android:text="VPN hay Wi-Fi"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"
+						android:layout_gravity="center"
 						android:layout_height="match_parent"/>
 			</LinearLayout>
+
 			<LinearLayout
 					android:id="@+id/ll_user_id"
 					android:layout_above="@id/ll_store"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal"
-					android:layout_marginBottom="@dimen/margin_items_input_confirm_tablet"
-					>
+					android:layout_marginBottom="@dimen/margin_items_input_confirm_tablet">
+
 				<TextView
 						android:layout_width="0dp"
 						android:layout_weight="4"
 						android:textSize="@dimen/tv_button_input_tablet"
-						android:text="@string/title_user_id"
+						android:text="@string/certlogin_userid_title"
 						android:textColor="@color/text_color"
 						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
 						android:layout_height="match_parent"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"
+						android:textSize="@dimen/tv_button_input_tablet"
+						android:text=":"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:layout_gravity="center"
+						android:textColor="@color/text_color"
+						android:gravity="right|center_vertical"/>
+
 				<TextView
 						android:id="@+id/txtUserId"
 						android:layout_width="0dp"
 						android:layout_weight="5"
-						android:paddingLeft="@dimen/margin_item_menu"
 						android:textSize="@dimen/tv_button_input_tablet"
 						android:ellipsize="end"
 						android:maxLines="1"
 						android:text="anhvt"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"
+						android:layout_gravity="center"
 						android:layout_height="match_parent"/>
 			</LinearLayout>
+
 			<LinearLayout
 					android:layout_above="@id/ll_user_id"
 					android:layout_width="match_parent"
@@ -84,110 +115,166 @@
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginBottom="@dimen/margin_item_menu"
-						android:orientation="horizontal"
-						>
+						android:orientation="horizontal">
+
 					<TextView
 							android:layout_width="0dp"
 							android:layout_weight="4"
 							android:textSize="@dimen/tv_button_input_tablet"
-							android:text="@string/title_host_name"
+							android:text="@string/host_name"
 							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
+							android:layout_gravity="center"
 							android:layout_height="match_parent"/>
+
+					<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:textSize="@dimen/tv_button_input_tablet"
+							android:text=":"
+							android:paddingLeft="@dimen/margin_item_menu"
+							android:paddingRight="@dimen/margin_item_menu"
+							android:layout_gravity="center"
+							android:textColor="@color/text_color"
+							android:gravity="right|center_vertical"/>
+
 					<TextView
 							android:id="@+id/txtHostName"
 							android:layout_width="0dp"
 							android:layout_weight="5"
-							android:paddingLeft="@dimen/margin_item_menu"
 							android:textSize="@dimen/tv_button_input_tablet"
 							android:text="10.0.1.68"
 							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
+							android:layout_gravity="center"
 							android:layout_height="match_parent"/>
 				</LinearLayout>
 
 				<LinearLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
-						android:orientation="horizontal" >
+						android:orientation="horizontal">
+
 					<TextView
 							android:layout_width="0dp"
 							android:layout_weight="4"
 							android:textSize="@dimen/tv_button_input_tablet"
-							android:text="@string/title_port_number"
+							android:text="@string/port_number"
 							android:textColor="@color/text_color"
 							android:gravity="right|center_vertical"
+							android:layout_gravity="center"
 							android:layout_height="match_parent"/>
+
+					<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:textSize="@dimen/tv_button_input_tablet"
+							android:text=":"
+							android:paddingLeft="@dimen/margin_item_menu"
+							android:paddingRight="@dimen/margin_item_menu"
+							android:layout_gravity="center"
+							android:textColor="@color/text_color"
+							android:gravity="right|center_vertical"/>
+
 					<TextView
 							android:id="@+id/txtPortName"
 							android:layout_width="0dp"
 							android:layout_weight="5"
-							android:paddingLeft="@dimen/margin_item_menu"
 							android:textSize="@dimen/tv_button_input_tablet"
 							android:text="433"
 							android:textColor="@color/text_color"
 							android:gravity="left|center_vertical"
+							android:layout_gravity="center"
 							android:layout_height="match_parent"/>
 				</LinearLayout>
 			</LinearLayout>
 		</RelativeLayout>
+
 		<FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:layout_marginLeft="@dimen/margin_item_menu"
 				android:layout_marginRight="@dimen/margin_item_menu"
-				android:background="@color/text_color" />
+				android:background="@color/text_color"/>
+
 		<RelativeLayout
 				android:layout_marginTop="@dimen/margin_top_with_line_input_confirm_tablet"
 				android:layout_marginBottom="@dimen/margin_right_user_input_tablet"
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
 				android:layout_weight="1.1">
+
 			<LinearLayout
 					android:id="@+id/ll_email"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					>
+					android:orientation="horizontal">
+
 				<TextView
 						android:layout_width="0dp"
 						android:layout_weight="4"
 						android:textSize="@dimen/tv_button_input_tablet"
-						android:text="@string/title_destination_email_address"
+						android:text="@string/input_email"
 						android:textColor="@color/text_color"
 						android:gravity="right|center_vertical"
+						android:layout_gravity="center"
 						android:layout_height="match_parent"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"
+						android:textSize="@dimen/tv_button_input_tablet"
+						android:text=":"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:layout_gravity="center"
+						android:textColor="@color/text_color"
+						android:gravity="right|center_vertical"/>
+
 				<TextView
 						android:id="@+id/txtEmail"
 						android:layout_width="0dp"
 						android:layout_weight="5"
-						android:paddingLeft="@dimen/margin_item_menu"
 						android:textSize="@dimen/tv_button_input_tablet"
 						android:textColor="@color/text_color"
 						android:gravity="left|center_vertical"
+						android:layout_gravity="center"
 						android:layout_height="match_parent"/>
 			</LinearLayout>
+
 			<LinearLayout
 					android:layout_below="@id/ll_email"
 					android:layout_width="match_parent"
 					android:layout_marginTop="@dimen/margin_item_menu"
 					android:layout_height="match_parent"
-					android:orientation="horizontal"
-					>
+					android:orientation="horizontal">
+
 				<TextView
 						android:layout_width="0dp"
 						android:layout_weight="4"
 						android:textSize="@dimen/tv_button_input_tablet"
-						android:text="@string/title_reason_for_apply"
+						android:text="@string/reason_for_apply"
 						android:textColor="@color/text_color"
 						android:gravity="right|top"
-						android:layout_height="match_parent"/>
+						android:layout_height="wrap_content"/>
+
+				<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/tv_button_input_tablet"
+						android:text=":"
+						android:paddingLeft="@dimen/margin_item_menu"
+						android:paddingRight="@dimen/margin_item_menu"
+						android:layout_gravity="top|center"
+						android:textColor="@color/text_color"
+						android:gravity="right|center_vertical"/>
 
 				<ScrollView
 						android:layout_width="0dp"
 						android:layout_weight="5"
 						android:scrollbars="vertical"
 						android:layout_height="match_parent">
+
 					<TextView
 							android:id="@+id/txtReason"
 							android:layout_width="match_parent"
@@ -198,7 +285,6 @@
 							android:inputType="text|textVisiblePassword|textNoSuggestions|textMultiLine"
 							android:layout_height="wrap_content"/>
 				</ScrollView>
-
 			</LinearLayout>
 		</RelativeLayout>
 	</LinearLayout>
