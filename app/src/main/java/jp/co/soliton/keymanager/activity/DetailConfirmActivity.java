@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.LogCtrl;
@@ -35,6 +37,8 @@ public class DetailConfirmActivity extends FragmentActivity {
 	private TextView title;
 	private TextView tvDeleteApply;
 	private TextView tvConfirmApply;
+	protected TextView textViewBack;
+	protected TextView tvTitleHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class DetailConfirmActivity extends FragmentActivity {
 		tvStatus = (TextView) findViewById(R.id.tvStatus);
 		tvDeleteApply = (TextView) findViewById(R.id.tvDeleteApply);
 		tvConfirmApply = (TextView) findViewById(R.id.tvConfirmApply);
+	    tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
+	    textViewBack = (TextView) findViewById(R.id.textViewBack);
     }
 
 	public String getId() {
@@ -68,7 +74,25 @@ public class DetailConfirmActivity extends FragmentActivity {
             finish();
         }
 	    setupDisplay();
+        updateHeader();
     }
+
+	private void updateHeader() {
+		tvTitleHeader.measure(0, 0);
+		textViewBack.measure(0, 0);
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		int width = displayMetrics.widthPixels;
+		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
+			textViewBack.setText("");
+			textViewBack.measure(0, 0);
+			int tmp = textViewBack.getMeasuredWidth() * 2;
+			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvTitleHeader.getLayoutParams();
+			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+			params.setMargins(tmp, params.topMargin, tmp, params.bottomMargin);
+			tvTitleHeader.setLayoutParams(params);
+		}
+	}
 
 	private void setupDisplay() {
 		title.setText(getString(R.string.approval_confirmation));
