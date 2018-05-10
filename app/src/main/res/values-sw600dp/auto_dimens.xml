@@ -35,7 +35,7 @@
 	<dimen name="margin_icon_setting">7.81dp</dimen>
 	<dimen name="margin_item_menu">7.81dp</dimen>
 	<dimen name="margin_items_input_confirm_tablet">23.44dp</dimen>
-	<dimen name="margin_items_input_host_tablet">39.06dp</dimen>
+	<dimen name="margin_items_input_host_tablet">23.44dp</dimen>
 	<dimen name="margin_left_detail_confirm_apply_tablet">60.16dp</dimen>
 	<dimen name="margin_left_side">15.63dp</dimen>
 	<dimen name="margin_left_side_menu">3.91dp</dimen>
