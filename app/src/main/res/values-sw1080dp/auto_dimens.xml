@@ -77,4 +77,5 @@
 	<dimen name="text_size_input_tablet">30.94sp</dimen>
 	<dimen name="tv_button_input_tablet">28.13sp</dimen>
 	<dimen name="tv_title_left_side">33.75sp</dimen>
+	<dimen name="text_size_title_host_name_leftside_tablet">21.09dp</dimen>
 </resources>
