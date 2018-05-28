@@ -54,6 +54,7 @@ android {
     }
     lintOptions {
         disable 'LongLogTag'
+        abortOnError false
     }
     android.applicationVariants.all { variant ->
         variant.buildConfigField 'String', 'BUILD_NUM', "\"${buildNum}\""
