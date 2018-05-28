@@ -26,11 +26,16 @@ import jp.co.soliton.keymanager.wifi.WifiControl;
 import jp.co.soliton.keymanager.xmlparser.XmlDictionary;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 import jp.co.soliton.keymanager.xmlparser.XmlStringData;
+import org.bouncycastle.asn1.x500.RDN;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
 
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.CertStore;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
@@ -407,10 +412,14 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 			element.setsNValue(certRep.getCertificate().getSerialNumber().toString());
 			String str = certRep.getCertificate().getSubjectDN().toString();
 			String[] arr = str.split(",");
-			for (int i = 0; i < arr.length; i++) {
-				if (arr[i].toString().startsWith("CN=")) {
-					element.setcNValue(arr[i].toString().replace("CN=", "").trim());
-				}
+			try {
+				X500Name x500name = new JcaX509CertificateHolder(certRep.getCertificate()).getSubject();
+				RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+				String cnCertificate = cn.getFirst().getValue().toString();
+				element.setcNValue(cnCertificate.trim());
+				element.setSubjectCommonName(cnCertificate.trim());
+			} catch (CertificateEncodingException e) {
+				e.printStackTrace();
 			}
 			CertificateUtility.certificateToKeyChain(
 					activity,
@@ -426,20 +435,13 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				}
 				if (arr[i].toString().startsWith("C=")) {
 					element.setSubjectCountryName(arr[i].toString().replace("C=", "").trim());
-				}
-				if (arr[i].toString().startsWith("ST=")) {
+				} else if (arr[i].toString().startsWith("ST=")) {
 					element.setSubjectStateOrProvinceName(arr[i].toString().replace("ST=", "").trim());
-				}
-				if (arr[i].toString().startsWith("L=")) {
+				} else if (arr[i].toString().startsWith("L=")) {
 					element.setSubjectLocalityName(arr[i].toString().replace("L=", "").trim());
-				}
-				if (arr[i].toString().startsWith("O=")) {
+				} else if (arr[i].toString().startsWith("O=")) {
 					element.setSubjectOrganizationName(arr[i].toString().replace("O=", "").trim());
-				}
-				if (arr[i].toString().startsWith("CN=")) {
-					element.setSubjectCommonName(arr[i].toString().replace("CN=", "").trim());
-				}
-				if (arr[i].toString().startsWith("E=")) {
+				} else if (arr[i].toString().startsWith("E=")) {
 					element.setSubjectEmailAddress(arr[i].toString().replace("E=", "").trim());
 				}
 			}
