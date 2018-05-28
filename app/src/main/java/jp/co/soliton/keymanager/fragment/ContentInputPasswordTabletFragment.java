@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
@@ -201,7 +202,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	}
 
 	private void clickNext(View v) {
-		String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
+		String url = String.format("%s:%s", CommonUtils.removeHttp(element.getHost()), element.getPortSSL());
 		m_InformCtrl.SetURL(url);
 		//make parameter
 		boolean ret = makeParameterLogon();
@@ -426,7 +427,7 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 					@Override
 					public void onClick(View v) {
 						dialog.dismiss();
-						String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
+						String url = String.format("%s:%s", CommonUtils.removeHttp(element.getHost()), element.getPortSSL());
 						m_InformCtrl.SetURL(url);
 
 						//make parameter
