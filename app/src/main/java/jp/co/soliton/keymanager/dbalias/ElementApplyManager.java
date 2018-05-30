@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import jp.co.soliton.keymanager.LogCtrl;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.EpsapVersion;
 
@@ -54,7 +55,7 @@ public class ElementApplyManager {
 
 	public void saveElementApply(ElementApply elementApply) {
 		ContentValues values = new ContentValues();
-		values.put(HOST_NAME_COLUMN, elementApply.getHost());
+		values.put(HOST_NAME_COLUMN, CommonUtils.removeHttp(elementApply.getHost()));
 		values.put(PORT_COLUMN, elementApply.getPort());
 		values.put(PORT_SSL_COLUMN, elementApply.getPortSSL());
 		values.put(USER_ID_COLUMN, elementApply.getUserId());
@@ -152,7 +153,7 @@ public class ElementApplyManager {
 				do {
 					ElementApply elementApply = new ElementApply();
 					elementApply.setId(getColumnIntWithCursor(cursor, ID_COLUMN));
-					elementApply.setHost(getColumnStringWithCursor(cursor, HOST_NAME_COLUMN));
+					elementApply.setHost(CommonUtils.removeHttp(getColumnStringWithCursor(cursor, HOST_NAME_COLUMN)));
 					elementApply.setPortSSL(getColumnStringWithCursor(cursor, PORT_SSL_COLUMN));
 					elementApply.setPort(getColumnStringWithCursor(cursor, PORT_COLUMN));
 					elementApply.setUserId(getColumnStringWithCursor(cursor, USER_ID_COLUMN));
@@ -273,7 +274,7 @@ public class ElementApplyManager {
 
 			cursor.moveToFirst();
 			elementApply.setId(getColumnIntWithCursor(cursor, ID_COLUMN));
-			elementApply.setHost(getColumnStringWithCursor(cursor, HOST_NAME_COLUMN));
+			elementApply.setHost(CommonUtils.removeHttp(getColumnStringWithCursor(cursor, HOST_NAME_COLUMN)));
 			elementApply.setPortSSL(getColumnStringWithCursor(cursor, PORT_SSL_COLUMN));
 			elementApply.setPort(getColumnStringWithCursor(cursor, PORT_COLUMN));
 			elementApply.setUserId(getColumnStringWithCursor(cursor, USER_ID_COLUMN));
@@ -339,8 +340,7 @@ public class ElementApplyManager {
 	public void deleteElementApply(String id) {
 		try {
 			openDatabase();
-			sqLiteDB.delete(TABLE_ELEMENT_APPLY, " id = ?",
-					new String[]{id});
+			sqLiteDB.delete(TABLE_ELEMENT_APPLY, " id = ?", new String[]{id});
 		} finally {
 			closeDatabase();
 		}

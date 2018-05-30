@@ -167,7 +167,7 @@ public class TabletInputHostFragment extends TabletInputFragment {
 
 	@Override
 	public void nextAction() {
-		String host = editTextHost.getText().toString().trim();
+		String host = CommonUtils.removeHttp(editTextHost.getText().toString().trim());
 		String port = editTextSecurePort.getText().toString().trim();
 		tabletAbtractInputFragment.getInputApplyInfo().setHost(host);
 		tabletAbtractInputFragment.getInputApplyInfo().setSecurePort(port);
@@ -176,10 +176,9 @@ public class TabletInputHostFragment extends TabletInputFragment {
 		if (tabletAbtractInputFragment.getInformCtrl() == null) {
 			tabletAbtractInputFragment.setInformCtrl(new InformCtrl());
 		}
-
 		tabletAbtractInputFragment.setHostName(host);
 		tabletAbtractInputFragment.setPortName(port);
-		String url = String.format("%s:%s", CommonUtils.removeHttp(host), port);
+		String url = String.format("%s:%s", host, port);
 		tabletAbtractInputFragment.getInformCtrl().SetURL(url);
 		new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment.getErroType()
 				, new ConnectApplyTask.EndConnection() {

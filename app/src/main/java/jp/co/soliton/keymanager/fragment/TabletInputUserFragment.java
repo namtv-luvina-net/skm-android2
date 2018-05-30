@@ -212,7 +212,7 @@ public class TabletInputUserFragment extends TabletInputFragment {
 		// グレーアウト
 //		setButtonRunnable(false);
 		if (nullOrEmpty(tabletAbtractInputFragment.getInformCtrl().GetURL())) {
-			String url = String.format("%s:%s", CommonUtils.removeHttp(tabletAbtractInputFragment.getInputApplyInfo().getHost()),
+			String url = String.format("%s:%s", tabletAbtractInputFragment.getInputApplyInfo().getHost(),
 					tabletAbtractInputFragment.getInputApplyInfo().getSecurePort());
 			tabletAbtractInputFragment.getInformCtrl().SetURL(url);
 		}

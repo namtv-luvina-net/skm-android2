@@ -170,7 +170,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 			if (tabletAbtractInputFragment.getInformCtrl() == null) {
 				tabletAbtractInputFragment.setInformCtrl(new InformCtrl());
 			}
-			String url = String.format("%s:%s", CommonUtils.removeHttp(tabletAbtractInputFragment.getInputApplyInfo().getHost()), edtPort.getText()
+			String url = String.format("%s:%s", tabletAbtractInputFragment.getInputApplyInfo().getHost(), edtPort.getText()
 					.toString().trim());
 
 			tabletAbtractInputFragment.getInformCtrl().SetURL(url);
@@ -226,7 +226,7 @@ public class TabletInputPortFragment extends TabletInputFragment {
 				tabletAbtractInputFragment.getProgressDialog().show();
 				String host = tabletAbtractInputFragment.getHostName();
 				String port = tabletAbtractInputFragment.getPortName();
-				String url = String.format("%s:%s", CommonUtils.removeHttp(host), port);
+				String url = String.format("%s:%s", host, port);
 				tabletAbtractInputFragment.getInformCtrl().SetURL(url);
 				new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment
 						.getErroType(), new ConnectApplyTask.EndConnection() {

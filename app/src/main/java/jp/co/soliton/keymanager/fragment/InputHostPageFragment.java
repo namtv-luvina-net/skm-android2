@@ -138,8 +138,10 @@ public class InputHostPageFragment extends InputBasePageFragment {
      */
     @Override
     public void nextAction() {
-        pagerInputActivity.getInputApplyInfo().setHost(txtHostname.getText().toString().trim());
-        pagerInputActivity.getInputApplyInfo().setSecurePort(txtSecurePort.getText().toString().trim());
+	    String host = CommonUtils.removeHttp(txtHostname.getText().toString().trim());
+	    String port = txtSecurePort.getText().toString().trim();
+        pagerInputActivity.getInputApplyInfo().setHost(host);
+        pagerInputActivity.getInputApplyInfo().setSecurePort(port);
         pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);
         progressDialog.show();
         // グレーアウト
@@ -147,10 +149,9 @@ public class InputHostPageFragment extends InputBasePageFragment {
         if (m_InformCtrl == null) {
             m_InformCtrl = new InformCtrl();
         }
-	    pagerInputActivity.setHostName(txtHostname.getText().toString().trim());
-	    pagerInputActivity.setPortName(txtSecurePort.getText().toString().trim());
-	    String host = CommonUtils.removeHttp(pagerInputActivity.getHostName());
-	    String url = String.format("%s:%s", host, pagerInputActivity.getPortName());
+	    pagerInputActivity.setHostName(host);
+	    pagerInputActivity.setPortName(port);
+	    String url = String.format("%s:%s", host, port);
         m_InformCtrl.SetURL(url);
 	    new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
 		    @Override

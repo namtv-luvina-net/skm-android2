@@ -74,7 +74,7 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
     }
 
     public void clickNext(View v) {
-        String url = String.format("%s:%s", CommonUtils.removeHttp(element.getHost()), element.getPortSSL());
+        String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
         m_InformCtrl.SetURL(url);
         //make parameter
         boolean ret = makeParameterLogon();
@@ -384,7 +384,7 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        String url = String.format("%s:%s", CommonUtils.removeHttp(element.getHost()), element.getPortSSL());
+                        String url = String.format("%s:%s", element.getHost(), element.getPortSSL());
                         m_InformCtrl.SetURL(url);
 
                         //make parameter

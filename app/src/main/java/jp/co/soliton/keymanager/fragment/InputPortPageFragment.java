@@ -149,7 +149,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
         if (m_InformCtrl == null) {
             m_InformCtrl = new InformCtrl();
         }
-	    String host = CommonUtils.removeHttp(pagerInputActivity.getInputApplyInfo().getHost());
+	    String host = pagerInputActivity.getInputApplyInfo().getHost();
         String url = String.format("%s:%s", host, txtPort.getText().toString().trim());
         m_InformCtrl.SetURL(url);
         //Open thread download cert
@@ -172,7 +172,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
             LogCtrl.getInstance().info("Apply: CA Certificate Installation Successful");
 	        if (pagerInputActivity.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2){
 		        progressDialog.show();
-		        String url = String.format("%s:%s", CommonUtils.removeHttp(pagerInputActivity.getHostName()), pagerInputActivity.getPortName());
+		        String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
 		        m_InformCtrl.SetURL(url);
 		        new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
 			        @Override

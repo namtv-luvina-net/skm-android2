@@ -166,7 +166,7 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
         // グレーアウト
         setButtonRunnable(false);
         if (nullOrEmpty(pagerReapplyActivity.getInformCtrl().GetURL())) {
-            String url = String.format("%s:%s", CommonUtils.removeHttp(pagerReapplyActivity.getInputApplyInfo().getHost()),
+            String url = String.format("%s:%s", pagerReapplyActivity.getInputApplyInfo().getHost(),
                     pagerReapplyActivity.getInputApplyInfo().getSecurePort());
             pagerReapplyActivity.getInformCtrl().SetURL(url);
         }

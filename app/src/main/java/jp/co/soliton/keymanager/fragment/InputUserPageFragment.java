@@ -171,7 +171,7 @@ public class InputUserPageFragment extends InputBasePageFragment {
         // グレーアウト
         setButtonRunnable(false);
         if (nullOrEmpty(pagerInputActivity.getInformCtrl().GetURL())) {
-            String url = String.format("%s:%s", CommonUtils.removeHttp(pagerInputActivity.getInputApplyInfo().getHost()), pagerInputActivity.getInputApplyInfo().getSecurePort());
+            String url = String.format("%s:%s", pagerInputActivity.getInputApplyInfo().getHost(), pagerInputActivity.getInputApplyInfo().getSecurePort());
             pagerInputActivity.getInformCtrl().SetURL(url);
         }
         pagerInputActivity.getInformCtrl().SetCookie(null);
