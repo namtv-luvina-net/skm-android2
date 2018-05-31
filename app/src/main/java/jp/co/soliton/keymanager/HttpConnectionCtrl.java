@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
@@ -466,7 +468,14 @@ public class HttpConnectionCtrl {
 		LogCtrl.getInstance().info("HttpConnectionCtrl: Send Request POST");
 		LogCtrl.getInstance().debug(http.getURL().toString());
 		LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getRequestProperties()));
-
+		try {
+			TLSSocketFactory socketFactory = new TLSSocketFactory();
+			((HttpsURLConnection) http).setSSLSocketFactory(socketFactory);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (KeyManagementException e) {
+			e.printStackTrace();
+		}
 		try {
 			// 送受信定義
 			http.setDoInput(true);
