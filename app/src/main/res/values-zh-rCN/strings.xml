@@ -167,7 +167,7 @@
 	<string name="title_https_port_number">HTTPS端口号</string>
 	<string name="title_input_host_name">输入主机名称</string>
 	<string name="title_list_certificate">选择证书</string>
-	<string name="title_password">“密码：”</string>
+	<string name="title_password">密码：</string>
 	<string name="title_status">状态：</string>
 	<string name="status">状态</string>
 	<string name="title_user_id">用户ID：</string>

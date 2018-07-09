@@ -167,7 +167,7 @@
 	<string name="title_https_port_number">Mã port HTTPS</string>
 	<string name="title_input_host_name">Nhập tên host</string>
 	<string name="title_list_certificate">Chọn giấy chứng nhận</string>
-	<string name="title_password">"Mật khẩu : "</string>
+	<string name="title_password">Mật khẩu : </string>
 	<string name="title_status">Trạng thái :</string>
 	<string name="status">Trạng thái</string>
 	<string name="title_user_id">ID người dùng:</string>

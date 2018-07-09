@@ -167,7 +167,7 @@
 	<string name="title_https_port_number">HTTPS 포트 번호</string>
 	<string name="title_input_host_name">호스트명 입력</string>
 	<string name="title_list_certificate">증명서 선택</string>
-	<string name="title_password">"비밀번호:"</string>
+	<string name="title_password">비밀번호:</string>
 	<string name="title_status">상태:</string>
 	<string name="status">상태</string>
 	<string name="title_user_id">사용자 ID:</string>

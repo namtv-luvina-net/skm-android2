@@ -167,7 +167,7 @@
 	<string name="title_https_port_number">HTTPSポート番号</string>
 	<string name="title_input_host_name">ホスト名を入力</string>
 	<string name="title_list_certificate">証明書を選択</string>
-	<string name="title_password">"パスワード :"</string>
+	<string name="title_password">パスワード :</string>
 	<string name="title_status">ステータス :</string>
 	<string name="status">ステータス</string>
 	<string name="title_user_id">ユーザーID :</string>

@@ -167,7 +167,7 @@
 	<string name="title_https_port_number">HTTPS端口號</string>
 	<string name="title_input_host_name">輸入主機名稱</string>
 	<string name="title_list_certificate">選擇證書</string>
-	<string name="title_password">「密碼：」</string>
+	<string name="title_password">密碼：</string>
 	<string name="title_status">狀態：</string>
 	<string name="status">狀態</string>
 	<string name="title_user_id">使用者ID：</string>
