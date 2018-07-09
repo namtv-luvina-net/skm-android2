@@ -1,12 +1,11 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.support.v4.app.FragmentActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.common.CommonUtils;
 
 /**
  * Created by nguyenducdat on 6/19/2017.
@@ -21,9 +20,9 @@ public class BaseSettingPhoneActivity extends FragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
-		textViewBack = (TextView) findViewById(R.id.textViewBack);
-		btnMenuDetailSetting = (Button) findViewById(R.id.btnMenuDetailSetting);
+		tvTitleHeader = findViewById(R.id.tvTitleHeader);
+		textViewBack = findViewById(R.id.textViewBack);
+		btnMenuDetailSetting = findViewById(R.id.btnMenuDetailSetting);
 	}
 
 	public void btnBackClick(View v) {
@@ -36,7 +35,7 @@ public class BaseSettingPhoneActivity extends FragmentActivity {
 		setTextBtnBack();
 		setTextTitle();
 		initBtnMenuDetailSetting();
-		updateHeader();
+		CommonUtils.updateHeader(this, textViewBack, tvTitleHeader);
 	}
 
 	protected void setTextBtnBack() {
@@ -47,21 +46,4 @@ public class BaseSettingPhoneActivity extends FragmentActivity {
 	}
 
 	protected void initBtnMenuDetailSetting() {	}
-
-	private void updateHeader() {
-		tvTitleHeader.measure(0, 0);
-		textViewBack.measure(0, 0);
-		DisplayMetrics displayMetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-		int width = displayMetrics.widthPixels;
-		if (tvTitleHeader.getMeasuredWidth() > width - (textViewBack.getMeasuredWidth() * 2)) {
-			textViewBack.setText("");
-			textViewBack.measure(0, 0);
-			int tmp = textViewBack.getMeasuredWidth() * 2;
-			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvTitleHeader.getLayoutParams();
-			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-			params.setMargins(tmp, params.topMargin, tmp, params.bottomMargin);
-			tvTitleHeader.setLayoutParams(params);
-		}
-	}
 }

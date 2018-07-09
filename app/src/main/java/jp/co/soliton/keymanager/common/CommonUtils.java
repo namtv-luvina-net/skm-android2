@@ -1,13 +1,16 @@
 package jp.co.soliton.keymanager.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.StringList;
 
@@ -36,6 +39,23 @@ public class CommonUtils {
 			param.width = maxWidth;
 			param.gravity = Gravity.RIGHT;
 			tvRight.setLayoutParams(param);
+		}
+	}
+
+	public static void updateHeader(Context context, TextView tvBack, TextView title) {
+		title.measure(0, 0);
+		tvBack.measure(0, 0);
+		DisplayMetrics displayMetrics = new DisplayMetrics();
+		((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		int width = displayMetrics.widthPixels;
+		if (title.getMeasuredWidth() > width - (tvBack.getMeasuredWidth() * 2)) {
+			tvBack.setText("");
+			tvBack.measure(0, 0);
+			int tmp = tvBack.getMeasuredWidth() * 2;
+			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+			params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+			params.setMargins(tmp, params.topMargin, tmp, params.bottomMargin);
+			title.setLayoutParams(params);
 		}
 	}
 

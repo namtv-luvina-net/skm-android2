@@ -9,6 +9,7 @@ import android.widget.TextView;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.adapter.AdapterListCertificate;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
@@ -24,16 +25,17 @@ public class ListCertificateActivity extends Activity {
     private AdapterListCertificate adapterListCertificate;
     private ElementApplyManager elementMgr;
     private List<ElementApply> listCertificate;
-    private TextView title;
+    private TextView tvBack, title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_certificate);
-        title = (TextView) findViewById(R.id.tvTitleHeader);
+	    tvBack = findViewById(R.id.textViewBack);
+        title = findViewById(R.id.tvTitleHeader);
         title.setText(getString(R.string.title_list_certificate));
-        list = (ListView)findViewById(R.id.listConfirm);
+        list = findViewById(R.id.listConfirm);
         list.setSelector(android.R.color.transparent);
         elementMgr = ElementApplyManager.getInstance(getApplicationContext());
     }
@@ -60,5 +62,6 @@ public class ListCertificateActivity extends Activity {
         listCertificate = elementMgr.getAllCertificate();
         adapterListCertificate = new AdapterListCertificate(this, listCertificate);
         list.setAdapter(adapterListCertificate);
+        CommonUtils.updateHeader(this, tvBack, title);
     }
 }
