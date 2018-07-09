@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import jp.co.soliton.keymanager.*;
+import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.customview.AutoResizeTextView;
 import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.DialogApplyProgressBar;
@@ -34,7 +35,7 @@ import static jp.co.soliton.keymanager.manager.APIDManager.*;
 
 public class ConfirmApplyActivity extends Activity {
 
-    private Button btnBackInput;
+    private TextView btnBackInput, btnRight;
     private Button btnApply;
     private TextView txtConfirmHostname;
     private TextView txtConfirmPortnumber;
@@ -61,15 +62,16 @@ public class ConfirmApplyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_apply);
-        btnBackInput = (Button) findViewById(R.id.btnConfirmBack);
-        btnApply = (Button) findViewById(R.id.btnConfirmApply);
-        txtConfirmHostname = (TextView) findViewById(R.id.txtConfirmHostname);
-        txtConfirmPortnumber = (TextView) findViewById(R.id.txtConfirmPortnumber);
-        txtConfirmUserId = (TextView) findViewById(R.id.txtConfirmUserId);
-        txtConfirmTargetPlace = (TextView) findViewById(R.id.txtConfirmTargetPlace);
-        txtConfirmEmail = (TextView) findViewById(R.id.txtConfirmEmail);
-        txtConfirmReason = (TextView) findViewById(R.id.txtConfirmReason);
-        titleEmail = (AutoResizeTextView) findViewById(R.id.titleEmail);
+        btnBackInput = findViewById(R.id.btnConfirmBack);
+        btnRight = findViewById(R.id.btn_right);
+        btnApply = findViewById(R.id.btnConfirmApply);
+        txtConfirmHostname = findViewById(R.id.txtConfirmHostname);
+        txtConfirmPortnumber = findViewById(R.id.txtConfirmPortnumber);
+        txtConfirmUserId = findViewById(R.id.txtConfirmUserId);
+        txtConfirmTargetPlace = findViewById(R.id.txtConfirmTargetPlace);
+        txtConfirmEmail = findViewById(R.id.txtConfirmEmail);
+        txtConfirmReason = findViewById(R.id.txtConfirmReason);
+        titleEmail = findViewById(R.id.titleEmail);
         if (ValidateParams.isJPLanguage()) {
             titleEmail.setMaxLines(1);
         } else {
@@ -79,8 +81,8 @@ public class ConfirmApplyActivity extends Activity {
         int sdk_int_version = Build.VERSION.SDK_INT;
         if (sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
             View hrStore = findViewById(R.id.hrStore);
-            LinearLayout titleStore = (LinearLayout) findViewById(R.id.titleStore);
-            LinearLayout valueStore = (LinearLayout) findViewById(R.id.valueStore);
+            LinearLayout titleStore = findViewById(R.id.titleStore);
+            LinearLayout valueStore = findViewById(R.id.valueStore);
             hrStore.setVisibility(View.GONE);
             titleStore.setVisibility(View.GONE);
             valueStore.setVisibility(View.GONE);
@@ -102,6 +104,7 @@ public class ConfirmApplyActivity extends Activity {
         if (elementMgr == null) {
             elementMgr = ElementApplyManager.getInstance(this);
         }
+	    CommonUtils.updateWidthToolbar(btnBackInput, btnRight);
     }
 
     @Override

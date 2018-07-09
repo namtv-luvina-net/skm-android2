@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import jp.co.soliton.keymanager.StringList;
 
 import java.io.File;
@@ -13,6 +17,33 @@ import java.io.File;
  * Created by luongdolong on 11/1/2017.
  */
 public class CommonUtils {
+
+	public static void updateWidthToolbar(TextView tvLeft, TextView tvRight) {
+		setWidthWrap(tvLeft);
+		setWidthWrap(tvRight);
+		tvLeft.measure(0, 0);
+		tvRight.measure(0, 0);
+		int maxWidth = tvLeft.getMeasuredWidth();
+		int widthRight = tvRight.getMeasuredWidth();
+		if (widthRight > maxWidth) {
+			maxWidth = widthRight;
+			LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) tvLeft.getLayoutParams();
+			param.width = maxWidth;
+			param.gravity = Gravity.LEFT;
+			tvLeft.setLayoutParams(param);
+		} else if (widthRight < maxWidth) {
+			LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) tvRight.getLayoutParams();
+			param.width = maxWidth;
+			param.gravity = Gravity.RIGHT;
+			tvRight.setLayoutParams(param);
+		}
+	}
+
+	private static void setWidthWrap(TextView txtView) {
+		ViewGroup.LayoutParams params = txtView.getLayoutParams();
+		params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+		txtView.setLayoutParams(params);
+	}
 
 	public static String removeHttp(String host) {
 		host = host.toLowerCase();
