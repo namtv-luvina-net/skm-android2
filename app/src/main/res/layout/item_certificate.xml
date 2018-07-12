@@ -3,65 +3,76 @@
               android:id="@+id/llSettingCert"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:weightSum="13"
               android:clickable="true"
               android:orientation="horizontal">
 
 	<LinearLayout
-			android:layout_width="0dp"
+			android:id="@+id/ll_icon_certificate"
+			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
 			android:gravity="center"
-			android:padding="10dp"
-			android:layout_weight="4">
+			android:paddingLeft="10dp"
+			android:paddingTop="10dp"
+			android:paddingBottom="10dp">
+
 		<ImageView
 				android:id="@+id/icCertificate"
-				android:layout_width="100dp"
-				android:layout_height="100dp"
+				android:layout_width="90dp"
+				android:layout_height="90dp"
+				android:scaleType="fitCenter"
 				android:src="@drawable/ic_certificate"/>
 	</LinearLayout>
 
 	<LinearLayout
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
+			android:minHeight="120dp"
 			android:gravity="center_vertical"
 			android:orientation="vertical"
-			android:layout_weight="6" >
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="5dp"
+			android:paddingTop="10dp"
+			android:paddingBottom="10dp"
+			android:layout_weight="6">
+
 		<TextView
 				android:id="@+id/txtStore"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:textSize="15dp"
+				android:textSize="14dp"
 				android:ellipsize="end"
 				android:singleLine="true"
 				android:textColor="@color/text_color"
 				android:layout_marginBottom="10dp"
-				android:text="Store" />
+				android:text="Store"/>
+
 		<TextView
 				android:id="@+id/txtStatus"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:textSize="15dp"
+				android:textSize="14dp"
 				android:ellipsize="end"
 				android:singleLine="true"
 				android:textColor="@color/text_color"
 				android:layout_marginBottom="10dp"
-				android:text="Expired" />
+				android:text="Expired"/>
+
 		<TextView
 				android:id="@+id/txtCN"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:textSize="15dp"
+				android:textSize="14dp"
 				android:ellipsize="end"
 				android:singleLine="true"
 				android:textColor="@color/text_color"
-				android:text="Common Name" />
+				android:text="Common Name"/>
 	</LinearLayout>
 
 	<LinearLayout
-			android:layout_width="0dp"
+			android:layout_width="wrap_content"
 			android:layout_height="match_parent"
-			android:gravity="center"
-			android:layout_weight="3" >
+			android:gravity="center">
+
 		<jp.co.soliton.keymanager.customview.AutoResizeTextView
 				android:id="@+id/btnUpdate"
 				android:layout_width="wrap_content"
@@ -72,25 +83,10 @@
 				android:text="@string/btn_update"
 				android:singleLine="true"
 				android:maxLines="1"
-				android:textSize="15dp"
+				android:textSize="14dp"
 				android:background="@drawable/border_button_inactive"
 				android:scaleType="centerInside"
-				android:layout_marginRight="15dp"
-				android:textColor="@color/text_color_inactive" />
-		<!--<TextView-->
-				<!--android:id="@+id/btnUpdate"-->
-				<!--android:layout_width="wrap_content"-->
-				<!--android:layout_height="28dp"-->
-				<!--android:gravity="center"-->
-				<!--android:paddingLeft="5dp"-->
-				<!--android:paddingRight="5dp"-->
-				<!--android:text="@string/btn_update"-->
-				<!--android:singleLine="true"-->
-				<!--android:maxLines="1"-->
-				<!--android:textSize="15dp"-->
-				<!--android:background="@drawable/border_button_inactive"-->
-				<!--android:scaleType="centerInside"-->
-				<!--android:layout_marginRight="15dp"-->
-				<!--android:textColor="@color/text_color_inactive" />-->
+				android:layout_marginRight="10dp"
+				android:textColor="@color/text_color_inactive"/>
 	</LinearLayout>
 </LinearLayout>
