@@ -206,4 +206,5 @@
 	<string name="go_to_setting">Vers Paramètres</string>
 	<string name="message_go_setting_allow_permission">Vous n&apos;avez aucun droit d&apos;accès. Définissez les droits dans les paramètres de l&apos;application.</string>
 	<string name="subject_alternative_names">Nom Alternatif Du Sujet</string>
+	<string name="apply_action">Appliquer</string>
 </resources>

@@ -206,4 +206,5 @@
 	<string name="go_to_setting">Zu den Einstellungen</string>
 	<string name="message_go_setting_allow_permission">Sie haben keine Zugriffsrechte. Legen Sie die Rechte in den App-Einstellungen fest.</string>
 	<string name="subject_alternative_names">Alternativer Betreff</string>
+	<string name="apply_action">Antrag</string>
 </resources>

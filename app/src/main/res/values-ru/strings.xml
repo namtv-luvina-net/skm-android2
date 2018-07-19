@@ -206,4 +206,5 @@
 	<string name="go_to_setting">В настройки</string>
 	<string name="message_go_setting_allow_permission">У вас отсутствуют права доступа. Установите права в настройках приложения.</string>
 	<string name="subject_alternative_names">Альтернативное Имя Получателя</string>
+	<string name="apply_action">Применить</string>
 </resources>

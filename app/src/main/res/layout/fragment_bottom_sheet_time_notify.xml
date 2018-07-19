@@ -38,7 +38,7 @@
 					android:layout_width="0dp"
 					android:layout_weight="1"
 					android:layout_height="match_parent"
-					android:text="@string/apply"
+					android:text="@string/apply_action"
 					android:gravity="center"
 					android:textSize="17sp"
 					android:padding="5dp"
