@@ -27,9 +27,10 @@
 					android:layout_weight="1"
 					android:layout_height="match_parent"
 					android:text="@string/label_dialog_cancel"
-					android:gravity="center"
+					android:gravity="left"
 					android:textSize="17sp"
 					android:padding="5dp"
+					android:layout_marginLeft="10dp"
 					android:textColor="@color/text_color_active"
 					android:textStyle="bold"/>
 
@@ -39,7 +40,8 @@
 					android:layout_weight="1"
 					android:layout_height="match_parent"
 					android:text="@string/apply_action"
-					android:gravity="center"
+					android:gravity="right"
+					android:layout_marginRight="10dp"
 					android:textSize="17sp"
 					android:padding="5dp"
 					android:textColor="@color/text_color_active"
