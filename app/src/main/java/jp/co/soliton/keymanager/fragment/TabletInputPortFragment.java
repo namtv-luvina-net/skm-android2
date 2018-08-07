@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -222,25 +223,39 @@ public class TabletInputPortFragment extends TabletInputFragment {
 	 */
 	public void finishInstallCertificate(int resultCode) {
 		if (resultCode == Activity.RESULT_OK) {
-			if (tabletAbtractInputFragment.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-				tabletAbtractInputFragment.getProgressDialog().show();
-				String host = tabletAbtractInputFragment.getHostName();
-				String port = tabletAbtractInputFragment.getPortName();
-				String url = String.format("%s:%s", host, port);
-				tabletAbtractInputFragment.getInformCtrl().SetURL(url);
-				new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment
-						.getErroType(), new ConnectApplyTask.EndConnection() {
+			if (tabletAbtractInputFragment.controlPagesInput.getCertArray().size() > 0)
+			{
+				final Handler handler = new Handler();
+				handler.postDelayed(new Runnable() {
 					@Override
-					public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-						tabletAbtractInputFragment.getProgressDialog().dismiss();
-						tabletAbtractInputFragment.setInformCtrl(informCtrl);
-						tabletAbtractInputFragment.setErroType(errorType);
-						checkCertificateInstalled(result);
+					public void run() {
+						tabletAbtractInputFragment.controlPagesInput.installCACert();
 					}
-				}).execute();
-			} else {
-				tabletAbtractInputFragment.gotoPage(2);
+				}, 500);
 			}
+			else
+			{
+				if (tabletAbtractInputFragment.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+					tabletAbtractInputFragment.getProgressDialog().show();
+					String host = tabletAbtractInputFragment.getHostName();
+					String port = tabletAbtractInputFragment.getPortName();
+					String url = String.format("%s:%s", host, port);
+					tabletAbtractInputFragment.getInformCtrl().SetURL(url);
+					new ConnectApplyTask(getActivity(), tabletAbtractInputFragment.getInformCtrl(), tabletAbtractInputFragment
+							.getErroType(), new ConnectApplyTask.EndConnection() {
+						@Override
+						public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+							tabletAbtractInputFragment.getProgressDialog().dismiss();
+							tabletAbtractInputFragment.setInformCtrl(informCtrl);
+							tabletAbtractInputFragment.setErroType(errorType);
+							checkCertificateInstalled(result);
+						}
+					}).execute();
+				} else {
+					tabletAbtractInputFragment.gotoPage(2);
+				}
+			}
+
 		}
 	}
 

@@ -720,7 +720,7 @@ public class XmlPullParserAided /*extends Activity*/{
 					cacert = cacert.replaceAll("\\p{C}", ""); // CONTROL CODE
 					cacert = cacert.replaceAll("�", ""); // � = REPLACEMENT CHARACTOR
 					xmlStringData.SetData(cacert);
-					break;
+					continue;
 				}
 			}
 		} catch (XmlPullParserException e) {
@@ -1211,4 +1211,5 @@ public class XmlPullParserAided /*extends Activity*/{
 	public List<String> GetSubjectList() { return this.m_StrListScepSubject;}
 	public XmlKeyWord GetXmlKeyWord() { return this.m_xmlKeyword;}
 	public String GetCacert() {return GetDictionary().getCacert();}
+	public List<String> GetCacertArray() {return GetDictionary().getCacertArray();}
 }

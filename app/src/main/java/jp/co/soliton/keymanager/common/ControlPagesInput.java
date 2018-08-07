@@ -12,6 +12,7 @@ import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 
 import javax.security.cert.X509Certificate;
 import java.net.URLEncoder;
+import java.util.List;
 
 import static jp.co.soliton.keymanager.manager.APIDManager.TARGET_WiFi;
 
@@ -23,6 +24,12 @@ public class ControlPagesInput {
 	public static int REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT = 4955;
 
 	private Activity activity;
+
+	public List<String> getCertArray() {
+		return certArray;
+	}
+
+	private List<String> certArray;
 
 	public ControlPagesInput(Activity activity) {
 		this.activity = activity;
@@ -42,20 +49,29 @@ public class ControlPagesInput {
 					.error_install_certificate));
 			return activity.getString(R.string.error_install_certificate);
 		}
-		cacert = m_p_aided.GetCacert();
-		//Install certificate
-		Intent intent = KeyChain.createInstallIntent();
-		try {
-			LogCtrl.getInstance().info("Apply: Install CA Certificate " + Integer.toString(cacert.length()));
-			LogCtrl.getInstance().debug(cacert);
+		certArray = m_p_aided.GetCacertArray();
+		return installCACert();
+	}
 
-			X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
-			intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
-			intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
-			activity.startActivityForResult(intent, REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT);
-		} catch (Exception e) {
-			LogCtrl.getInstance().error("Apply: Install CA Certificate Error: " +  activity.getString(R.string.error_install_certificate));
-			return activity.getString(R.string.error_install_certificate);
+	public String installCACert()
+	{
+		if (certArray.size() > 0)
+		{
+			String cacert = certArray.get(0);
+			certArray.remove(0);
+			Intent intent = KeyChain.createInstallIntent();
+			try {
+				LogCtrl.getInstance().info("Apply: Install CA Certificate " + Integer.toString(cacert.length()));
+				LogCtrl.getInstance().debug(cacert);
+
+				X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
+				intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
+				intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
+				activity.startActivityForResult(intent, REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT);
+			} catch (Exception e) {
+				LogCtrl.getInstance().error("Apply: Install CA Certificate Error: " +  activity.getString(R.string.error_install_certificate));
+				return activity.getString(R.string.error_install_certificate);
+			}
 		}
 		return "";
 	}

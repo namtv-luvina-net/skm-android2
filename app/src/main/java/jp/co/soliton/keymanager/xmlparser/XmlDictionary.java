@@ -240,5 +240,20 @@ public class XmlDictionary {
 		}
 		return cacert;
 	}
+
+	public List<String> getCacertArray() {
+		List<String> cacertArray = new ArrayList<String>();
+		List<XmlStringData> listPayloadContent = GetArrayString();
+		for (int i = 0; i < listPayloadContent.size(); i++) {
+			XmlStringData xmlStringData = listPayloadContent.get(i);
+			if (xmlStringData.GetKeyName().equals("PayloadContent")) {
+				String cacert = xmlStringData.GetData();
+				cacert = String.format("%s\n%s\n%s", "-----BEGIN CERTIFICATE-----", cacert, "-----END CERTIFICATE-----");
+				cacertArray.add(cacert);
+				continue;
+			}
+		}
+		return cacertArray;
+	}
 }
 
