@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -41,6 +42,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
 	private TextView txtGuideDownloadCaCertificate;
     private LinearLayout zoneInputPort;
     public static String payloadDisplayName = "EACert";
+    ControlPagesInput controlPagesInput;
 
     public static Fragment newInstance(Context context) {
         InputPortPageFragment f = new InputPortPageFragment();
@@ -169,23 +171,33 @@ public class InputPortPageFragment extends InputBasePageFragment {
      */
     public void finishInstallCertificate(int resultCode) {
         if (resultCode == Activity.RESULT_OK) {
-            LogCtrl.getInstance().info("Apply: CA Certificate Installation Successful");
-	        if (pagerInputActivity.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2){
-		        progressDialog.show();
-		        String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
-		        m_InformCtrl.SetURL(url);
-		        new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
-			        @Override
-			        public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
-				        progressDialog.dismiss();
-				        m_InformCtrl = informCtrl;
-				        m_nErroType = errorType;
-				        checkCertificateInstalled(result);
-			        }
-		        }).execute();
-	        }else {
-		        pagerInputActivity.gotoPage(2);
-	        }
+            if (controlPagesInput.getCertArray().size() > 0) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        controlPagesInput.installCACert();
+                    }
+                }, 500);
+            } else {
+                LogCtrl.getInstance().info("Apply: CA Certificate Installation Successful");
+                if (pagerInputActivity.sdk_int_version >= Build.VERSION_CODES.JELLY_BEAN_MR2){
+                    progressDialog.show();
+                    String url = String.format("%s:%s", pagerInputActivity.getHostName(), pagerInputActivity.getPortName());
+                    m_InformCtrl.SetURL(url);
+                    new ConnectApplyTask(pagerInputActivity, m_InformCtrl, m_nErroType, new ConnectApplyTask.EndConnection() {
+                        @Override
+                        public void endConnect(Boolean result, InformCtrl informCtrl, int errorType) {
+                            progressDialog.dismiss();
+                            m_InformCtrl = informCtrl;
+                            m_nErroType = errorType;
+                            checkCertificateInstalled(result);
+                        }
+                    }).execute();
+                }else {
+                    pagerInputActivity.gotoPage(2);
+                }
+            }
         }
         else {
             LogCtrl.getInstance().warn("Apply: CA Certificate Installation Canceled");
@@ -217,7 +229,7 @@ public class InputPortPageFragment extends InputBasePageFragment {
         if (result) {
             //Download certificate
 //            downloadCert();
-	        ControlPagesInput controlPagesInput = new ControlPagesInput(getActivity());
+            controlPagesInput = new ControlPagesInput(getActivity());
 	        String strDownloadCert = controlPagesInput.downloadCert(m_InformCtrl.GetRtn());
 	        if (strDownloadCert.length() > 0) {
 		        showMessage(strDownloadCert);
