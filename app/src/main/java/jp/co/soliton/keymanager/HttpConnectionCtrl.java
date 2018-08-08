@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import jp.co.soliton.keymanager.tls.TLSSocketFactory;
 
 import javax.net.ssl.*;
 import java.io.BufferedInputStream;
@@ -14,8 +13,6 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
@@ -35,7 +32,7 @@ public class HttpConnectionCtrl {
 	//	trustAllHosts();	// 証明書認証を回避するための手続き2-1
 		
 	//}
-	
+
 	// コンストラクタ
 	public HttpConnectionCtrl(Context context) {
 		m_ctx = context;
@@ -162,8 +159,6 @@ public class HttpConnectionCtrl {
 			if (url.getProtocol().toLowerCase().equals("https")) {
 				HttpsURLConnection urlconn = (HttpsURLConnection)url.openConnection();
 				http = urlconn;
-				TLSSocketFactory socketFactory = new TLSSocketFactory();
-				((HttpsURLConnection)http).setSSLSocketFactory(socketFactory);
 			} else {
 				http = (HttpURLConnection)url.openConnection();
 			}
@@ -468,14 +463,6 @@ public class HttpConnectionCtrl {
 		LogCtrl.getInstance().info("HttpConnectionCtrl: Send Request POST");
 		LogCtrl.getInstance().debug(http.getURL().toString());
 		LogCtrl.getInstance().debug(getAllHeaderFieldValues(http.getRequestProperties()));
-		try {
-			TLSSocketFactory socketFactory = new TLSSocketFactory();
-			((HttpsURLConnection) http).setSSLSocketFactory(socketFactory);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (KeyManagementException e) {
-			e.printStackTrace();
-		}
 		try {
 			// 送受信定義
 			http.setDoInput(true);
