@@ -40,17 +40,17 @@ public class CertificateUtility {
 			Iterator<? extends Certificate> iterator = cACertificateCollection.iterator();
 			int i = cACertificateCollection.size();
 			while (iterator.hasNext() == true) {
-				try {
-					X509Certificate certificate = (X509Certificate) iterator.next();
-					X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
-					RDN cn = x500name.getRDNs(BCStyle.CN)[0];
-					String cnCertificate = cn.getFirst().getValue().toString();
-					CertificateUtility.certificateToKeyChain(context, certificate, cnCertificate, i + CERT_STORE_TO_KEY_CHAIN);
-				} catch (CertificateEncodingException e) {
-					e.printStackTrace();
-				}
+				X509Certificate certificate = (X509Certificate) iterator.next();
+				X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
+				RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+				String cnCertificate = cn.getFirst().getValue().toString();
+				CertificateUtility.certificateToKeyChain(context, certificate, cnCertificate, i + CERT_STORE_TO_KEY_CHAIN);
 				i--;
 			}
+		} catch (CertificateEncodingException e) {
+			e.printStackTrace();
+			LogCtrl.getInstance().error("CertificateUtility::certStoreToKeyChain CertificateEncodingException::" + e
+					.toString());
 		} catch (CertStoreException e) {
 			e.printStackTrace();
 			LogCtrl.getInstance().error("CertificateUtility::certStoreToKeyChain CertStoreException::" + e
