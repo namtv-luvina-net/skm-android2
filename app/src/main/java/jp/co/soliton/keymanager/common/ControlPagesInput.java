@@ -74,8 +74,9 @@ public class ControlPagesInput {
 				LogCtrl.getInstance().debug(cacert);
 
 				CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509", "BC");
-				InputStream inputStrem = new ByteArrayInputStream(cacert.getBytes());
-				X509Certificate x509 = (X509Certificate) certificateFactory.generateCertificate(inputStrem);
+				InputStream inputStream = new ByteArrayInputStream(cacert.getBytes());
+				X509Certificate x509 = (X509Certificate) certificateFactory.generateCertificate(inputStream);
+				inputStream.close();
 				X500Name x500name = new JcaX509CertificateHolder(x509).getSubject();
 				RDN cn = x500name.getRDNs(BCStyle.CN)[0];
 				String cnCertificate = cn.getFirst().getValue().toString();
