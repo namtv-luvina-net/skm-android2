@@ -3,6 +3,12 @@ package jp.co.soliton.keymanager.common;
 import android.app.Activity;
 import android.content.Intent;
 import android.security.KeyChain;
+
+import org.bouncycastle.asn1.x500.RDN;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.LogCtrl;
 import jp.co.soliton.keymanager.R;
@@ -10,7 +16,10 @@ import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.fragment.InputPortPageFragment;
 import jp.co.soliton.keymanager.xmlparser.XmlPullParserAided;
 
-import javax.security.cert.X509Certificate;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -64,9 +73,14 @@ public class ControlPagesInput {
 				LogCtrl.getInstance().info("Apply: Install CA Certificate " + Integer.toString(cacert.length()));
 				LogCtrl.getInstance().debug(cacert);
 
-				X509Certificate x509 = X509Certificate.getInstance(cacert.getBytes());
+				CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509", "BC");
+				InputStream inputStrem = new ByteArrayInputStream(cacert.getBytes());
+				X509Certificate x509 = (X509Certificate) certificateFactory.generateCertificate(inputStrem);
+				X500Name x500name = new JcaX509CertificateHolder(x509).getSubject();
+				RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+				String cnCertificate = cn.getFirst().getValue().toString();
 				intent.putExtra(KeyChain.EXTRA_CERTIFICATE, x509.getEncoded());
-				intent.putExtra(KeyChain.EXTRA_NAME, InputPortPageFragment.payloadDisplayName);
+				intent.putExtra(KeyChain.EXTRA_NAME, cnCertificate);
 				activity.startActivityForResult(intent, REQUEST_CODE_INSTALL_CERTIFICATION_CONTROL_PAGES_INPUT);
 			} catch (Exception e) {
 				LogCtrl.getInstance().error("Apply: Install CA Certificate Error: " +  activity.getString(R.string.error_install_certificate));

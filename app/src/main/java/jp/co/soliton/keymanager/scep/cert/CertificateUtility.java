@@ -8,8 +8,12 @@ import jp.co.soliton.keymanager.LogCtrl;
 import org.bouncycastle.asn1.*;
 import org.bouncycastle.asn1.cms.Attribute;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.bouncycastle.asn1.x500.RDN;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.asn1.x509.X509Extension;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.jce.PKCS10CertificationRequest;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 
@@ -36,8 +40,15 @@ public class CertificateUtility {
 			Iterator<? extends Certificate> iterator = cACertificateCollection.iterator();
 			int i = cACertificateCollection.size();
 			while (iterator.hasNext() == true) {
-				X509Certificate certificate = (X509Certificate) iterator.next();
-				CertificateUtility.certificateToKeyChain(context, certificate, alias, i + CERT_STORE_TO_KEY_CHAIN);
+				try {
+					X509Certificate certificate = (X509Certificate) iterator.next();
+					X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
+					RDN cn = x500name.getRDNs(BCStyle.CN)[0];
+					String cnCertificate = cn.getFirst().getValue().toString();
+					CertificateUtility.certificateToKeyChain(context, certificate, cnCertificate, i + CERT_STORE_TO_KEY_CHAIN);
+				} catch (CertificateEncodingException e) {
+					e.printStackTrace();
+				}
 				i--;
 			}
 		} catch (CertStoreException e) {
