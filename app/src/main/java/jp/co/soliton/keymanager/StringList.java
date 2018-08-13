@@ -18,10 +18,9 @@ public class StringList {
 
 
 	//<======= URL Scheme
-	public final static String m_str_schemehost = "host";
-	public final static String m_str_schemeuser = "user";
-	public final static String m_str_schemepass = "pass";
-	public final static String m_str_schemeauto = "autoconnect";
+	public final static String m_str_schemeHost = "host";
+	public final static String m_str_schemePort = "http-port";
+	public final static String m_str_schemeSecurePort = "https-port";
 
 	/*--- POSTパラメータ ---*/
 	public final static String m_strUserID = "UserID=";

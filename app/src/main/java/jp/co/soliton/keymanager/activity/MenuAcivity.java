@@ -79,6 +79,42 @@ public class MenuAcivity extends FragmentActivity {
 				}
 			}
 		}
+		handleSchemeIfNeed(getIntent());
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		handleSchemeIfNeed(intent);
+	}
+
+	private void handleSchemeIfNeed(Intent intent) {
+		try {
+			Uri uri = intent.getData();
+			String host = uri.getQueryParameter(StringList.m_str_schemeHost);
+			String port = uri.getQueryParameter(StringList.m_str_schemePort);
+			String securePort = uri.getQueryParameter(StringList.m_str_schemeSecurePort);
+			if (host == null || port == null || securePort == null) {
+				return;
+			}
+			if (isTablet) {
+				Bundle bundle = new Bundle();
+				bundle.putString(StringList.m_str_schemeHost, host);
+				bundle.putString(StringList.m_str_schemePort, port);
+				bundle.putString(StringList.m_str_schemeSecurePort, securePort);
+				startApplyActivityFragment(TabletBaseInputFragment.START_FROM_MENU);
+				fragmentContent.setArguments(bundle);
+			} else {
+				InputApplyInfo.deletePref(getApplicationContext());
+				Intent i = new Intent(this, ViewPagerInputActivity.class);
+				i.putExtra(StringList.m_str_schemeHost, host);
+				i.putExtra(StringList.m_str_schemePort, port);
+				i.putExtra(StringList.m_str_schemeSecurePort, securePort);
+				startActivity(i);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String getIdUpdate() {

@@ -58,6 +58,7 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
         setUpView();
         setTab();
         inputApplyInfo = InputApplyInfo.getPref(this);
+	    getDataFromIntentIfPossible();
         m_InformCtrl = new InformCtrl();
         String idConfirmApply = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 
@@ -78,7 +79,19 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
         }
     }
 
-    @Override
+	private void getDataFromIntentIfPossible() {
+		Intent i = getIntent();
+		if (i.hasExtra(StringList.m_str_schemeHost)) {
+			String host = i.getStringExtra(StringList.m_str_schemeHost);
+			String port = i.getStringExtra(StringList.m_str_schemePort);
+			String securePort = i.getStringExtra(StringList.m_str_schemeSecurePort);
+			inputApplyInfo.setHost(host);
+			inputApplyInfo.setPort(port);
+			inputApplyInfo.setSecurePort(securePort);
+		}
+	}
+
+	@Override
     public void onResume() {
         super.onResume();
         setChangePage();

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.InputApplyInfo;
 import jp.co.soliton.keymanager.R;
+import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.MenuAcivity;
 import jp.co.soliton.keymanager.adapter.ViewPagerTabletAdapter;
 import jp.co.soliton.keymanager.common.ControlPagesInput;
@@ -48,6 +49,7 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 	protected boolean isShowingKeyboard = false;
 	protected String idConfirmApply;
 	private View viewFragment;
+	protected String host, port, securePort;
 
 	@Override
 	public void onAttach(Context context) {
@@ -74,15 +76,26 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 			}
 		});
 		SoftKeyboardCtrl.addListenner(viewFragment, this);
+		getDataFromActivityIfPossible();
 		return viewFragment;
+	}
+
+	private void getDataFromActivityIfPossible() {
+		if (getArguments() != null) {
+			if (getArguments().containsKey(StringList.m_str_schemeHost)) {
+				host = getArguments().getString(StringList.m_str_schemeHost);
+				port = getArguments().getString(StringList.m_str_schemePort);
+				securePort = getArguments().getString(StringList.m_str_schemeSecurePort);
+			}
+		}
 	}
 
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-		btnSkip = (Button) view.findViewById(R.id.btnSkip);
-		btnBack = (Button) view.findViewById(R.id.btnBack);
-		btnNext = (Button) view.findViewById(R.id.btnNext);
-		viewPager = (InputApplyViewPager) view.findViewById(R.id.viewPager);
+		btnSkip = view.findViewById(R.id.btnSkip);
+		btnBack = view.findViewById(R.id.btnBack);
+		btnNext = view.findViewById(R.id.btnNext);
+		viewPager = view.findViewById(R.id.viewPager);
 		viewPager.setAdapter(adapter);
 		viewPager.setPagingEnabled(false);
 		viewPager.setCurrentItem(0);
@@ -93,8 +106,21 @@ public abstract class TabletAbtractInputFragment extends Fragment implements Sof
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		inputApplyInfo = InputApplyInfo.getPref(activity);
+		getDataSchemeIfHas();
 		m_InformCtrl = new InformCtrl();
 		controlPagesInput = new ControlPagesInput(activity);
+	}
+
+	private void getDataSchemeIfHas() {
+		if (host != null && host.length() > 0) {
+			inputApplyInfo.setHost(host);
+		}
+		if (port != null && port.length() > 0) {
+			inputApplyInfo.setPort(port);
+		}
+		if (securePort != null && securePort.length() > 0) {
+			inputApplyInfo.setSecurePort(securePort);
+		}
 	}
 
 	@Override
