@@ -4,15 +4,15 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import org.apache.commons.io.IOUtils;
+import org.bouncycastle.cms.CMSSignedDataParser;
 
 import javax.net.ssl.*;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Iterator;
@@ -456,6 +456,24 @@ public class HttpConnectionCtrl {
 			return false;
 		}
 		return true;
+	}
+
+	private InputStream decodeData(InputStream inputStream) {
+		String contents = "";
+		// プロファイルを読み込みます.
+		try {
+			// CMS 署名パーサーを初期化します.
+			CMSSignedDataParser parser = new CMSSignedDataParser(inputStream);
+
+			// ファイルのコンテンツを取得します.
+			contents = IOUtils.toString(parser.getSignedContent().getContentStream(), "UTF-8");
+
+			// 表示します.
+			System.out.println(contents);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ByteArrayInputStream(contents.getBytes(StandardCharsets.UTF_8));
 	}
 	
 	// パケットの送受信
