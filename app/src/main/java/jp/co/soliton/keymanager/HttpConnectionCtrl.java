@@ -416,7 +416,7 @@ public class HttpConnectionCtrl {
 				return false;
 			}
 
-			BufferedInputStream bis = new BufferedInputStream( http.getInputStream() );
+			BufferedInputStream bis = new BufferedInputStream(decodeData(http.getInputStream()));
 			byte[] buf_solo = new byte[i_packetsize];
 			byte[] buf_all = new byte[65536];
 			int i_size;
@@ -459,21 +459,18 @@ public class HttpConnectionCtrl {
 	}
 
 	private InputStream decodeData(InputStream inputStream) {
-		String contents = "";
-		// プロファイルを読み込みます.
 		try {
-			// CMS 署名パーサーを初期化します.
 			CMSSignedDataParser parser = new CMSSignedDataParser(inputStream);
-
-			// ファイルのコンテンツを取得します.
-			contents = IOUtils.toString(parser.getSignedContent().getContentStream(), "UTF-8");
-
-			// 表示します.
-			System.out.println(contents);
+			return parser.getSignedContent().getContentStream();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return new InputStream() {
+				@Override
+				public int read() {
+					return -1;
+				}
+			};
 		}
-		return new ByteArrayInputStream(contents.getBytes(StandardCharsets.UTF_8));
 	}
 	
 	// パケットの送受信
