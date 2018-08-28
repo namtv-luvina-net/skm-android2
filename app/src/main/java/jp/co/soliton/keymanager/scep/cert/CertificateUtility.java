@@ -143,14 +143,18 @@ public class CertificateUtility {
 		if (challenge != null) {
 			// <== debug
 			// create the extension value
-			GeneralNames subjectAltName = new GeneralNames(
-					new GeneralName(GeneralName.rfc822Name, sbjectAltName/*"soliton@example.local"*/));
+
 			// create the extensions object and add it as an attribute
 			Vector oids = new Vector();
 			Vector values = new Vector();
 
-			oids.add(X509Extensions.SubjectAlternativeName);
-			values.add(new X509Extension(false, new DEROctetString(subjectAltName)));
+			if (sbjectAltName.length() > 0) {
+				GeneralNames subjectAltName = new GeneralNames(
+						new GeneralName(GeneralName.rfc822Name, sbjectAltName/*"soliton@example.local"*/));
+				oids.add(X509Extensions.SubjectAlternativeName);
+				values.add(new X509Extension(false, new DEROctetString(subjectAltName)));
+			}
+
 			values.add(new DERPrintableString(challenge));
 
 			X509Extensions extensions = new X509Extensions(oids, values);
