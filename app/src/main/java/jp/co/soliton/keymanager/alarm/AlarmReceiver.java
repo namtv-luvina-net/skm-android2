@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import jp.co.soliton.keymanager.NotificationLogCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.StringList;
 import jp.co.soliton.keymanager.activity.AlarmReapplyActivity;
@@ -25,22 +26,26 @@ import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
+import static jp.co.soliton.keymanager.common.DateUtils.STRING_DATE_FORMAT_SYSTEM_TIME;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-	    boolean isTablet = context.getResources().getBoolean(R.bool.isTablet);
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "soliton:key_manager");
-        //Acquire the lock
-        wl.acquire();
+	public static final String REQUEST_CODE = "REQUEST_CODE";
 
-        //You can do the processing here update the widget/remote views.
-        Bundle extras = intent.getExtras();
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		boolean isTablet = context.getResources().getBoolean(R.bool.isTablet);
+		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "soliton:key_manager");
+		//Acquire the lock
+		wl.acquire();
 
-	    String id = extras.getString(StringList.ELEMENT_APPLY_ID, "");
+		//You can do the processing here update the widget/remote views.
+		Bundle extras = intent.getExtras();
+
+		String id = extras.getString(StringList.ELEMENT_APPLY_ID, "");
+		int requestCode = extras.getInt(REQUEST_CODE, 0);
 		ElementApplyManager mgr = ElementApplyManager.getInstance(context);
 		ElementApply element = mgr.getElementApply(id);
 
@@ -83,15 +88,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 		stackBuilder.addNextIntent(resultIntent);
 		PendingIntent resultPendingIntent =
 				stackBuilder.getPendingIntent(
-						Integer.parseInt(id),
+						requestCode,
 						PendingIntent.FLAG_UPDATE_CURRENT
 				);
 		mBuilder.setContentIntent(resultPendingIntent);
 		mBuilder.setAutoCancel(true);
 		NotificationManager mNotificationManager =
 				(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		final int _id = (int) System.currentTimeMillis();
-		mNotificationManager.notify(_id, mBuilder.build());
+		mNotificationManager.notify(requestCode, mBuilder.build());
 		//Release the lock
 		wl.release();
 	}
@@ -103,46 +107,131 @@ public class AlarmReceiver extends BroadcastReceiver {
 		return R.mipmap.ic_notification;
 	}
 
-    private void cancelNotification(Context context) {
-        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
-    }
+	public void updateNotificationIfNeed(Context context, ElementApply newElementApply, ElementApply databaseElementApply) {
+		if (!newElementApply.isNotiEnableFlag()) {
+			if (databaseElementApply.isNotiEnableFlag() && databaseElementApply.getNotValidAfter() != null) {
+				removeAlarmExpired(context, String.valueOf(databaseElementApply.getId()));
+			}
+		} else {
+			if (databaseElementApply.isNotiEnableFlag() && databaseElementApply.getNotValidAfter() != null) {
+				removeAlarmExpired(context, String.valueOf(databaseElementApply.getId()));
+			}
+			addAlarmExpiredIfNeed(context, newElementApply);
+		}
 
-    public void setupNotification(Context context) {
-        cancelNotification(context);
-        ElementApplyManager elementMgr = ElementApplyManager.getInstance(context);
-        List<ElementApply> lsElement = elementMgr.getAllCertificate();
-        Calendar cal = Calendar.getInstance();
-        int index = 0;
-        int startIndex = 1000;
-        for (ElementApply el : lsElement) {
-            if (!el.isNotiEnableFlag() && !el.isNotiEnableBeforeFlag()) {
-                continue;
-            }
-            Date expirationDate = DateUtils.convertSringToDateSystemTime(el.getExpirationDate());
-            cal.setTime(expirationDate);
-            if (el.isNotiEnableFlag() && expirationDate.after(Calendar.getInstance().getTime())) {
-                setAlarm(context, String.valueOf(el.getId()), startIndex + index, expirationDate.getTime());
-                index++;
-            }
-            int before = el.getNotiEnableBefore();
-            cal.add(Calendar.DAY_OF_MONTH, before * -1);
-            if (el.isNotiEnableBeforeFlag() && cal.getTime().after(Calendar.getInstance().getTime())) {
-                setAlarm(context, String.valueOf(el.getId()), startIndex + index, cal.getTime().getTime());
-                index++;
-            }
-        }
-    }
+		if (!newElementApply.isNotiEnableBeforeFlag()) {
+			if (databaseElementApply.isNotiEnableBeforeFlag() && databaseElementApply.getNotValidAfter() != null) {
+				removeAlarmBefore(context, String.valueOf(databaseElementApply.getId()));
+			}
+		} else {
+			if (databaseElementApply.isNotiEnableBeforeFlag() && databaseElementApply.getNotValidAfter() != null) {
+				removeAlarmBefore(context, String.valueOf(databaseElementApply.getId()));
+			}
+			addAlarmBeforeIfNeed(context, newElementApply);
+		}
+	}
 
-	private void setAlarm(Context context, String value, int requestCode, long time) {
+	public void addAlarmExpiredIfNeed(Context context, ElementApply el) {
+		Calendar cal = Calendar.getInstance();
+		Date expirationDate = DateUtils.convertSringToDateSystemTime(el.getExpirationDate());
+		cal.setTime(expirationDate);
+		if (el.isNotiEnableFlag() && expirationDate.after(Calendar.getInstance().getTime())) {
+			NotificationLogCtrl.getInstance().add(getInfoElementApplyToLogExpired(el));
+			setAlarm(context, String.valueOf(el.getId()), getRequestCodeExpired(el.getId()), expirationDate.getTime());
+		}
+	}
+
+	public void addAlarmBeforeIfNeed(Context context, ElementApply el) {
+		Calendar cal = Calendar.getInstance();
+		Date expirationDate = DateUtils.convertSringToDateSystemTime(el.getExpirationDate());
+		cal.setTime(expirationDate);
+		int before = el.getNotiEnableBefore();
+		cal.add(Calendar.DAY_OF_MONTH, before * -1);
+		if (el.isNotiEnableBeforeFlag() && cal.getTime().after(Calendar.getInstance().getTime())) {
+			NotificationLogCtrl.getInstance().add(getInfoElementApplyToLogBefore(el));
+			setAlarm(context, String.valueOf(el.getId()), getRequestCodeBeforeExpired(el.getId()), cal.getTime().getTime());
+		}
+	}
+
+	public int getRequestCodeExpired(int idElement) {
+		return idElement * 2;
+	}
+
+	public int getRequestCodeBeforeExpired(int idElement) {
+		return idElement * 2 + 1;
+	}
+
+	private void setAlarm(Context context, String idElement, int requestCode, long time) {
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		intent.removeExtra(StringList.ELEMENT_APPLY_ID);
-		intent.putExtra(StringList.ELEMENT_APPLY_ID, value);
+		intent.putExtra(StringList.ELEMENT_APPLY_ID, idElement);
+		intent.putExtra(REQUEST_CODE, requestCode);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent
+				.FLAG_UPDATE_CURRENT);
+		if (pendingIntent != null) {
+			am.cancel(pendingIntent);
+			pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent
+					.FLAG_UPDATE_CURRENT);
+		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			am.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+		} else {
+			am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+		}
+	}
+
+	public void removeAlarmExpired(Context context, String idElement) {
+		NotificationLogCtrl.getInstance().remove(getInfoElementApplyToLogExpired(ElementApplyManager.getInstance(context)
+				.getElementApply(idElement)));
+		removeAlarm(context, idElement, getRequestCodeExpired(Integer.parseInt(idElement)));
+	}
+
+	public void removeAlarmBefore(Context context, String idElement) {
+		NotificationLogCtrl.getInstance().remove(getInfoElementApplyToLogBefore(ElementApplyManager.getInstance(context)
+				.getElementApply(idElement)));
+		removeAlarm(context, idElement, getRequestCodeBeforeExpired(Integer.parseInt(idElement)));
+	}
+
+	private void removeAlarm(Context context, String idElement, int requestCode) {
+		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(context, AlarmReceiver.class);
+		intent.putExtra(StringList.ELEMENT_APPLY_ID, idElement);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent
 				.FLAG_UPDATE_CURRENT);
 		am.cancel(pendingIntent);
-		am.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+	}
+
+	private String getInfoElementApplyToLogBefore(ElementApply el) {
+		Calendar calendar = Calendar.getInstance();
+		Date expirationDate = DateUtils.convertSringToDateSystemTime(el.getExpirationDate());
+		calendar.setTime(expirationDate);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME, calendar.getTime()) + " ");
+		stringBuilder.append(el.getcNValue() + " ");
+		stringBuilder.append(el.getSerialNumber() + " ");
+		stringBuilder.append("[DaysBefore] ");
+		int before = el.getNotiEnableBefore();
+		calendar.add(Calendar.DAY_OF_MONTH, before * -1);
+		stringBuilder.append(DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME, calendar.getTime()) + " ");
+		stringBuilder.append("\n");
+		return stringBuilder.toString();
+	}
+
+	private String getInfoElementApplyToLogExpired(ElementApply el) {
+		Calendar calendar = Calendar.getInstance();
+		Date expirationDate = DateUtils.convertSringToDateSystemTime(el.getExpirationDate());
+		calendar.setTime(expirationDate);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME, calendar.getTime()) + " ");
+		stringBuilder.append(el.getcNValue() + " ");
+		stringBuilder.append(el.getSerialNumber() + " ");
+		stringBuilder.append("[Expired] ");
+		stringBuilder.append(DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME, calendar.getTime()) + " ");
+		stringBuilder.append("\n");
+		return stringBuilder.toString();
 	}
 
 	public Bitmap getLargeIcon(Context context) {

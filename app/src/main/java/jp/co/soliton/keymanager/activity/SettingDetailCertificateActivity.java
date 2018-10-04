@@ -39,7 +39,7 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
 	    elementMgr = ElementApplyManager.getInstance(this);
 	    id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 	    elementApply = elementMgr.getElementApply(id);
-		expandableListView = (ExpandableListView) findViewById(R.id.expand_detail_cert);
+		expandableListView = findViewById(R.id.expand_detail_cert);
 	    adapterSettingDetailCertificate = new AdapterSettingDetailCertificate(this, false);
 	    expandableListView.setAdapter(adapterSettingDetailCertificate);
     }
@@ -47,6 +47,7 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
     @Override
     protected void onResume() {
 	    super.onResume();
+	    elementApply = elementMgr.getElementApply(id);
 	    prepareData();
     }
 
@@ -111,11 +112,16 @@ public class SettingDetailCertificateActivity extends BaseSettingPhoneActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+	            AlarmReceiver alarm = new AlarmReceiver();
+	            if (elementApply.isNotiEnableFlag()) {
+		            alarm.removeAlarmExpired(getApplicationContext(), id);
+	            }
+	            if (elementApply.isNotiEnableBeforeFlag()) {
+		            alarm.removeAlarmBefore(getApplicationContext(), id);
+	            }
                 elementMgr.deleteElementApply(id);
 				LogCtrl.getInstance().info("Certificate: Deleted");
 				LogCtrl.getInstance().debug("CN=" + elementApply.getcNValue() + "S/N=" + elementApply.getsNValue());
-                AlarmReceiver alarm = new AlarmReceiver();
-                alarm.setupNotification(getApplicationContext());
                 finish();
             }
         });

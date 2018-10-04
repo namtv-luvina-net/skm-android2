@@ -597,10 +597,12 @@ public class MenuAcivity extends FragmentActivity {
 			StartUsingProceduresControl.getInstance(this).afterIntallCert();
 			if (resultCode != 0) {
 				ElementApplyManager mgr = ElementApplyManager.getInstance(getApplicationContext());
-				mgr.updateElementCertificate(StartUsingProceduresControl.getInstance(this).getElement());
+				ElementApply elementApplyNew = StartUsingProceduresControl.getInstance(this).getElement();
+				ElementApply elementApplyInDatabase = mgr.getElementApply(String.valueOf(elementApplyNew.getId()));
 				AlarmReceiver alarm = new AlarmReceiver();
-				alarm.setupNotification(getApplicationContext());
-				completeUsingProceduresFragment(StartUsingProceduresControl.getInstance(this).getElement());
+				alarm.updateNotificationIfNeed(getApplicationContext(), elementApplyNew, elementApplyInDatabase);
+				mgr.updateElementCertificate(elementApplyNew);
+				completeUsingProceduresFragment(elementApplyNew);
 			} else {
 				goBackElementApply();
 			}

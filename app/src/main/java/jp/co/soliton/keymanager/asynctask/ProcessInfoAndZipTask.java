@@ -3,16 +3,23 @@ package jp.co.soliton.keymanager.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 import jp.co.soliton.keymanager.BuildConfig;
+import jp.co.soliton.keymanager.NotificationLogCtrl;
 import jp.co.soliton.keymanager.SKMApplication;
 import jp.co.soliton.keymanager.StringList;
-import jp.co.soliton.keymanager.common.Compress;
-import jp.co.soliton.keymanager.common.DateUtils;
-import jp.co.soliton.keymanager.common.InfoDevice;
-import jp.co.soliton.keymanager.common.LogFileCtrl;
+import jp.co.soliton.keymanager.common.*;
+import jp.co.soliton.keymanager.dbalias.ElementApply;
+import jp.co.soliton.keymanager.dbalias.ElementApplyManager;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import static jp.co.soliton.keymanager.common.DateUtils.STRING_DATE_FORMAT_SYSTEM_TIME;
+import static jp.co.soliton.keymanager.common.DateUtils.STRING_DATE_FORMAT_SYSTEM_TIME1;
 import static jp.co.soliton.keymanager.dbalias.DatabaseHandler.DATABASE_NAME;
 
 /**
@@ -46,11 +53,102 @@ public class ProcessInfoAndZipTask extends AsyncTask<Void, Void, ProcessInfoAndZ
 	private ArrayList<String> getListFileToZip(InfoDevice infoDevice) {
 		ArrayList<String> listFileToZip = LogFileCtrl.getListLogFile(context);
 		listFileToZip.add(infoDevice.getPathFileInfo());
+		String notificationFilePath = NotificationLogCtrl.getInstance().getNotificationLogFile();
+		if (notificationFilePath != null) {
+			listFileToZip.add(notificationFilePath);
+		}
+
+		ElementApplyManager elementMgr = ElementApplyManager.getInstance(context);
+		List<ElementApply> lsElement = elementMgr.getAllCertificate();
+		listFileToZip.add(createCertificateFile(lsElement));
+		listFileToZip.add(createNotificationFile(lsElement));
+
 		if (SKMApplication.SKM_DEBUG || SKMApplication.SKM_TRACE) {
 			addFileMdmIfExists(listFileToZip);
 			addFileDatabaseIfOk(listFileToZip);
 		}
 		return listFileToZip;
+	}
+
+	private String createCertificateFile(List<ElementApply> lsElement) {
+		File certificateFile = new File(SKMApplication.getAppContext().getFilesDir().getPath() + File.separator +
+				"certificates.txt");
+		if (certificateFile.exists()) {
+			certificateFile.delete();
+		}
+		JSONArray jsonArray = new JSONArray();
+		for (ElementApply el : lsElement) {
+			JSONObject jsonObject = new JSONObject();
+			try {
+				jsonObject.put("CN", el.getcNValue());
+				jsonObject.put("SN", el.getSerialNumber());
+				Date date = DateUtils.convertSringToDate(STRING_DATE_FORMAT_SYSTEM_TIME, el.getExpirationDate());
+				String strDate = DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME1, date);
+				jsonObject.put("Expiration", strDate);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			jsonArray.put(jsonObject);
+		}
+		try {
+			certificateFile.createNewFile();
+			FileUtils.saveFileInfo(certificateFile, jsonArray.toString(4));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return certificateFile.getAbsolutePath();
+	}
+
+	private String createNotificationFile(List<ElementApply> lsElement) {
+		File notificationFile = new File(SKMApplication.getAppContext().getFilesDir().getPath() + File.separator +
+				"notification.txt");
+		if (notificationFile.exists()) {
+			notificationFile.delete();
+		}
+		JSONArray jsonArray = new JSONArray();
+		for (ElementApply el : lsElement) {
+			if (el.isNotiEnableFlag()) {
+				JSONObject jsonObject = new JSONObject();
+				try {
+					jsonObject.put("Type", "Expired");
+					Date date = DateUtils.convertSringToDate(STRING_DATE_FORMAT_SYSTEM_TIME, el.getExpirationDate());
+					String strDate = DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME1, date);
+					jsonObject.put("DeliveryDate", strDate);
+					jsonObject.put("DateInterval", 0);
+					jsonObject.put("SN", el.getSerialNumber());
+					jsonObject.put("CN", el.getcNValue());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				jsonArray.put(jsonObject);
+			}
+			if (el.isNotiEnableBeforeFlag()) {
+				JSONObject jsonObject = new JSONObject();
+				try {
+					jsonObject.put("Type", "DaysBefore");
+					Date date = DateUtils.convertSringToDate(STRING_DATE_FORMAT_SYSTEM_TIME, el.getExpirationDate());
+					String strDate = DateUtils.convertDateToString(STRING_DATE_FORMAT_SYSTEM_TIME1, date);
+					jsonObject.put("DeliveryDate", strDate);
+					jsonObject.put("DateInterval", el.getNotiEnableBefore());
+					jsonObject.put("SN", el.getSerialNumber());
+					jsonObject.put("CN", el.getcNValue());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				jsonArray.put(jsonObject);
+			}
+		}
+		try {
+			notificationFile.createNewFile();
+			FileUtils.saveFileInfo(notificationFile, jsonArray.toString(4));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return notificationFile.getAbsolutePath();
 	}
 
 	private void addFileMdmIfExists(ArrayList<String> listFileToZip) {

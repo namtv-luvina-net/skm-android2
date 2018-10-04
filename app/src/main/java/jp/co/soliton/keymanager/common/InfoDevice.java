@@ -62,7 +62,7 @@ public class InfoDevice {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		saveFileInfo(fileInfo, outputDataBuilder);
+		FileUtils.saveFileInfo(fileInfo, outputDataBuilder.toString());
 		return outputDataBuilder.toString();
 	}
 
@@ -173,20 +173,6 @@ public class InfoDevice {
 		final String[] units = new String[] { "", "kB", "MB", "GB", "TB" };
 		int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
 		return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + units[digitGroups];
-	}
-
-	private boolean saveFileInfo(File file, StringBuilder stringBuilder) {
-		try{
-			FileWriter fwriter = new FileWriter(file, false);// true to append // false to overwrite.
-			BufferedWriter bwriter = new BufferedWriter(fwriter);
-			bwriter.write(stringBuilder.toString());
-			bwriter.close();
-			return true;
-		}
-		catch (Exception e){
-			e.printStackTrace();
-			return false;
-		}
 	}
 
 	private String makeInfoLine(String str1, String str2) {

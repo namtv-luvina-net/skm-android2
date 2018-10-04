@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static jp.co.soliton.keymanager.common.DateUtils.STRING_DATE_FORMAT_SYSTEM_TIME;
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;
 import static jp.co.soliton.keymanager.common.TypeScrollFragment.SCROLL_TO_RIGHT;
 import static jp.co.soliton.keymanager.manager.APIDManager.PREFIX_APID_WIFI;
@@ -426,7 +427,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 					certRep.getCertificate(),
 					element.getcNValue(),
 					m_nEnrollRtnCode/*0*/);
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+			SimpleDateFormat dateFormat = new SimpleDateFormat(STRING_DATE_FORMAT_SYSTEM_TIME, Locale.getDefault());
 			element.setExpirationDate(dateFormat.format(certRep.getCertificate().getNotAfter()));
 			//retrieve data certificate
 			for (int i = 0; i < arr.length; i++) {

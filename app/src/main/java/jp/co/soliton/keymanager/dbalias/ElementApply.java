@@ -207,7 +207,7 @@ public class ElementApply implements Serializable {
     }
 
     public String getsNValue() {
-        return sNValue;
+        return sNValue != null ? sNValue : "";
     }
 
     public void setsNValue(String sNValue) {
@@ -327,7 +327,7 @@ public class ElementApply implements Serializable {
     }
 
     public String getSerialNumber() {
-        return serialNumber;
+        return serialNumber != null ? serialNumber : "";
     }
 
     public void setSerialNumber(String serialNumber) {

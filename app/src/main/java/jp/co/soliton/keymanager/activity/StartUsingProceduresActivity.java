@@ -59,11 +59,15 @@ public class StartUsingProceduresActivity extends Activity {
 			if (resultCode != 0) {
 				LogCtrl.getInstance().info("Proc: Certificate Installation Successful");
 				ElementApplyManager mgr = ElementApplyManager.getInstance(getApplicationContext());
-				mgr.updateElementCertificate(StartUsingProceduresControl.getInstance(this).getElement());
+				ElementApply elementApplyNew = StartUsingProceduresControl.getInstance(this).getElement();
+				ElementApply elementApplyInDatabase = mgr.getElementApply(String.valueOf(elementApplyNew.getId()));
 				AlarmReceiver alarm = new AlarmReceiver();
-				alarm.setupNotification(getApplicationContext());
+				alarm.updateNotificationIfNeed(getApplicationContext(), elementApplyNew, elementApplyInDatabase);
+
+				mgr.updateElementCertificate(elementApplyNew);
+
 				Intent intent = new Intent(getApplicationContext(), CompleteUsingProceduresActivity.class);
-				intent.putExtra("ELEMENT_APPLY", StartUsingProceduresControl.getInstance(this).getElement());
+				intent.putExtra("ELEMENT_APPLY", elementApplyNew);
 				finish();
 				startActivity(intent);
 			} else {

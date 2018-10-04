@@ -36,11 +36,10 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
     private String idCert;
     private ElementApplyManager elementMgr;
     private static final int MAX_BEFORE_DATE = 120;
-    private static final int MIN_BEFORE_DATE = 1;
-	String numDateNotifBefore = "";
 	int notifyBeforeCurrent = 1;
 	private TextView btnSettingProductInfo;
 	private RelativeLayout rlExpired;
+	AlarmReceiver alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +59,7 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
 	    btnSettingProductInfo = findViewById(R.id.btnSettingProductInfo);
 	    rlExpired = findViewById(R.id.rl_expired);
         elementMgr = ElementApplyManager.getInstance(this);
+	    alarm = new AlarmReceiver();
     }
 
 	@Override
@@ -79,9 +79,31 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
 			updateEnableViewExpired(isChecked);
 		}
 		btnSaveNotifClick();
+		updateNotification(buttonView, isChecked);
 	}
 
-    @Override
+	private void updateNotification(CompoundButton buttonView, boolean isChecked) {
+		if (NotifModeEnum.ONE != mode) {
+			return;
+		}
+		if (buttonView == swNotifBeforeFlag) {
+			if (!isChecked) {
+				alarm.removeAlarmBefore(getApplicationContext(), idCert);
+			} else {
+				ElementApply elementApply = elementMgr.getElementApply(idCert);
+				alarm.addAlarmBeforeIfNeed(getApplicationContext(), elementApply);
+			}
+		} else {
+			if (!isChecked) {
+				alarm.removeAlarmExpired(getApplicationContext(), idCert);
+			} else {
+				ElementApply elementApply = elementMgr.getElementApply(idCert);
+				alarm.addAlarmExpiredIfNeed(getApplicationContext(), elementApply);
+			}
+		}
+	}
+
+	@Override
     protected void onResume() {
         super.onResume();
 	    btnSettingProductInfo.setText(getString(R.string.label_expired) +" (" + getString(R.string.label_day_before) +")");
@@ -105,9 +127,6 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
 	}
 
 	public void btnSaveNotifClick() {
-        if (!isValidateInput()) {
-            return;
-        }
         if (NotifModeEnum.ONE == mode) {
 	        elementMgr.updateNotifSettingElement(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
                     CommonUtils.toInt(getTextNotifBefore()), idCert);
@@ -118,12 +137,7 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
                     new Boolean(swNotifBeforeFlag.isChecked()));
             CommonUtils.putPref(getApplicationContext(), StringList.KEY_NOTIF_ENABLE_BEFORE,
                     new Integer(CommonUtils.toInt(getTextNotifBefore())));
-
-            //elementMgr.updateNotifSetting(swNotifFlag.isChecked(), swNotifBeforeFlag.isChecked(),
-            //                        CommonUtils.toInt(tvNotifBefore.getText().toString().trim()));
         }
-        AlarmReceiver alarm = new AlarmReceiver();
-        alarm.setupNotification(getApplicationContext());
     }
 
 
@@ -209,61 +223,8 @@ public class NotificationSettingActivity extends BaseSettingPhoneActivity implem
 		}
 	}
 
-	private boolean isValidateInput() {
-        if (!swNotifBeforeFlag.isChecked()) {
-            return true;
-        }
-        if (CommonUtils.isEmpty(getTextNotifBefore()) || !CommonUtils.isNumber(getTextNotifBefore())) {
-            showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
-                @Override
-                public void onOkDismissMessage() {
-                    tvNotifBefore.setText(numDateNotifBefore);
-	                btnSaveNotifClick();
-                }
-            });
-            return false;
-        }
-        if (CommonUtils.toInt(getTextNotifBefore()) <= 0) {
-            showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
-                @Override
-                public void onOkDismissMessage() {
-                    tvNotifBefore.setText(String.valueOf(MIN_BEFORE_DATE));
-	                btnSaveNotifClick();
-                }
-            });
-            return false;
-        }
-        if (CommonUtils.toInt(getTextNotifBefore()) > MAX_BEFORE_DATE) {
-            showMessage(makeMsgNotRangeExpiry(), getString(R.string.error), new DialogApplyMessage.OnOkDismissMessageListener() {
-                @Override
-                public void onOkDismissMessage() {
-                    tvNotifBefore.setText(String.valueOf(MAX_BEFORE_DATE));
-	                btnSaveNotifClick();
-                }
-            });
-            return false;
-        }
-        return true;
-    }
-
 	@NonNull
 	private String getTextNotifBefore() {
 		return tvNotifBefore.getText().toString().trim();
 	}
-
-	/**
-     * Show message
-     *
-     * @param message
-     */
-    private void showMessage(String message, String titleDialog, DialogApplyMessage.OnOkDismissMessageListener listener) {
-        DialogApplyMessage dlgMessage = new DialogApplyMessage(this, message);
-        dlgMessage.setOnOkDismissMessageListener(listener);
-        dlgMessage.setTitleDialog(titleDialog);
-        dlgMessage.show();
-    }
-
-    private String makeMsgNotRangeExpiry() {
-        return String.format(getString(R.string.error_input_before_expiry), MAX_BEFORE_DATE);
-    }
 }

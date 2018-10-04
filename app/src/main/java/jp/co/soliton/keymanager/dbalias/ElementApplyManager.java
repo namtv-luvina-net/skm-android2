@@ -210,6 +210,7 @@ public class ElementApplyManager {
 					elementApply.setNotiEnableBefore(getColumnIntWithCursor(cursor, NOTI_ENABLE_BEFORE_COLUMN));
 					elementApply.setExpirationDate(getColumnStringWithCursor(cursor, EXPIRATION_DATE_COLUMN));
 					elementApply.setcNValue(getColumnStringWithCursor(cursor, CN_VALUE_COLUMN));
+					elementApply.setSerialNumber(getColumnStringWithCursor(cursor, SERIAL_NUMBER_COLUMN));
 					elementApply.setTarger(getColumnStringWithCursor(cursor, TARGET_COLUMN));
 
 					elementApplyList.add(elementApply);

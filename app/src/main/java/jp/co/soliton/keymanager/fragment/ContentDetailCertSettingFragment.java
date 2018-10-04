@@ -74,6 +74,7 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 	@Override
 	public void onResume() {
 		super.onResume();
+		elementApply = elementMgr.getElementApply(id);
 		prepareData();
 		moreOption.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -114,11 +115,16 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				AlarmReceiver alarm = new AlarmReceiver();
+				if (elementApply.isNotiEnableFlag()) {
+					alarm.removeAlarmExpired(getActivity().getApplicationContext(), id);
+				}
+				if (elementApply.isNotiEnableBeforeFlag()) {
+					alarm.removeAlarmBefore(getActivity().getApplicationContext(), id);
+				}
 				elementMgr.deleteElementApply(id);
 				LogCtrl.getInstance().info("Certificate: Deleted");
 				LogCtrl.getInstance().debug("CN=" + elementApply.getcNValue() + "S/N=" + elementApply.getsNValue());
-				AlarmReceiver alarm = new AlarmReceiver();
-				alarm.setupNotification(getActivity());
 				getActivity().onBackPressed();
 			}
 		});
