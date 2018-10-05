@@ -231,4 +231,9 @@
 	<string name="browse_is_not_installed">Browser app not installed.</string>
 	<string name="content_privacy_policy">Diagnostic information that you send includes information of your devices and usage situation of the application. We do not use those information for identifying users. We use the diagnostic information to improve stability of our applications and the quality of our services. All of the information is used on the basis of our Privacy Policy.</string>
 	<string name="apply_action">Apply</string>
+
+	/* Trace Logs */
+	<string name="trace_logs">Trace Logs</string>
+	<string name="trace_mode_notify">You are now %d step away to enable trace mode.</string>
+	<string name="trace_mode_enable">Trace mode is now enable.</string>
 </resources>

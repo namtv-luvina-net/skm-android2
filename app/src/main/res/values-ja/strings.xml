@@ -210,4 +210,10 @@
 	<string name="browse_is_not_installed">ブラウザが見つかれません。</string>
 	<string name="content_privacy_policy">送信していただく診断情報には、端末に関する情報とアプリの使用状況が含まれます。これらの情報がユーザーの特定に使用されることはありません。ソリトンシステムズでは、診断情報をアプリの安定性の向上や、サービスの品質改善のために利用いたします。すべての情報は、ソリトンシステムズのプライバシーポリシーに基づいて使用されます。</string>
 	<string name="apply_action">適用</string>
+
+	/* Trace Logs */
+	<string name="trace_logs">トレースログ</string>
+	<string name="trace_mode_notify">トレースモードになるまであと%dステップです。</string>
+	<string name="trace_mode_enable">トレースモードになりました。</string>
+
 </resources>

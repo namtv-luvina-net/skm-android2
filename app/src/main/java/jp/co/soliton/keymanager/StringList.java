@@ -359,4 +359,5 @@ public class StringList {
 	public static String KEY_NOTIF_ENABLE_BEFORE = "KEY_NOTIF_ENABLE_BEFORE";
 	public static String ID_DETAIL_CURRENT = "";
 	public static String UPDATE_METHOD_SETUP_NOTIFY = "UPDATE_METHOD_SETUP_NOTIFY";
+	public static final String TRACE_LOG_KEY = "TraceLogs";
 }

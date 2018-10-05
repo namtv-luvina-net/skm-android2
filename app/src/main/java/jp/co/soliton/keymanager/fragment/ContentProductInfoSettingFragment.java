@@ -1,7 +1,9 @@
 package jp.co.soliton.keymanager.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +11,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-import jp.co.soliton.keymanager.BuildConfig;
-import jp.co.soliton.keymanager.LogCtrl;
-import jp.co.soliton.keymanager.R;
+import android.widget.*;
+import jp.co.soliton.keymanager.*;
 import jp.co.soliton.keymanager.asynctask.ProcessInfoAndZipTask;
 import jp.co.soliton.keymanager.common.EmailCtrl;
 import jp.co.soliton.keymanager.customview.DialogApplyConfirm;
@@ -28,6 +27,12 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 	private ProgressDialog progressDialog;
 	private Button btnSettingProductInfo;
 	private Button btnPrivacyPolicy;
+
+	private Switch traceModeSwitch;
+	private RelativeLayout traceModeItem;
+	public static final int MAX_CLICK_COUNT = 7;
+	private int clickCount;
+	private Toast toast;
 
 	public static Fragment newInstance() {
 		ContentProductInfoSettingFragment f = new ContentProductInfoSettingFragment();
@@ -50,6 +55,8 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 		tvTitleHeader = viewFragment.findViewById(R.id.tvTitleHeader);
 		tvTitleHeader.setText(getString(R.string.label_product_setting));
 		btnSettingProductInfo = viewFragment.findViewById(R.id.btnSettingProductInfo);
+		traceModeSwitch = viewFragment.findViewById(R.id.sw_trace_mode);
+		traceModeItem = viewFragment.findViewById(R.id.traceLogsItem);
 		return viewFragment;
 	}
 
@@ -65,6 +72,21 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 		String verApp = BuildConfig.VERSION_NAME;
 		String productInfo = nameApp + "\n" + version +" " +verApp;
 		btnSettingProductInfo.setText(productInfo);
+
+		Context context = SKMApplication.getAppContext();
+		SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
+				context.MODE_PRIVATE);
+		boolean isTraceMode = sharedPref.getBoolean(StringList.TRACE_LOG_KEY, false);
+		clickCount = isTraceMode ? 0 : MAX_CLICK_COUNT;
+		traceModeItem.setVisibility(isTraceMode ? View.VISIBLE : View.GONE);
+
+
+		btnSettingProductInfo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleTapProductItem();
+			}
+		});
 
 		btnLogSendMail.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -86,6 +108,48 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 				getActivity().onBackPressed();
 			}
 		});
+
+		traceModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+				traceModeItem.setVisibility(View.GONE);
+				traceModeSwitch.setChecked(true);
+				clickCount = MAX_CLICK_COUNT;
+				Context context = SKMApplication.getAppContext();
+				SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
+						context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedPref.edit();
+				editor.putBoolean(StringList.TRACE_LOG_KEY, false);
+				editor.commit();
+				LogCtrl.getInstance().updateTraceMode();
+			}
+		});
+	}
+
+	private void handleTapProductItem() {
+		clickCount--;
+		Context context = SKMApplication.getAppContext();
+		if (clickCount < MAX_CLICK_COUNT - 2) {
+			if (toast != null) {
+				toast.cancel();
+			}
+			if (clickCount > 0) {
+				toast = Toast.makeText(context, String.format(getString(R.string.trace_mode_notify), clickCount), Toast
+						.LENGTH_SHORT);
+			} else {
+				toast = Toast.makeText(context, getString(R.string.trace_mode_enable), Toast.LENGTH_SHORT);
+				if (clickCount == 0) {
+					SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
+							context.MODE_PRIVATE);
+					SharedPreferences.Editor editor = sharedPref.edit();
+					editor.putBoolean(StringList.TRACE_LOG_KEY, true);
+					editor.commit();
+					traceModeItem.setVisibility(View.VISIBLE);
+					LogCtrl.getInstance().updateTraceMode();
+				}
+			}
+			toast.show();
+		}
 	}
 
 	private void confirmPrivacyPolicy() {

@@ -1,5 +1,7 @@
 package jp.co.soliton.keymanager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.LogFileCtrl;
@@ -15,12 +17,14 @@ public class LogCtrl {
 
 	private static LogCtrl instance;
 	private static String nameLogFile;
+	private boolean isTraceMode;
 
 	public static LogCtrl getInstance(){
 		if (instance == null) {
 			synchronized (LogCtrl.class) {
 				if (instance == null) {
 					instance = new LogCtrl();
+					instance.updateTraceMode();
 				}
 			}
 		}
@@ -28,6 +32,13 @@ public class LogCtrl {
 	}
 
 	private LogCtrl() {
+	}
+
+	public void updateTraceMode() {
+		Context context = SKMApplication.getAppContext();
+		SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
+				context.MODE_PRIVATE);
+		isTraceMode = sharedPref.getBoolean(StringList.TRACE_LOG_KEY, false);
 	}
 
 	public void info(String msg){
@@ -43,7 +54,7 @@ public class LogCtrl {
 	}
 
 	public void debug(String msg){
-		if (SKMApplication.SKM_DEBUG || SKMApplication.SKM_TRACE) {
+		if (SKMApplication.SKM_DEBUG || SKMApplication.SKM_TRACE || isTraceMode) {
 			Logger(Debug, msg);
 		}
 	}
