@@ -38,7 +38,7 @@ public class Requester {
 				throw new RequesterException("No CA Certificcate");
 			}
 			return cACertificateStore;
-		} catch (TransactionException e) {
+		} catch (Exception e) {
 			throw new RequesterException(e.getMessage());
 		}
 	}
@@ -80,7 +80,7 @@ public class Requester {
 			Transaction<CertRep> transaction = new Transaction<CertRep>();
 			CertRepReponseHandler certRepResponseHandler = new CertRepReponseHandler();
 			return transaction.start(request, certRepResponseHandler);
-		} catch (TransactionException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new RequesterException(e.getMessage());
 		}
