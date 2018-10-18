@@ -52,12 +52,12 @@ public class ContentDetailCertSettingFragment extends TabletBaseSettingFragment 
 		elementMgr = ElementApplyManager.getInstance(getActivity());
 		elementApply = elementMgr.getElementApply(id);
 		viewFragment = inflater.inflate(R.layout.fragment_setting_detail_certificate, container, false);
-		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		tvTitleHeader = viewFragment.findViewById(R.id.tvTitleHeader);
 		tvTitleHeader.setText(elementApply.getcNValue());
-		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
-		moreOption = (Button) viewFragment.findViewById(R.id.more_option);
+		textViewBack = viewFragment.findViewById(R.id.textViewBack);
+		moreOption = viewFragment.findViewById(R.id.more_option);
 		moreOption.setVisibility(View.VISIBLE);
-		expandableListView = (ExpandableListView) viewFragment.findViewById(R.id.expand_detail_cert);
+		expandableListView = viewFragment.findViewById(R.id.expand_detail_cert);
 		adapterSettingDetailCertificate = new AdapterSettingDetailCertificate(getActivity(), true);
 		expandableListView.setAdapter(adapterSettingDetailCertificate);
 		expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {

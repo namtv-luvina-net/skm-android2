@@ -58,9 +58,9 @@ public class InputPasswordActivity extends Activity implements SoftKeyboardCtrl.
         setContentView(R.layout.activity_input_password);
         id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
         cancelApply = getIntent().getStringExtra(StringList.CANCEL_APPLY);
-        txtUserId = (TextView) findViewById(R.id.txtUserId);
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
-        btnInputNext = (Button) findViewById(R.id.btnInputNext);
+        txtUserId = findViewById(R.id.txtUserId);
+        txtPassword = findViewById(R.id.txtPassword);
+        btnInputNext = findViewById(R.id.btnInputNext);
         elementMgr = ElementApplyManager.getInstance(this);
         m_InformCtrl = new InformCtrl();
         if (progressDialog == null) {

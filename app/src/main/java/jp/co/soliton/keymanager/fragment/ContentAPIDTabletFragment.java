@@ -42,12 +42,12 @@ public class ContentAPIDTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_content_apid_tablet, container, false);
-		btnCopy = (Button) viewFragment.findViewById(R.id.btnCopy);
-		btnMail = (Button) viewFragment.findViewById(R.id.btnMail);
-		contentWifi = (TextView) viewFragment.findViewById(R.id.content_wifi);
-		contentVPN = (TextView) viewFragment.findViewById(R.id.content_vpn);
-		titleVPN = (TextView) viewFragment.findViewById(R.id.title_vpn);
-		titleWifi = (TextView) viewFragment.findViewById(R.id.title_wifi);
+		btnCopy = viewFragment.findViewById(R.id.btnCopy);
+		btnMail = viewFragment.findViewById(R.id.btnMail);
+		contentWifi = viewFragment.findViewById(R.id.content_wifi);
+		contentVPN = viewFragment.findViewById(R.id.content_vpn);
+		titleVPN = viewFragment.findViewById(R.id.title_vpn);
+		titleWifi = viewFragment.findViewById(R.id.title_wifi);
 		apidManager = new APIDManager(getActivity());
 		return viewFragment;
 	}

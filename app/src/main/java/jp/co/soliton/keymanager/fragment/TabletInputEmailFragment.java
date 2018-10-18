@@ -44,8 +44,8 @@ public class TabletInputEmailFragment extends TabletInputFragment {
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		viewFragment = inflater.inflate(R.layout.fragment_input_email_tablet, container, false);
-		txtEmail = (EditText) viewFragment.findViewById(R.id.txtEmail);
-		titleInput = (TextView) viewFragment.findViewById(R.id.titleInput);
+		txtEmail = viewFragment.findViewById(R.id.txtEmail);
+		titleInput = viewFragment.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.set_notification_destination_email_address));
 		return viewFragment;
 	}

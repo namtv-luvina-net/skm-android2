@@ -59,11 +59,11 @@ public class TabletInputPortFragment extends TabletInputFragment {
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_port_tablet, container, false);
-		rootViewInputPort = (RelativeLayout) view.findViewById(R.id.rootViewInputPort);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		rootViewInputPort = view.findViewById(R.id.rootViewInputPort);
+		titleInput = view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.download_ca_certificate));
-		edtPort = (EditText) view.findViewById(R.id.edit_port);
-		txtGuideDownloadCaCertificate = (TextView) view.findViewById(R.id.txt_des_download_ca);
+		edtPort = view.findViewById(R.id.edit_port);
+		txtGuideDownloadCaCertificate = view.findViewById(R.id.txt_des_download_ca);
 		if (tabletAbtractInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2) {
 			txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
 		} else {

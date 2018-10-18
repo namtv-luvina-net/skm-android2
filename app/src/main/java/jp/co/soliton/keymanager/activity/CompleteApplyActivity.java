@@ -32,7 +32,7 @@ public class CompleteApplyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_apply);
-        btnBackTop = (Button) findViewById(R.id.btnBackToTop);
+        btnBackTop = findViewById(R.id.btnBackToTop);
         Intent intent = getIntent();
         if (intent.getBooleanExtra(StringList.BACK_AUTO, false)) {
             btnBackTop.setText(getString(R.string.back_to_top_auto));

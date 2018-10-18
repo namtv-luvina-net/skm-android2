@@ -34,11 +34,11 @@ public class LeftSideInputPasswordTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_left_side_input_password_tablet, container, false);
-		tvValueHost = (TextView) viewFragment.findViewById(R.id.tv_value_host);
-		tvValueUserId = (TextView) viewFragment.findViewById(R.id.tv_value_user_id);
-		tvValueApplyDate = (TextView) viewFragment.findViewById(R.id.tv_value_apply_date);
-		tvValueStatus = (TextView) viewFragment.findViewById(R.id.tv_value_status);
-		tvStorage = (TextView) viewFragment.findViewById(R.id.tv_storage);
+		tvValueHost = viewFragment.findViewById(R.id.tv_value_host);
+		tvValueUserId = viewFragment.findViewById(R.id.tv_value_user_id);
+		tvValueApplyDate = viewFragment.findViewById(R.id.tv_value_apply_date);
+		tvValueStatus = viewFragment.findViewById(R.id.tv_value_status);
+		tvStorage = viewFragment.findViewById(R.id.tv_storage);
 		updateLeftsideInputPasswordTablet();
 		return viewFragment;
 	}

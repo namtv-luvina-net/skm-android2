@@ -50,9 +50,9 @@ public class TabletInputHostFragment extends TabletInputFragment {
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_host_tablet, null);
-		editTextHost = (EditText) view.findViewById(R.id.edit_host);
-		editTextSecurePort = (EditText) view.findViewById(R.id.edit_port);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		editTextHost = view.findViewById(R.id.edit_host);
+		editTextSecurePort = view.findViewById(R.id.edit_port);
+		titleInput = view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.host_name_and_port_number));
 		return view;
 	}

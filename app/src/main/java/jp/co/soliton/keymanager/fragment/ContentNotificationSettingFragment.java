@@ -39,7 +39,7 @@ public class ContentNotificationSettingFragment extends TabletBaseSettingFragmen
 		.OnCheckedChangeListener {
 
 	public enum NotifModeEnum {
-		ALL, ONE;
+		ALL, ONE
 	}
 
 	private static final int MAX_BEFORE_DATE = 120;

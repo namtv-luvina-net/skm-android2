@@ -75,9 +75,9 @@ public class TabletInputUserFragment extends TabletInputFragment {
 					(savedInstanceState, TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_user_tablet, container, false);
-		txtUserId = (EditText) view.findViewById(R.id.txtUserId);
-		txtPassword = (EditText) view.findViewById(R.id.txtPassword);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		txtUserId = view.findViewById(R.id.txtUserId);
+		txtPassword = view.findViewById(R.id.txtPassword);
+		titleInput = view.findViewById(R.id.titleInput);
 		if (ValidateParams.nullOrEmpty(id_update)) {
 			titleInput.setText(getString(R.string.input_user_id_and_password));
 		}else {

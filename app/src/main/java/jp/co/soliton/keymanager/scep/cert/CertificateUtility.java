@@ -36,7 +36,7 @@ public class CertificateUtility {
 			CertStore store, String alias) {
 		try {
 			Collection<? extends Certificate> cACertificateCollection;
-			cACertificateCollection = (Collection<? extends Certificate>) store.getCertificates(null);
+			cACertificateCollection = store.getCertificates(null);
 			Iterator<? extends Certificate> iterator = cACertificateCollection.iterator();
 			int i = cACertificateCollection.size();
 			while (iterator.hasNext() == true) {

@@ -84,8 +84,8 @@ public class AdapterSettingDetailCertificate extends BaseExpandableListAdapter {
 			} else {
 				convertView = infalInflater.inflate(R.layout.item_header_detail_cert_phone_setting, null);
 			}
-			headerHolder.title = (TextView) convertView.findViewById(R.id.header_item);
-			headerHolder.lineTop = (TextView) convertView.findViewById(R.id.lineTopHeader);
+			headerHolder.title = convertView.findViewById(R.id.header_item);
+			headerHolder.lineTop = convertView.findViewById(R.id.lineTopHeader);
 			convertView.setTag(headerHolder);
 		}else {
 			headerHolder = (HeaderHolder) convertView.getTag();
@@ -120,9 +120,9 @@ public class AdapterSettingDetailCertificate extends BaseExpandableListAdapter {
 		ChildHolder childHolder = new ChildHolder();
 		if (convertView == null) {
 			convertView = createConvertViewChild(groupPosition, childPosition);
-			childHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
-			childHolder.detail = (TextView) convertView.findViewById(R.id.tvDetail);
-			childHolder.lineBottom = (TextView) convertView.findViewById(R.id.lineBottom);
+			childHolder.title = convertView.findViewById(R.id.tvTitle);
+			childHolder.detail = convertView.findViewById(R.id.tvDetail);
+			childHolder.lineBottom = convertView.findViewById(R.id.lineBottom);
 			convertView.setTag(childHolder);
 		}else {
 			childHolder = (ChildHolder) convertView.getTag();

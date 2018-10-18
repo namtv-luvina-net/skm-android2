@@ -73,9 +73,9 @@ public class AdapterMDM extends ArrayAdapter<AdapterMDM.ItemMDM> {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
 	        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_mdm, parent, false);
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.txtName);
-            viewHolder.txtValue = (TextView) convertView.findViewById(R.id.txtValue);
-            viewHolder.line = (TextView) convertView.findViewById(R.id.line);
+            viewHolder.txtName = convertView.findViewById(R.id.txtName);
+            viewHolder.txtValue = convertView.findViewById(R.id.txtValue);
+            viewHolder.line = convertView.findViewById(R.id.line);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

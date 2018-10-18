@@ -31,9 +31,9 @@ public class ListConfirmActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_confirm);
-	    title = (TextView) findViewById(R.id.tvTitleHeader);
+	    title = findViewById(R.id.tvTitleHeader);
 	    title.setText(getString(R.string.list_application));
-	    list = (ListView) findViewById(R.id.listConfirm);
+	    list = findViewById(R.id.listConfirm);
 	    adapterListConfirmApply = new AdapterListConfirmApply(this, listElementApply);
 	    list.setAdapter(adapterListConfirmApply);
 	    elementMgr = ElementApplyManager.getInstance(getApplicationContext());

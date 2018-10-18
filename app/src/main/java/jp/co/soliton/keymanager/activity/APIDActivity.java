@@ -28,7 +28,7 @@ public class APIDActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apid);
-	    this.layoutShareAPID = (LinearLayout)findViewById(R.id.layoutShareAPID);
+	    this.layoutShareAPID = findViewById(R.id.layoutShareAPID);
         layoutShareAPID.setOnClickListener(this);
 		Bundle extras = getIntent().getExtras();
 	    if (extras != null) {   
@@ -41,8 +41,8 @@ public class APIDActivity extends Activity implements View.OnClickListener {
 	    builderAPID.append(getResources().getString(R.string.main_apid_wifi) + "\n");
 	    builderAPID.append(strUDID);
 
-        this.tvVPNID = (TextView)findViewById(R.id.tvVPNID);
-        this.tvWIFIID = (TextView)findViewById(R.id.tvWIFIID);
+        this.tvVPNID = findViewById(R.id.tvVPNID);
+        this.tvWIFIID = findViewById(R.id.tvWIFIID);
         tvVPNID.setText(strVpnID);
         tvWIFIID.setText(strUDID);
     }

@@ -40,8 +40,8 @@ public class TabletInputSuccessFragment extends TabletInputFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_apply_success_tablet, container, false);
-		titleSuccess = (TextView) viewFragment.findViewById(R.id.titleSuccess);
-		contentSuccess = (TextView) viewFragment.findViewById(R.id.contentSuccess);
+		titleSuccess = viewFragment.findViewById(R.id.titleSuccess);
+		contentSuccess = viewFragment.findViewById(R.id.contentSuccess);
 		if (isBackToTopAuto) {
 			contentSuccess.setText(getString(R.string.back_to_top_auto));
 		}else {

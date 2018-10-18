@@ -76,12 +76,12 @@ public class ContentInputPasswordTabletFragment extends Fragment implements Soft
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_input_password_tablet, container, false);
-		titleInput = (TextView) viewFragment.findViewById(R.id.titleInput);
+		titleInput = viewFragment.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.input_password));
-		txtUserId = (TextView) viewFragment.findViewById(R.id.txtUserId);
-		txtPassword = (EditText) viewFragment.findViewById(R.id.txtPassword);
-		btnNext = (Button) viewFragment.findViewById(R.id.btnNext);
-		btnBack = (Button) viewFragment.findViewById(R.id.btnBack);
+		txtUserId = viewFragment.findViewById(R.id.txtUserId);
+		txtPassword = viewFragment.findViewById(R.id.txtPassword);
+		btnNext = viewFragment.findViewById(R.id.btnNext);
+		btnBack = viewFragment.findViewById(R.id.btnBack);
 		SoftKeyboardCtrl.addListenner(viewFragment, this);
 		viewFragment.setOnTouchListener(new View.OnTouchListener() {
 			@Override

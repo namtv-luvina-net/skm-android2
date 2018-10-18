@@ -37,10 +37,10 @@ public class ContentMenuPhoneFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View  view = inflater.inflate(R.layout.fragment_menu_phone, container, false);
-		btnMenuStart = (Button) view.findViewById(R.id.btnMenuStart);
-		btnMenuAPID = (Button) view.findViewById(R.id.btnMenuAPID);
-		btnMenuConfirmApply = (Button) view.findViewById(R.id.btnMenuConfirmApply);
-		btnSetting = (Button) view.findViewById(R.id.btnSetting);
+		btnMenuStart = view.findViewById(R.id.btnMenuStart);
+		btnMenuAPID = view.findViewById(R.id.btnMenuAPID);
+		btnMenuConfirmApply = view.findViewById(R.id.btnMenuConfirmApply);
+		btnSetting = view.findViewById(R.id.btnSetting);
 		return view;
 	}
 

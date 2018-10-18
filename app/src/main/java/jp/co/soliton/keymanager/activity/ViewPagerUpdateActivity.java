@@ -127,10 +127,10 @@ public class ViewPagerUpdateActivity extends FragmentActivity implements SoftKey
      * Init control common
      */
     private void setUpView(){
-        mViewPager = (InputApplyViewPager) findViewById(R.id.viewPager);
-        backButton = (Button) findViewById(R.id.btnInputBack);
-        nextButton = (Button) findViewById(R.id.btnInputNext);
-        groupCircle = (RelativeLayout) findViewById(R.id.groupCircle);
+        mViewPager = findViewById(R.id.viewPager);
+        backButton = findViewById(R.id.btnInputBack);
+        nextButton = findViewById(R.id.btnInputNext);
+        groupCircle = findViewById(R.id.groupCircle);
         adapter = new ViewPagerUpdateAdapter(getApplicationContext(),getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
         mViewPager.setPagingEnabled(false);

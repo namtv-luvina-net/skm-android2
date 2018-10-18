@@ -24,8 +24,8 @@ public class ContentLibrarySettingFragment extends TabletBaseSettingFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_library_info, container, false);
-		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
-		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		textViewBack = viewFragment.findViewById(R.id.textViewBack);
+		tvTitleHeader = viewFragment.findViewById(R.id.tvTitleHeader);
 		tvTitleHeader.setText(getString(R.string.label_library_setting));
 		return viewFragment;
 	}

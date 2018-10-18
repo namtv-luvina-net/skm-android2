@@ -38,8 +38,8 @@ public class InputHostPageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_host, null);
-        txtHostname = (EditText) root.findViewById(R.id.txtHostname);
-        txtSecurePort = (EditText) root.findViewById(R.id.txtSecurePort);
+        txtHostname = root.findViewById(R.id.txtHostname);
+        txtSecurePort = root.findViewById(R.id.txtSecurePort);
         initValueControl();
         return root;
     }

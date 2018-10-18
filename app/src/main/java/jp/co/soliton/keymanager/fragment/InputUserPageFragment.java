@@ -58,8 +58,8 @@ public class InputUserPageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_user, null);
-        txtUserId = (EditText) root.findViewById(R.id.txtUserId);
-        txtPassword = (EditText) root.findViewById(R.id.txtPassword);
+        txtUserId = root.findViewById(R.id.txtUserId);
+        txtPassword = root.findViewById(R.id.txtPassword);
         initValueControl();
         return root;
     }

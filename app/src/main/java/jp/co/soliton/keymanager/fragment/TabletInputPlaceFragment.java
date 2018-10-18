@@ -46,10 +46,10 @@ public class TabletInputPlaceFragment extends TabletInputFragment {
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_store_tablet, container, false);
-		zoneInputPlace = (RelativeLayout) view.findViewById(R.id.zoneInputPlace);
-		btnTargetVPN = (RelativeLayout) view.findViewById(R.id.btnTargetVPN);
-		btnTargetWiFi = (RelativeLayout) view.findViewById(R.id.btnTargetWifi);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		zoneInputPlace = view.findViewById(R.id.zoneInputPlace);
+		btnTargetVPN = view.findViewById(R.id.btnTargetVPN);
+		btnTargetWiFi = view.findViewById(R.id.btnTargetWifi);
+		titleInput = view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.target_place));
 
 		if (tabletAbtractInputFragment.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){

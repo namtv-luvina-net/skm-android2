@@ -36,9 +36,9 @@ public class MDMActivity extends BaseSettingPhoneActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdm_setting);
-	    btnDeleteMDM = (Button) findViewById(R.id.btnDeleteMDM);
-	    listView = (ListView) findViewById(R.id.listMdmItem);
-	    viewProgressBar = (RelativeLayout) findViewById(R.id.pb);
+	    btnDeleteMDM = findViewById(R.id.btnDeleteMDM);
+	    listView = findViewById(R.id.listMdmItem);
+	    viewProgressBar = findViewById(R.id.pb);
 	    listItemMDM = new ArrayList<>();
 	    adapterMDM = new AdapterMDM(this, listItemMDM);
 	    listView.setAdapter(adapterMDM);

@@ -27,9 +27,9 @@ public class DialogMenuCertDetail extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_menu_cert_detail);
 
-        btnCancel = (Button) findViewById(R.id.btnDlgCertDetailCancel);
-        btnDelete = (Button) findViewById(R.id.btnDlgCertDetailDel);
-        btnNotification = (Button) findViewById(R.id.btnDlgCertDetailNotif);
+        btnCancel = findViewById(R.id.btnDlgCertDetailCancel);
+        btnDelete = findViewById(R.id.btnDlgCertDetailDel);
+        btnNotification = findViewById(R.id.btnDlgCertDetailNotif);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override

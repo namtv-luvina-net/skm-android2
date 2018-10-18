@@ -30,13 +30,13 @@ public class LeftSideListCertAndReapplyTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_leftside_list_certificate_and_reapply, container, false);
-		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		tvBack = viewFragment.findViewById(R.id.tvBack);
 		listTextTitle = new TextView[5];
-		listTextTitle[0] = (TextView) viewFragment.findViewById(R.id.tvListCertificate);
-		listTextTitle[1] = (TextView) viewFragment.findViewById(R.id.tvInputPassword);
-		listTextTitle[2] = (TextView) viewFragment.findViewById(R.id.tvInputEmail);
-		listTextTitle[3] = (TextView) viewFragment.findViewById(R.id.tvInputReason);
-		listTextTitle[4] = (TextView) viewFragment.findViewById(R.id.tvConfirmApply);
+		listTextTitle[0] = viewFragment.findViewById(R.id.tvListCertificate);
+		listTextTitle[1] = viewFragment.findViewById(R.id.tvInputPassword);
+		listTextTitle[2] = viewFragment.findViewById(R.id.tvInputEmail);
+		listTextTitle[3] = viewFragment.findViewById(R.id.tvInputReason);
+		listTextTitle[4] = viewFragment.findViewById(R.id.tvConfirmApply);
 		return viewFragment;
 	}
 

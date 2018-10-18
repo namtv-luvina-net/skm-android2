@@ -46,17 +46,17 @@ public class DetailConfirmActivity extends FragmentActivity {
 	    setContentView(R.layout.activity_detail_confirm);
 	    id = getIntent().getStringExtra(StringList.ELEMENT_APPLY_ID);
 	    elementMgr = ElementApplyManager.getInstance(getApplicationContext());
-	    title = (TextView) findViewById(R.id.tvTitleHeader);
-		tvHostName = (TextView) findViewById(R.id.tvHostName);
-		tvUserId = (TextView) findViewById(R.id.titleUserId);
-	    titleStorage = (TextView) findViewById(R.id.title_storage);
-	    contentStorage = (TextView) findViewById(R.id.content_storage);
-		tvDate = (TextView) findViewById(R.id.tvDate);
-		tvStatus = (TextView) findViewById(R.id.tvStatus);
-		tvDeleteApply = (TextView) findViewById(R.id.tvDeleteApply);
-		tvConfirmApply = (TextView) findViewById(R.id.tvConfirmApply);
-	    tvTitleHeader = (TextView) findViewById(R.id.tvTitleHeader);
-	    textViewBack = (TextView) findViewById(R.id.textViewBack);
+	    title = findViewById(R.id.tvTitleHeader);
+		tvHostName = findViewById(R.id.tvHostName);
+		tvUserId = findViewById(R.id.titleUserId);
+	    titleStorage = findViewById(R.id.title_storage);
+	    contentStorage = findViewById(R.id.content_storage);
+		tvDate = findViewById(R.id.tvDate);
+		tvStatus = findViewById(R.id.tvStatus);
+		tvDeleteApply = findViewById(R.id.tvDeleteApply);
+		tvConfirmApply = findViewById(R.id.tvConfirmApply);
+	    tvTitleHeader = findViewById(R.id.tvTitleHeader);
+	    textViewBack = findViewById(R.id.textViewBack);
     }
 
 	public String getId() {

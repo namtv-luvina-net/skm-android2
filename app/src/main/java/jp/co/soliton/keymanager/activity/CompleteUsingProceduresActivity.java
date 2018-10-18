@@ -25,9 +25,9 @@ public class CompleteUsingProceduresActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_using_procedures);
-	    txtCN = (TextView) findViewById(R.id.txtCN);
-	    txtSN = (TextView) findViewById(R.id.txtSN);
-	    txtEpDate = (TextView) findViewById(R.id.txtEpDate);
+	    txtCN = findViewById(R.id.txtCN);
+	    txtSN = findViewById(R.id.txtSN);
+	    txtEpDate = findViewById(R.id.txtEpDate);
         Intent intent = getIntent();
         elementApply = (ElementApply)intent.getSerializableExtra("ELEMENT_APPLY");
     }

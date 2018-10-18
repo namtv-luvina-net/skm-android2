@@ -44,9 +44,9 @@ public class InputPlacePageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_place, null);
-        zoneInputPlace = (LinearLayout) root.findViewById(R.id.zoneInputPlace);
-        btnTargetVPN = (Button) root.findViewById(R.id.btnTargetVPN);
-        btnTargetWiFi = (Button) root.findViewById(R.id.btnTargetWifi);
+        zoneInputPlace = root.findViewById(R.id.zoneInputPlace);
+        btnTargetVPN = root.findViewById(R.id.btnTargetVPN);
+        btnTargetWiFi = root.findViewById(R.id.btnTargetWifi);
         if (pagerInputActivity.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2){
             pagerInputActivity.getInputApplyInfo().setPlace(TARGET_VPN);
             pagerInputActivity.getInputApplyInfo().savePref(pagerInputActivity);

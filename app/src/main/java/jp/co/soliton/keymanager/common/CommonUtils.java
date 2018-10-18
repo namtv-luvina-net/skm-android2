@@ -205,10 +205,7 @@ public class CommonUtils {
         if (string == null) {
             return true;
         }
-        if (string.isEmpty()) {
-            return true;
-        }
-        return false;
+	    return string.isEmpty();
     }
 
     /**
@@ -235,7 +232,7 @@ public class CommonUtils {
         if (string == null) {
             return 0;
         } else {
-            return Integer.parseInt(string.toString());
+            return Integer.parseInt(string);
         }
     }
 
@@ -250,7 +247,7 @@ public class CommonUtils {
         if (string == null) {
             return 0;
         } else {
-            return Double.parseDouble(string.toString());
+            return Double.parseDouble(string);
         }
     }
 
@@ -298,10 +295,7 @@ public class CommonUtils {
      */
     public static boolean isDigit(char c) {
         int x = (int) c;
-        if ((x >= 48 && x <= 57) || x == 45) {
-            return true;
-        }
-        return false;
+	    return (x >= 48 && x <= 57) || x == 45;
     }
 
     public static String capitalize(String str) {

@@ -75,7 +75,7 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 
 		Context context = SKMApplication.getAppContext();
 		SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-				context.MODE_PRIVATE);
+				Context.MODE_PRIVATE);
 		boolean isTraceMode = sharedPref.getBoolean(StringList.TRACE_LOG_KEY, false);
 		clickCount = isTraceMode ? 0 : MAX_CLICK_COUNT;
 		traceModeItem.setVisibility(isTraceMode ? View.VISIBLE : View.GONE);
@@ -117,7 +117,7 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 				clickCount = MAX_CLICK_COUNT;
 				Context context = SKMApplication.getAppContext();
 				SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-						context.MODE_PRIVATE);
+						Context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = sharedPref.edit();
 				editor.putBoolean(StringList.TRACE_LOG_KEY, false);
 				editor.commit();
@@ -140,7 +140,7 @@ public class ContentProductInfoSettingFragment extends TabletBaseSettingFragment
 				toast = Toast.makeText(context, getString(R.string.trace_mode_enable), Toast.LENGTH_SHORT);
 				if (clickCount == 0) {
 					SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-							context.MODE_PRIVATE);
+							Context.MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putBoolean(StringList.TRACE_LOG_KEY, true);
 					editor.commit();

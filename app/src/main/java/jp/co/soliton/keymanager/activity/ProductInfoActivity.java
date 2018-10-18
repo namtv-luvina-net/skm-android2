@@ -36,8 +36,8 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
-        btnLogSendMail = (Button) findViewById(R.id.btnLogSendMail);
-	    btnSettingProductInfo = (Button) findViewById(R.id.btnSettingProductInfo);
+        btnLogSendMail = findViewById(R.id.btnLogSendMail);
+	    btnSettingProductInfo = findViewById(R.id.btnSettingProductInfo);
 	    btnPrivacyPolicy = findViewById(R.id.btnPrivacyPolicy);
 	    progressDialog = new ProgressDialog(this);
 		traceModeSwitch =findViewById(R.id.sw_trace_mode);
@@ -64,7 +64,7 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
 
 		Context context = getApplicationContext();
 		SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-				context.MODE_PRIVATE);
+				MODE_PRIVATE);
 		boolean isTraceMode = sharedPref.getBoolean(StringList.TRACE_LOG_KEY, false);
 		clickCount = isTraceMode ? 0 : MAX_CLICK_COUNT;
 		traceModeItem.setVisibility(isTraceMode ? View.VISIBLE : View.GONE);
@@ -99,7 +99,7 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
 				clickCount = MAX_CLICK_COUNT;
 				Context context = getApplicationContext();
 				SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-						context.MODE_PRIVATE);
+						MODE_PRIVATE);
 				SharedPreferences.Editor editor = sharedPref.edit();
 				editor.putBoolean(StringList.TRACE_LOG_KEY, false);
 				editor.commit();
@@ -122,7 +122,7 @@ public class ProductInfoActivity extends BaseSettingPhoneActivity {
 				if (clickCount == 0) {
 					Context context = getApplicationContext();
 					SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-							context.MODE_PRIVATE);
+							MODE_PRIVATE);
 					SharedPreferences.Editor editor = sharedPref.edit();
 					editor.putBoolean(StringList.TRACE_LOG_KEY, true);
 					editor.commit();

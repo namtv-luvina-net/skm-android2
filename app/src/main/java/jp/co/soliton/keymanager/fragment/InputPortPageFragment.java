@@ -52,15 +52,15 @@ public class InputPortPageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_port, null);
-        txtPort = (EditText) root.findViewById(R.id.txtPort);
-        zoneInputPortTitle = (TextView) root.findViewById(R.id.zoneInputPortTitle);
-        txtGuideDownloadCaCertificate = (TextView) root.findViewById(R.id.tv_guide_download_ca_certificate);
+        txtPort = root.findViewById(R.id.txtPort);
+        zoneInputPortTitle = root.findViewById(R.id.zoneInputPortTitle);
+        txtGuideDownloadCaCertificate = root.findViewById(R.id.tv_guide_download_ca_certificate);
 	    if (pagerInputActivity.sdk_int_version < Build.VERSION_CODES.JELLY_BEAN_MR2) {
 		    txtGuideDownloadCaCertificate.setText(getString(R.string.download_ca_description42));
 	    }else {
 		    txtGuideDownloadCaCertificate.setText(Html.fromHtml(getString(R.string.download_ca_description43)));
 	    }
-        zoneInputPort = (LinearLayout) root.findViewById(R.id.zoneInputPort);
+        zoneInputPort = root.findViewById(R.id.zoneInputPort);
         initValueControl();
         return root;
     }

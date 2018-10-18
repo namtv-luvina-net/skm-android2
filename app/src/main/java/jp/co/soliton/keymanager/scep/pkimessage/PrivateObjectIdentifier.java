@@ -28,16 +28,16 @@ import org.bouncycastle.asn1.ASN1ObjectIdentifier;
    +-------------------+-----------------------------------------------+
  */
 public interface PrivateObjectIdentifier {
-	static final ASN1ObjectIdentifier veriSign = new ASN1ObjectIdentifier("2.16.840.1.113733");
-	static final ASN1ObjectIdentifier pki = veriSign.branch("1");
-	static final ASN1ObjectIdentifier attributes = pki.branch("9");
-	static final ASN1ObjectIdentifier messageType = attributes.branch("2");
-	static final ASN1ObjectIdentifier pkiStatus = attributes.branch("3");
-	static final ASN1ObjectIdentifier failInfo = attributes.branch("4");
-	static final ASN1ObjectIdentifier senderNonce = attributes.branch("5");
-	static final ASN1ObjectIdentifier recipientNonce = attributes.branch("6");
-	static final ASN1ObjectIdentifier transId = attributes.branch("7");
-	static final ASN1ObjectIdentifier extensionReq = attributes.branch("8");
+	ASN1ObjectIdentifier veriSign = new ASN1ObjectIdentifier("2.16.840.1.113733");
+	ASN1ObjectIdentifier pki = veriSign.branch("1");
+	ASN1ObjectIdentifier attributes = pki.branch("9");
+	ASN1ObjectIdentifier messageType = attributes.branch("2");
+	ASN1ObjectIdentifier pkiStatus = attributes.branch("3");
+	ASN1ObjectIdentifier failInfo = attributes.branch("4");
+	ASN1ObjectIdentifier senderNonce = attributes.branch("5");
+	ASN1ObjectIdentifier recipientNonce = attributes.branch("6");
+	ASN1ObjectIdentifier transId = attributes.branch("7");
+	ASN1ObjectIdentifier extensionReq = attributes.branch("8");
 
-	public ASN1ObjectIdentifier getASN1ObjectIdentifier();
+	ASN1ObjectIdentifier getASN1ObjectIdentifier();
 }

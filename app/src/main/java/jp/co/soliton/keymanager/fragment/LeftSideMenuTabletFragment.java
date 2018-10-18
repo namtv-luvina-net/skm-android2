@@ -44,8 +44,8 @@ public class LeftSideMenuTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_left_side_menu_tablet, container, false);
-		textViewGuide3 = (TextView) viewFragment.findViewById(R.id.tv_guide_3);
-		btnSetting = (Button) viewFragment.findViewById(R.id.btnSetting);
+		textViewGuide3 = viewFragment.findViewById(R.id.tv_guide_3);
+		btnSetting = viewFragment.findViewById(R.id.btnSetting);
 		return viewFragment;
 	}
 

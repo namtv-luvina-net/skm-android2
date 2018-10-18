@@ -87,7 +87,7 @@ public class CertRepReponseHandler implements ResponseHandler<CertRep> {
 			@SuppressWarnings("deprecation")
 			CertStore certStore = pkiMessage.getCertificatesAndCRLs("Collection", "BC");
 			Collection<? extends Certificate> certificateCollection;
-			certificateCollection = (Collection<? extends Certificate>) certStore.getCertificates(null);
+			certificateCollection = certStore.getCertificates(null);
 			Iterator<? extends Certificate> it = certificateCollection.iterator();
 			X509Certificate cert = (X509Certificate) it.next();
 			LogCtrl.getInstance().info("SCEP: Receive X509Certificate");

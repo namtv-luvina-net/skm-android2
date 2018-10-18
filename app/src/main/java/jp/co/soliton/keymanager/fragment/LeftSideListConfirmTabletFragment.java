@@ -22,9 +22,9 @@ public class LeftSideListConfirmTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_left_side_list_confirm_tablet, container, false);
-		tvTitle = (TextView) viewFragment.findViewById(R.id.tvTitle);
+		tvTitle = viewFragment.findViewById(R.id.tvTitle);
 		tvTitle.setText(getString(R.string.list_application));
-		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		tvBack = viewFragment.findViewById(R.id.tvBack);
 		return viewFragment;
 	}
 

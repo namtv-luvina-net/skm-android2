@@ -45,7 +45,7 @@ public class ContentCompleteConfirmApplyFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_complete_confirm_apply_tablet, container, false);
 		layoutComplete = viewFragment.findViewById(R.id.layoutComplete);
-		btnStartUsing = (Button) viewFragment.findViewById(R.id.btnStartUsing);
+		btnStartUsing = viewFragment.findViewById(R.id.btnStartUsing);
 		return viewFragment;
 	}
 

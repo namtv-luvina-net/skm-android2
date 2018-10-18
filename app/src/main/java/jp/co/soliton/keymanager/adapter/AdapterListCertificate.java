@@ -231,10 +231,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
 				maxLength = bounds.width();
 			}
 		}
-		if (maxLength > widthTextView) {
-			return true;
-		}
-		return false;
+		return maxLength > widthTextView;
 	}
 
 	private boolean containStoreWIFI() {
@@ -269,10 +266,7 @@ public class AdapterListCertificate extends ArrayAdapter<ElementApply> {
 			maxLength = txtStatus.getMeasuredWidth();
 		}
 
-		if (maxLength > widthTextView) {
-			return true;
-		}
-		return false;
+		return maxLength > widthTextView;
 	}
 
 	private boolean isHideIconWithCN(TextView txtCN, int widthTextView) {

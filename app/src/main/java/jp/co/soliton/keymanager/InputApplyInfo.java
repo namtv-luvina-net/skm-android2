@@ -102,7 +102,7 @@ public class InputApplyInfo {
 
 	public void savePref(Context context) {
         SharedPreferences pref = context.getSharedPreferences(StringList.m_str_store_preference,
-                context.MODE_PRIVATE);
+		        Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         if (host != null && !host.isEmpty()) {
             editor.putString(INPUT_APPLY_HOST, host);
@@ -154,7 +154,7 @@ public class InputApplyInfo {
 
     public static InputApplyInfo getPref(Context context) {
         SharedPreferences pref = context.getSharedPreferences(StringList.m_str_store_preference,
-                context.MODE_PRIVATE);
+		        Context.MODE_PRIVATE);
         InputApplyInfo inputApplyInfo = new InputApplyInfo();
         inputApplyInfo.setHost(pref.getString(INPUT_APPLY_HOST, ""));
         inputApplyInfo.setSecurePort(pref.getString(INPUT_APPLY_SECURE_PORT, ""));
@@ -170,7 +170,7 @@ public class InputApplyInfo {
 
     public static void deletePref(Context context) {
         SharedPreferences pref = context.getSharedPreferences(StringList.m_str_store_preference,
-                context.MODE_PRIVATE);
+		        Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         if (!pref.getString(INPUT_APPLY_HOST, "").isEmpty()) {
             editor.remove(INPUT_APPLY_HOST);

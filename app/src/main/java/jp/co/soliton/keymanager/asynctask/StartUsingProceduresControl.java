@@ -99,7 +99,7 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 	private StartUsingProceduresControl(Activity activity, InformCtrl m_InformCtrl, ElementApply element) {
 		this.activity = activity;
 		isTablet = activity.getResources().getBoolean(R.bool.isTablet);
-		this.m_InformCtrl = m_InformCtrl;
+		StartUsingProceduresControl.m_InformCtrl = m_InformCtrl;
 		this.element = element;
 		scepRequester = getScepRequester();
 	}
@@ -434,16 +434,16 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				if (arr[i] == null || arr[i].length() <= 0) {
 					continue;
 				}
-				if (arr[i].toString().startsWith("C=")) {
-					element.setSubjectCountryName(arr[i].toString().replace("C=", "").trim());
-				} else if (arr[i].toString().startsWith("ST=")) {
-					element.setSubjectStateOrProvinceName(arr[i].toString().replace("ST=", "").trim());
-				} else if (arr[i].toString().startsWith("L=")) {
-					element.setSubjectLocalityName(arr[i].toString().replace("L=", "").trim());
-				} else if (arr[i].toString().startsWith("O=")) {
-					element.setSubjectOrganizationName(arr[i].toString().replace("O=", "").trim());
-				} else if (arr[i].toString().startsWith("E=")) {
-					element.setSubjectEmailAddress(arr[i].toString().replace("E=", "").trim());
+				if (arr[i].startsWith("C=")) {
+					element.setSubjectCountryName(arr[i].replace("C=", "").trim());
+				} else if (arr[i].startsWith("ST=")) {
+					element.setSubjectStateOrProvinceName(arr[i].replace("ST=", "").trim());
+				} else if (arr[i].startsWith("L=")) {
+					element.setSubjectLocalityName(arr[i].replace("L=", "").trim());
+				} else if (arr[i].startsWith("O=")) {
+					element.setSubjectOrganizationName(arr[i].replace("O=", "").trim());
+				} else if (arr[i].startsWith("E=")) {
+					element.setSubjectEmailAddress(arr[i].replace("E=", "").trim());
 				}
 			}
 			str = certRep.getCertificate().getIssuerDN().toString();
@@ -452,26 +452,26 @@ public class StartUsingProceduresControl implements KeyChainAliasCallback {
 				if (arrIssuer[i] == null || arrIssuer[i].length() <= 0) {
 					continue;
 				}
-				if (arrIssuer[i].toString().startsWith("C=")) {
-					element.setIssuerCountryName(arrIssuer[i].toString().replace("C=", "").trim());
+				if (arrIssuer[i].startsWith("C=")) {
+					element.setIssuerCountryName(arrIssuer[i].replace("C=", "").trim());
 				}
-				if (arrIssuer[i].toString().startsWith("ST=")) {
-					element.setIssuerStateOrProvinceName(arrIssuer[i].toString().replace("ST=", "").trim());
+				if (arrIssuer[i].startsWith("ST=")) {
+					element.setIssuerStateOrProvinceName(arrIssuer[i].replace("ST=", "").trim());
 				}
-				if (arrIssuer[i].toString().startsWith("L=")) {
-					element.setIssuerLocalityName(arrIssuer[i].toString().replace("L=", "").trim());
+				if (arrIssuer[i].startsWith("L=")) {
+					element.setIssuerLocalityName(arrIssuer[i].replace("L=", "").trim());
 				}
-				if (arrIssuer[i].toString().startsWith("O=")) {
-					element.setIssuerOrganizationName(arrIssuer[i].toString().replace("O=", "").trim());
+				if (arrIssuer[i].startsWith("O=")) {
+					element.setIssuerOrganizationName(arrIssuer[i].replace("O=", "").trim());
 				}
-				if (arrIssuer[i].toString().startsWith("CN=")) {
-					element.setIssuerCommonName(arrIssuer[i].toString().replace("CN=", "").trim());
+				if (arrIssuer[i].startsWith("CN=")) {
+					element.setIssuerCommonName(arrIssuer[i].replace("CN=", "").trim());
 				}
-				if (arrIssuer[i].toString().startsWith("E=")) {
-					element.setIssuerEmailAdress(arrIssuer[i].toString().replace("E=", "").trim());
+				if (arrIssuer[i].startsWith("E=")) {
+					element.setIssuerEmailAdress(arrIssuer[i].replace("E=", "").trim());
 				}
-				if (arrIssuer[i].toString().startsWith("OU=")) {
-					element.setIssuerOrganizationUnitName(arrIssuer[i].toString().replace("OU=", "").trim());
+				if (arrIssuer[i].startsWith("OU=")) {
+					element.setIssuerOrganizationUnitName(arrIssuer[i].replace("OU=", "").trim());
 				}
 			}
 			element.setVersion(String.valueOf(certRep.getCertificate().getVersion()));

@@ -25,12 +25,12 @@ public class SettingActivity  extends BaseSettingPhoneActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        menuSettingCertList = (RelativeLayout) findViewById(R.id.menuSettingCertList);
-        menuSettingNotif = (RelativeLayout) findViewById(R.id.menuSettingNotif);
-        menuSettingProduct = (RelativeLayout) findViewById(R.id.menuSettingProduct);
-        menuSettingLibrary = (RelativeLayout) findViewById(R.id.menuSettingLibrary);
-	    menuSettingMDM = (RelativeLayout) findViewById(R.id.menuSettingMDM);
-	    layoutMDM = (LinearLayout) findViewById(R.id.ll_mdm);
+        menuSettingCertList = findViewById(R.id.menuSettingCertList);
+        menuSettingNotif = findViewById(R.id.menuSettingNotif);
+        menuSettingProduct = findViewById(R.id.menuSettingProduct);
+        menuSettingLibrary = findViewById(R.id.menuSettingLibrary);
+	    menuSettingMDM = findViewById(R.id.menuSettingMDM);
+	    layoutMDM = findViewById(R.id.ll_mdm);
 	    mdm = new MDMFlgs();
     }
 

@@ -33,15 +33,15 @@ public class LeftSideInputTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_left_side_input_tablet, container, false);
-		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		tvBack = viewFragment.findViewById(R.id.tvBack);
 		listTextTitle = new TextView[7];
-		listTextTitle[0] = (TextView) viewFragment.findViewById(R.id.tv_host_name_and_port_number);
-		listTextTitle[1] = (TextView) viewFragment.findViewById(R.id.tv_download_ca_certificate);
-		listTextTitle[2] = (TextView) viewFragment.findViewById(R.id.tv_select_store);
-		listTextTitle[3] = (TextView) viewFragment.findViewById(R.id.tv_input_id_and_password);
-		listTextTitle[4] = (TextView) viewFragment.findViewById(R.id.tv_input_email);
-		listTextTitle[5] = (TextView) viewFragment.findViewById(R.id.tv_input_reason);
-		listTextTitle[6] = (TextView) viewFragment.findViewById(R.id.tv_confirm_input);
+		listTextTitle[0] = viewFragment.findViewById(R.id.tv_host_name_and_port_number);
+		listTextTitle[1] = viewFragment.findViewById(R.id.tv_download_ca_certificate);
+		listTextTitle[2] = viewFragment.findViewById(R.id.tv_select_store);
+		listTextTitle[3] = viewFragment.findViewById(R.id.tv_input_id_and_password);
+		listTextTitle[4] = viewFragment.findViewById(R.id.tv_input_email);
+		listTextTitle[5] = viewFragment.findViewById(R.id.tv_input_reason);
+		listTextTitle[6] = viewFragment.findViewById(R.id.tv_confirm_input);
 		return viewFragment;
 	}
 

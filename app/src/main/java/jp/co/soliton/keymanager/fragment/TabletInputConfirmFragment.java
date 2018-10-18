@@ -71,13 +71,13 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 					TAG_TABLET_BASE_INPUT_FRAGMENT);
 		}
 		View view = inflater.inflate(R.layout.fragment_input_confirm_tablet, container, false);
-		txtHostName = (TextView) view.findViewById(R.id.txtHostName);
-		txtPortName = (TextView) view.findViewById(R.id.txtPortName);
-		txtUserId = (TextView) view.findViewById(R.id.txtUserId);
-		txtStore = (TextView) view.findViewById(R.id.txtStore);
-		txtEmail = (TextView) view.findViewById(R.id.txtEmail);
-		txtReason = (TextView) view.findViewById(R.id.txtReason);
-		titleInput = (TextView) view.findViewById(R.id.titleInput);
+		txtHostName = view.findViewById(R.id.txtHostName);
+		txtPortName = view.findViewById(R.id.txtPortName);
+		txtUserId = view.findViewById(R.id.txtUserId);
+		txtStore = view.findViewById(R.id.txtStore);
+		txtEmail = view.findViewById(R.id.txtEmail);
+		txtReason = view.findViewById(R.id.txtReason);
+		titleInput = view.findViewById(R.id.titleInput);
 		titleInput.setText(getString(R.string.confirm_content));
 		return view;
 	}
@@ -374,7 +374,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 				tabletAbtractInputFragment.setErroType(ERR_UNAUTHORIZED);
 				return false;
 			}
-			if (retStr.length() > 4 && retStr.startsWith(getString(R.string.ERR).toString())) {
+			if (retStr.length() > 4 && retStr.startsWith(getString(R.string.ERR))) {
 				LogCtrl.getInstance().error("Apply: Receive " + retStr);
 				tabletAbtractInputFragment.setErroType(ERR_COLON);
 				return false;

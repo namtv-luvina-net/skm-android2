@@ -43,14 +43,14 @@ public class ContentDetailConfirmFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_detail_confirm_apply_tablet, container, false);
 		elementMgr = ElementApplyManager.getInstance(getActivity());
-		tvHostName = (TextView) viewFragment.findViewById(R.id.tvHostName);
-		tvUserId = (TextView) viewFragment.findViewById(R.id.titleUserId);
-		titleStorage = (TextView) viewFragment.findViewById(R.id.title_storage);
-		contentStorage = (TextView) viewFragment.findViewById(R.id.content_storage);
-		tvDate = (TextView) viewFragment.findViewById(R.id.tvDate);
-		tvStatus = (TextView) viewFragment.findViewById(R.id.tvStatus);
-		tvDeleteApply = (TextView) viewFragment.findViewById(R.id.tvDeleteApply);
-		tvConfirmApply = (TextView) viewFragment.findViewById(R.id.tvConfirmApply);
+		tvHostName = viewFragment.findViewById(R.id.tvHostName);
+		tvUserId = viewFragment.findViewById(R.id.titleUserId);
+		titleStorage = viewFragment.findViewById(R.id.title_storage);
+		contentStorage = viewFragment.findViewById(R.id.content_storage);
+		tvDate = viewFragment.findViewById(R.id.tvDate);
+		tvStatus = viewFragment.findViewById(R.id.tvStatus);
+		tvDeleteApply = viewFragment.findViewById(R.id.tvDeleteApply);
+		tvConfirmApply = viewFragment.findViewById(R.id.tvConfirmApply);
 		return viewFragment;
 	}
 

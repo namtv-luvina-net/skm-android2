@@ -38,7 +38,7 @@ public class DateUtils {
 	}
 
 	public static String convertDateToString(String type, Date date) {
-		String strDate = new SimpleDateFormat(type).format(date).toString();
+		String strDate = new SimpleDateFormat(type).format(date);
 		return strDate;
 	}
 
@@ -46,10 +46,7 @@ public class DateUtils {
 		try {
 			Date currentDate = Calendar.getInstance().getTime();
 			Date dateCompare = convertSringToDate(STRING_DATE_FORMAT_FOR_LOG, strDateToCompare);
-			if (currentDate.before(dateCompare)) {
-				return false;
-			}
-			return true;
+			return !currentDate.before(dateCompare);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -150,9 +150,9 @@ public class ViewPagerInputActivity extends FragmentActivity implements SoftKeyb
      * Init control common
      */
     private void setUpView(){
-        mViewPager = (InputApplyViewPager) findViewById(R.id.viewPager);
-        backButton = (Button) findViewById(R.id.btnInputBack);
-        nextButton = (Button) findViewById(R.id.btnInputNext);
+        mViewPager = findViewById(R.id.viewPager);
+        backButton = findViewById(R.id.btnInputBack);
+        nextButton = findViewById(R.id.btnInputNext);
         adapter = new ViewPagerAdapter(this,getSupportFragmentManager());
 	    if (savedInstanceState == null){
 		    adapter.init();

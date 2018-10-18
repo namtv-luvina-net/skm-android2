@@ -26,8 +26,8 @@ public class SettingListCertificateActivity extends BaseSettingPhoneActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_list_certificate);
-	    tvNoCertInstalled = (TextView) findViewById(R.id.tvNoCertInstalled);
-        list = (ListView)findViewById(R.id.listSettingCert);
+	    tvNoCertInstalled = findViewById(R.id.tvNoCertInstalled);
+        list = findViewById(R.id.listSettingCert);
         elementMgr = ElementApplyManager.getInstance(getApplicationContext());
 	    listCertificate = elementMgr.getAllCertificate();
 	    adapterListCertificate = new AdapterSettingListCertificate(this, listCertificate, false);

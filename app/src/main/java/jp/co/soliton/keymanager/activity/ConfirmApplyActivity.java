@@ -418,7 +418,7 @@ public class ConfirmApplyActivity extends Activity {
                 m_nErroType = ERR_UNAUTHORIZED;
                 return false;
             }
-            if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR).toString())) {
+            if (m_InformCtrl.GetRtn().length() > 4 && m_InformCtrl.GetRtn().startsWith(getString(R.string.ERR))) {
                 LogCtrl.getInstance().error("Apply: Receive ERR");
                 m_nErroType = ERR_COLON;
                 return false;

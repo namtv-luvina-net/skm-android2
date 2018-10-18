@@ -33,8 +33,8 @@ public class InputReasonPageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_reason, null);
-        txtReason = (EditText) root.findViewById(R.id.txtReason);
-        btnSkipReason = (Button) root.findViewById(R.id.btnSkipReason);
+        txtReason = root.findViewById(R.id.txtReason);
+        btnSkipReason = root.findViewById(R.id.btnSkipReason);
         initValueControl();
         return root;
     }

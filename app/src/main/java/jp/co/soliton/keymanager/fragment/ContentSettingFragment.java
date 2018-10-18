@@ -48,15 +48,15 @@ public class ContentSettingFragment extends TabletBaseSettingFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_setting_tablet, container, false);
-		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
-		moreOption = (Button) viewFragment.findViewById(R.id.more_option);
-		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
-		menuSettingCertList = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingCertList);
-		menuSettingNotif = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingNotif);
-		menuSettingProduct = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingProduct);
-		menuSettingLibrary = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingLibrary);
-		menuSettingMDM = (RelativeLayout) viewFragment.findViewById(R.id.menuSettingMDM);
-		layoutMDM = (LinearLayout) viewFragment.findViewById(R.id.ll_mdm);
+		tvTitleHeader = viewFragment.findViewById(R.id.tvTitleHeader);
+		moreOption = viewFragment.findViewById(R.id.more_option);
+		textViewBack = viewFragment.findViewById(R.id.textViewBack);
+		menuSettingCertList = viewFragment.findViewById(R.id.menuSettingCertList);
+		menuSettingNotif = viewFragment.findViewById(R.id.menuSettingNotif);
+		menuSettingProduct = viewFragment.findViewById(R.id.menuSettingProduct);
+		menuSettingLibrary = viewFragment.findViewById(R.id.menuSettingLibrary);
+		menuSettingMDM = viewFragment.findViewById(R.id.menuSettingMDM);
+		layoutMDM = viewFragment.findViewById(R.id.ll_mdm);
 		mdm = new MDMFlgs();
 		return viewFragment;
 	}

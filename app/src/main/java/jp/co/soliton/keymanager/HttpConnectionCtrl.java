@@ -675,10 +675,10 @@ public class HttpConnectionCtrl {
 			}
 
 			public void checkClientTrusted(X509Certificate[] chain,
-					String authType) throws CertificateException {
+					String authType) {
 			}
 			public void checkServerTrusted(X509Certificate[] chain,
-					String authType) throws CertificateException {
+					String authType) {
 
 			}
 

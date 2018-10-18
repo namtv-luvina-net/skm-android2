@@ -45,10 +45,10 @@ public class ContentListCertificateSettingFragment extends TabletBaseSettingFrag
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_setting_list_certificate, container, false);
-		tvNoCertInstalled = (TextView) viewFragment.findViewById(R.id.tvNoCertInstalled);
-		textViewBack = (TextView) viewFragment.findViewById(R.id.textViewBack);
-		list = (ListView) viewFragment.findViewById(R.id.listSettingCert);
-		tvTitleHeader = (TextView) viewFragment.findViewById(R.id.tvTitleHeader);
+		tvNoCertInstalled = viewFragment.findViewById(R.id.tvNoCertInstalled);
+		textViewBack = viewFragment.findViewById(R.id.textViewBack);
+		list = viewFragment.findViewById(R.id.listSettingCert);
+		tvTitleHeader = viewFragment.findViewById(R.id.tvTitleHeader);
 		tvTitleHeader.setText(getString(R.string.list_cert));
 		return viewFragment;
 	}

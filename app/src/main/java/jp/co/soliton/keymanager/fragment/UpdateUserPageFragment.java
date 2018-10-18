@@ -60,8 +60,8 @@ public class UpdateUserPageFragment extends ReapplyBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_reapply_user, null);
-        txtPassword = (EditText) root.findViewById(R.id.txtPassword);
-        txtUserId = (TextView) root.findViewById(R.id.txtUserId);
+        txtPassword = root.findViewById(R.id.txtPassword);
+        txtUserId = root.findViewById(R.id.txtUserId);
         initValueControl();
         return root;
     }

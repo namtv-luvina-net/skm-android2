@@ -86,14 +86,14 @@ public class AdapterListConfirmTabletApply extends ArrayAdapter<ElementApply> {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_confirm_apply_tablet, parent, false);
-            viewHolder.titleHost = (TextView) convertView.findViewById(R.id.titleDateInfo);
-            viewHolder.tvHostValue = (TextView) convertView.findViewById(R.id.titleUserId);
-            viewHolder.titleID = (TextView) convertView.findViewById(R.id.titleID);
-            viewHolder.tvIdValue = (TextView) convertView.findViewById(R.id.tvIdValue);
-            viewHolder.tvStatus = (TextView) convertView.findViewById(R.id.tvStatus);
-            viewHolder.tvUpdateDate = (TextView) convertView.findViewById(R.id.tvUpdateDate);
-	        viewHolder.titleStorage = (TextView) convertView.findViewById(R.id.titleStorage);
-	        viewHolder.contentStorage = (TextView) convertView.findViewById(R.id.contentStorage);
+            viewHolder.titleHost = convertView.findViewById(R.id.titleDateInfo);
+            viewHolder.tvHostValue = convertView.findViewById(R.id.titleUserId);
+            viewHolder.titleID = convertView.findViewById(R.id.titleID);
+            viewHolder.tvIdValue = convertView.findViewById(R.id.tvIdValue);
+            viewHolder.tvStatus = convertView.findViewById(R.id.tvStatus);
+            viewHolder.tvUpdateDate = convertView.findViewById(R.id.tvUpdateDate);
+	        viewHolder.titleStorage = convertView.findViewById(R.id.titleStorage);
+	        viewHolder.contentStorage = convertView.findViewById(R.id.contentStorage);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

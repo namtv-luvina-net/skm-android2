@@ -30,7 +30,7 @@ public class ContentUpdateFromNotificationFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_notif_update_tablet, container, false);
-		btnStartUpdate = (Button) viewFragment.findViewById(R.id.btnStartUpdate);
+		btnStartUpdate = viewFragment.findViewById(R.id.btnStartUpdate);
 		return viewFragment;
 	}
 

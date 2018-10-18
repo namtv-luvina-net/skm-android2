@@ -77,10 +77,9 @@ public class X509Utils {
      * Gets the URL of the Certificate Revocation List for a Certificate
      * @param certificate	the Certificate
      * @return	the String where you can check if the certificate was revoked
-     * @throws CertificateParsingException
      * @throws IOException
      */
-    public static String getCRLURL(X509Certificate certificate) throws CertificateParsingException {
+    public static String getCRLURL(X509Certificate certificate) {
         DERObject obj;
         try {
             obj = getExtensionValue(certificate, X509Extensions.CRLDistributionPoints.getId());

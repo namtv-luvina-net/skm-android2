@@ -97,11 +97,11 @@ public class AdapterSettingListCertificate extends ArrayAdapter<ElementApply> {
 	        }else {
 		        convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_setting_certificate, parent, false);
 	        }
-            viewHolder.txtStore = (TextView) convertView.findViewById(R.id.txtStore);
-            viewHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatusCert);
-            viewHolder.txtCN = (TextView) convertView.findViewById(R.id.txtCommonNameCert);
-            viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icSettingCertificate);
-            viewHolder.llSettingCert = (LinearLayout) convertView.findViewById(R.id.llSettingCert);
+            viewHolder.txtStore = convertView.findViewById(R.id.txtStore);
+            viewHolder.txtStatus = convertView.findViewById(R.id.txtStatusCert);
+            viewHolder.txtCN = convertView.findViewById(R.id.txtCommonNameCert);
+            viewHolder.icCertificate = convertView.findViewById(R.id.icSettingCertificate);
+            viewHolder.llSettingCert = convertView.findViewById(R.id.llSettingCert);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

@@ -35,9 +35,9 @@ public class InputEmailPageFragment extends InputBasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_input_email, null);
-        txtEmail = (EditText) root.findViewById(R.id.txtEmail);
-        btnSkipEmail = (Button) root.findViewById(R.id.btnSkipEmail);
-        titleEmail = (AutoResizeTextView) root.findViewById(R.id.titleEmail);
+        txtEmail = root.findViewById(R.id.txtEmail);
+        btnSkipEmail = root.findViewById(R.id.btnSkipEmail);
+        titleEmail = root.findViewById(R.id.titleEmail);
         if (ValidateParams.isJPLanguage()) {
             titleEmail.setMaxLines(1);
         } else {

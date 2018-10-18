@@ -38,7 +38,7 @@ public class WifiControl {
 		TLS,
 		TTLS,
 		LEAP,
-	};
+	}
 
 	public static final int TLS = 13;
 	public static final int LEAP = 17;
@@ -133,7 +133,6 @@ public class WifiControl {
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_OuterIdentity)) {	// 外部ID
 			item_piece.SetIdentity(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_TLSTrustedServerNames)) {	// 証明書
-			;
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_AcceptEAPTypes)) {	// EAP type
 			item_piece.SetEAPType(strData);
 		} else if(strKeyName.equalsIgnoreCase(StringList.m_str_Phase2)) {	// EAP Phase2 Authentication
@@ -1507,4 +1506,4 @@ public class WifiControl {
 
             }
         }
-};
+}

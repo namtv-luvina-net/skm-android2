@@ -34,10 +34,7 @@ public class ValidateParams {
                 return false;
             }
         }
-        if (userId.contains("  ")) {
-            return false;
-        }
-        return true;
+	    return !userId.contains("  ");
     }
 
     /**
@@ -60,9 +57,6 @@ public class ValidateParams {
      * @return boolean
      */
     public static Boolean isJPLanguage() {
-        if (Locale.getDefault().getLanguage().equals("ja")) {
-            return true;
-        }
-        return false;
+	    return Locale.getDefault().getLanguage().equals("ja");
     }
 }

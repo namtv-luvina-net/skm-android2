@@ -42,8 +42,8 @@ public class ContentListCertificateTabletFragment extends Fragment implements Ad
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_list_apply_update_tablet, container, false);
-		listView = (ListView) viewFragment.findViewById(R.id.listCertificate);
-		tvNew = (TextView) viewFragment.findViewById(R.id.tvNewApply);
+		listView = viewFragment.findViewById(R.id.listCertificate);
+		tvNew = viewFragment.findViewById(R.id.tvNewApply);
 		return viewFragment;
 	}
 

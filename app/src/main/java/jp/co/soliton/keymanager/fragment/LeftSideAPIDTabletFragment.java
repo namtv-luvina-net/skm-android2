@@ -23,7 +23,7 @@ public class LeftSideAPIDTabletFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_left_side_apid_tablet, container, false);
-		tvBack = (TextView) viewFragment.findViewById(R.id.tvBack);
+		tvBack = viewFragment.findViewById(R.id.tvBack);
 		return viewFragment;
 	}
 

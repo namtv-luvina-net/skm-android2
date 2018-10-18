@@ -37,7 +37,7 @@ public class LogCtrl {
 	public void updateTraceMode() {
 		Context context = SKMApplication.getAppContext();
 		SharedPreferences sharedPref = context.getSharedPreferences(StringList.m_str_store_preference,
-				context.MODE_PRIVATE);
+				Context.MODE_PRIVATE);
 		isTraceMode = sharedPref.getBoolean(StringList.TRACE_LOG_KEY, false);
 	}
 

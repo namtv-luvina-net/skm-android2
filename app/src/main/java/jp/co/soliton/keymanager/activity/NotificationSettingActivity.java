@@ -26,7 +26,7 @@ import java.util.Date;
 public class NotificationSettingActivity extends BaseSettingPhoneActivity implements CompoundButton.OnCheckedChangeListener {
     public static final String KEY_NOTIF_MODE = "KEY_NOTIF_MODE";
     public enum NotifModeEnum {
-        ALL, ONE;
+        ALL, ONE
     }
     private Switch swNotifFlag;
     private Switch swNotifBeforeFlag;

@@ -94,11 +94,11 @@ public class AdapterListCertificateTablet extends ArrayAdapter<ElementApply> {
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_apply_update_tablet, parent, false);
-	        viewHolder.txtStore = (TextView) convertView.findViewById(R.id.txtStore);
-	        viewHolder.titleDateInfo = (TextView) convertView.findViewById(R.id.titleDateInfo);
-	        viewHolder.titleCN = (TextView) convertView.findViewById(R.id.titleCN);
-	        viewHolder.btnApplyUpdate = (TextView) convertView.findViewById(R.id.btnApplyUpdate);
-	        viewHolder.icCertificate = (ImageView) convertView.findViewById(R.id.icCertificate);
+	        viewHolder.txtStore = convertView.findViewById(R.id.txtStore);
+	        viewHolder.titleDateInfo = convertView.findViewById(R.id.titleDateInfo);
+	        viewHolder.titleCN = convertView.findViewById(R.id.titleCN);
+	        viewHolder.btnApplyUpdate = convertView.findViewById(R.id.btnApplyUpdate);
+	        viewHolder.icCertificate = convertView.findViewById(R.id.icCertificate);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

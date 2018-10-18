@@ -35,10 +35,10 @@ public class ContentCompleteUsingProceduresFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		viewFragment = inflater.inflate(R.layout.fragment_complete_using_procedures_tablet, container, false);
-        txtCN = (TextView) viewFragment.findViewById(R.id.txtCN);
-        txtSN = (TextView) viewFragment.findViewById(R.id.txtSN);
-        txtEpDate = (TextView) viewFragment.findViewById(R.id.txtEpDate);
-		backToTop = (TextView) viewFragment.findViewById(R.id.backToTop);
+        txtCN = viewFragment.findViewById(R.id.txtCN);
+        txtSN = viewFragment.findViewById(R.id.txtSN);
+        txtEpDate = viewFragment.findViewById(R.id.txtEpDate);
+		backToTop = viewFragment.findViewById(R.id.backToTop);
 		return viewFragment;
 	}
 

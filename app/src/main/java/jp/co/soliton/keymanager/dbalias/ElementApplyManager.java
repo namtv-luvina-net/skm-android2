@@ -162,7 +162,7 @@ public class ElementApplyManager {
 					elementApply.setVersionEpsAp(getColumnStringWithCursor(cursor, EPSAP_VERSION_COLUMN));
 					elementApply.setTarger(getColumnStringWithCursor(cursor, TARGET_COLUMN));
 					elementApply.setStatus(getColumnIntWithCursor(cursor, STATUS_COLUMN));
-					elementApply.setChallenge(getColumnIntWithCursor(cursor, CHALLENGE_COLUMN) > 0 ? true : false);
+					elementApply.setChallenge(getColumnIntWithCursor(cursor, CHALLENGE_COLUMN) > 0);
 					elementApply.setUpdateDate(getColumnStringWithCursor(cursor, UPDATE_AT_COLUMN));
 					elementApply.setNotiEnableFlag(1 == getColumnIntWithCursor(cursor, NOTI_ENABLE_FLAG_COLUMN));
 					elementApply.setNotiEnableBeforeFlag(1 == getColumnIntWithCursor(cursor,
@@ -285,7 +285,7 @@ public class ElementApplyManager {
 			elementApply.setTarger(getColumnStringWithCursor(cursor, TARGET_COLUMN));
 			elementApply.setStatus(getColumnIntWithCursor(cursor, STATUS_COLUMN));
 			elementApply.setVersionEpsAp(getColumnStringWithCursor(cursor, EPSAP_VERSION_COLUMN));
-			elementApply.setChallenge(getColumnIntWithCursor(cursor, CHALLENGE_COLUMN) > 0 ? true : false);
+			elementApply.setChallenge(getColumnIntWithCursor(cursor, CHALLENGE_COLUMN) > 0);
 			elementApply.setUpdateDate(getColumnStringWithCursor(cursor, UPDATE_AT_COLUMN));
 			elementApply.setExpirationDate(getColumnStringWithCursor(cursor, EXPIRATION_DATE_COLUMN));
 
@@ -440,9 +440,6 @@ public class ElementApplyManager {
 			cursor.close();
 			closeDatabase();
 		}
-		if (total > 0) {
-			return true;
-		}
-		return false;
+		return total > 0;
 	}
 }
