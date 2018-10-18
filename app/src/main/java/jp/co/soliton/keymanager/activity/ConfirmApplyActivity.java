@@ -187,13 +187,13 @@ public class ConfirmApplyActivity extends Activity {
      * @param result
      */
     private void endConnection(boolean result) {
-        progressDialog.dismiss();
         //request with result error
         if (!result) {
 	        if (reTry) {
                 new ProcessApplyTask().execute();
                 return;
             }
+	        progressDialog.dismiss();
             btnApply.setEnabled(true);
             //show message error
             if (m_nErroType == ERR_ESPAP_NOT_CONNECT) {
@@ -220,6 +220,7 @@ public class ConfirmApplyActivity extends Activity {
                 showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
             }
         } else {
+	        progressDialog.dismiss();
             if (m_nErroType == RET_ESP_AP_OK) {
 	            saveElementApply();
                 applyFinish();

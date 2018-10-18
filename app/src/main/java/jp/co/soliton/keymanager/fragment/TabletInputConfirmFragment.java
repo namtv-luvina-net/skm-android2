@@ -199,7 +199,6 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 	 * @param result
 	 */
 	private void endConnection(boolean result) {
-		tabletAbtractInputFragment.getProgressDialog().dismiss();
 		//request with result error
 		int m_nErroType = tabletAbtractInputFragment.getErroType();
 		if (!result) {
@@ -207,6 +206,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 				new ProcessApplyTask().execute();
 				return;
 			}
+			tabletAbtractInputFragment.getProgressDialog().dismiss();
 			//show message error
 			if (m_nErroType == ERR_ESPAP_NOT_CONNECT) {
 				tabletAbtractInputFragment.showMessage(getString(R.string.connect_not_epsap));
@@ -232,6 +232,7 @@ public class TabletInputConfirmFragment extends TabletInputFragment {
 				tabletAbtractInputFragment.showMessage(m_InformCtrl.GetRtn().substring(str_err.length()));
 			}
 		} else {
+			tabletAbtractInputFragment.getProgressDialog().dismiss();
 			if (m_nErroType == RET_ESP_AP_OK) {
 				saveElementApply();
 				applyFinish();
