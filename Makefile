@@ -2,17 +2,13 @@ CP := cp
 CD := cd
 RM := rm -rf
 AFPLAY := afplay
-DEPLOY_DIR := /Users/build/Projects/www_inhouse
 SOUND_FILE := /System/Library/Sounds/Glass.aiff
 ZIPARCHIVE := zip -r -q
 
-all: clean buildall deploy sound
+all: clean buildall sound
 
 sound:
 	${AFPLAY} ${SOUND_FILE}
-
-deploy:
-	$(CP) ./app/build/outputs/apk/*.apk $(DEPLOY_DIR)/
 
 beta:
 	./gradlew clean assembleBeta
