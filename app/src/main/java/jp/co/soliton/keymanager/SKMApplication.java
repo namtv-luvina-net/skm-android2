@@ -5,6 +5,7 @@ import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.CommonUtils;
@@ -53,7 +54,11 @@ public class SKMApplication extends Application {
 			    if (!getResources().getBoolean(R.bool.isTablet)) {
 				    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			    } else {
-				    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+					if (Build.VERSION.SDK_INT == 26 && activity.getLocalClassName().contains("SettingTabletActivity")) {
+				        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+				    } else {
+				        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+				    }
 			    }
 		    }
 
