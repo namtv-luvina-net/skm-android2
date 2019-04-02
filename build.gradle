@@ -18,6 +18,17 @@ allprojects {
         google()
         jcenter()
     }
+    project.ext {
+        minSdkVersion = 21
+        targetSdkVersion = 27
+        compileSdkVersion = 27
+        supportLibraryVersion = "27.1.1"
+
+        majorVer = 2
+        minorVer = 0
+        revisionVer = 5
+        buildNum = 0
+    }
 }
 
 task clean(type: Delete) {

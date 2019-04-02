@@ -1,16 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    def buildNum = '0'
-    def versionStr = '205'
-    compileSdkVersion 27
-    buildToolsVersion '28.0.3'
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "jp.co.soliton.keymanager"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 8
-        versionName '2.0.5'
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.minSdkVersion * 1000000 + rootProject.ext.majorVer * 100000 + rootProject.ext.minorVer * 1000 + rootProject.ext.revisionVer * 10
+        versionName rootProject.ext.majorVer + '.' + rootProject.ext.minorVer + '.' + rootProject.ext.revisionVer
     }
     signingConfigs {
         beta {
@@ -57,13 +54,13 @@ android {
         abortOnError false
     }
     android.applicationVariants.all { variant ->
-        variant.buildConfigField 'String', 'BUILD_NUM', "\"${buildNum}\""
-        variant.buildConfigField 'String', 'VERSION_STR', "\"${versionStr}\""
+        variant.buildConfigField 'String', 'BUILD_NUM', "\"${rootProject.ext.buildNum}\""
+        variant.buildConfigField 'String', 'VERSION_STR', "\"${rootProject.ext.majorVer}${rootProject.ext.minorVer}${rootProject.ext.revisionVer}\""
         variant.outputs.all {
             if (variant.buildType.name.equals('release')) {
-                outputFileName = "SolitonKeyManagerV${versionStr}_Android.apk"
+                outputFileName = "SolitonKeyManagerV${rootProject.ext.majorVer}${rootProject.ext.minorVer}${rootProject.ext.revisionVer}_Android.apk"
             } else {
-                outputFileName = "SolitonKeyManagerV${versionStr}${buildNum}_${variant.buildType.name}_Android.apk"
+                outputFileName = "SolitonKeyManagerV${rootProject.ext.majorVer}${rootProject.ext.minorVer}${rootProject.ext.revisionVer}${rootProject.ext.buildNum}_${variant.buildType.name}_Android.apk"
             }
         }
     }
@@ -77,10 +74,9 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibraryVersion}"
+    implementation "com.android.support:design:${rootProject.ext.supportLibraryVersion}"
     implementation group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-
 }
