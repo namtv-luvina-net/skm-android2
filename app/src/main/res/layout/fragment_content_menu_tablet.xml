@@ -14,7 +14,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/height_item_menu">
 
-			<android.support.v4.widget.Space
+			<androidx.core.widget.Space
 					android:id="@+id/space_center"
 					android:layout_centerHorizontal="true"
 					android:layout_width="@dimen/margin_item_menu"
@@ -58,7 +58,7 @@
 					android:paddingRight="@dimen/margin_left_side"
 					android:background="@drawable/round_corner_white">
 
-				<android.support.v4.widget.Space
+				<androidx.core.widget.Space
 						android:id="@+id/space_apid"
 						android:layout_width="match_parent"
 						android:layout_centerVertical="true"

@@ -1,7 +1,7 @@
 package jp.co.soliton.keymanager.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.*;
 import jp.co.soliton.keymanager.LogCtrl;
@@ -11,7 +11,6 @@ import jp.co.soliton.keymanager.alarm.AlarmReceiver;
 import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.DateUtils;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
-import jp.co.soliton.keymanager.customview.DialogApplyMessage;
 import jp.co.soliton.keymanager.customview.ExpiredTimeNotifyBottomSheetDialog;
 import jp.co.soliton.keymanager.dbalias.ElementApply;
 import jp.co.soliton.keymanager.dbalias.ElementApplyManager;

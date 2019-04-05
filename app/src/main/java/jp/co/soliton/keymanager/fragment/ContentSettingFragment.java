@@ -3,15 +3,14 @@ package jp.co.soliton.keymanager.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.activity.SettingTabletActivity;
 import jp.co.soliton.keymanager.mdm.MDMFlgs;

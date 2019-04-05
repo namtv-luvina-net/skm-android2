@@ -21,7 +21,7 @@
         android:networkSecurityConfig="@xml/network_security_config">
         <!-- Version 2.0 -->
 	    <provider
-			    android:name="android.support.v4.content.FileProvider"
+			    android:name="androidx.core.content.FileProvider"
 			    android:authorities="jp.co.soliton.keymanager"
 			    android:exported="false"
 			    android:grantUriPermissions="true">

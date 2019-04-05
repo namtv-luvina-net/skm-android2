@@ -5,8 +5,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -21,7 +21,6 @@ import jp.co.soliton.keymanager.InformCtrl;
 import jp.co.soliton.keymanager.R;
 import jp.co.soliton.keymanager.asynctask.ConnectApplyTask;
 import jp.co.soliton.keymanager.asynctask.DownloadCertificateTask;
-import jp.co.soliton.keymanager.common.CommonUtils;
 import jp.co.soliton.keymanager.common.SoftKeyboardCtrl;
 
 import static jp.co.soliton.keymanager.common.ErrorNetwork.*;

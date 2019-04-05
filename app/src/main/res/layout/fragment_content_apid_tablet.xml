@@ -42,7 +42,7 @@
 				android:background="@drawable/background_apid"/>
 	</LinearLayout>
 
-	<android.support.v4.widget.Space
+	<androidx.core.widget.Space
 			android:id="@+id/space_apid"
 			android:layout_width="match_parent"
 			android:layout_centerVertical="true"
@@ -90,7 +90,7 @@
 			android:layout_height="@dimen/height_item_content_apid"
 			android:layout_marginTop="@dimen/margin_left_side">
 
-		<android.support.v4.widget.Space
+		<androidx.core.widget.Space
 				android:id="@+id/space_between_button_ctrl"
 				android:layout_centerInParent="true"
 				android:layout_width="@dimen/margin_left_side"
